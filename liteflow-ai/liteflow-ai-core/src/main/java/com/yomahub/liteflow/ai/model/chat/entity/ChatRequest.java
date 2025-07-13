@@ -1,9 +1,9 @@
 package com.yomahub.liteflow.ai.model.chat.entity;
 
-import java.util.List;
-
 import com.yomahub.liteflow.ai.model.ModelRequest;
 import com.yomahub.liteflow.ai.model.chat.message.Message;
+
+import java.util.List;
 
 /**
  * Chat 请求体
@@ -22,13 +22,6 @@ public class ChatRequest implements ModelRequest {
      * 聊天选项配置
      */
     private ChatOptions options;
-
-    public ChatRequest() {
-    }
-
-    public ChatRequest(List<Message> messages) {
-        this.messages = messages;
-    }
 
     public ChatRequest(List<Message> messages, ChatOptions options) {
         this.messages = messages;

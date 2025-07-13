@@ -11,4 +11,14 @@ import com.yomahub.liteflow.ai.model.ModelConfig;
 
 public class ChatConfig extends ModelConfig {
 
+    private boolean autoToolCallEnabled;
+
+    public boolean isAutoToolCallEnabled() {
+        return autoToolCallEnabled;
+    }
+
+    public void setAutoToolCallEnabled(boolean autoToolCallEnabled) {
+        this.autoToolCallEnabled = autoToolCallEnabled;
+    }
+
 }

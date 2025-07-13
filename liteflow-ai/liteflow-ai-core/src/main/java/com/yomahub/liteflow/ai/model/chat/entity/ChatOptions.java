@@ -12,7 +12,14 @@ import com.yomahub.liteflow.ai.model.ModelOptions;
 public class ChatOptions implements ModelOptions {
 
     public static final ChatOptions DEFAULT = new ChatOptions() {
-
+        {
+            DEFAULT.setTemperature(0.8f);
+            DEFAULT.setTopP(0.9f);
+            DEFAULT.setTopK(50f);
+            DEFAULT.setMaxTokens(512);
+            DEFAULT.setSeed(null);
+            DEFAULT.setEnableThinking(false);
+        }
     };
 
     private Float temperature;
