@@ -2,12 +2,10 @@ package com.yomahub.liteflow.ai.model.chat;
 
 import com.yomahub.liteflow.ai.model.BaseModel;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatConfig;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatOptions;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.model.chat.message.Message;
 
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 聊天模型
@@ -18,11 +16,27 @@ import java.util.List;
 
 public interface ChatModel extends BaseModel<ChatConfig> {
 
-    ChatResponse call(ChatRequest request);
+    /**
+     * 执行聊天请求(同步)
+     *
+     * @param request 聊天请求
+     * @return 聊天响应
+     */
+    ChatResponse chat(ChatRequest request);
 
-    default ChatResponse call(List<Message> messages) {
-        return call(new ChatRequest(messages, ChatOptions.DEFAULT));
-    }
+    /**
+     * 执行聊天请求(异步)
+     *
+     * @param request 聊天请求
+     * @return 异步聊天响应
+     */
+    CompletableFuture<ChatResponse> chatAsync(ChatRequest request);
 
-//    void stream(ChatRequest request, StreamHandler streamHandler);
+    /**
+     * 执行聊天请求(异步流式)
+     *
+     * @param request 聊天请求
+     */
+    void stream(ChatRequest request);
+
 }
