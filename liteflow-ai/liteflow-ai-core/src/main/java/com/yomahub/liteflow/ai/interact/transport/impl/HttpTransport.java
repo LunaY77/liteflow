@@ -1,9 +1,15 @@
 package com.yomahub.liteflow.ai.interact.transport.impl;
 
+import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
+import com.yomahub.liteflow.ai.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.interact.transport.Transport;
 import com.yomahub.liteflow.ai.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
+import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
+import com.yomahub.liteflow.ai.util.HttpUtil;
+
+import java.io.IOException;
 
 /**
  * Http传输实现，阻塞式传输
@@ -15,13 +21,34 @@ import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
 public class HttpTransport implements Transport {
 
     @Override
-    public void start(ChatConfig config, ChatRequest request, TransportListener listener) {
+    public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
+        throw new UnsupportedOperationException("HTTP传输不支持流式调用，请使用SSE传输或调用startBlocking方法");
+    }
 
+    @Override
+    public ChatResponse startBlocking(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline) {
+        try (HttpUtil httpUtil = HttpUtil
+                .builder()
+                .connectTimeout(config.getTimeout())
+                .readTimeout(config.getTimeout())
+                .writeTimeout(config.getTimeout())
+                .build()) {
+            // 构建请求体
+            String requestBody = buildRequestBody(config, request);
+
+            // 发送HTTP请求
+            String responseBody = httpUtil.post(config.resolveUrl(), requestBody, config.getHeadersConfig());
+
+            // 处理响应
+            return pipeline.processBlocking(responseBody);
+        } catch (IOException e) {
+            throw new LiteFlowAIException("阻塞调用大模型失败", e);
+        }
     }
 
     @Override
     public void close() {
-
+        // 空实现
+        // HTTP 连接在 try-with-resource 中自动关闭
     }
-
 }

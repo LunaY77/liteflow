@@ -20,6 +20,11 @@ public class LiteFlowAIException extends RuntimeException {
         this.message = message;
     }
 
+    public LiteFlowAIException(String message, Throwable cause) {
+        super(cause);
+        this.message = message;
+    }
+
     @Override
     public String getMessage() {
         return message;

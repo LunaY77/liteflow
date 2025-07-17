@@ -27,10 +27,11 @@ public interface ResultHandler {
      *
      * @param response 处理后的聊天响应结果，可能包含错误信息
      * @param context  聊天上下文，包含处理过程中的状态和信息
+     * @param e
      * @return 处理后的结果
      */
     // TODO args
-    ChatResponse onError(ChatResponse response, ChatContext context);
+    ChatResponse onError(ChatResponse response, ChatContext context, Exception e);
 
     /**
      * 最终结果处理的回调方法。无论是否发生错误均会调用此方法。

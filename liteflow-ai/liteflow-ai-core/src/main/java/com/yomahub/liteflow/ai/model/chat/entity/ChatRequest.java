@@ -214,7 +214,7 @@ public class ChatRequest implements ModelRequest {
          * 请求发生错误时的回调方法
          *
          * @param onError 请求发生错误时的回调函数
-         * @see ResultHandler#onError(ChatResponse, ChatContext)
+         * @see ResultHandler#onError(ChatResponse, ChatContext, Exception)
          */
         public Builder onError(BiFunction<ChatResponse, ChatContext, ChatResponse> onError) {
             listenerAggregator.onError = onError;
@@ -292,7 +292,7 @@ public class ChatRequest implements ModelRequest {
                     }
 
                     @Override
-                    public ChatResponse onError(ChatResponse response, ChatContext context) {
+                    public ChatResponse onError(ChatResponse response, ChatContext context, Exception e) {
                         return onError.apply(response, context);
                     }
 
