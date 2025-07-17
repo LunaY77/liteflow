@@ -69,9 +69,10 @@ public class LlmInteractClient implements InteractClient {
         private final ChatRequest request;
         private final ChatContext context;
         private final ChunkProcessPipeline pipeline;
-        private final TransportListener transportListener;
+        private final TransportListener externalTransportListener;
         private final ResultHandler resultHandler;
         private final Transport transport;
+        private final InternalTransportListener internalTransportListener;
 
         public InteractManager(ChatConfig config, ChatRequest request) {
             this.config = config;
@@ -82,32 +83,61 @@ public class LlmInteractClient implements InteractClient {
                     ? ChunkProcessPipeline.createStreamingPipeline(context, protocolTransformer, request.getChunkCallbackTransformer())
                     : ChunkProcessPipeline.createBlockingPipeline(context, protocolTransformer);
             this.transport = TransportType.getTransportInstance(config.getTransportType());
-            this.transportListener = request.getTransportListener();
+            this.externalTransportListener = request.getTransportListener();
             this.resultHandler = request.getResultHandler();
+            this.internalTransportListener = new InternalTransportListener();
         }
 
         /**
          * 流式调用
          */
         public void executeStreaming() {
-//            ChatResponse response = null;
-//            try {
-//                transportListener.onStart(context);
-//
-//                transport.start(config, request, pipeline, transportListener);
-//
-//                transportListener.onClose();
-//            } catch (Exception e) {
-//                handleError(response, e);
-//            } finally {
-//                cleanup(response);
-//            }
+            ChatResponse response = null;
+            try {
+                // 启动传输，使用内部监听器
+                transport.start(config, request, pipeline, internalTransportListener);
+            } catch (Exception e) {
+                handleError(response, e);
+            }
+        }
+
+        /**
+         * 内部传输监听器，用于处理流式调用的各种事件
+         */
+        private class InternalTransportListener implements TransportListener {
+
+            @Override
+            public void onStart(ChatContext context) {
+                externalTransportListener.onStart(context);
+            }
+
+            @Override
+            public void onClose(ChatContext context) {
+                ChatResponse finalResponse = null;
+                try {
+                    // 构造最终响应
+                    finalResponse = pipeline.buildFinalStreamingResponse();
+
+                    // 调用结果处理器的完成回调
+                    finalResponse = resultHandler.onCompletion(finalResponse, context);
+
+                    // TODO: 工具调用
+
+                    // 调用外部监听器的关闭事件
+                    externalTransportListener.onClose(context);
+                } catch (Exception e) {
+                    handleError(finalResponse, e);
+                } finally {
+                    // 清理资源
+                    cleanup(finalResponse);
+                }
+            }
         }
 
         public ChatResponse executeBlocking() {
             ChatResponse response = null;
             try {
-                transportListener.onStart(context);
+                externalTransportListener.onStart(context);
 
                 response = transport.startBlocking(config, request, pipeline);
 

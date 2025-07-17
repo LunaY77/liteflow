@@ -23,8 +23,7 @@ public class ChunkProcessPipeline {
     private ChunkProcessPipeline(
             ChatContext context,
             ProtocolTransformer protocolTransformer,
-            ChunkCallbackTransformer chunkCallbackTransformer
-    ) {
+            ChunkCallbackTransformer chunkCallbackTransformer) {
         this.context = context;
         this.protocolTransformer = protocolTransformer;
         this.chunkCallbackTransformer = chunkCallbackTransformer;
@@ -76,6 +75,15 @@ public class ChunkProcessPipeline {
      */
     public ChatResponse processBlocking(String blockingResponse) {
         return protocolTransformer.transformBlockingResponse(blockingResponse, context);
+    }
+
+    /**
+     * 构造流式调用的最终响应
+     *
+     * @return 最终的 ChatResponse
+     */
+    public ChatResponse buildFinalStreamingResponse() {
+        return protocolTransformer.transformStreamingResponse(context);
     }
 
     public ChatContext getContext() {

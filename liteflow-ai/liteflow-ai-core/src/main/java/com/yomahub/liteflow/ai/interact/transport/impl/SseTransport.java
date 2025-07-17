@@ -1,19 +1,21 @@
 package com.yomahub.liteflow.ai.interact.transport.impl;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.yomahub.liteflow.ai.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.interact.transport.Transport;
 import com.yomahub.liteflow.ai.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Sse传输实现，基于Server-Sent Events的非阻塞式传输
@@ -82,6 +84,8 @@ public class SseTransport extends EventSourceListener implements Transport {
     @Override
     public void onClosed(@NotNull EventSource eventSource) {
         super.onClosed(eventSource);
+
+        // 通知连接关闭
         listener.onClose(pipeline.getContext());
     }
 

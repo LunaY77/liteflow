@@ -24,10 +24,10 @@ public interface ProtocolTransformer extends ChunkTransformer {
     StreamingProtocolChunk transformStreamingChunk(String streamChunk, ChatContext context);
 
     /**
-     * 将流式响应转换为 LiteFlow-AI 支持的 ChatResponse。
+     * 从聊天上下文构造最终的 ChatResponse（用于流式调用）
      *
-     * @param context 上下文信息，包含会话状态等
-     * @return 转换后的 ChatResponse
+     * @param context 聊天上下文，包含累积的文本内容等信息
+     * @return 构造的最终 ChatResponse
      */
     ChatResponse transformStreamingResponse(ChatContext context);
 
