@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 协议转换器工厂
+ * 消息协议转换器工厂
  *
  * @author 苍镜月
  * @since TODO

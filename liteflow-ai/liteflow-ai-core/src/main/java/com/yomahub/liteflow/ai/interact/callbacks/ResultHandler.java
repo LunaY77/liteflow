@@ -17,26 +17,29 @@ public interface ResultHandler {
      *
      * @param response 处理后的聊天响应结果
      * @param context  聊天上下文，包含处理过程中的状态和信息
+     * @return 处理后的结果
      */
     // TODO args
-    void onCompletion(ChatResponse response, ChatContext context);
+    ChatResponse onCompletion(ChatResponse response, ChatContext context);
 
     /**
      * 处理过程中发生错误的回调方法。
      *
      * @param response 处理后的聊天响应结果，可能包含错误信息
      * @param context  聊天上下文，包含处理过程中的状态和信息
+     * @return 处理后的结果
      */
     // TODO args
-    void onError(ChatResponse response, ChatContext context);
+    ChatResponse onError(ChatResponse response, ChatContext context);
 
     /**
      * 最终结果处理的回调方法。无论是否发生错误均会调用此方法。
      *
      * @param response 最终的聊天响应结果
      * @param context  聊天上下文，包含处理过程中的状态和信息
+     * @return 处理后的结果
      */
     // TODO args
-    void onFinal(ChatResponse response, ChatContext context);
+    ChatResponse onFinal(ChatResponse response, ChatContext context);
 
 }

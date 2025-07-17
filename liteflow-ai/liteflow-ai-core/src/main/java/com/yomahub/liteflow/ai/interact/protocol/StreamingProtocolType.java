@@ -6,19 +6,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 协议类型枚举
+ * 流式消息协议类型枚举
  *
  * @author 苍镜月
  * @since TODO
  */
 
-public enum ProtocolType {
+public enum StreamingProtocolType {
     // 文本内容
     TEXT(1, "text"),
     // 工具调用
     TOOL_CALLS(2, "tool_calls"),
     // 推理内容
-    REASONING(3, "reasoning"),
+    THINKING(3, "thinking"),
     // 停止信号
     STOP(4, "stop"),
     // 错误信息
@@ -33,7 +33,7 @@ public enum ProtocolType {
     private final Integer code;
     private final String desc;
 
-    ProtocolType(Integer code, String desc) {
+    StreamingProtocolType(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -46,13 +46,13 @@ public enum ProtocolType {
         return desc;
     }
 
-    private static final Map<Integer, ProtocolType> cache;
+    private static final Map<Integer, StreamingProtocolType> cache;
 
     static {
-        cache = Arrays.stream(ProtocolType.values()).collect(Collectors.toMap(ProtocolType::getCode, Function.identity()));
+        cache = Arrays.stream(StreamingProtocolType.values()).collect(Collectors.toMap(StreamingProtocolType::getCode, Function.identity()));
     }
 
-    public static ProtocolType of(Integer code) {
+    public static StreamingProtocolType of(Integer code) {
         return cache.get(code);
     }
 }

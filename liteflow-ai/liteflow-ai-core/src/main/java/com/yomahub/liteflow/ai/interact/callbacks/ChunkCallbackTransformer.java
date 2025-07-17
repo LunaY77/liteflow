@@ -1,15 +1,16 @@
 package com.yomahub.liteflow.ai.interact.callbacks;
 
 import com.yomahub.liteflow.ai.interact.pipeline.ChatContext;
+import com.yomahub.liteflow.ai.interact.pipeline.ChunkTransformer;
 
 /**
- * 消息处理管道的回调接口。根据块数据的类型进行具体回调
+ * 流式消息处理管道的回调接口。根据块数据的类型进行具体回调
  *
  * @author 苍镜月
  * @since TODO
  */
 
-public interface ChunkCallback {
+public interface ChunkCallbackTransformer extends ChunkTransformer {
 
     /**
      * 处理文本消息的回调方法。
@@ -17,7 +18,7 @@ public interface ChunkCallback {
      * @param content 文本内容
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    void onText(String content, ChatContext context);
+    String onText(String content, ChatContext context);
 
     /**
      * 处理思考消息的回调方法。
@@ -25,7 +26,7 @@ public interface ChunkCallback {
      * @param content 思考内容
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    void onThinking(String content, ChatContext context);
+    String onThinking(String content, ChatContext context);
 
     /**
      * 处理工具调用消息的回调方法。
@@ -34,7 +35,7 @@ public interface ChunkCallback {
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
     // TODO args
-    void onToolsCalling(Object content, ChatContext context);
+    Object onToolsCalling(Object content, ChatContext context);
 
     /**
      * 处理 Token 统计信息的回调方法
@@ -43,7 +44,7 @@ public interface ChunkCallback {
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
     // TODO args
-    void onUsage(Object content, ChatContext context);
+    Object onUsage(Object content, ChatContext context);
 
     /**
      * 处理基础信息/搜索结果的回调方法
@@ -52,6 +53,10 @@ public interface ChunkCallback {
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
     // TODO args
-    void onGrounding(Object content, ChatContext context);
+    Object onGrounding(Object content, ChatContext context);
 
+    @Override
+    default String getTransformerType() {
+        return "ChunkCallback";
+    }
 }

@@ -3,7 +3,7 @@ package com.yomahub.liteflow.ai.interact.protocol;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * 协议转换器自动注册
+ * 消息协议转换器自动注册
  *
  * @author 苍镜月
  * @since TODO

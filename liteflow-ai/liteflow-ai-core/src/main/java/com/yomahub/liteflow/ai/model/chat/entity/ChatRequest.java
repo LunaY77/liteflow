@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.model.chat.entity;
 
-import com.yomahub.liteflow.ai.interact.callbacks.ChunkCallback;
+import com.yomahub.liteflow.ai.interact.callbacks.ChunkCallbackTransformer;
 import com.yomahub.liteflow.ai.interact.callbacks.ResultHandler;
 import com.yomahub.liteflow.ai.interact.pipeline.ChatContext;
 import com.yomahub.liteflow.ai.interact.transport.TransportListener;
@@ -8,7 +8,7 @@ import com.yomahub.liteflow.ai.model.ModelRequest;
 import com.yomahub.liteflow.ai.model.chat.message.Message;
 
 import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -42,7 +42,7 @@ public class ChatRequest implements ModelRequest {
     /**
      * 分块回调，用于处理消息分块的各种事件
      */
-    private final ChunkCallback chunkCallback;
+    private final ChunkCallbackTransformer chunkCallbackTransformer;
 
     /**
      * 私有构造函数，使用 Builder 模式创建 ChatRequest 实例
@@ -54,7 +54,7 @@ public class ChatRequest implements ModelRequest {
         this.options = builder.options;
         this.transportListener = builder.transportListener;
         this.resultHandler = builder.resultHandler;
-        this.chunkCallback = builder.chunkCallback;
+        this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
     }
 
     public List<Message> getMessages() {
@@ -73,8 +73,8 @@ public class ChatRequest implements ModelRequest {
         return resultHandler;
     }
 
-    public ChunkCallback getChunkCallback() {
-        return chunkCallback;
+    public ChunkCallbackTransformer getChunkCallback() {
+        return chunkCallbackTransformer;
     }
 
     public static Builder builder() {
@@ -87,7 +87,7 @@ public class ChatRequest implements ModelRequest {
         private final LlmListenerAggregator listenerAggregator = new LlmListenerAggregator();
         private TransportListener transportListener;
         private ResultHandler resultHandler;
-        private ChunkCallback chunkCallback;
+        private ChunkCallbackTransformer chunkCallbackTransformer;
 
         /**
          * 设置上下文消息
@@ -137,9 +137,9 @@ public class ChatRequest implements ModelRequest {
          * 文本消息的回调方法
          *
          * @param onText 文本消息的回调函数
-         * @see ChunkCallback#onText(String, ChatContext)
+         * @see ChunkCallbackTransformer#onText(String, ChatContext)
          */
-        public Builder onText(BiConsumer<String, ChatContext> onText) {
+        public Builder onText(BiFunction<String, ChatContext, String> onText) {
             listenerAggregator.onText = onText;
             return this;
         }
@@ -148,9 +148,9 @@ public class ChatRequest implements ModelRequest {
          * 思考消息的回调方法
          *
          * @param onThinking 思考消息的回调函数
-         * @see ChunkCallback#onThinking(String, ChatContext)
+         * @see ChunkCallbackTransformer#onThinking(String, ChatContext)
          */
-        public Builder onThinking(BiConsumer<String, ChatContext> onThinking) {
+        public Builder onThinking(BiFunction<String, ChatContext, String> onThinking) {
             listenerAggregator.onThinking = onThinking;
             return this;
         }
@@ -159,9 +159,9 @@ public class ChatRequest implements ModelRequest {
          * 工具调用消息的回调方法
          *
          * @param onToolsCalling 工具调用消息的回调函数
-         * @see ChunkCallback#onToolsCalling(Object, ChatContext)
+         * @see ChunkCallbackTransformer#onToolsCalling(Object, ChatContext)
          */
-        public Builder onToolsCalling(BiConsumer<Object, ChatContext> onToolsCalling) {
+        public Builder onToolsCalling(BiFunction<Object, ChatContext, Object> onToolsCalling) {
             listenerAggregator.onToolsCalling = onToolsCalling;
             return this;
         }
@@ -170,9 +170,9 @@ public class ChatRequest implements ModelRequest {
          * Token 统计信息的回调方法
          *
          * @param onUsage Token 统计信息的回调函数
-         * @see ChunkCallback#onUsage(Object, ChatContext)
+         * @see ChunkCallbackTransformer#onUsage(Object, ChatContext)
          */
-        public Builder onUsage(BiConsumer<Object, ChatContext> onUsage) {
+        public Builder onUsage(BiFunction<Object, ChatContext, Object> onUsage) {
             listenerAggregator.onUsage = onUsage;
             return this;
         }
@@ -181,9 +181,9 @@ public class ChatRequest implements ModelRequest {
          * 基础信息/搜索结果的回调方法
          *
          * @param onGrounding 基础信息/搜索结果的回调函数
-         * @see ChunkCallback#onGrounding(Object, ChatContext)
+         * @see ChunkCallbackTransformer#onGrounding(Object, ChatContext)
          */
-        public Builder onGrounding(BiConsumer<Object, ChatContext> onGrounding) {
+        public Builder onGrounding(BiFunction<Object, ChatContext, Object> onGrounding) {
             listenerAggregator.onGrounding = onGrounding;
             return this;
         }
@@ -194,7 +194,7 @@ public class ChatRequest implements ModelRequest {
          * @param onCompletion 请求完成时的回调函数
          * @see ResultHandler#onCompletion(ChatResponse, ChatContext)
          */
-        public Builder onCompletion(BiConsumer<ChatResponse, ChatContext> onCompletion) {
+        public Builder onCompletion(BiFunction<ChatResponse, ChatContext, ChatResponse> onCompletion) {
             listenerAggregator.onCompletion = onCompletion;
             return this;
         }
@@ -205,7 +205,7 @@ public class ChatRequest implements ModelRequest {
          * @param onError 请求发生错误时的回调函数
          * @see ResultHandler#onError(ChatResponse, ChatContext)
          */
-        public Builder onError(BiConsumer<ChatResponse, ChatContext> onError) {
+        public Builder onError(BiFunction<ChatResponse, ChatContext, ChatResponse> onError) {
             listenerAggregator.onError = onError;
             return this;
         }
@@ -216,7 +216,7 @@ public class ChatRequest implements ModelRequest {
          * @param onFinal 请求最终结果的回调函数
          * @see ResultHandler#onFinal(ChatResponse, ChatContext)
          */
-        public Builder onFinal(BiConsumer<ChatResponse, ChatContext> onFinal) {
+        public Builder onFinal(BiFunction<ChatResponse, ChatContext, ChatResponse> onFinal) {
             listenerAggregator.onFinal = onFinal;
             return this;
         }
@@ -229,7 +229,7 @@ public class ChatRequest implements ModelRequest {
         public ChatRequest build() {
             this.transportListener = listenerAggregator.toTransportListener();
             this.resultHandler = listenerAggregator.toResultHandler();
-            this.chunkCallback = listenerAggregator.toChunkCallback();
+            this.chunkCallbackTransformer = listenerAggregator.toChunkCallback();
             return new ChatRequest(this);
         }
 
@@ -239,14 +239,14 @@ public class ChatRequest implements ModelRequest {
         private static class LlmListenerAggregator {
             Consumer<ChatContext> onStart = context -> {};
             Consumer<ChatContext> onClose = context -> {};
-            BiConsumer<String, ChatContext> onText = (content, context) -> {};
-            BiConsumer<String, ChatContext> onThinking = (content, context) -> {};
-            BiConsumer<Object, ChatContext> onToolsCalling = (content, context) -> {};
-            BiConsumer<Object, ChatContext> onUsage = (content, context) -> {};
-            BiConsumer<Object, ChatContext> onGrounding = (content, context) -> {};
-            BiConsumer<ChatResponse, ChatContext> onCompletion = (response, context) -> {};
-            BiConsumer<ChatResponse, ChatContext> onError = (response, context) -> {};
-            BiConsumer<ChatResponse, ChatContext> onFinal = (response, context) -> {};
+            BiFunction<String, ChatContext, String> onText = (content, context) -> content;
+            BiFunction<String, ChatContext, String> onThinking = (content, context) -> content;
+            BiFunction<Object, ChatContext, Object> onToolsCalling = (content, context) -> content;
+            BiFunction<Object, ChatContext, Object> onUsage = (content, context) -> content;
+            BiFunction<Object, ChatContext, Object> onGrounding = (content, context) -> content;
+            BiFunction<ChatResponse, ChatContext, ChatResponse> onCompletion = (response, context) -> response;
+            BiFunction<ChatResponse, ChatContext, ChatResponse> onError = (response, context) -> response;
+            BiFunction<ChatResponse, ChatContext, ChatResponse> onFinal = (response, context) -> response;
 
             TransportListener toTransportListener() {
                 return new TransportListener() {
@@ -265,47 +265,47 @@ public class ChatRequest implements ModelRequest {
             ResultHandler toResultHandler() {
                 return new ResultHandler() {
                     @Override
-                    public void onCompletion(ChatResponse response, ChatContext context) {
-                        onCompletion.accept(response, context);
+                    public ChatResponse onCompletion(ChatResponse response, ChatContext context) {
+                        return onCompletion.apply(response, context);
                     }
 
                     @Override
-                    public void onError(ChatResponse response, ChatContext context) {
-                        onError.accept(response, context);
+                    public ChatResponse onError(ChatResponse response, ChatContext context) {
+                        return onError.apply(response, context);
                     }
 
                     @Override
-                    public void onFinal(ChatResponse response, ChatContext context) {
-                        onFinal.accept(response, context);
+                    public ChatResponse onFinal(ChatResponse response, ChatContext context) {
+                        return onFinal.apply(response, context);
                     }
                 };
             }
 
-            ChunkCallback toChunkCallback() {
-                return new ChunkCallback() {
+            ChunkCallbackTransformer toChunkCallback() {
+                return new ChunkCallbackTransformer() {
                     @Override
-                    public void onText(String content, ChatContext context) {
-                        onText.accept(content, context);
+                    public String onText(String content, ChatContext context) {
+                        return onText.apply(content, context);
                     }
 
                     @Override
-                    public void onThinking(String content, ChatContext context) {
-                        onThinking.accept(content, context);
+                    public String onThinking(String content, ChatContext context) {
+                        return onThinking.apply(content, context);
                     }
 
                     @Override
-                    public void onToolsCalling(Object content, ChatContext context) {
-                        onToolsCalling.accept(content, context);
+                    public Object onToolsCalling(Object content, ChatContext context) {
+                        return onToolsCalling.apply(content, context);
                     }
 
                     @Override
-                    public void onUsage(Object content, ChatContext context) {
-                        onUsage.accept(content, context);
+                    public Object onUsage(Object content, ChatContext context) {
+                        return onUsage.apply(content, context);
                     }
 
                     @Override
-                    public void onGrounding(Object content, ChatContext context) {
-                        onGrounding.accept(content, context);
+                    public Object onGrounding(Object content, ChatContext context) {
+                        return onGrounding.apply(content, context);
                     }
                 };
             }
