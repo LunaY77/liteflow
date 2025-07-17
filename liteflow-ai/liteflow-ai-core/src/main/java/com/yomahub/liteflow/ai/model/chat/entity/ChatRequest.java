@@ -8,6 +8,7 @@ import com.yomahub.liteflow.ai.model.ModelRequest;
 import com.yomahub.liteflow.ai.model.chat.message.Message;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -227,6 +228,12 @@ public class ChatRequest implements ModelRequest {
          * @return ChatRequest 实例
          */
         public ChatRequest build() {
+            if (Objects.isNull(messages) || messages.isEmpty()) {
+                throw new IllegalArgumentException("Messages cannot be null or empty");
+            }
+            if (Objects.isNull(options)) {
+                options = ChatOptions.DEFAULT;
+            }
             this.transportListener = listenerAggregator.toTransportListener();
             this.resultHandler = listenerAggregator.toResultHandler();
             this.chunkCallbackTransformer = listenerAggregator.toChunkCallback();
@@ -249,6 +256,8 @@ public class ChatRequest implements ModelRequest {
             BiFunction<ChatResponse, ChatContext, ChatResponse> onFinal = (response, context) -> response;
 
             TransportListener toTransportListener() {
+                Objects.requireNonNull(onStart, "onStart cannot be null");
+                Objects.requireNonNull(onClose, "onClose cannot be null");
                 return new TransportListener() {
                     @Override
                     public void onStart(ChatContext context) {
@@ -263,6 +272,9 @@ public class ChatRequest implements ModelRequest {
             }
 
             ResultHandler toResultHandler() {
+                Objects.requireNonNull(onCompletion, "onCompletion cannot be null");
+                Objects.requireNonNull(onError, "onError cannot be null");
+                Objects.requireNonNull(onFinal, "onFinal cannot be null");
                 return new ResultHandler() {
                     @Override
                     public ChatResponse onCompletion(ChatResponse response, ChatContext context) {
@@ -282,6 +294,11 @@ public class ChatRequest implements ModelRequest {
             }
 
             ChunkCallbackTransformer toChunkCallback() {
+                Objects.requireNonNull(onText, "onText cannot be null");
+                Objects.requireNonNull(onThinking, "onThinking cannot be null");
+                Objects.requireNonNull(onToolsCalling, "onToolsCalling cannot be null");
+                Objects.requireNonNull(onUsage, "onUsage cannot be null");
+                Objects.requireNonNull(onGrounding, "onGrounding cannot be null");
                 return new ChunkCallbackTransformer() {
                     @Override
                     public String onText(String content, ChatContext context) {
