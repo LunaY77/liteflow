@@ -12,7 +12,7 @@ import java.util.Objects;
  * @since TODO
  */
 
-public class ModelConfig {
+public class ModelConfig implements RequestBodyConvertible {
 
     protected String apiUrl;
 
@@ -27,6 +27,8 @@ public class ModelConfig {
     protected Duration timeout = Duration.ofSeconds(60);
 
     protected Map<String, String> headersConfig = new LinkedHashMap<>();
+
+    protected static final String MODEL_KEY = "model";
 
     public ModelConfig() {
     }
@@ -49,7 +51,7 @@ public class ModelConfig {
         this.headersConfig = headersConfig;
     }
 
-    protected ModelConfig(Builder builder) {
+    protected ModelConfig(Builder<?> builder) {
         this.apiUrl = builder.apiUrl;
         this.endPoint = builder.endPoint;
         this.apiKey = builder.apiKey;
@@ -57,6 +59,24 @@ public class ModelConfig {
         this.model = builder.model;
         this.timeout = builder.timeout;
         this.headersConfig.putAll(builder.headersConfig);
+    }
+
+    @Override
+    public RequestBody toRequestBody() {
+        return RequestBody.of()
+                .putIfNotNull(MODEL_KEY, model);
+    }
+
+    /**
+     * 解析完整的API URL
+     *
+     * @return 完整的API URL
+     */
+    public String resolveUrl() {
+        String cleanApiUrl = apiUrl.endsWith("/") ? apiUrl.substring(0, apiUrl.length() - 1) : apiUrl;
+        String cleanEndpoint = endPoint.startsWith("/") ? endPoint.substring(1) : endPoint;
+
+        return cleanApiUrl + "/" + cleanEndpoint;
     }
 
     public String getApiUrl() {
@@ -119,11 +139,7 @@ public class ModelConfig {
         this.headersConfig.remove(key);
     }
 
-    public Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder {
+    public static abstract class Builder<B extends Builder<B>> {
         protected String apiUrl;
 
         protected String endPoint;
@@ -138,48 +154,51 @@ public class ModelConfig {
 
         protected Map<String, String> headersConfig = new LinkedHashMap<>();
 
-        public Builder apiUrl(String apiUrl) {
+        protected abstract B self();
+
+        public B apiUrl(String apiUrl) {
             this.apiUrl = apiUrl;
-            return this;
+            return self();
         }
 
-        public Builder endPoint(String endPoint) {
+        public B endPoint(String endPoint) {
             this.endPoint = endPoint;
-            return this;
+            return self();
         }
 
-        public Builder apiKey(String apiKey) {
+        public B apiKey(String apiKey) {
             this.apiKey = apiKey;
-            return this;
+            return self();
         }
 
-        public Builder provider(String provider) {
+        public B provider(String provider) {
             this.provider = provider;
-            return this;
+            return self();
         }
 
-        public Builder model(String model) {
+        public B model(String model) {
             this.model = model;
-            return this;
+            return self();
         }
 
-        public Builder timeout(Duration timeout) {
+        public B timeout(Duration timeout) {
             this.timeout = timeout;
-            return this;
+            return self();
         }
 
-        public Builder headersConfig(Map<String, String> headersConfig) {
+        public B headersConfig(Map<String, String> headersConfig) {
             this.headersConfig = headersConfig;
-            return this;
+            return self();
         }
 
-        public ModelConfig build() {
+        protected void checkRequiredFields() {
             Objects.requireNonNull(apiUrl, "API URL must not be null");
             Objects.requireNonNull(endPoint, "End Point must not be null");
             Objects.requireNonNull(apiKey, "API Key must not be null");
             Objects.requireNonNull(provider, "Provider must not be null");
             Objects.requireNonNull(model, "Model must not be null");
-            return new ModelConfig(this);
         }
+
+        public abstract ModelConfig build();
     }
 }

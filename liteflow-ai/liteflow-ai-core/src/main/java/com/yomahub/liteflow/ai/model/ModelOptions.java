@@ -7,5 +7,5 @@ package com.yomahub.liteflow.ai.model;
  * @since TODO
  */
 
-public interface ModelOptions {
+public interface ModelOptions extends RequestBodyConvertible {
 }

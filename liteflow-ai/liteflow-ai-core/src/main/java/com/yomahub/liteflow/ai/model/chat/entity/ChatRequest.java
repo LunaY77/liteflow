@@ -5,6 +5,7 @@ import com.yomahub.liteflow.ai.interact.callbacks.ResultHandler;
 import com.yomahub.liteflow.ai.interact.pipeline.ChatContext;
 import com.yomahub.liteflow.ai.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.model.ModelRequest;
+import com.yomahub.liteflow.ai.model.RequestBody;
 import com.yomahub.liteflow.ai.model.chat.message.Message;
 
 import java.util.List;
@@ -45,6 +46,8 @@ public class ChatRequest implements ModelRequest {
      */
     private final ChunkCallbackTransformer chunkCallbackTransformer;
 
+    private static final String MESSAGES_KEY = "messages";
+
     /**
      * 私有构造函数，使用 Builder 模式创建 ChatRequest 实例
      *
@@ -56,6 +59,13 @@ public class ChatRequest implements ModelRequest {
         this.transportListener = builder.transportListener;
         this.resultHandler = builder.resultHandler;
         this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
+    }
+
+    @Override
+    public RequestBody toRequestBody() {
+        return RequestBody.of()
+                .putIfNotEmpty(MESSAGES_KEY, messages)
+                .merge(options.toRequestBody());
     }
 
     public List<Message> getMessages() {
@@ -74,7 +84,7 @@ public class ChatRequest implements ModelRequest {
         return resultHandler;
     }
 
-    public ChunkCallbackTransformer getChunkCallback() {
+    public ChunkCallbackTransformer getChunkCallbackTransformer() {
         return chunkCallbackTransformer;
     }
 
@@ -236,7 +246,7 @@ public class ChatRequest implements ModelRequest {
             }
             this.transportListener = listenerAggregator.toTransportListener();
             this.resultHandler = listenerAggregator.toResultHandler();
-            this.chunkCallbackTransformer = listenerAggregator.toChunkCallback();
+            this.chunkCallbackTransformer = listenerAggregator.toChunkCallbackTransformer();
             return new ChatRequest(this);
         }
 
@@ -293,7 +303,7 @@ public class ChatRequest implements ModelRequest {
                 };
             }
 
-            ChunkCallbackTransformer toChunkCallback() {
+            ChunkCallbackTransformer toChunkCallbackTransformer() {
                 Objects.requireNonNull(onText, "onText cannot be null");
                 Objects.requireNonNull(onThinking, "onThinking cannot be null");
                 Objects.requireNonNull(onToolsCalling, "onToolsCalling cannot be null");
