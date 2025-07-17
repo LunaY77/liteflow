@@ -3,6 +3,7 @@ package com.yomahub.liteflow.ai.model;
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 模型配置信息
@@ -15,6 +16,8 @@ public class ModelConfig {
 
     protected String apiUrl;
 
+    protected String endPoint;
+
     protected String apiKey;
 
     protected String provider;
@@ -23,7 +26,38 @@ public class ModelConfig {
 
     protected Duration timeout = Duration.ofSeconds(60);
 
-    protected final Map<String, String> headersConfig = new LinkedHashMap<>();
+    protected Map<String, String> headersConfig = new LinkedHashMap<>();
+
+    public ModelConfig() {
+    }
+
+    public ModelConfig(
+            String apiUrl,
+            String endPoint,
+            String apiKey,
+            String provider,
+            String model,
+            Duration timeout,
+            Map<String, String> headersConfig
+    ) {
+        this.apiUrl = apiUrl;
+        this.endPoint = endPoint;
+        this.apiKey = apiKey;
+        this.provider = provider;
+        this.model = model;
+        this.timeout = timeout;
+        this.headersConfig = headersConfig;
+    }
+
+    protected ModelConfig(Builder builder) {
+        this.apiUrl = builder.apiUrl;
+        this.endPoint = builder.endPoint;
+        this.apiKey = builder.apiKey;
+        this.provider = builder.provider;
+        this.model = builder.model;
+        this.timeout = builder.timeout;
+        this.headersConfig.putAll(builder.headersConfig);
+    }
 
     public String getApiUrl() {
         return apiUrl;
@@ -31,6 +65,14 @@ public class ModelConfig {
 
     public void setApiUrl(String apiUrl) {
         this.apiUrl = apiUrl;
+    }
+
+    public String getEndPoint() {
+        return endPoint;
+    }
+
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
     }
 
     public String getApiKey() {
@@ -75,5 +117,69 @@ public class ModelConfig {
 
     public void removeHeader(String key) {
         this.headersConfig.remove(key);
+    }
+
+    public Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        protected String apiUrl;
+
+        protected String endPoint;
+
+        protected String apiKey;
+
+        protected String provider;
+
+        protected String model;
+
+        protected Duration timeout = Duration.ofSeconds(60);
+
+        protected Map<String, String> headersConfig = new LinkedHashMap<>();
+
+        public Builder apiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+            return this;
+        }
+
+        public Builder endPoint(String endPoint) {
+            this.endPoint = endPoint;
+            return this;
+        }
+
+        public Builder apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        public Builder provider(String provider) {
+            this.provider = provider;
+            return this;
+        }
+
+        public Builder model(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public Builder timeout(Duration timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
+        public Builder headersConfig(Map<String, String> headersConfig) {
+            this.headersConfig = headersConfig;
+            return this;
+        }
+
+        public ModelConfig build() {
+            Objects.requireNonNull(apiUrl, "API URL must not be null");
+            Objects.requireNonNull(endPoint, "End Point must not be null");
+            Objects.requireNonNull(apiKey, "API Key must not be null");
+            Objects.requireNonNull(provider, "Provider must not be null");
+            Objects.requireNonNull(model, "Model must not be null");
+            return new ModelConfig(this);
+        }
     }
 }
