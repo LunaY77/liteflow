@@ -47,6 +47,7 @@ public interface Transport {
     default String buildRequestBody(ChatConfig config, ChatRequest request) {
         return config.toRequestBody()
                 .merge(request.toRequestBody())
+                .put("prompt", "Why sky is blue?")
                 .toJsonString();
     }
 }
