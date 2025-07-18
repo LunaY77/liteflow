@@ -24,7 +24,9 @@ public class ChatConfig extends ModelConfig {
 
     protected static final String STREAM_KEY = "stream";
 
-    public ChatConfig() {}
+    public ChatConfig() {
+        super();
+    }
 
     public ChatConfig(
             String apiUrl,

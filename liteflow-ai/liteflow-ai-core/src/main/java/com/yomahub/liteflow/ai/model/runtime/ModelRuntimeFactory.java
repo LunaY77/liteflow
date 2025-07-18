@@ -3,6 +3,9 @@ package com.yomahub.liteflow.ai.model.runtime;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.model.BaseModel;
 import com.yomahub.liteflow.ai.model.ModelConfig;
+import com.yomahub.liteflow.ai.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.model.chat.entity.ChatConfig;
+import com.yomahub.liteflow.ai.model.embedding.EmbeddingModel;
 import com.yomahub.liteflow.ai.util.SpringUtil;
 
 import java.util.Map;
@@ -39,7 +42,7 @@ public class ModelRuntimeFactory {
      * @param config   模型配置
      * @return 模型运行时实例
      */
-    public static BaseModel<? extends ModelConfig> createRuntime(String provider, ModelConfig config) {
+    private static BaseModel<? extends ModelConfig> createRuntime(String provider, ModelConfig config) {
         String cacheKey = provider + "_" + config.hashCode();
 
         return RUNTIME_CACHE.computeIfAbsent(cacheKey, key -> {
@@ -54,6 +57,36 @@ public class ModelRuntimeFactory {
                 throw new RuntimeException("创建模型运行时失败, provider: " + provider + ", modelConfig: " + config, e);
             }
         });
+    }
+
+    /**
+     * 创建聊天模型运行时实例
+     *
+     * @param provider 模型提供者标识
+     * @param config   聊天模型配置
+     * @return 聊天模型运行时实例
+     */
+    public static ChatModel createChatRuntime(String provider, ChatConfig config) {
+        BaseModel<? extends ModelConfig> model = createRuntime(provider + ModelType.CHAT_MODEL, config);
+        if (!(model instanceof ChatModel)) {
+            throw new LiteFlowAIException("提供者 " + provider + " 不支持聊天模型");
+        }
+        return (ChatModel) model;
+    }
+
+    /**
+     * 创建嵌入模型运行时实例
+     *
+     * @param provider 模型提供者标识
+     * @param config   模型配置
+     * @return 嵌入模型运行时实例
+     */
+    public static EmbeddingModel createEmbeddingRuntime(String provider, ModelConfig config) {
+        BaseModel<? extends ModelConfig> model = createRuntime(provider + ModelType.EMBEDDING_MODEL, config);
+        if (!(model instanceof EmbeddingModel)) {
+            throw new LiteFlowAIException("提供者 " + provider + " 不支持嵌入模型");
+        }
+        return (EmbeddingModel) model;
     }
 
     /**

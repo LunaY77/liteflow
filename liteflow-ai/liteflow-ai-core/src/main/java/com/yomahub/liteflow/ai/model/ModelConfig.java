@@ -194,7 +194,6 @@ public class ModelConfig implements RequestBodyConvertible {
         protected void checkRequiredFields() {
             Objects.requireNonNull(apiUrl, "API URL must not be null");
             Objects.requireNonNull(endPoint, "End Point must not be null");
-            Objects.requireNonNull(apiKey, "API Key must not be null");
             Objects.requireNonNull(provider, "Provider must not be null");
             Objects.requireNonNull(model, "Model must not be null");
         }

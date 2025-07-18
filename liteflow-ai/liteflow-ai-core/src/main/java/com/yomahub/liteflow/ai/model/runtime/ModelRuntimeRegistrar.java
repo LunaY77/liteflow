@@ -29,11 +29,11 @@ public class ModelRuntimeRegistrar implements SmartInitializingSingleton {
 
             if (Objects.nonNull(beanType) && BaseModel.class.isAssignableFrom(beanType)) {
                 LiteFlowAIModel annotation = beanType.getAnnotation(LiteFlowAIModel.class);
-                String provider = annotation.value() + "_" + beanName;
+                String modelName = annotation.value();
 
-                ModelRuntimeFactory.registerModelProvider(provider, (Class<? extends BaseModel<? extends ModelConfig>>) beanType);
+                ModelRuntimeFactory.registerModelProvider(modelName, (Class<? extends BaseModel<? extends ModelConfig>>) beanType);
 
-                LOG.info("已注册模型运行时: {} -> {}", provider, beanType.getName());
+                LOG.info("已注册模型运行时: {} -> {}", modelName, beanType.getName());
             }
         }
     }
