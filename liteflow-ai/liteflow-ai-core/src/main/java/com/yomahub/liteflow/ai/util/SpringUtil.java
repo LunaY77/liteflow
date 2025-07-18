@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 
@@ -57,6 +58,14 @@ public class SpringUtil implements ApplicationContextAware {
         Class<?>[] genericTypes = (Class[]) Arrays.stream(parameterizedType.getActualTypeArguments()).map((type) -> (Class) type).toArray((x$0) -> new Class[x$0]);
         String[] beanNames = applicationContext.getBeanNamesForType(ResolvableType.forClassWithGenerics(rawType, genericTypes));
         return (T) getBean(beanNames[0], rawType);
+    }
+
+    public static String[] getBeanNamesForAnnotation(Class<? extends Annotation> annotationType) {
+        return applicationContext.getBeanNamesForAnnotation(annotationType);
+    }
+
+    public static Class<?> getType(String name) {
+        return applicationContext.getType(name);
     }
 
 }

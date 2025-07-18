@@ -1,6 +1,8 @@
-package com.yomahub.liteflow.ai.model;
+package com.yomahub.liteflow.ai.model.runtime;
 
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
+import com.yomahub.liteflow.ai.model.BaseModel;
+import com.yomahub.liteflow.ai.model.ModelConfig;
 import com.yomahub.liteflow.ai.util.SpringUtil;
 
 import java.util.Map;
