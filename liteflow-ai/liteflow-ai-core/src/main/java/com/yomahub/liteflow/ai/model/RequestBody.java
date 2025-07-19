@@ -86,6 +86,40 @@ public class RequestBody {
     }
 
     /**
+     * 从请求体中移除指定的键。
+     *
+     * @param key 要移除的键
+     * @return 当前实例
+     */
+    public RequestBody remove(String key) {
+        this.data.remove(key);
+        return this;
+    }
+
+    /**
+     * 从请求体中批量移除指定的键。
+     *
+     * @param keys 要移除的键列表
+     * @return 当前实例
+     */
+    public RequestBody removeBatch(String... keys) {
+        for (String key : keys) {
+            this.data.remove(key);
+        }
+        return this;
+    }
+
+    /**
+     * 清空请求体中的所有数据。
+     *
+     * @return 当前实例
+     */
+    public RequestBody removeAll() {
+        this.data.clear();
+        return this;
+    }
+
+    /**
      * 向请求体中添加一个键值对。
      *
      * @param key   键

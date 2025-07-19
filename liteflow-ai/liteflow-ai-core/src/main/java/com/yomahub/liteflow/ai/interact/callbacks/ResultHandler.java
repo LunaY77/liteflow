@@ -12,6 +12,25 @@ import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
 
 public interface ResultHandler {
 
+    static ResultHandler getDefault() {
+        return new ResultHandler() {
+            @Override
+            public ChatResponse onCompletion(ChatResponse response, ChatContext context) {
+                return response;
+            }
+
+            @Override
+            public ChatResponse onError(ChatResponse response, ChatContext context, Exception e) {
+                return response;
+            }
+
+            @Override
+            public ChatResponse onFinal(ChatResponse response, ChatContext context) {
+                return response;
+            }
+        };
+    }
+
     /**
      * 消息处理完成的回调方法。
      *

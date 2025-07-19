@@ -16,11 +16,11 @@ import java.util.Map;
 
 public class ChatConfig extends ModelConfig {
 
-    private boolean autoToolCallEnabled = true;
+    protected boolean autoToolCallEnabled = true;
 
-    private boolean streaming = true;
+    protected boolean streaming = true;
 
-    private TransportType transportType = TransportType.SSE;
+    protected TransportType transportType = TransportType.SSE;
 
     protected static final String STREAM_KEY = "stream";
 
@@ -60,6 +60,10 @@ public class ChatConfig extends ModelConfig {
         return super.toRequestBody()
                 // 默认流式，如果不需要流式输出，则设置为false
                 .putIf(!streaming, STREAM_KEY, streaming);
+    }
+
+    public static Builder<?> builder() {
+        return new Builder.BuilderImpl();
     }
 
     /**
@@ -110,6 +114,19 @@ public class ChatConfig extends ModelConfig {
         public B transportType(TransportType transportType) {
             this.transportType = transportType;
             return self();
+        }
+
+        private static class BuilderImpl extends Builder<BuilderImpl> {
+            @Override
+            protected BuilderImpl self() {
+                return this;
+            }
+
+            @Override
+            public ChatConfig build() {
+                checkRequiredFields();
+                return new ChatConfig(this);
+            }
         }
     }
 }

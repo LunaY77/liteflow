@@ -11,6 +11,18 @@ import com.yomahub.liteflow.ai.interact.pipeline.ChatContext;
 
 public interface TransportListener {
 
+    static TransportListener getDefault() {
+        return new TransportListener() {
+            @Override
+            public void onStart(ChatContext context) {
+            }
+
+            @Override
+            public void onClose(ChatContext context) {
+            }
+        };
+    }
+
     /**
      * 请求开始时的回调方法
      *

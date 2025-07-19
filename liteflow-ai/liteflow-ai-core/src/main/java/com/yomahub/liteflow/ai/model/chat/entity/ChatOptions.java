@@ -21,17 +21,17 @@ public class ChatOptions implements ModelOptions {
             .enableThinking(false)
             .build();
 
-    private Float temperature;
+    protected Float temperature;
 
-    private Float topP;
+    protected Float topP;
 
-    private Float topK;
+    protected Float topK;
 
-    private Integer maxTokens;
+    protected Integer maxTokens;
 
-    private String seed;
+    protected String seed;
 
-    private Boolean enableThinking;
+    protected Boolean enableThinking;
 
     protected static final String TEMPERATURE_KEY = "options.temperature";
     protected static final String TOP_P_KEY = "options.top_p";
@@ -40,6 +40,12 @@ public class ChatOptions implements ModelOptions {
     protected static final String THINK_KEY = "think";
 
     public ChatOptions() {
+        this.temperature = DEFAULT.temperature;
+        this.topP = DEFAULT.topP;
+        this.topK = DEFAULT.topK;
+        this.maxTokens = DEFAULT.maxTokens;
+        this.seed = DEFAULT.seed;
+        this.enableThinking = DEFAULT.enableThinking;
     }
 
     public ChatOptions(
@@ -58,7 +64,7 @@ public class ChatOptions implements ModelOptions {
         this.enableThinking = enableThinking;
     }
 
-    public ChatOptions(Builder builder) {
+    public ChatOptions(Builder<?> builder) {
         this.temperature = builder.temperature;
         this.topP = builder.topP;
         this.topK = builder.topK;
@@ -125,50 +131,62 @@ public class ChatOptions implements ModelOptions {
         this.enableThinking = enableThinking;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder<?> builder() {
+        return new Builder.BuilderImpl();
     }
 
-    public static class Builder {
-        private Float temperature;
-        private Float topP;
-        private Float topK;
-        private Integer maxTokens;
-        private String seed;
-        private Boolean enableThinking;
+    public static abstract class Builder<B extends Builder<B>> {
+        protected Float temperature;
+        protected Float topP;
+        protected Float topK;
+        protected Integer maxTokens;
+        protected String seed;
+        protected Boolean enableThinking;
 
-        public Builder temperature(Float temperature) {
+        protected abstract B self();
+
+        public abstract ChatOptions build();
+
+        public B temperature(Float temperature) {
             this.temperature = temperature;
-            return this;
+            return self();
         }
 
-        public Builder topP(Float topP) {
+        public B topP(Float topP) {
             this.topP = topP;
-            return this;
+            return self();
         }
 
-        public Builder topK(Float topK) {
+        public B topK(Float topK) {
             this.topK = topK;
-            return this;
+            return self();
         }
 
-        public Builder maxTokens(Integer maxTokens) {
+        public B maxTokens(Integer maxTokens) {
             this.maxTokens = maxTokens;
-            return this;
+            return self();
         }
 
-        public Builder seed(String seed) {
+        public B seed(String seed) {
             this.seed = seed;
-            return this;
+            return self();
         }
 
-        public Builder enableThinking(Boolean enableThinking) {
+        public B enableThinking(Boolean enableThinking) {
             this.enableThinking = enableThinking;
-            return this;
+            return self();
         }
 
-        public ChatOptions build() {
-            return new ChatOptions(temperature, topP, topK, maxTokens, seed, enableThinking);
+        private static class BuilderImpl extends Builder<BuilderImpl> {
+            @Override
+            protected BuilderImpl self() {
+                return this;
+            }
+
+            @Override
+            public ChatOptions build() {
+                return new ChatOptions(this);
+            }
         }
     }
 }

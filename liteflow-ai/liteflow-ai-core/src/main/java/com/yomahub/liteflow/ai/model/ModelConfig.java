@@ -139,6 +139,10 @@ public class ModelConfig implements RequestBodyConvertible {
         this.headersConfig.remove(key);
     }
 
+    public static Builder<?> builder() {
+        return new Builder.BuilderImpl();
+    }
+
     public static abstract class Builder<B extends Builder<B>> {
         protected String apiUrl;
 
@@ -199,5 +203,19 @@ public class ModelConfig implements RequestBodyConvertible {
         }
 
         public abstract ModelConfig build();
+
+        private static class BuilderImpl extends Builder<BuilderImpl> {
+
+            @Override
+            protected BuilderImpl self() {
+                return this;
+            }
+
+            @Override
+            public ModelConfig build() {
+                checkRequiredFields();
+                return new ModelConfig(this);
+            }
+        }
     }
 }

@@ -13,6 +13,35 @@ import com.yomahub.liteflow.ai.interact.protocol.StreamingProtocolChunk;
 
 public interface ChunkCallbackTransformer extends ChunkTransformer {
 
+    static ChunkCallbackTransformer getDefault() {
+        return new ChunkCallbackTransformer() {
+            @Override
+            public String onText(String content, ChatContext context) {
+                return content;
+            }
+
+            @Override
+            public String onThinking(String content, ChatContext context) {
+                return content;
+            }
+
+            @Override
+            public Object onToolsCalling(Object content, ChatContext context) {
+                return content;
+            }
+
+            @Override
+            public Object onUsage(Object content, ChatContext context) {
+                return content;
+            }
+
+            @Override
+            public Object onGrounding(Object content, ChatContext context) {
+                return content;
+            }
+        };
+    }
+
     default StreamingProtocolChunk transform(StreamingProtocolChunk transformedChunk, ChatContext context) {
         switch (transformedChunk.getType()) {
             case TEXT:
