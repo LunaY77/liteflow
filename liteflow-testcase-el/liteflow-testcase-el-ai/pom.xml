@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>liteflow-ai</artifactId>
+        <artifactId>liteflow-testcase-el</artifactId>
         <groupId>com.yomahub</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>liteflow-ai-test</artifactId>
+    <artifactId>liteflow-testcase-el-ai</artifactId>
 
     <dependencies>
         <dependency>
@@ -26,7 +26,7 @@
 
         <dependency>
             <groupId>com.yomahub</groupId>
-            <artifactId>liteflow-ai-model-ollama</artifactId>
+            <artifactId>liteflow-ai-ollama</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

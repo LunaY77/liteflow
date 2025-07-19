@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.model.ollama;
+package com.yomahub.liteflow.test.ai.model.ollama;
 
 import com.yomahub.liteflow.ai.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
