@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.interact.transport.impl;
 
+import okhttp3.Headers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,6 +17,8 @@ import okhttp3.Response;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
+
+import java.util.Map;
 
 /**
  * Sse传输实现，基于Server-Sent Events的非阻塞式传输
@@ -97,9 +100,11 @@ public class SseTransport extends EventSourceListener implements Transport {
 
     private Request buildSseRequest(ChatConfig config, ChatRequest request) {
         String requestBody = buildRequestBody(config, request);
+        Map<String, String> requestHeader = buildRequestHeader(config);
 
         return new Request.Builder()
                 .url(config.resolveUrl())
+                .headers(Headers.of(requestHeader))
                 .addHeader("Accept", "text/event-stream")
                 .addHeader("Cache-Control", "no-cache")
                 .post(okhttp3.RequestBody.create(requestBody, okhttp3.MediaType.parse("application/json")))

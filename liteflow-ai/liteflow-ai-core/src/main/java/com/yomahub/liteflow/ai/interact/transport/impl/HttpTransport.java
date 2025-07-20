@@ -10,6 +10,7 @@ import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.util.HttpUtil;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Http传输实现，阻塞式传输
@@ -35,9 +36,11 @@ public class HttpTransport implements Transport {
                 .build()) {
             // 构建请求体
             String requestBody = buildRequestBody(config, request);
+            // 构建请求头
+            Map<String, String> requestHeader = buildRequestHeader(config);
 
             // 发送HTTP请求
-            String responseBody = httpUtil.post(config.resolveUrl(), requestBody, config.getHeadersConfig());
+            String responseBody = httpUtil.post(config.resolveUrl(), requestBody, requestHeader);
 
             // 处理响应
             return pipeline.processBlocking(responseBody);

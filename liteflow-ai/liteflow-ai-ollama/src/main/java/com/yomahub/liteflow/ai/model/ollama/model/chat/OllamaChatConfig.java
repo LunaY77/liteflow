@@ -26,7 +26,7 @@ public class OllamaChatConfig extends ChatConfig {
             String provider,
             String model,
             Duration timeout,
-            Map<String, String> headersConfig,
+            Map<String, Object> headersConfig,
             boolean autoToolCallEnabled,
             boolean streaming,
             TransportType transportType

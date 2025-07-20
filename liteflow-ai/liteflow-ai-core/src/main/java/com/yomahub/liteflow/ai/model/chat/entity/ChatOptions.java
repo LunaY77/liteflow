@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.model.chat.entity;
 
 import com.yomahub.liteflow.ai.model.ModelOptions;
-import com.yomahub.liteflow.ai.model.RequestBody;
+import com.yomahub.liteflow.ai.util.request.RequestBody;
 
 /**
  * 对话选项配置

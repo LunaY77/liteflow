@@ -5,6 +5,8 @@ import com.yomahub.liteflow.ai.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
 
+import java.util.Map;
+
 /**
  * 数据传输接口
  *
@@ -47,6 +49,16 @@ public interface Transport {
     default String buildRequestBody(ChatConfig config, ChatRequest request) {
         return config.toRequestBody()
                 .merge(request.toRequestBody())
-                .toJsonString();
+                .convert();
+    }
+
+    /**
+     * 构建请求头 Map
+     *
+     * @return 请求头 Map
+     */
+    default Map<String, String> buildRequestHeader(ChatConfig config) {
+        return config.toRequestHeader()
+                .convert();
     }
 }

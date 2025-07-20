@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.model;
+package com.yomahub.liteflow.ai.util.request;
 
 /**
  * 实现该接口的类可以转换为请求体。

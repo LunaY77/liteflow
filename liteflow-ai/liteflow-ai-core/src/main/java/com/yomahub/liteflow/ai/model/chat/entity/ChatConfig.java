@@ -2,7 +2,7 @@ package com.yomahub.liteflow.ai.model.chat.entity;
 
 import com.yomahub.liteflow.ai.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.model.ModelConfig;
-import com.yomahub.liteflow.ai.model.RequestBody;
+import com.yomahub.liteflow.ai.util.request.RequestBody;
 
 import java.time.Duration;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class ChatConfig extends ModelConfig {
             String provider,
             String model,
             Duration timeout,
-            Map<String, String> headersConfig,
+            Map<String, Object> headersConfig,
             boolean autoToolCallEnabled,
             boolean streaming,
             TransportType transportType

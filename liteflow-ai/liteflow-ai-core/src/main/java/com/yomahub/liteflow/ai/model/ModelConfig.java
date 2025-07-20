@@ -1,5 +1,11 @@
 package com.yomahub.liteflow.ai.model;
 
+import cn.hutool.core.util.StrUtil;
+import com.yomahub.liteflow.ai.util.request.RequestBody;
+import com.yomahub.liteflow.ai.util.request.RequestBodyConvertible;
+import com.yomahub.liteflow.ai.util.request.RequestHeader;
+import com.yomahub.liteflow.ai.util.request.RequestHeaderConvertible;
+
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,7 +18,7 @@ import java.util.Objects;
  * @since TODO
  */
 
-public class ModelConfig implements RequestBodyConvertible {
+public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvertible {
 
     protected String apiUrl;
 
@@ -26,9 +32,11 @@ public class ModelConfig implements RequestBodyConvertible {
 
     protected Duration timeout = Duration.ofSeconds(60);
 
-    protected Map<String, String> headersConfig = new LinkedHashMap<>();
+    protected Map<String, Object> headersConfig = new LinkedHashMap<>();
 
     protected static final String MODEL_KEY = "model";
+    protected static final String API_KEY_KEY = "Authorization";
+    protected static final String BEARER_PREFIX = "Bearer ";
 
     public ModelConfig() {
     }
@@ -40,7 +48,7 @@ public class ModelConfig implements RequestBodyConvertible {
             String provider,
             String model,
             Duration timeout,
-            Map<String, String> headersConfig
+            Map<String, Object> headersConfig
     ) {
         this.apiUrl = apiUrl;
         this.endPoint = endPoint;
@@ -65,6 +73,12 @@ public class ModelConfig implements RequestBodyConvertible {
     public RequestBody toRequestBody() {
         return RequestBody.of()
                 .putIfNotNull(MODEL_KEY, model);
+    }
+
+    @Override
+    public RequestHeader toRequestHeader() {
+        return RequestHeader.of(headersConfig)
+                .putIf(StrUtil.isNotBlank(apiKey), API_KEY_KEY, BEARER_PREFIX + apiKey);
     }
 
     /**
@@ -127,7 +141,7 @@ public class ModelConfig implements RequestBodyConvertible {
         this.timeout = timeout;
     }
 
-    public Map<String, String> getHeadersConfig() {
+    public Map<String, Object> getHeadersConfig() {
         return headersConfig;
     }
 
@@ -156,7 +170,7 @@ public class ModelConfig implements RequestBodyConvertible {
 
         protected Duration timeout = Duration.ofSeconds(60);
 
-        protected Map<String, String> headersConfig = new LinkedHashMap<>();
+        protected Map<String, Object> headersConfig = new LinkedHashMap<>();
 
         protected abstract B self();
 
@@ -190,7 +204,7 @@ public class ModelConfig implements RequestBodyConvertible {
             return self();
         }
 
-        public B headersConfig(Map<String, String> headersConfig) {
+        public B headersConfig(Map<String, Object> headersConfig) {
             this.headersConfig = headersConfig;
             return self();
         }

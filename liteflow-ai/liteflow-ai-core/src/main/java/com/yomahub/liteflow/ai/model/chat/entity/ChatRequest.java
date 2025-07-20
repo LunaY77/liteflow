@@ -5,7 +5,7 @@ import com.yomahub.liteflow.ai.interact.callbacks.ResultHandler;
 import com.yomahub.liteflow.ai.interact.pipeline.ChatContext;
 import com.yomahub.liteflow.ai.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.model.ModelRequest;
-import com.yomahub.liteflow.ai.model.RequestBody;
+import com.yomahub.liteflow.ai.util.request.RequestBody;
 import com.yomahub.liteflow.ai.model.chat.message.Message;
 import org.apache.commons.lang3.function.TriFunction;
 
