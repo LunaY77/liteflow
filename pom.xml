@@ -461,7 +461,8 @@
 		<module>liteflow-testcase-el</module>
         <module>liteflow-el-builder</module>
 		<module>liteflow-benchmark</module>
-    </modules>
+		<module>liteflow-ai</module>
+	</modules>
 
 	<distributionManagement>
 		<snapshotRepository>
