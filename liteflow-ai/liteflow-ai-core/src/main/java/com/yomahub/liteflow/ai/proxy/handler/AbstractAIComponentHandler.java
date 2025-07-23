@@ -2,7 +2,7 @@ package com.yomahub.liteflow.ai.proxy.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.enums.AITypeEnum;
+import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;

@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.enums;
+package com.yomahub.liteflow.ai.domain.enums;
 
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.core.NodeSwitchComponent;
