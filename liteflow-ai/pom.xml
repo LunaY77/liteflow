@@ -13,6 +13,7 @@
 
     <modules>
         <module>liteflow-ai-core</module>
+        <module>liteflow-ai-ollama</module>
     </modules>
 
     <artifactId>liteflow-ai</artifactId>

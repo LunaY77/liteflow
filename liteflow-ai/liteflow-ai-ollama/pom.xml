@@ -10,12 +10,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>liteflow-ai-core</artifactId>
+    <artifactId>liteflow-ai-ollama</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.yomahub</groupId>
-            <artifactId>liteflow-spring-boot-starter</artifactId>
+            <artifactId>liteflow-ai-core</artifactId>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
@@ -30,12 +31,7 @@
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
+            <artifactId>langchain4j-ollama</artifactId>
         </dependency>
 
     </dependencies>
