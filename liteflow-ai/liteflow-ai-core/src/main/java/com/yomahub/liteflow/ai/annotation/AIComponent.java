@@ -19,8 +19,19 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface AIComponent {
 
+    /**
+     * AI 厂商 (e.g. openai, ollama, etc.)
+     */
+    String provider() default "";
+
+    /**
+     * 节点 ID
+     */
     String nodeId() default "";
 
+    /**
+     * 节点名称
+     */
     String nodeName() default "";
 
     // --- 连接、鉴权参数 ---

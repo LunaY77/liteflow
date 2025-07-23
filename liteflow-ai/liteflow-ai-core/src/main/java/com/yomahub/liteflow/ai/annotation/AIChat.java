@@ -17,11 +17,6 @@ import java.lang.annotation.Target;
 public @interface AIChat {
 
     /**
-     * AI 厂商 (e.g. openai, ollama, etc.)
-     */
-    String provider() default "";
-
-    /**
      * 系统提示词
      */
     String systemPrompt() default "你是一个意图分类助手";
