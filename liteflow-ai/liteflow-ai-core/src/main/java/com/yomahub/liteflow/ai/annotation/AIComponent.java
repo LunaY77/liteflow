@@ -17,4 +17,6 @@ import java.lang.annotation.Target;
 public @interface AIComponent {
 
     String nodeId() default "";
+
+    String nodeName() default "";
 }
