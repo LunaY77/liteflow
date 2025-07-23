@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.wrap;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
+import com.yomahub.liteflow.ai.config.ModelConfig;
 
 import java.lang.annotation.Annotation;
 
@@ -13,35 +14,47 @@ import java.lang.annotation.Annotation;
 
 public class AIProxyWrapBean<T extends Annotation> {
 
-    protected AIComponent aiComponent;
+    private AIComponent aiComponent;
 
-    protected T annotation;
+    private ModelConfig config;
 
-    protected Class<?> interfaceClass;
+    private String nodeId;
 
-    protected String beanName;
+    private String nodeName;
+
+    private T annotation;
+
+    private Class<?> interfaceClass;
+
+    private String beanName;
 
     public AIProxyWrapBean() {
     }
 
     public AIProxyWrapBean(AIComponent aiComponent, T annotation,
                            Class<?> interfaceClass, String beanName) {
-        this.aiComponent = aiComponent;
+        this.config = ModelConfig.fromAnnotation(aiComponent);
+        this.nodeId = aiComponent.nodeId();
+        this.nodeName = aiComponent.nodeName();
         this.annotation = annotation;
         this.interfaceClass = interfaceClass;
         this.beanName = beanName;
     }
 
+    public AIComponent getAiComponent() {
+        return aiComponent;
+    }
+
     public String getNodeId() {
-        return aiComponent.nodeId();
+        return nodeId;
     }
 
     public String getNodeName() {
-        return aiComponent.nodeName();
+        return nodeName;
     }
 
-    public AIComponent getAiComponent() {
-        return aiComponent;
+    public ModelConfig getConfig() {
+        return config;
     }
 
     public T getAnnotation() {
@@ -58,6 +71,18 @@ public class AIProxyWrapBean<T extends Annotation> {
 
     public void setAiComponent(AIComponent aiComponent) {
         this.aiComponent = aiComponent;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+    public void setConfig(ModelConfig config) {
+        this.config = config;
     }
 
     public void setAnnotation(T annotation) {
