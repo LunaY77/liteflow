@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.exception.ProxyException;
 import com.yomahub.liteflow.log.LFLog;
@@ -136,8 +137,8 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
                     .getLoaded()
                     .newInstance();
 
-            nodeComponent.setNodeId(wrapBean.getNodeId());
-            nodeComponent.setName(wrapBean.getNodeName());
+            SetUtil.setIfPresent(nodeComponent::setNodeId, wrapBean.getNodeId());
+            SetUtil.setIfPresent(nodeComponent::setName, wrapBean.getNodeName());
 
             LOG.info("Created AI component: {}, beanName: {}, type: {}",
                     nodeComponent.getNodeId(), wrapBean.getBeanName(), aiType);
