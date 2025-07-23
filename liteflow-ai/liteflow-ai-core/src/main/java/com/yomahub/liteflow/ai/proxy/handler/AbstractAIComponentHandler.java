@@ -158,7 +158,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
     private String generateProxyClassName(AIProxyWrapBean<T> wrapBean) {
         return StrUtil.format("{}$ByteBuddy${}${}",
                 wrapBean.getInterfaceClass().getName(),
-                wrapBean.getAiComponent().nodeId(),
+                wrapBean.getNodeId(),
                 SerialsUtil.generateShortUUID());
     }
 

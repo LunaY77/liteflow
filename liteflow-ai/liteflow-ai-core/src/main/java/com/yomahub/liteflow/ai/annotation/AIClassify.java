@@ -23,7 +23,7 @@ public @interface AIClassify {
     /**
      * 系统提示词
      */
-    String systemPrompt() default "";
+    String systemPrompt() default "你是一个意图分类助手";
 
     /**
      * 用户提示词
