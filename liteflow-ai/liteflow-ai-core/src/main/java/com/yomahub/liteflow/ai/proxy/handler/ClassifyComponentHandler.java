@@ -2,7 +2,7 @@ package com.yomahub.liteflow.ai.proxy.handler;
 
 import com.yomahub.liteflow.ai.annotation.AIClassify;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.enums.AITypeEnum;
+import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.ClassifyAIInvocationHandler;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 import net.bytebuddy.description.method.MethodDescription;

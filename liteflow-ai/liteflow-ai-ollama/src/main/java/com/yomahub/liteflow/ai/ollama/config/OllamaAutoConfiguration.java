@@ -1,6 +1,6 @@
-package com.yomahub.liteflow.ai.config;
+package com.yomahub.liteflow.ai.ollama.config;
 
-import com.yomahub.liteflow.ai.proxy.AIComponentPostProcessor;
+import com.yomahub.liteflow.ai.ollama.model.OllamaModelProvider;
 import com.yomahub.liteflow.springboot.config.LiteflowMainAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @AutoConfigureBefore({ LiteflowMainAutoConfiguration.class })
-public class LiteflowAIAutoConfiguration {
+public class OllamaAutoConfiguration {
 
     @Bean
-    public AIComponentPostProcessor aiComponentPostProcessor() {
-        return new AIComponentPostProcessor();
+    public OllamaModelProvider ollamaModelProvider() {
+        return new OllamaModelProvider();
     }
 }
