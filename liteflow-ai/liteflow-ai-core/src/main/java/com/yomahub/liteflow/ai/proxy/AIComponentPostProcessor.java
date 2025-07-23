@@ -1,13 +1,13 @@
 package com.yomahub.liteflow.ai.proxy;
 
+import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
+import com.yomahub.liteflow.process.holder.SpringNodeIdHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
-
-import java.util.Objects;
 
 /**
  * AI组件后置处理器
@@ -38,16 +38,12 @@ public class AIComponentPostProcessor implements BeanPostProcessor, Ordered {
                 // 使用工厂创建AI组件
                 NodeComponent aiComponent = aiComponentFactory.createAIComponent(clazz, beanName);
 
-                if (Objects.nonNull(aiComponent)) {
-                    LOG.info("Successfully created AI component for interface: {}, replacing bean: {}",
-                            clazz.getName(), beanName);
-                    return aiComponent;
-                } else {
-                    LOG.warn("Failed to create AI component for interface: {}, returning original bean",
-                            clazz.getName());
-                    return bean;
-                }
+                LOG.info("AI proxy component[{}] has been created for interface: {}", beanName, clazz.getName());
 
+                String nodeId = StrUtil.isNotBlank(aiComponent.getNodeId()) ? aiComponent.getNodeId() : SpringNodeIdHolder.getRealBeanName(clazz, beanName);
+                SpringNodeIdHolder.add(nodeId);
+
+                return aiComponent;
             } catch (Exception e) {
                 LOG.error("Error creating AI component for interface: {}, beanName: {}",
                         clazz.getName(), beanName, e);

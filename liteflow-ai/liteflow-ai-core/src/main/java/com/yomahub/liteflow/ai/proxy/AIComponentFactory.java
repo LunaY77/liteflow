@@ -64,9 +64,6 @@ public class AIComponentFactory {
      * @return NodeComponent实例，如果不是AI组件则返回null
      */
     public NodeComponent createAIComponent(Class<?> interfaceClass, String beanName) {
-        LOG.info("Attempting to create AI component for interface: {}, beanName: {}",
-                interfaceClass.getName(), beanName);
-
         // 检查是否是AI组件
         AIComponent aiComponent = interfaceClass.getAnnotation(AIComponent.class);
         if (Objects.isNull(aiComponent)) {
