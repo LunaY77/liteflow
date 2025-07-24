@@ -15,13 +15,13 @@ import java.lang.reflect.Method;
  * @since TODO
  */
 
-public abstract class AbstractAIInvocationHandler implements InvocationHandler {
+public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> implements InvocationHandler {
 
     protected final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
 
-    protected AIProxyWrapBean<?> wrapBean;
+    protected T wrapBean;
 
-    public AbstractAIInvocationHandler(AIProxyWrapBean<?> wrapBean) {
+    public AbstractAIInvocationHandler(T wrapBean) {
         this.wrapBean = wrapBean;
     }
 

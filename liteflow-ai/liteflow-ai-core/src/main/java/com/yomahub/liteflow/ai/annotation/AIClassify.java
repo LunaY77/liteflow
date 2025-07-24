@@ -15,10 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface AIClassify {
-    /**
-     * AI 厂商 (e.g. openai, ollama, etc.)
-     */
-    String provider() default "";
 
     /**
      * 系统提示词

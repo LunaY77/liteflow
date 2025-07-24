@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
-import com.yomahub.liteflow.ai.annotation.AIRetrieval;
-import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.proxy.wrap.RetrievalProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
 
 /**
@@ -11,9 +10,9 @@ import com.yomahub.liteflow.core.NodeComponent;
  * @since TODO
  */
 
-public class RetrievalAIInvocationHandler extends AbstractAIInvocationHandler {
+public class RetrievalAIInvocationHandler extends AbstractAIInvocationHandler<RetrievalProxyWrapBean> {
 
-    public RetrievalAIInvocationHandler(AIProxyWrapBean<AIRetrieval> wrapBean) {
+    public RetrievalAIInvocationHandler(RetrievalProxyWrapBean wrapBean) {
         super(wrapBean);
     }
 

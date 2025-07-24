@@ -5,6 +5,7 @@ import com.yomahub.liteflow.ai.annotation.AIRetrieval;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.RetrievalAIInvocationHandler;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.proxy.wrap.RetrievalProxyWrapBean;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.matcher.ElementMatcher;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -35,12 +36,12 @@ public class RetrievalComponentHandler extends AbstractAIComponentHandler<AIRetr
     @Override
     protected AIProxyWrapBean<AIRetrieval> createWrapBean(AIComponent aiComponent, AIRetrieval annotation,
                                                           Class<?> interfaceClass, String beanName) {
-        return new AIProxyWrapBean<>(aiComponent, annotation, interfaceClass, beanName);
+        return new RetrievalProxyWrapBean(aiComponent, annotation, interfaceClass, beanName);
     }
 
     @Override
     protected InvocationHandler getInvocationHandler(AIProxyWrapBean<AIRetrieval> wrapBean) {
-        return new RetrievalAIInvocationHandler(wrapBean);
+        return new RetrievalAIInvocationHandler((RetrievalProxyWrapBean) wrapBean);
     }
 
     @Override

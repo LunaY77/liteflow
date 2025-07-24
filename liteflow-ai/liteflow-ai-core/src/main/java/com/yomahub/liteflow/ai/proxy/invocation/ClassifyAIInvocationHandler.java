@@ -1,8 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
-import com.yomahub.liteflow.ai.annotation.AIClassify;
 import com.yomahub.liteflow.ai.model.ModelFactory;
-import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.proxy.wrap.ClassifyProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
 import dev.langchain4j.model.chat.ChatModel;
 
@@ -13,15 +12,14 @@ import dev.langchain4j.model.chat.ChatModel;
  * @since TODO
  */
 
-public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler {
+public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<ClassifyProxyWrapBean> {
 
-    public ClassifyAIInvocationHandler(AIProxyWrapBean<AIClassify> wrapBean) {
+    public ClassifyAIInvocationHandler(ClassifyProxyWrapBean wrapBean) {
         super(wrapBean);
     }
 
     @Override
     protected Object executeAIProcess(NodeComponent nodeComponent, Object[] args) {
-        AIClassify aiClassifyAnno = (AIClassify) wrapBean.getAnnotation();
 
         ChatModel chatModel = ModelFactory.getChatModel(wrapBean.getConfig());
 
