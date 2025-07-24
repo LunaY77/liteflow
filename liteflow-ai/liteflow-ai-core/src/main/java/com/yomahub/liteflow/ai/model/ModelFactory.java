@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.model;
 
-import com.yomahub.liteflow.ai.config.ModelConfig;
+import com.yomahub.liteflow.ai.domain.ModelConfig;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;

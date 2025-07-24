@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.model;
 
-import com.yomahub.liteflow.ai.config.ModelConfig;
+import com.yomahub.liteflow.ai.domain.ModelConfig;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;

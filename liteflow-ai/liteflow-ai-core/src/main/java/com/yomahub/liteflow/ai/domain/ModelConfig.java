@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.config;
+package com.yomahub.liteflow.ai.domain;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.util.KeyValue;

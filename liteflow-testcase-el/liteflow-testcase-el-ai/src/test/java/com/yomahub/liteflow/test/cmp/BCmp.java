@@ -1,4 +1,4 @@
-package com.yonahub.liteflow.test.cmp;
+package com.yomahub.liteflow.test.cmp;
 
 import com.yomahub.liteflow.core.NodeComponent;
 import org.springframework.stereotype.Component;
