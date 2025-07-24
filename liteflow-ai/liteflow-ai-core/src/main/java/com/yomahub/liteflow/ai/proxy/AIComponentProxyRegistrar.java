@@ -4,9 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.proxy.annotation.EnableAIComponent;
+import com.yomahub.liteflow.ai.proxy.holder.AIComponentHolder;
 import com.yomahub.liteflow.core.NodeComponent;
-import com.yomahub.liteflow.enums.NodeTypeEnum;
-import com.yomahub.liteflow.flow.FlowBus;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
 import com.yomahub.liteflow.process.holder.SpringNodeIdHolder;
@@ -25,7 +24,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * TODO
+ * AI 组件发现与注册器(注册到 Spring 容器)
  *
  * @author 苍镜月
  * @since TODO
@@ -100,9 +99,8 @@ public class AIComponentProxyRegistrar implements ImportBeanDefinitionRegistrar 
             LOG.info("AI proxy component[{}] has been created for interface: {}", beanName, clazz.getName());
 
             String nodeId = StrUtil.isNotBlank(aiComponent.getNodeId()) ? aiComponent.getNodeId() : SpringNodeIdHolder.getRealBeanName(clazz, beanName);
-            SpringNodeIdHolder.add(nodeId);
 
-            FlowBus.addNode(nodeId, aiComponent.getName(), NodeTypeEnum.COMMON, aiComponent.getClass());
+            AIComponentHolder.addAIComponent(nodeId, aiComponent);
 
             return aiComponent;
         } catch (Exception e) {
