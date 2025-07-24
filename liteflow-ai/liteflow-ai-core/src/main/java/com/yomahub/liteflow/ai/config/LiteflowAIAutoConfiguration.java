@@ -15,8 +15,4 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore({ LiteflowMainAutoConfiguration.class })
 public class LiteflowAIAutoConfiguration {
 
-//    @Bean
-//    public static AIComponentPostProcessor aiComponentPostProcessor() {
-//        return new AIComponentPostProcessor();
-//    }
 }
