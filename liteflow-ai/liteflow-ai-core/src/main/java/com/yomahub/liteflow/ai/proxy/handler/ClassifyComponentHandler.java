@@ -5,6 +5,7 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.ClassifyAIInvocationHandler;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.proxy.wrap.ClassifyProxyWrapBean;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.matcher.ElementMatcher;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -35,12 +36,12 @@ public class ClassifyComponentHandler extends AbstractAIComponentHandler<AIClass
     @Override
     protected AIProxyWrapBean<AIClassify> createWrapBean(AIComponent aiComponent, AIClassify annotation,
                                                          Class<?> interfaceClass, String beanName) {
-        return new AIProxyWrapBean<>(aiComponent, annotation, interfaceClass, beanName);
+        return new ClassifyProxyWrapBean(aiComponent, annotation, interfaceClass, beanName);
     }
 
     @Override
     protected InvocationHandler getInvocationHandler(AIProxyWrapBean<AIClassify> wrapBean) {
-        return new ClassifyAIInvocationHandler(wrapBean);
+        return new ClassifyAIInvocationHandler((ClassifyProxyWrapBean) wrapBean);
     }
 
     @Override

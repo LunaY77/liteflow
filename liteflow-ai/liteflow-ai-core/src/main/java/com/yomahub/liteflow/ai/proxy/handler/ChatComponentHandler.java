@@ -5,6 +5,7 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.ChatAIInvocationHandler;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.matcher.ElementMatcher;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -35,12 +36,12 @@ public class ChatComponentHandler extends AbstractAIComponentHandler<AIChat> {
     @Override
     protected AIProxyWrapBean<AIChat> createWrapBean(AIComponent aiComponent, AIChat annotation,
                                                      Class<?> interfaceClass, String beanName) {
-        return new AIProxyWrapBean<>(aiComponent, annotation, interfaceClass, beanName);
+        return new ChatProxyWrapBean(aiComponent, annotation, interfaceClass, beanName);
     }
 
     @Override
     protected InvocationHandler getInvocationHandler(AIProxyWrapBean<AIChat> wrapBean) {
-        return new ChatAIInvocationHandler(wrapBean);
+        return new ChatAIInvocationHandler((ChatProxyWrapBean) wrapBean);
     }
 
     @Override

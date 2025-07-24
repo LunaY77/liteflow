@@ -1,8 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
-import com.yomahub.liteflow.ai.annotation.AIChat;
 import com.yomahub.liteflow.ai.model.ModelFactory;
-import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
@@ -14,16 +13,15 @@ import dev.langchain4j.model.chat.StreamingChatModel;
  * @since TODO
  */
 
-public class ChatAIInvocationHandler extends AbstractAIInvocationHandler {
+public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatProxyWrapBean> {
 
-    public ChatAIInvocationHandler(AIProxyWrapBean<AIChat> wrapBean) {
+    public ChatAIInvocationHandler(ChatProxyWrapBean wrapBean) {
         super(wrapBean);
     }
 
     @Override
     protected Void executeAIProcess(NodeComponent nodeComponent, Object[] args) {
-        AIChat aiChatAnno = (AIChat) wrapBean.getAnnotation();
-        if (aiChatAnno.streaming()) {
+        if (wrapBean.isStreaming()) {
             return processStreaming(nodeComponent, args);
         } else {
             return processBlocking(nodeComponent, args);

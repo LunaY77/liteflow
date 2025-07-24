@@ -6,38 +6,34 @@ import com.yomahub.liteflow.ai.config.ModelConfig;
 import java.lang.annotation.Annotation;
 
 /**
- * TODO
+ * AI节点包装 Bean
  *
  * @author 苍镜月
  * @since TODO
  */
 
-public class AIProxyWrapBean<T extends Annotation> {
+public abstract class AIProxyWrapBean<T extends Annotation> {
 
-    private AIComponent aiComponent;
+    protected AIComponent aiComponent;
 
-    private ModelConfig config;
+    protected ModelConfig config;
 
-    private String nodeId;
+    protected String nodeId;
 
-    private String nodeName;
+    protected String nodeName;
 
-    private T annotation;
+    protected Class<?> interfaceClass;
 
-    private Class<?> interfaceClass;
-
-    private String beanName;
+    protected String beanName;
 
     public AIProxyWrapBean() {
     }
 
-    public AIProxyWrapBean(AIComponent aiComponent, T annotation,
-                           Class<?> interfaceClass, String beanName) {
+    public AIProxyWrapBean(AIComponent aiComponent, Class<?> interfaceClass, String beanName) {
         this.aiComponent = aiComponent;
         this.config = ModelConfig.fromAnnotation(aiComponent);
         this.nodeId = aiComponent.nodeId();
         this.nodeName = aiComponent.nodeName();
-        this.annotation = annotation;
         this.interfaceClass = interfaceClass;
         this.beanName = beanName;
     }
@@ -56,10 +52,6 @@ public class AIProxyWrapBean<T extends Annotation> {
 
     public ModelConfig getConfig() {
         return config;
-    }
-
-    public T getAnnotation() {
-        return annotation;
     }
 
     public Class<?> getInterfaceClass() {
@@ -84,10 +76,6 @@ public class AIProxyWrapBean<T extends Annotation> {
 
     public void setConfig(ModelConfig config) {
         this.config = config;
-    }
-
-    public void setAnnotation(T annotation) {
-        this.annotation = annotation;
     }
 
     public void setInterfaceClass(Class<?> interfaceClass) {

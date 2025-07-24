@@ -1,5 +1,7 @@
 package com.yomahub.liteflow.ai.context;
 
+import java.util.UUID;
+
 /**
  * chat 上下文
  *
@@ -15,8 +17,8 @@ public class ChatContext {
 
     public ChatContext() {}
 
-    public ChatContext(String chatId, StreamHandler streamHandler) {
-        this.chatId = chatId;
+    public ChatContext(StreamHandler streamHandler) {
+        this.chatId = "chat_" + UUID.randomUUID();
         this.streamHandler = streamHandler;
     }
 
