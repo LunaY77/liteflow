@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.wrap;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.config.ModelConfig;
+import com.yomahub.liteflow.ai.domain.ModelConfig;
 
 import java.lang.annotation.Annotation;
 

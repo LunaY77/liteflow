@@ -27,9 +27,22 @@ public class AIComponentFactory {
 
     private final Map<Class<? extends Annotation>, AbstractAIComponentHandler<?>> handlerMap;
 
-    public AIComponentFactory() {
+    private AIComponentFactory() {
         this.handlerMap = new HashMap<>();
         initializeHandlers();
+    }
+
+    private static class Holder {
+        private static final AIComponentFactory INSTANCE = new AIComponentFactory();
+    }
+
+    /**
+     * 获取AIComponentFactory单例实例
+     *
+     * @return AIComponentFactory实例
+     */
+    public static AIComponentFactory getInstance() {
+        return Holder.INSTANCE;
     }
 
     /**
@@ -114,29 +127,32 @@ public class AIComponentFactory {
     }
 
     /**
-     * 判断是否是AI组件接口
+     * 判断是否是AI组件，通过检查是否实现了唯一标识的接口
      *
-     * @param interfaceClass 接口类
-     * @return true如果是AI组件
+     * @param clazz 类
+     * @return 如果是AI组件
      */
-    public boolean isAIComponent(Class<?> interfaceClass) {
-        if (!interfaceClass.isInterface()) {
-            return false;
-        }
+    public boolean isAIComponent(Class<?> clazz) {
+        // 判断是否实现了唯一标识 ProxyMetadataAware 接口
+        return ProxyInterfaceAware.class.isAssignableFrom(clazz);
+    }
 
+    /**
+     * 检查类是否被AI注解标记
+     *
+     * @param clazz 类
+     * @return 如果类被AIComponent注解标记，并且至少有一个支持的AI注解
+     */
+    public boolean isAIAnnotated(Class<?> clazz) {
         // 检查是否有AIComponent注解
-        if (!interfaceClass.isAnnotationPresent(AIComponent.class)) {
+        if (!clazz.isAnnotationPresent(AIComponent.class)) {
             return false;
         }
 
-        // 检查是否有任何支持的AI注解
-        for (Class<? extends Annotation> annotationType : handlerMap.keySet()) {
-            if (interfaceClass.isAnnotationPresent(annotationType)) {
-                return true;
-            }
-        }
-
-        return false;
+        // 检查是否只有一个支持的AI注解
+        return handlerMap.keySet().stream()
+                .filter(clazz::isAnnotationPresent)
+                .count() == 1;
     }
 
     /**

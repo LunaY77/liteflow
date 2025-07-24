@@ -1,1 +1,2 @@
-com.yomahub.liteflow.ai.config.LiteflowAIAutoConfiguration
+com.yomahub.liteflow.ai.config.LiteFlowAIAutoConfiguration
+com.yomahub.liteflow.ai.config.LiteFlowAIPropertyAutoConfiguration

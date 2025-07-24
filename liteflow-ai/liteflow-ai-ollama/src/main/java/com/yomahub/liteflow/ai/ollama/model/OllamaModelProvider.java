@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.ollama.model;
 
-import com.yomahub.liteflow.ai.config.ModelConfig;
+import com.yomahub.liteflow.ai.domain.ModelConfig;
 import com.yomahub.liteflow.ai.domain.constant.ProviderName;
 import com.yomahub.liteflow.ai.model.ModelProviderRegistrar;
 import dev.langchain4j.model.chat.ChatModel;

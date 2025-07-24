@@ -1,6 +1,5 @@
-package com.yonahub.liteflow.test;
+package com.yomahub.liteflow.test;
 
-import com.yomahub.liteflow.ai.proxy.annotation.EnableAIComponent;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import org.junit.jupiter.api.Assertions;
@@ -19,11 +18,10 @@ import javax.annotation.Resource;
  * @since TODO
  */
 
-@TestPropertySource(value = "classpath:application.properties")
+@TestPropertySource(value = "classpath:application.yaml")
 @SpringBootTest(classes = {ProxyTest.class})
 @EnableAutoConfiguration
-@ComponentScan({"com.yonahub.liteflow.test.cmp"})
-@EnableAIComponent({"com.yonahub.liteflow.test.cmp"})
+@ComponentScan({"com.yomahub.liteflow.test.cmp"})
 public class ProxyTest {
 
     @Resource
