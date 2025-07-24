@@ -1,9 +1,7 @@
 package com.yomahub.liteflow.ai.config;
 
-import com.yomahub.liteflow.ai.proxy.AIComponentPostProcessor;
 import com.yomahub.liteflow.springboot.config.LiteflowMainAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -17,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore({ LiteflowMainAutoConfiguration.class })
 public class LiteflowAIAutoConfiguration {
 
-    @Bean
-    public AIComponentPostProcessor aiComponentPostProcessor() {
-        return new AIComponentPostProcessor();
-    }
+//    @Bean
+//    public static AIComponentPostProcessor aiComponentPostProcessor() {
+//        return new AIComponentPostProcessor();
+//    }
 }

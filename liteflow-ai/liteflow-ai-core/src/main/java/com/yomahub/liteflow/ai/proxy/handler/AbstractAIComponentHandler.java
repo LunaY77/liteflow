@@ -133,7 +133,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
                     .intercept(InvocationHandlerAdapter.of(getInvocationHandler(wrapBean)))
                     .annotateType(wrapBean.getAiComponent(), wrapBean.getAnnotation())
                     .make()
-                    .load(this.getClass().getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
+                    .load(this.getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
                     .getLoaded()
                     .newInstance();
 
