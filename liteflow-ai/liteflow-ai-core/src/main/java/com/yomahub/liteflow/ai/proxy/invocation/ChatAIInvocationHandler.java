@@ -39,6 +39,7 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler {
     private Void processBlocking(NodeComponent nodeComponent, Object[] args) {
         ChatModel chatModel = ModelFactory.getChatModel(wrapBean.getConfig());
 
+        LOG.info("Processing chat request with model: {}", chatModel.getClass().getSimpleName());
         return null;
     }
 }

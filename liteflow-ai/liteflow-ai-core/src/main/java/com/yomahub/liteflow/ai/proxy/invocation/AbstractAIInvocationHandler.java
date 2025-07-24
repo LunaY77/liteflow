@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 
 public abstract class AbstractAIInvocationHandler implements InvocationHandler {
 
-    private final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
+    protected final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
 
     protected AIProxyWrapBean<?> wrapBean;
 

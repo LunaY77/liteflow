@@ -33,6 +33,7 @@ public class AIProxyWrapBean<T extends Annotation> {
 
     public AIProxyWrapBean(AIComponent aiComponent, T annotation,
                            Class<?> interfaceClass, String beanName) {
+        this.aiComponent = aiComponent;
         this.config = ModelConfig.fromAnnotation(aiComponent);
         this.nodeId = aiComponent.nodeId();
         this.nodeName = aiComponent.nodeName();
