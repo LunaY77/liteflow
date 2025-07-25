@@ -1,5 +1,8 @@
 package com.yomahub.liteflow.ai.config;
 
+import com.yomahub.liteflow.ai.parse.anno.ChatAnnotationProcessor;
+import com.yomahub.liteflow.ai.parse.anno.ClassifyAnnotationProcessor;
+import com.yomahub.liteflow.ai.parse.anno.RetrievalAnnotationProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentBeanPostProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentProxyRegistrar;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,6 +26,21 @@ public class LiteFlowAIAutoConfiguration {
     @Bean
     public AIComponentBeanPostProcessor aiComponentPostProcessor() {
         return new AIComponentBeanPostProcessor();
+    }
+
+    @Bean
+    public ChatAnnotationProcessor chatAnnotationProcessor() {
+        return new ChatAnnotationProcessor();
+    }
+
+    @Bean
+    public ClassifyAnnotationProcessor classifyAnnotationProcessor() {
+        return new ClassifyAnnotationProcessor();
+    }
+
+    @Bean
+    public RetrievalAnnotationProcessor retrievalAnnotationProcessor() {
+        return new RetrievalAnnotationProcessor();
     }
 
 }
