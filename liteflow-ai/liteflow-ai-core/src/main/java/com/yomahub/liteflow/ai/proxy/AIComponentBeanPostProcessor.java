@@ -8,7 +8,6 @@ import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.core.Ordered;
 
 import java.util.Objects;
 
@@ -19,7 +18,7 @@ import java.util.Objects;
  * @author 苍镜月
  * @since TODO
  */
-public class AIComponentBeanPostProcessor implements BeanPostProcessor, Ordered {
+public class AIComponentBeanPostProcessor implements BeanPostProcessor {
 
     private static final LFLog LOG = LFLoggerManager.getLogger(AIComponentBeanPostProcessor.class);
 
@@ -69,10 +68,5 @@ public class AIComponentBeanPostProcessor implements BeanPostProcessor, Ordered 
         }
 
         return bean;
-    }
-
-    @Override
-    public int getOrder() {
-        return -100;
     }
 }
