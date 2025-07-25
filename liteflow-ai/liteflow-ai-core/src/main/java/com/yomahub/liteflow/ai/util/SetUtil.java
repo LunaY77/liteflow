@@ -29,6 +29,19 @@ public class SetUtil {
     }
 
     /**
+     * 如果给定的值为 null 或 "空" 或 默认值，则调用消费者。
+     *
+     * @param consumer 要执行的操作。
+     * @param value    要检查的值。
+     * @param <T>      值的类型。
+     */
+    public static <T> void setIfNotPresent(Consumer<T> consumer, T value) {
+        if (isNullOrEmptyOrDefault(value)) {
+            consumer.accept(value);
+        }
+    }
+
+    /**
      * 检查给定的对象是否为 null 或 "空" 或 默认值
      * 如果一个对象是 String、Collection、Map 或数组，且其元素个数或长度为零，
      * 那么它被认为是"空"的。

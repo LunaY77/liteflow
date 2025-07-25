@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.proxy;
 
+import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.log.LFLog;
@@ -9,10 +10,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.*;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
@@ -98,13 +96,17 @@ public class AIComponentProxyRegistrar implements BeanDefinitionRegistryPostProc
                     builder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
 
                     // 将 BeanDefinition 注册到 Spring 容器中
-                    String beanName = StringUtils.uncapitalize(interfaceClass.getSimpleName());
+                    // NodeId 与 BeanName 保持一致
+                    AIComponent anno = interfaceClass.getAnnotation(AIComponent.class);
+                    String beanName = StrUtil.isNotBlank(anno.nodeId()) ? anno.nodeId() : StringUtils.uncapitalize(interfaceClass.getSimpleName());
                     registry.registerBeanDefinition(beanName, builder.getBeanDefinition());
 
                     LOG.info("Detected AI component interface: {}, registered as BeanDefinition with name: {}",
                             interfaceClassName, beanName);
                 } catch (ClassNotFoundException e) {
                     throw new LiteFlowAIException("Failed to find AI component interface class", e);
+                } catch (BeanDefinitionOverrideException e) {
+                    throw new LiteFlowAIException("bean name conflicts with existing bean definition", e);
                 }
             }
         }
