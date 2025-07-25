@@ -6,7 +6,6 @@ import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.flow.FlowBus;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
-import com.yomahub.liteflow.process.holder.SpringNodeIdHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
@@ -57,7 +56,7 @@ public class AIComponentBeanPostProcessor implements BeanPostProcessor, Ordered 
 
                 LOG.info("AI proxy component[{}] has been created for interface: {}", beanName, interfaceClass.getName());
 
-                String nodeId = StrUtil.isNotBlank(aiComponent.getNodeId()) ? aiComponent.getNodeId() : SpringNodeIdHolder.getRealBeanName(interfaceClass, beanName);
+                String nodeId = StrUtil.isNotBlank(aiComponent.getNodeId()) ? aiComponent.getNodeId() : beanName;
                 // 注册到FlowBus中（LiteFlow容器）
                 FlowBus.addManagedNode(nodeId, aiComponent);
 
