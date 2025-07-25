@@ -14,7 +14,7 @@ import java.lang.annotation.Annotation;
 
 public abstract class AIProxyWrapBean<T extends Annotation> {
 
-    protected AIComponent aiComponent;
+    protected T annotation;
 
     protected ModelConfig config;
 
@@ -30,7 +30,6 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
     }
 
     public AIProxyWrapBean(AIComponent aiComponent, Class<?> interfaceClass, String beanName) {
-        this.aiComponent = aiComponent;
         this.config = ModelConfig.fromAnnotation(aiComponent);
         this.nodeId = aiComponent.nodeId();
         this.nodeName = aiComponent.nodeName();
@@ -38,8 +37,12 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
         this.beanName = beanName;
     }
 
-    public AIComponent getAiComponent() {
-        return aiComponent;
+    public T getAnnotation() {
+        return annotation;
+    }
+    
+    public void setAnnotation(T annotation) {
+        this.annotation = annotation;
     }
 
     public String getNodeId() {
@@ -60,10 +63,6 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
 
     public String getBeanName() {
         return beanName;
-    }
-
-    public void setAiComponent(AIComponent aiComponent) {
-        this.aiComponent = aiComponent;
     }
 
     public void setNodeId(String nodeId) {

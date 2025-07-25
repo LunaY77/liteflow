@@ -23,7 +23,7 @@ public class SetUtil {
      * @param <T>      值的类型。
      */
     public static <T> void setIfPresent(Consumer<T> consumer, T value) {
-        if (!isNullOrEmptyOrDefault(value)) {
+        if (!isPresent(value)) {
             consumer.accept(value);
         }
     }
@@ -36,7 +36,7 @@ public class SetUtil {
      * @param <T>      值的类型。
      */
     public static <T> void setIfNotPresent(Consumer<T> consumer, T value) {
-        if (isNullOrEmptyOrDefault(value)) {
+        if (isPresent(value)) {
             consumer.accept(value);
         }
     }
@@ -50,7 +50,7 @@ public class SetUtil {
      * @param value 要检查的对象。
      * @return 如果对象为 null 或 “空” 或 默认值，则返回 true，否则返回 false。
      */
-    private static boolean isNullOrEmptyOrDefault(Object value) {
+    public static boolean isPresent(Object value) {
         if (Objects.isNull(value)) {
             return true;
         } else if (value instanceof Collection) {

@@ -30,7 +30,7 @@ public class ClassifyProxyWrapBean extends AIProxyWrapBean<AIClassify> {
     public ClassifyProxyWrapBean(AIComponent aiComponent, AIClassify annotation,
                              Class<?> interfaceClass, String beanName) {
         super(aiComponent, interfaceClass, beanName);
-        // TODO anno
+        this.annotation = annotation;
     }
 
     public String getSystemPrompt() {
@@ -47,5 +47,21 @@ public class ClassifyProxyWrapBean extends AIProxyWrapBean<AIClassify> {
 
     public boolean isMultiLabel() {
         return multiLabel;
+    }
+
+    public void setSystemPrompt(String systemPrompt) {
+        this.systemPrompt = systemPrompt;
+    }
+
+    public void setUserPrompt(String userPrompt) {
+        this.userPrompt = userPrompt;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public void setMultiLabel(boolean multiLabel) {
+        this.multiLabel = multiLabel;
     }
 }

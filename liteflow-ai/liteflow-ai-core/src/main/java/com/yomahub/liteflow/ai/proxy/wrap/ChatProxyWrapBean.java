@@ -25,7 +25,7 @@ public class ChatProxyWrapBean extends AIProxyWrapBean<AIChat> {
     public ChatProxyWrapBean(AIComponent aiComponent, AIChat annotation,
                            Class<?> interfaceClass, String beanName) {
         super(aiComponent, interfaceClass, beanName);
-        // TODO anno
+        this.annotation = annotation;
     }
 
     public String getSystemPrompt() {
@@ -38,5 +38,17 @@ public class ChatProxyWrapBean extends AIProxyWrapBean<AIChat> {
 
     public boolean isStreaming() {
         return streaming;
+    }
+
+    public void setSystemPrompt(String systemPrompt) {
+        this.systemPrompt = systemPrompt;
+    }
+
+    public void setUserPrompt(String userPrompt) {
+        this.userPrompt = userPrompt;
+    }
+
+    public void setStreaming(boolean streaming) {
+        this.streaming = streaming;
     }
 }

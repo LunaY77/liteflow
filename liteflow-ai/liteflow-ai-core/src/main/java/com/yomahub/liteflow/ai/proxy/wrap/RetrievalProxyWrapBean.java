@@ -19,6 +19,6 @@ public class RetrievalProxyWrapBean extends AIProxyWrapBean<AIRetrieval> {
     public RetrievalProxyWrapBean(AIComponent aiComponent, AIRetrieval annotation,
                                  Class<?> interfaceClass, String beanName) {
         super(aiComponent, interfaceClass, beanName);
-        // TODO anno
+        this.annotation = annotation;
     }
 }
