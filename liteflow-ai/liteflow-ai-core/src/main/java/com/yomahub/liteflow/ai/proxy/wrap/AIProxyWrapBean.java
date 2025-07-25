@@ -40,10 +40,6 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
     public T getAnnotation() {
         return annotation;
     }
-    
-    public void setAnnotation(T annotation) {
-        this.annotation = annotation;
-    }
 
     public String getNodeId() {
         return nodeId;

@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.test;
 
+import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +30,7 @@ public class ProxyTest {
 
     @Test
     public void testProxy() {
-        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", "arg");
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 }
