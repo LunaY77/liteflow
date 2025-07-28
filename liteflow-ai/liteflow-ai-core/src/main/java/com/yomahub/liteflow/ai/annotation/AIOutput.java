@@ -1,7 +1,5 @@
 package com.yomahub.liteflow.ai.annotation;
 
-import dev.langchain4j.model.chat.request.ResponseFormatType;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,20 +11,14 @@ import java.lang.annotation.Target;
  * @author 苍镜月
  * @since TODO
  */
-
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AIOutput {
-    ResponseFormatType type() default ResponseFormatType.TEXT;
-    String methodExpress() default "setData";
-    String key();
-    Class<?> entity() default Object.class;
-    OutputField[] mapping() default {};
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface OutputField {
-        String name();
-        String methodExpress() default "setData";
-        String key();
-    }
+    /**
+     * 输出字段映射配置
+     *
+     * @return 输出字段数组
+     */
+    OutputField[] mapping() default {};
 }

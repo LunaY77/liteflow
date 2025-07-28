@@ -11,18 +11,14 @@ import java.lang.annotation.Target;
  * @author 苍镜月
  * @since TODO
  */
-
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AIInput {
 
+    /**
+     * 输入字段映射配置
+     *
+     * @return 输入字段数组
+     */
     InputField[] mapping() default {};
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface InputField {
-        String name();
-        String expression();
-        String defaultValue() default "";
-        boolean required() default false;
-    }
 }
