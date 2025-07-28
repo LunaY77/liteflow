@@ -8,28 +8,30 @@ import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
 /**
- * TODO
+ * AI聊天注解处理器
  *
  * @author 苍镜月
  * @since TODO
  */
-
 public class ChatAnnotationProcessor extends AbstractAnnotationProcessor<AIChat, ChatProxyWrapBean> {
 
     @Override
     public void postProcessBeforeTrigger(AIChat annotation, ProcessorContext<ChatProxyWrapBean> context) {
         ChatProxyWrapBean wrapBean = context.getWrapBean();
 
+        // 设置基本属性
         SetUtil.setIfPresent(wrapBean::setStreaming, annotation.streaming());
 
-        SetUtil.setIfPresent(wrapBean::setUserPrompt, annotation.userPrompt());
+        // 处理系统提示词
+        parsePrompt(annotation.systemPrompt(), context, wrapBean::setSystemPrompt);
 
-        SetUtil.setIfPresent(wrapBean::setSystemPrompt, annotation.systemPrompt());
+        // 处理用户提示词
+        parsePrompt(annotation.userPrompt(), context, wrapBean::setUserPrompt);
     }
 
     @Override
     public void postProcessAfterTrigger(AIChat annotation, ProcessorContext<ChatProxyWrapBean> context) {
-
+        // TODO: 处理输出参数绑定
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * TODO
+ * AI 意图识别注解处理器
  *
  * @author 苍镜月
  * @since TODO
@@ -27,9 +27,11 @@ public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIC
 
         SetUtil.setIfPresent(wrapBean::setMultiLabel, annotation.multiLabel());
 
-        SetUtil.setIfPresent(wrapBean::setSystemPrompt, annotation.systemPrompt());
+        // 处理系统提示词
+        parsePrompt(annotation.systemPrompt(), context, wrapBean::setSystemPrompt);
 
-        SetUtil.setIfPresent(wrapBean::setUserPrompt, annotation.userPrompt());
+        // 处理用户提示词
+        parsePrompt(annotation.userPrompt(), context, wrapBean::setUserPrompt);
     }
 
     @Override
