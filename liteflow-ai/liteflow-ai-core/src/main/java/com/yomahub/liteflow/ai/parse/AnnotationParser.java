@@ -37,9 +37,9 @@ public class AnnotationParser {
     }
 
     /**
-     * 解析AI类型的注解
+     * 执行注解解析前处理
      *
-     * @param annotation 注解
+     * @param annotation 待解析注解
      * @param context    处理器上下文
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -47,6 +47,20 @@ public class AnnotationParser {
         AITypeEnum type = AITypeEnum.fromAnnotationType(annotation);
         AnnotationProcessor processor = getProcessor(type.getCode());
         processor.postProcessBeforeTrigger(annotation, context);
+    }
+
+    /**
+     * 执行注解解析后处理
+     *
+     * @param annotation 待解析注解
+     * @param context    处理器上下文
+     * @param result     响应结果
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void postProcessAfterTrigger(Annotation annotation, ProcessorContext<?> context, Object result) {
+        AITypeEnum type = AITypeEnum.fromAnnotationType(annotation);
+        AnnotationProcessor processor = getProcessor(type.getCode());
+        processor.postProcessAfterTrigger(annotation, context, result);
     }
 
     private static AnnotationProcessor<?, ?> getProcessor(Integer code) {

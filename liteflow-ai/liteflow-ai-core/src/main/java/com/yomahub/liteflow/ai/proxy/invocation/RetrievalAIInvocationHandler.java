@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
+import com.yomahub.liteflow.ai.parse.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.RetrievalProxyWrapBean;
-import com.yomahub.liteflow.core.NodeComponent;
 
 /**
  * RAG组件的调用处理器
@@ -17,7 +17,7 @@ public class RetrievalAIInvocationHandler extends AbstractAIInvocationHandler<Re
     }
 
     @Override
-    protected Object executeAIProcess(NodeComponent nodeComponent, Object[] args) {
+    protected Object doExecuteAIProcess(ProcessorContext<RetrievalProxyWrapBean> processorContext, Object[] args) {
         return null;
     }
 }

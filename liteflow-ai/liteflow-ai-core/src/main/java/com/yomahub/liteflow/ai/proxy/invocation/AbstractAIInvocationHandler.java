@@ -1,5 +1,8 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
+import com.yomahub.liteflow.ai.context.ChatContext;
+import com.yomahub.liteflow.ai.parse.AnnotationParser;
+import com.yomahub.liteflow.ai.parse.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
@@ -37,5 +40,37 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
      * @param args
      * @return 处理结果
      */
-    protected abstract Object executeAIProcess(NodeComponent nodeComponent, Object[] args);
+    protected Object executeAIProcess(NodeComponent nodeComponent, Object[] args) {
+        // 创建处理上下文
+        ProcessorContext<T> processorContext = new ProcessorContext<>(
+                wrapBean,
+                nodeComponent.getContextBean(ChatContext.class),
+                nodeComponent
+        );
+
+        try {
+            // 注解解析前置处理
+            AnnotationParser.postProcessBeforeTrigger(wrapBean.getAnnotation(), processorContext);
+
+            // 执行实际的AI处理逻辑
+            Object result = doExecuteAIProcess(processorContext, args);
+
+            // 注解解析后置处理
+            AnnotationParser.postProcessAfterTrigger(wrapBean.getAnnotation(), processorContext, result);
+
+            return result;
+        } catch (Exception e) {
+            LOG.error("Error executing AI process for node: {}", nodeComponent.getNodeId(), e);
+            throw e;
+        }
+    }
+
+    /**
+     * 执行具体的AI处理逻辑
+     *
+     * @param processorContext 处理上下文
+     * @param args             参数
+     * @return 处理结果
+     */
+    protected abstract Object doExecuteAIProcess(ProcessorContext<T> processorContext, Object[] args);
 }

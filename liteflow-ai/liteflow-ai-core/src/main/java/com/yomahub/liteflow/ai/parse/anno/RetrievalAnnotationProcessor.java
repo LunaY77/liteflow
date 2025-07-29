@@ -21,7 +21,7 @@ public class RetrievalAnnotationProcessor extends AbstractAnnotationProcessor<AI
     }
 
     @Override
-    public void postProcessAfterTrigger(AIRetrieval annotation, ProcessorContext<RetrievalProxyWrapBean> context) {
+    public void postProcessAfterTrigger(AIRetrieval annotation, ProcessorContext<RetrievalProxyWrapBean> context, Object result) {
 
     }
 

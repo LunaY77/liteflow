@@ -1,8 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
-import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.model.ModelFactory;
-import com.yomahub.liteflow.ai.parse.AnnotationParser;
 import com.yomahub.liteflow.ai.parse.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
@@ -23,27 +21,22 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatPro
     }
 
     @Override
-    protected Void executeAIProcess(NodeComponent nodeComponent, Object[] args) {
-        ChatContext chatContext = nodeComponent.getContextBean(ChatContext.class);
-        ProcessorContext<ChatProxyWrapBean> processorContext = new ProcessorContext<>(wrapBean, chatContext, nodeComponent);
-
-        // 注解解析前置处理
-        AnnotationParser.postProcessBeforeTrigger(wrapBean.getAnnotation(), processorContext);
-
+    protected Object doExecuteAIProcess(ProcessorContext<ChatProxyWrapBean> processorContext, Object[] args) {
+        NodeComponent nodeComponent = processorContext.getNodeComponent();
         if (wrapBean.isStreaming()) {
-            return processStreaming(nodeComponent, args);
+            return processStreaming(nodeComponent);
         } else {
-            return processBlocking(nodeComponent, args);
+            return processBlocking(nodeComponent);
         }
     }
 
-    private Void processStreaming(NodeComponent nodeComponent, Object[] args) {
+    private Void processStreaming(NodeComponent nodeComponent) {
         StreamingChatModel streamingChatModel = ModelFactory.getStreamingChatModel(wrapBean.getConfig());
 
         return null;
     }
 
-    private Void processBlocking(NodeComponent nodeComponent, Object[] args) {
+    private Void processBlocking(NodeComponent nodeComponent) {
         ChatModel chatModel = ModelFactory.getChatModel(wrapBean.getConfig());
 
         LOG.info("Processing chat request with model: {}", chatModel.getClass().getSimpleName());
