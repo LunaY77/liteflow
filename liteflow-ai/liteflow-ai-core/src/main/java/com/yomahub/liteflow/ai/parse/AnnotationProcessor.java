@@ -22,11 +22,11 @@ public interface AnnotationProcessor<A extends Annotation, T extends AIProxyWrap
     void postProcessBeforeTrigger(A annotation, ProcessorContext<T> context);
 
     /**
-     * TODO arg
      * 执行注解解析后处理
      *
-     * @param annotation
-     * @param context
+     * @param annotation 待解析注解
+     * @param context    处理器上下文
+     * @param result     响应结果
      */
-    void postProcessAfterTrigger(A annotation, ProcessorContext<T> context);
+    void postProcessAfterTrigger(A annotation, ProcessorContext<T> context, Object result);
 }

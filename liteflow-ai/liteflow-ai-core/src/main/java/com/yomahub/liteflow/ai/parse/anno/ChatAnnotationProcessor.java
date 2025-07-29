@@ -30,7 +30,7 @@ public class ChatAnnotationProcessor extends AbstractAnnotationProcessor<AIChat,
     }
 
     @Override
-    public void postProcessAfterTrigger(AIChat annotation, ProcessorContext<ChatProxyWrapBean> context) {
+    public void postProcessAfterTrigger(AIChat annotation, ProcessorContext<ChatProxyWrapBean> context, Object result) {
         // TODO: 处理输出参数绑定
     }
 

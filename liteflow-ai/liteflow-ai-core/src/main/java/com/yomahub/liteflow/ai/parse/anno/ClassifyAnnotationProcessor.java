@@ -35,7 +35,7 @@ public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIC
     }
 
     @Override
-    public void postProcessAfterTrigger(AIClassify annotation, ProcessorContext<ClassifyProxyWrapBean> context) {
+    public void postProcessAfterTrigger(AIClassify annotation, ProcessorContext<ClassifyProxyWrapBean> context, Object result) {
 
     }
 
