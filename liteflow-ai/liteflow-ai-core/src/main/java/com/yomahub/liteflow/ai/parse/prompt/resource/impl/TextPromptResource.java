@@ -57,7 +57,7 @@ public class TextPromptResource extends AbstractPromptResource {
         return Optional
                 .ofNullable(location)
                 .filter(s -> s.startsWith(prefix))
-                .map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
-                .orElse("");
+                .map(s -> s.substring(prefix.length()))
+                .orElse(location);
     }
 }
