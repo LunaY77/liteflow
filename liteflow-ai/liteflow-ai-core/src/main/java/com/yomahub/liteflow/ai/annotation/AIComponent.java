@@ -9,7 +9,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * TODO
+ * AI 组件注解，提供配置和标识功能
+ * <p>
+ * 配合具体的 AI 组件使用
+ * <ul>
+ *     <li>{@link AIChat}</li>
+ *     <li>{@link AIClassify}</li>
+ *     <li>{@link AIRetrieval}</li>
+ * </ul>
  *
  * @author 苍镜月
  * @since TODO
