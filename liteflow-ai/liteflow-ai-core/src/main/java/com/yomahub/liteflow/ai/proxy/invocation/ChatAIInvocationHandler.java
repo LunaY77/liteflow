@@ -3,7 +3,7 @@ package com.yomahub.liteflow.ai.proxy.invocation;
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.model.ModelFactory;
-import com.yomahub.liteflow.ai.parse.ProcessorContext;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.invocation.service.AiServiceFactory;
 import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
@@ -25,6 +25,12 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatPro
 
     public ChatAIInvocationHandler(ChatProxyWrapBean wrapBean) {
         super(wrapBean);
+    }
+
+    @Override
+    protected void checkValidation(ProcessorContext<ChatProxyWrapBean> processorContext) {
+        // 调用父类的校验方法
+        super.checkValidation(processorContext);
     }
 
     @Override

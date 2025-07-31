@@ -1,9 +1,12 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
+import com.yomahub.liteflow.ai.domain.ModelConfig;
+import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.parse.AnnotationParser;
-import com.yomahub.liteflow.ai.parse.ProcessorContext;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
@@ -52,6 +55,9 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
             // 注解解析前置处理
             AnnotationParser.postProcessBeforeTrigger(wrapBean.getAnnotation(), processorContext);
 
+            // 校验参数是否符合节点要求
+            checkValidation(processorContext);
+
             // 执行实际的AI处理逻辑
             Object result = doExecuteAIProcess(processorContext, args);
 
@@ -62,6 +68,29 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
         } catch (Exception e) {
             LOG.error("Error executing AI process for node: {}", nodeComponent.getNodeId(), e);
             throw e;
+        }
+    }
+
+    /**
+     * 校验参数是否符合节点要求
+     *
+     * @param processorContext 处理器上下文
+     */
+    protected void checkValidation(ProcessorContext<T> processorContext) {
+        // 校验Prompt
+        if (SetUtil.isNotPresent(wrapBean.getUserPrompt()) && SetUtil.isNotPresent(wrapBean.getSystemPrompt())) {
+            throw new LiteFlowAIException("User prompt and system prompt cannot both be empty");
+        }
+        // 校验必需参数
+        ModelConfig modelConfig = wrapBean.getConfig();
+        if (SetUtil.isNotPresent(modelConfig.getProvider())) {
+            throw new LiteFlowAIException("Provider cannot be empty for AI node: " + wrapBean.getNodeId());
+        }
+        if (SetUtil.isNotPresent(modelConfig.getBaseUrl())) {
+            throw new LiteFlowAIException("Base URL cannot be empty for AI node: " + wrapBean.getNodeId());
+        }
+        if (SetUtil.isNotPresent(modelConfig.getModel())) {
+            throw new LiteFlowAIException("Model cannot be empty for AI node: " + wrapBean.getNodeId());
         }
     }
 

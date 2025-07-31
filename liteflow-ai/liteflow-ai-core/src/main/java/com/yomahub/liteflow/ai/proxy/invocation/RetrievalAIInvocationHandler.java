@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
-import com.yomahub.liteflow.ai.parse.ProcessorContext;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.RetrievalProxyWrapBean;
 
 /**
