@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.test.cmp;
+package com.yomahub.liteflow.test.ai.proxy.cmp;
 
 /**
  * 测试结构化输出使用

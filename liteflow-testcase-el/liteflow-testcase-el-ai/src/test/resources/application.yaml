@@ -1,6 +1,0 @@
-liteflow:
-  rule-source: flow.el.xml
-  ai:
-    base-packages:
-      - com.yomahub.liteflow.test.cmp
-    enable: true

@@ -1,8 +1,9 @@
-package com.yomahub.liteflow.test;
+package com.yomahub.liteflow.test.ai.proxy;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
+import com.yomahub.liteflow.slot.DefaultContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,10 +20,10 @@ import javax.annotation.Resource;
  * @since TODO
  */
 
-@TestPropertySource(value = "classpath:application.yaml")
+@TestPropertySource("classpath:/proxy/application.yaml")
 @SpringBootTest(classes = {ProxyTest.class})
 @EnableAutoConfiguration
-@ComponentScan({"com.yomahub.liteflow.test.cmp"})
+@ComponentScan({"com.yomahub.liteflow.test.ai.proxy.cmp"})
 public class ProxyTest {
 
     @Resource
@@ -30,7 +31,7 @@ public class ProxyTest {
 
     @Test
     public void testProxy() {
-        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class, DefaultContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 }
