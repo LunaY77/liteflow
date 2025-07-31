@@ -2,7 +2,9 @@ package com.yomahub.liteflow.ai.parse;
 
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIInput;
+import com.yomahub.liteflow.ai.annotation.AIOutput;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
+import com.yomahub.liteflow.ai.domain.enums.ResponseType;
 import com.yomahub.liteflow.ai.parse.prompt.PromptTemplateParser;
 import com.yomahub.liteflow.ai.parse.prompt.resource.PromptResource;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
@@ -11,6 +13,7 @@ import com.yomahub.liteflow.log.LFLoggerManager;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.lang.annotation.Annotation;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -67,6 +70,28 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, T extend
                 LOG.warn("Failed to load prompt resource: {}, using original text", prompt, e);
                 setConsumer.accept(prompt);
             }
+        }
+    }
+
+    /**
+     * 解析 {@link AIOutput} 的结构化输出参数
+     *
+     * @param context 处理器上下文
+     */
+    protected void parseOutput(ProcessorContext<T> context) {
+        AIOutput outputAnno = context.getAiOutputAnno();
+        if (Objects.isNull(outputAnno)) return;
+
+        // 这里仅处理结构化输出相关的参数，其他参数交给 after 逻辑进行处理
+        T wrapBean = context.getWrapBean();
+        // 是否需要结构化输出
+        if (Objects.equals(ResponseType.JSON, outputAnno.responseType())) {
+            wrapBean.setResponseType(ResponseType.JSON);
+            // 设置输出实体类
+            wrapBean.setEntityClass(outputAnno.entityClass());
+        } else {
+            // 文本输出，设置 entityClass 为 String
+            wrapBean.setEntityClass(String.class);
         }
     }
 }

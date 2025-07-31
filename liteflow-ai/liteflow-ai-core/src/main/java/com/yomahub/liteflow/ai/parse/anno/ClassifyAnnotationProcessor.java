@@ -32,11 +32,13 @@ public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIC
 
         // 处理用户提示词
         parsePrompt(annotation.userPrompt(), context, wrapBean::setUserPrompt);
+
+        // 处理结构化输出参数绑定
+        parseOutput(context);
     }
 
     @Override
     public void postProcessAfterTrigger(AIClassify annotation, ProcessorContext<ClassifyProxyWrapBean> context, Object result) {
-
     }
 
     @Override

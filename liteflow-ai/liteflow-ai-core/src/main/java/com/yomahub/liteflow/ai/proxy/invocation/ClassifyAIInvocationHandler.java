@@ -21,7 +21,7 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
     @Override
     protected Object doExecuteAIProcess(ProcessorContext<ClassifyProxyWrapBean> processorContext, Object[] args) {
 
-        ChatModel chatModel = ModelFactory.getChatModel(wrapBean.getConfig());
+        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
 
         return null;
     }
