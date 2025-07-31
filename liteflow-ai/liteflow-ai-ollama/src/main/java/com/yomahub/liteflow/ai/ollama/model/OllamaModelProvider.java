@@ -2,13 +2,17 @@ package com.yomahub.liteflow.ai.ollama.model;
 
 import com.yomahub.liteflow.ai.domain.ModelConfig;
 import com.yomahub.liteflow.ai.domain.constant.ProviderName;
+import com.yomahub.liteflow.ai.domain.enums.ResponseType;
 import com.yomahub.liteflow.ai.model.ModelProviderRegistrar;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
+import dev.langchain4j.model.chat.Capability;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
+import dev.langchain4j.model.chat.request.ResponseFormat;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -33,8 +37,14 @@ public class OllamaModelProvider extends ModelProviderRegistrar {
                 .builder()
                 .baseUrl(modelConfig.getBaseUrl())
                 .modelName(modelConfig.getModel())
-                .build()
-        );
+        ).map(ollamaChatModelBuilder -> {
+            // 开启结构化输出
+            if (Objects.equals(ResponseType.JSON, wrapBean.getResponseType())) {
+                ollamaChatModelBuilder.responseFormat(ResponseFormat.JSON)
+                        .supportedCapabilities(Capability.RESPONSE_FORMAT_JSON_SCHEMA);
+            }
+            return ollamaChatModelBuilder.build();
+        });
     }
 
     @Override
