@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.test.cmp;
+package com.yomahub.liteflow.test.ai.proxy.cmp;
 
 import com.yomahub.liteflow.ai.annotation.*;
 import com.yomahub.liteflow.ai.domain.enums.ResponseType;
@@ -18,7 +18,7 @@ import com.yomahub.liteflow.ai.domain.enums.ResponseType;
         model = "qwen3:32b"
 )
 @AIChat(
-        systemPrompt = "classpath:system_prompt.txt",
+        systemPrompt = "classpath:proxy/system_prompt.txt",
         userPrompt = "{{question}}, {{answer}}"
 )
 @AIInput(
