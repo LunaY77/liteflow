@@ -23,7 +23,7 @@ public class SetUtil {
      * @param <T>      值的类型。
      */
     public static <T> void setIfPresent(Consumer<T> consumer, T value) {
-        if (!isPresent(value)) {
+        if (isPresent(value)) {
             consumer.accept(value);
         }
     }
@@ -36,9 +36,23 @@ public class SetUtil {
      * @param <T>      值的类型。
      */
     public static <T> void setIfNotPresent(Consumer<T> consumer, T value) {
-        if (isPresent(value)) {
+        if (isNotPresent(value)) {
             consumer.accept(value);
         }
+    }
+
+    /**
+     * 检查给定的对象是否不为 null 且不是 "空" 或 默认值。
+     * 如果一个对象是 String、Collection、Map 或数组，且其元素个数或长度为零，
+     * 那么它被认为是"空"的。
+     * 如果一个对象是 TriState 类型，并且其值为 UNSET，那么认为它是默认值
+     * 如果一个对象是 Integer、Long、Double 或 Float 类型，并且其值为 -1 或 -1.0，那么认为它是默认值
+     *
+     * @param value 要检查的对象。
+     * @return 如果对象不为 null 且不是 “空” 或 默认值，则返回 true，否则返回 false。
+     */
+    public static boolean isPresent(Object value) {
+        return !isNotPresent(value);
     }
 
     /**
@@ -46,11 +60,12 @@ public class SetUtil {
      * 如果一个对象是 String、Collection、Map 或数组，且其元素个数或长度为零，
      * 那么它被认为是"空"的。
      * 如果一个对象是 TriState 类型，并且其值为 UNSET，那么认为它是默认值
+     * 如果一个对象是 Integer、Long、Double 或 Float 类型，并且其值为 -1 或 -1.0，那么认为它是默认值
      *
      * @param value 要检查的对象。
      * @return 如果对象为 null 或 “空” 或 默认值，则返回 true，否则返回 false。
      */
-    public static boolean isPresent(Object value) {
+    public static boolean isNotPresent(Object value) {
         if (Objects.isNull(value)) {
             return true;
         } else if (value instanceof Collection) {
@@ -63,6 +78,14 @@ public class SetUtil {
             return Array.getLength(value) == 0;
         } else if (value instanceof TriState) {
             return value == TriState.UNSET;
+        } else if (value instanceof Integer) {
+            return (Integer) value == -1;
+        } else if (value instanceof Long) {
+            return (Long) value == -1L;
+        } else if (value instanceof Double) {
+            return (Double) value == -1.0;
+        } else if (value instanceof Float) {
+            return (Float) value == -1.0f;
         }
         return false;
     }
