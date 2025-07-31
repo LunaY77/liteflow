@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.model;
 
-import com.yomahub.liteflow.ai.domain.ModelConfig;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
+import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
 import dev.langchain4j.model.chat.ChatModel;
@@ -27,9 +27,9 @@ public class ModelFactory {
     private static final Map<String, ModelProvider> MODEL_PROVIDER_MAP = new ConcurrentHashMap<>();
 
     // 模型类型缓存
-    private static final Map<ModelConfig, ChatModel> CHAT_MODEL_CACHE = new ConcurrentHashMap<>();
-    private static final Map<ModelConfig, StreamingChatModel> STREAMING_CHAT_MODEL_CACHE = new ConcurrentHashMap<>();
-    private static final Map<ModelConfig, EmbeddingModel> EMBEDDING_MODEL_CACHE = new ConcurrentHashMap<>();
+    private static final Map<AIProxyWrapBean<?>, ChatModel> CHAT_MODEL_CACHE = new ConcurrentHashMap<>();
+    private static final Map<AIProxyWrapBean<?>, StreamingChatModel> STREAMING_CHAT_MODEL_CACHE = new ConcurrentHashMap<>();
+    private static final Map<AIProxyWrapBean<?>, EmbeddingModel> EMBEDDING_MODEL_CACHE = new ConcurrentHashMap<>();
 
     // 私有化构造函数
     private ModelFactory() {
@@ -50,45 +50,48 @@ public class ModelFactory {
     /**
      * 获取指定提供者名称的ChatModel实例
      *
-     * @param config 模型配置
+     * @param wrapBean AI 节点包装 Bean，从中获取模型配置信息
      * @return ChatModel实例
      */
-    public static ChatModel getChatModel(ModelConfig config) {
-        return CHAT_MODEL_CACHE.computeIfAbsent(config, key -> {
-            ModelProvider provider = getProvider(key.getProvider());
+    public static ChatModel getChatModel(AIProxyWrapBean<?> wrapBean) {
+        return CHAT_MODEL_CACHE.computeIfAbsent(wrapBean, key -> {
+            String providerName = key.getConfig().getProvider();
+            ModelProvider provider = getProvider(providerName);
             // 创建 ChatModel 实例
             return provider.createChatModel(key)
-                    .orElseThrow(() -> new LiteFlowAIException("ChatModel is not supported for provider: " + key.getProvider()));
+                    .orElseThrow(() -> new LiteFlowAIException("ChatModel is not supported for provider: " + providerName));
         });
     }
 
     /**
      * 获取指定提供者名称的StreamingChatModel实例
      *
-     * @param config 模型配置
+     * @param wrapBean AI 节点包装 Bean，从中获取模型配置信息
      * @return StreamingChatModel实例
      */
-    public static StreamingChatModel getStreamingChatModel(ModelConfig config) {
-        return STREAMING_CHAT_MODEL_CACHE.computeIfAbsent(config, key -> {
-            ModelProvider provider = getProvider(config.getProvider());
+    public static StreamingChatModel getStreamingChatModel(AIProxyWrapBean<?> wrapBean) {
+        return STREAMING_CHAT_MODEL_CACHE.computeIfAbsent(wrapBean, key -> {
+            String providerName = key.getConfig().getProvider();
+            ModelProvider provider = getProvider(providerName);
             // 创建 StreamingChatModel 实例
-            return provider.createStreamingChatModel(config)
-                    .orElseThrow(() -> new LiteFlowAIException("StreamingChatModel is not supported for provider: " + key.getProvider()));
+            return provider.createStreamingChatModel(wrapBean)
+                    .orElseThrow(() -> new LiteFlowAIException("StreamingChatModel is not supported for provider: " + providerName));
         });
     }
 
     /**
      * 获取指定提供者名称的EmbeddingModel实例
      *
-     * @param config 模型配置
+     * @param wrapBean AI 节点包装 Bean，从中获取模型配置信息
      * @return EmbeddingModel实例
      */
-    public static EmbeddingModel getEmbeddingModel(ModelConfig config) {
-        return EMBEDDING_MODEL_CACHE.computeIfAbsent(config, key -> {
-            ModelProvider provider = getProvider(key.getProvider());
+    public static EmbeddingModel getEmbeddingModel(AIProxyWrapBean<?> wrapBean) {
+        return EMBEDDING_MODEL_CACHE.computeIfAbsent(wrapBean, key -> {
+            String providerName = key.getConfig().getProvider();
+            ModelProvider provider = getProvider(providerName);
             // 创建 EmbeddingModel 实例
-            return provider.createEmbeddingModel(config)
-                    .orElseThrow(() -> new LiteFlowAIException("EmbeddingModel is not supported for provider: " + key.getProvider()));
+            return provider.createEmbeddingModel(wrapBean)
+                    .orElseThrow(() -> new LiteFlowAIException("EmbeddingModel is not supported for provider: " + providerName));
         });
     }
 

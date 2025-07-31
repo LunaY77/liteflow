@@ -12,10 +12,6 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 
 public class ChatProxyWrapBean extends AIProxyWrapBean<AIChat> {
 
-    private String systemPrompt;
-
-    private String userPrompt;
-
     private boolean streaming;
 
     public ChatProxyWrapBean() {
@@ -28,24 +24,8 @@ public class ChatProxyWrapBean extends AIProxyWrapBean<AIChat> {
         this.annotation = annotation;
     }
 
-    public String getSystemPrompt() {
-        return systemPrompt;
-    }
-
-    public String getUserPrompt() {
-        return userPrompt;
-    }
-
     public boolean isStreaming() {
         return streaming;
-    }
-
-    public void setSystemPrompt(String systemPrompt) {
-        this.systemPrompt = systemPrompt;
-    }
-
-    public void setUserPrompt(String userPrompt) {
-        this.userPrompt = userPrompt;
     }
 
     public void setStreaming(boolean streaming) {

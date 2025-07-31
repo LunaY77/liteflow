@@ -1,9 +1,7 @@
 package com.yomahub.liteflow.test.cmp;
 
-import com.yomahub.liteflow.ai.annotation.AIChat;
-import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.annotation.AIInput;
-import com.yomahub.liteflow.ai.annotation.InputField;
+import com.yomahub.liteflow.ai.annotation.*;
+import com.yomahub.liteflow.ai.domain.enums.ResponseType;
 
 /**
  * TODO
@@ -28,6 +26,13 @@ import com.yomahub.liteflow.ai.annotation.InputField;
                 @InputField(name = "question",  expression = "test", defaultValue = "Why sky is blue?"),
                 @InputField(name = "answer", expression = "test", defaultValue = "The sky appears blue due to the scattering of sunlight by the atmosphere.")
         }
+)
+@AIOutput(
+        responseType = ResponseType.JSON,
+        entityClass = Integer.class,
+        methodExpress = "setData",
+        useKeyIndex = true,
+        key = "result"
 )
 public interface AICmp {
 }

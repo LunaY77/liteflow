@@ -14,11 +14,6 @@ import java.util.List;
 
 public class ClassifyProxyWrapBean extends AIProxyWrapBean<AIClassify> {
 
-
-    private String systemPrompt;
-
-    private String userPrompt;
-
     private List<String> categories;
 
     private boolean multiLabel;
@@ -33,28 +28,12 @@ public class ClassifyProxyWrapBean extends AIProxyWrapBean<AIClassify> {
         this.annotation = annotation;
     }
 
-    public String getSystemPrompt() {
-        return systemPrompt;
-    }
-
-    public String getUserPrompt() {
-        return userPrompt;
-    }
-
     public List<String> getCategories() {
         return categories;
     }
 
     public boolean isMultiLabel() {
         return multiLabel;
-    }
-
-    public void setSystemPrompt(String systemPrompt) {
-        this.systemPrompt = systemPrompt;
-    }
-
-    public void setUserPrompt(String userPrompt) {
-        this.userPrompt = userPrompt;
     }
 
     public void setCategories(List<String> categories) {

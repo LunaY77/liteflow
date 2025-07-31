@@ -97,7 +97,7 @@ public @interface AIOutput {
      * <p>
      * 表示输出的 JSON Schema 定义。如果需要添加描述信息，请使用 LangChain4j 的相关注解
      */
-    Class<?> entityClass() default Object.class;
+    Class<?> entityClass() default String.class;
 
     /**
      * 如需启用，请设置 {@link AIOutput#responseType()} 为 {@link ResponseType#JSON}
