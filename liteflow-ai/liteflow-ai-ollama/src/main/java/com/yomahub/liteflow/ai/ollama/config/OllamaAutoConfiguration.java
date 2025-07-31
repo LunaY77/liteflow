@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO
+ * Ollama 自动配置
  *
  * @author 苍镜月
  * @since TODO
