@@ -29,7 +29,7 @@ import com.yomahub.liteflow.ai.domain.enums.ResponseType;
 )
 @AIOutput(
         responseType = ResponseType.JSON,
-        entityClass = Integer.class,
+        entityClass = Output.class,
         methodExpress = "setData",
         useKeyIndex = true,
         key = "result"

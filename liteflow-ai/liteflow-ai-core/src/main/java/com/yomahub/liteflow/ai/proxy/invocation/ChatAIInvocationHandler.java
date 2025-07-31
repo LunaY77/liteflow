@@ -64,7 +64,9 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatPro
         Object aiService = AiServiceFactory.createAiService(wrapBean.getEntityClass(), chatModel);
 
         try {
-            return AiServiceFactory.chat(aiService, wrapBean.getUserPrompt(), wrapBean.getSystemPrompt());
+            Object result = AiServiceFactory.chat(aiService, wrapBean.getUserPrompt(), wrapBean.getSystemPrompt());
+            LOG.info("Chat response: {}", result);
+            return result;
         } catch (Throwable e) {
             throw new LiteFlowAIException("Error during blocking chat processing", e);
         }
