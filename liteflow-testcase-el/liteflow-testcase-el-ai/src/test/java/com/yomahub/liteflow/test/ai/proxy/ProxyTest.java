@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * @since TODO
  */
 
-@TestPropertySource("classpath:/proxy/application.yaml")
+@TestPropertySource(properties = {"spring.config.location=classpath:/proxy/application.yaml"})
 @SpringBootTest(classes = {ProxyTest.class})
 @EnableAutoConfiguration
 @ComponentScan({"com.yomahub.liteflow.test.ai.proxy.cmp"})
