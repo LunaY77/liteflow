@@ -3,7 +3,7 @@ package com.yomahub.liteflow.ai.parse.anno;
 import com.yomahub.liteflow.ai.annotation.AIChat;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.parse.AbstractAnnotationProcessor;
-import com.yomahub.liteflow.ai.parse.ProcessorContext;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
@@ -33,8 +33,12 @@ public class ChatAnnotationProcessor extends AbstractAnnotationProcessor<AIChat,
     }
 
     @Override
-    public void postProcessAfterTrigger(AIChat annotation, ProcessorContext<ChatProxyWrapBean> context, Object result) {
-        // TODO: 处理输出参数绑定
+    public void postProcessAfterTrigger(ProcessorContext<ChatProxyWrapBean> context, Object result) {
+        ChatProxyWrapBean wrapBean = context.getWrapBean();
+        // 非流式输出，需要进行结构化处理
+        if (!wrapBean.isStreaming()) {
+            mapOutput2Context(context, result);
+        }
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.yomahub.liteflow.ai.annotation.AIInput;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.domain.enums.ResponseType;
+import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.parse.prompt.PromptTemplateParser;
 import com.yomahub.liteflow.ai.parse.prompt.resource.PromptResource;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
@@ -92,6 +94,34 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, T extend
         } else {
             // 文本输出，设置 entityClass 为 String
             wrapBean.setEntityClass(String.class);
+        }
+    }
+
+    /**
+     * 将处理结果映射到上下文中
+     *
+     * @param context 处理器上下文
+     * @param result  处理结果
+     */
+    protected void mapOutput2Context(ProcessorContext<T> context, Object result) {
+        if (Objects.isNull(result)) {
+            LOG.warn("AI processing result is null, skipping context mapping.");
+            return;
+        }
+
+        AIOutput outputAnno = context.getAiOutputAnno();
+        if (Objects.isNull(outputAnno)) {
+            LOG.warn("No AIOutput annotation found, skipping context mapping.");
+            return;
+        }
+
+        // 将结果映射到上下文中
+        String expression = outputAnno.methodExpress();
+        if (StrUtil.isNotBlank(expression)) {
+            ContextAccessor.setContextValueByExpression(expression, context, result);
+            LOG.info("Mapped AI output to context with expression: {}", expression);
+        } else {
+            LOG.warn("AIOutput expression is blank, skipping context mapping.");
         }
     }
 }

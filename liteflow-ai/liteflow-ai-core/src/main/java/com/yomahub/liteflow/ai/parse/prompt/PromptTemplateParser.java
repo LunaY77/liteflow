@@ -3,8 +3,8 @@ package com.yomahub.liteflow.ai.parse.prompt;
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.InputField;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
-import com.yomahub.liteflow.ai.parse.ProcessorContext;
-import com.yomahub.liteflow.core.NodeComponent;
+import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 
 import java.util.*;
 import java.util.function.Function;
@@ -73,7 +73,7 @@ public class PromptTemplateParser {
         // 第一优先级：使用 InputField 中的 expression 映射
         if (Objects.nonNull(field)) {
             // 使用表达式在上下文查找
-            String value = searchContextByExpression(field.expression(), context);
+            String value = ContextAccessor.searchContextByExpression(field.expression(), context);
             if (StrUtil.isNotBlank(value)) {
                 return value;
             }
@@ -88,33 +88,12 @@ public class PromptTemplateParser {
         }
 
         // 第二优先级，占位符作为表达式在上下文中查找
-        String value = searchContextByExpression(placeholder, context);
+        String value = ContextAccessor.searchContextByExpression(placeholder, context);
         if (StrUtil.isNotBlank(value)) {
             return value;
         }
 
         // 如果都没有找到，返回原始占位符
         return placeholder;
-    }
-
-    /**
-     * 根据表达式在上下文中查找值
-     * 这里可以根据实际需要实现更复杂的查找逻辑
-     *
-     * @param expression 表达式
-     * @param context    处理器上下文
-     * @return 查找到的值
-     */
-    private static String searchContextByExpression(String expression, ProcessorContext<?> context) {
-        if (StrUtil.isBlank(expression)) {
-            return null;
-        }
-
-        try {
-            NodeComponent nodeComponent = context.getNodeComponent();
-            return nodeComponent.getContextValue(expression);
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

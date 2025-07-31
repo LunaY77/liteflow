@@ -50,6 +50,7 @@ public class OllamaModelProvider extends ModelProviderRegistrar {
                     // TODO timeout 类型转换
                     // setIfPresent(ollamaChatModelBuilder::timeout, modelConfig.getTimeout());
                     setIfPresent(ollamaChatModelBuilder::maxRetries, modelConfig.getMaxRetries());
+                    // TODO 自定义请求头
                     return ollamaChatModelBuilder;
                 })
                 // 结构化输出配置
@@ -82,6 +83,7 @@ public class OllamaModelProvider extends ModelProviderRegistrar {
                     setIfPresent(ollamaStreamingChatModelBuilder::stop, modelConfig.getStop());
                     // TODO timeout 类型转换
                     // setIfPresent(ollamaStreamingChatModelBuilder::timeout, modelConfig.getTimeout());
+                    // TODO 自定义请求头
                     return ollamaStreamingChatModelBuilder;
                 })
                 // 结构化输出配置

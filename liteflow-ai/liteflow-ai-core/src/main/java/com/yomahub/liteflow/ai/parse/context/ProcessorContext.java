@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.parse;
+package com.yomahub.liteflow.ai.parse.context;
 
 import com.yomahub.liteflow.ai.annotation.AIInput;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
