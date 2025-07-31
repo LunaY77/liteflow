@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.parse;
 
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 
 import java.lang.annotation.Annotation;
@@ -24,9 +25,8 @@ public interface AnnotationProcessor<A extends Annotation, T extends AIProxyWrap
     /**
      * 执行注解解析后处理
      *
-     * @param annotation 待解析注解
      * @param context    处理器上下文
      * @param result     响应结果
      */
-    void postProcessAfterTrigger(A annotation, ProcessorContext<T> context, Object result);
+    void postProcessAfterTrigger(ProcessorContext<T> context, Object result);
 }

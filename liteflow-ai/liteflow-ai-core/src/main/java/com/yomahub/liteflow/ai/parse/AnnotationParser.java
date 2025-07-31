@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.ai.parse;
 
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
 
@@ -52,7 +53,7 @@ public class AnnotationParser {
     /**
      * 执行注解解析后处理
      *
-     * @param annotation 待解析注解
+     * @param annotation 待解析注解(这里的注解参数是为了帮助找到对应的处理器)
      * @param context    处理器上下文
      * @param result     响应结果
      */
@@ -60,7 +61,7 @@ public class AnnotationParser {
     public static void postProcessAfterTrigger(Annotation annotation, ProcessorContext<?> context, Object result) {
         AITypeEnum type = AITypeEnum.fromAnnotationType(annotation);
         AnnotationProcessor processor = getProcessor(type.getCode());
-        processor.postProcessAfterTrigger(annotation, context, result);
+        processor.postProcessAfterTrigger(context, result);
     }
 
     private static AnnotationProcessor<?, ?> getProcessor(Integer code) {
