@@ -9,7 +9,6 @@ import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
-import dev.langchain4j.service.Result;
 
 import java.util.Objects;
 
@@ -56,11 +55,12 @@ public class ContextAccessor {
         if (StrUtil.isBlank(expression) || Objects.isNull(value)) return;
 
         // 检查结果是否为 Result 类型
-        if (!(value instanceof Result)) {
-            throw new LiteFlowAIException("AIOutput annotation value must be of type Result.");
-        }
-        // 获取 Result 的内容
-        value = ((Result<?>) value).content();
+        // TODO result 类型的处理逻辑j
+//        if (!(value instanceof Result)) {
+//            throw new LiteFlowAIException("AIOutput annotation value must be of type Result.");
+//        }
+//        // 获取 Result 的内容
+//        value = ((Result<?>) value).content();
 
         NodeComponent nodeComponent = context.getNodeComponent();
         AIOutput outputAnno = context.getAiOutputAnno();

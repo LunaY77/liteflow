@@ -1,11 +1,9 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
-import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ClassifyProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
-import dev.langchain4j.model.chat.ChatModel;
 
 /**
  * 分类组件的调用处理器
@@ -40,7 +38,7 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
     @Override
     protected Object doExecuteAIProcess(ProcessorContext<ClassifyProxyWrapBean> processorContext, Object[] args) {
 
-        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
+//        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
 
         return null;
     }
