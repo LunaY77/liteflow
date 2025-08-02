@@ -1,16 +1,16 @@
 package com.yomahub.liteflow.ai.model.ollama.model.chat;
 
-import com.yomahub.liteflow.ai.interact.InteractClient;
-import com.yomahub.liteflow.ai.interact.LlmInteractClient;
-import com.yomahub.liteflow.ai.model.chat.ChatModel;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.model.runtime.LiteFlowAIModel;
+import com.yomahub.liteflow.ai.engine.interact.InteractClient;
+import com.yomahub.liteflow.ai.engine.interact.LlmInteractClient;
+import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
+import com.yomahub.liteflow.ai.engine.model.runtime.LiteFlowAIModel;
 
 import java.util.concurrent.CompletableFuture;
 
 import static com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant.PROVIDER_NAME;
-import static com.yomahub.liteflow.ai.model.runtime.ModelType.CHAT_MODEL;
+import static com.yomahub.liteflow.ai.engine.model.runtime.ModelType.CHAT_MODEL;
 
 /**
  * TODO

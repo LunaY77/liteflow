@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.test.ai.model.ollama;
 
-import com.yomahub.liteflow.ai.interact.transport.TransportType;
+import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
 import com.yomahub.liteflow.ai.model.ollama.interact.OllamaProtocolTransformer;
 import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatConfig;

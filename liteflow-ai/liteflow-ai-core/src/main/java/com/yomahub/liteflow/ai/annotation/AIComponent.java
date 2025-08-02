@@ -101,16 +101,6 @@ public @interface AIComponent {
      */
     double frequencyPenalty() default -1.0;
 
-    // --- Format ----
-    /**
-     * 响应格式
-     */
-    String responseFormat() default "";
-    /**
-     * 是否严格遵循 JSON Schema
-     */
-    TriState strictJsonSchema() default TriState.UNSET;
-
     // --- Tool Calling ----
     /**
      * 是否并行 ToolCall

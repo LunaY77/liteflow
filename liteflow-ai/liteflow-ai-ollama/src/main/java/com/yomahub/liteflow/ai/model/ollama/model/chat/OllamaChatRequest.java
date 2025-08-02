@@ -1,12 +1,12 @@
 package com.yomahub.liteflow.ai.model.ollama.model.chat;
 
-import com.yomahub.liteflow.ai.interact.callbacks.ChunkCallbackTransformer;
-import com.yomahub.liteflow.ai.interact.callbacks.ResultHandler;
-import com.yomahub.liteflow.ai.interact.transport.TransportListener;
-import com.yomahub.liteflow.ai.util.request.RequestBody;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatOptions;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.model.chat.message.Message;
+import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
+import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
+import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
+import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
+import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package com.yomahub.liteflow.ai.model.ollama.interact;
 
-import com.yomahub.liteflow.ai.interact.pipeline.ChatContext;
-import com.yomahub.liteflow.ai.interact.protocol.ProtocolTransformer;
-import com.yomahub.liteflow.ai.interact.protocol.ProtocolTransformerRegistrar;
-import com.yomahub.liteflow.ai.interact.protocol.StreamingProtocolChunk;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.model.chat.message.AssistantMessage;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.ChatContext;
+import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
+import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformerRegistrar;
+import com.yomahub.liteflow.ai.engine.interact.protocol.StreamingProtocolChunk;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
+import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 
 import static com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant.PROVIDER_NAME;
 

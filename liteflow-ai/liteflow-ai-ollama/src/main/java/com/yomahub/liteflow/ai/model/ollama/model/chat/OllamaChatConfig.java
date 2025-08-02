@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.model.ollama.model.chat;
 
-import com.yomahub.liteflow.ai.interact.transport.TransportType;
-import com.yomahub.liteflow.ai.model.chat.entity.ChatConfig;
+import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 
 import java.time.Duration;
 import java.util.Map;

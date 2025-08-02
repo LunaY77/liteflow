@@ -33,8 +33,6 @@ public final class ModelConfig {
     private final double repeatPenalty;
     private final double presencePenalty;
     private final double frequencyPenalty;
-    private final String responseFormat;
-    private final TriState strictJsonSchema;
     private final TriState parallelToolCalls;
     private final TriState logRequests;
     private final TriState logResponses;
@@ -43,8 +41,8 @@ public final class ModelConfig {
     public ModelConfig(String provider, String baseUrl, String model, String apiKey, String version,
                        String timeout, int maxRetries, double temperature, double topP, int topK,
                        int maxTokens, List<String> stop, int seed, double repeatPenalty,
-                       double presencePenalty, double frequencyPenalty, String responseFormat,
-                       TriState strictJsonSchema, TriState parallelToolCalls, TriState logRequests,
+                       double presencePenalty, double frequencyPenalty,
+                       TriState parallelToolCalls, TriState logRequests,
                        TriState logResponses, List<KeyValue> customHeaders) {
         this.provider = provider;
         this.baseUrl = baseUrl;
@@ -62,8 +60,6 @@ public final class ModelConfig {
         this.repeatPenalty = repeatPenalty;
         this.presencePenalty = presencePenalty;
         this.frequencyPenalty = frequencyPenalty;
-        this.responseFormat = responseFormat;
-        this.strictJsonSchema = strictJsonSchema;
         this.parallelToolCalls = parallelToolCalls;
         this.logRequests = logRequests;
         this.logResponses = logResponses;
@@ -74,13 +70,12 @@ public final class ModelConfig {
         return new ModelConfig(
                 anno.provider(), anno.baseUrl(), anno.model(), anno.apiKey(), anno.version(), anno.timeout(), anno.maxRetries(),
                 anno.temperature(), anno.topP(), anno.topK(), anno.maxTokens(), Arrays.asList(anno.stop()),
-                anno.seed(), anno.repeatPenalty(), anno.presencePenalty(), anno.frequencyPenalty(), anno.responseFormat(),
-                anno.strictJsonSchema(), anno.parallelToolCalls(), anno.logRequests(), anno.logResponses(),
+                anno.seed(), anno.repeatPenalty(), anno.presencePenalty(), anno.frequencyPenalty(),
+                anno.parallelToolCalls(), anno.logRequests(), anno.logResponses(),
                 Arrays.asList(anno.customHeaders())
         );
     }
 
-    // 3. 为所有字段生成 Getter 方法
     public String getProvider() {
         return provider;
     }
@@ -145,14 +140,6 @@ public final class ModelConfig {
         return frequencyPenalty;
     }
 
-    public String getResponseFormat() {
-        return responseFormat;
-    }
-
-    public TriState getStrictJsonSchema() {
-        return strictJsonSchema;
-    }
-
     public TriState getParallelToolCalls() {
         return parallelToolCalls;
     }
@@ -190,8 +177,6 @@ public final class ModelConfig {
                 Objects.equals(version, that.version) &&
                 Objects.equals(timeout, that.timeout) &&
                 Objects.equals(stop, that.stop) &&
-                Objects.equals(responseFormat, that.responseFormat) &&
-                strictJsonSchema == that.strictJsonSchema &&
                 parallelToolCalls == that.parallelToolCalls &&
                 logRequests == that.logRequests &&
                 logResponses == that.logResponses &&
@@ -200,7 +185,7 @@ public final class ModelConfig {
 
     @Override
     public int hashCode() {
-        return Objects.hash(provider, baseUrl, model, apiKey, version, timeout, maxRetries, temperature, topP, topK, maxTokens, stop, seed, repeatPenalty, presencePenalty, frequencyPenalty, responseFormat, strictJsonSchema, parallelToolCalls, logRequests, logResponses, customHeaders);
+        return Objects.hash(provider, baseUrl, model, apiKey, version, timeout, maxRetries, temperature, topP, topK, maxTokens, stop, seed, repeatPenalty, presencePenalty, frequencyPenalty, parallelToolCalls, logRequests, logResponses, customHeaders);
     }
 
     @Override
@@ -222,8 +207,6 @@ public final class ModelConfig {
                 ", repeatPenalty=" + repeatPenalty +
                 ", presencePenalty=" + presencePenalty +
                 ", frequencyPenalty=" + frequencyPenalty +
-                ", responseFormat='" + responseFormat + '\'' +
-                ", strictJsonSchema=" + strictJsonSchema +
                 ", parallelToolCalls=" + parallelToolCalls +
                 ", logRequests=" + logRequests +
                 ", logResponses=" + logResponses +
