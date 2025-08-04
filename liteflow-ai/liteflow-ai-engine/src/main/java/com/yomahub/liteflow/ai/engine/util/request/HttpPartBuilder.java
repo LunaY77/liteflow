@@ -140,7 +140,7 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
      * @return 当前构建器实例，用于链式调用。
      */
     public T putIfNotEmpty(String key, Object value) {
-        if (!isNullOrEmpty(value)) {
+        if (isPresent(value)) {
             this.data.put(key, value);
         }
         return self();
@@ -154,7 +154,7 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
      * @return 当前构建器实例，用于链式调用。
      */
     public T putIfNotNull(String key, Object value) {
-        if (!isNullOrEmpty(value)) {
+        if (isPresent(value)) {
             this.data.put(key, value);
         }
         return self();
@@ -175,6 +175,10 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
         return self();
     }
 
+    private static boolean isPresent(Object value) {
+        return !isNotPresent(value);
+    }
+
     /**
      * 检查给定的对象是否为 null 或 "空"。
      * 如果一个对象是 String、Collection、Map 或数组，且其元素个数或长度为零，
@@ -183,7 +187,7 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
      * @param value 要检查的对象。
      * @return 如果对象为 null 或空，则返回 true，否则返回 false。
      */
-    private static boolean isNullOrEmpty(Object value) {
+    private static boolean isNotPresent(Object value) {
         if (Objects.isNull(value)) {
             return true;
         } else if (value instanceof Collection) {

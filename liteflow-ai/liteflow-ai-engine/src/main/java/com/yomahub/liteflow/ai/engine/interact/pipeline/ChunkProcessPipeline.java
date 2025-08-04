@@ -14,14 +14,14 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 
 public class ChunkProcessPipeline {
 
-    private final ChatContext context;
+    private final InteractContext context;
 
     private final ProtocolTransformer protocolTransformer;
 
     private final ChunkCallbackTransformer chunkCallbackTransformer;
 
     private ChunkProcessPipeline(
-            ChatContext context,
+            InteractContext context,
             ProtocolTransformer protocolTransformer,
             ChunkCallbackTransformer chunkCallbackTransformer) {
         this.context = context;
@@ -37,7 +37,7 @@ public class ChunkProcessPipeline {
      * @param chunkCallbackTransformer 消息处理管道的回调接口，根据块数据的类型进行具体回调
      * @return 流式消息处理管道实例
      */
-    public static ChunkProcessPipeline createStreamingPipeline(ChatContext context, ProtocolTransformer protocolTransformer, ChunkCallbackTransformer chunkCallbackTransformer) {
+    public static ChunkProcessPipeline createStreamingPipeline(InteractContext context, ProtocolTransformer protocolTransformer, ChunkCallbackTransformer chunkCallbackTransformer) {
         return new ChunkProcessPipeline(context, protocolTransformer, chunkCallbackTransformer);
     }
 
@@ -48,7 +48,7 @@ public class ChunkProcessPipeline {
      * @param protocolTransformer 协议转换器，将不同厂商大模型响应转换为 LiteFlow-AI 支持的统一格式
      * @return 阻塞式调用的消息处理管道实例
      */
-    public static ChunkProcessPipeline createBlockingPipeline(ChatContext context, ProtocolTransformer protocolTransformer) {
+    public static ChunkProcessPipeline createBlockingPipeline(InteractContext context, ProtocolTransformer protocolTransformer) {
         return new ChunkProcessPipeline(context, protocolTransformer, null);
     }
 
@@ -86,7 +86,7 @@ public class ChunkProcessPipeline {
         return protocolTransformer.transformStreamingResponse(context);
     }
 
-    public ChatContext getContext() {
+    public InteractContext getContext() {
         return context;
     }
 }

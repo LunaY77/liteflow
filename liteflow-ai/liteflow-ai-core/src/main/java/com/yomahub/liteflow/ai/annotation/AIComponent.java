@@ -43,9 +43,39 @@ public @interface AIComponent {
 
     // --- 连接、鉴权参数 ---
     /**
-     * API URL
+     * API URL，和 endPoint 配合使用
+     * <p>
+     * 请不要在意是否以斜杠结尾or开头，框架会自动处理。
+     * <p>
+     * 你可以只使用 apiUrl，但不提供 endPoint，这样会使用默认的端点，
+     * 请查看对应模型提供商依赖下的 Constant 类，里面定义了默认的端点。
+     * <p>
+     * 例如：
+     * <ul>
+     *     <li>
+     *         openai-apiUrl: {@code https://api.openai.com/v1}<br>
+     *         openai-endPoint: {@code chat/completions}
+     *     </li>
+     * </ul>
      */
-    String baseUrl() default "";
+    String apiUrl() default "";
+    /**
+     * API 端点，和 apiUrl 配合使用
+     * <p>
+     * 请不要在意是否以斜杠结尾or开头，框架会自动处理。
+     * <p>
+     * 你可以只使用 apiUrl，但不提供 endPoint，这样会使用默认的端点，
+     * 请查看对应模型提供商依赖下的 Constant 类，里面定义了默认的端点。
+     * <p>
+     * 例如：
+     * <ul>
+     *     <li>
+     *         openai-apiUrl: {@code https://api.openai.com/v1}<br>
+     *         openai-endPoint: {@code chat/completions}
+     *     </li>
+     * </ul>
+     */
+    String endPoint() default "";
     /**
      * 模型名
      */
@@ -74,12 +104,10 @@ public @interface AIComponent {
     int topK() default -1;
     /**
      * 最大 Token 数量
-     * 统一：maxTokens, maxOutputTokens, numPredict
      */
     int maxTokens() default -1;
     /**
      * 停止序列
-     * 统一: stop, stopSequences
      */
     String[] stop() default {};
     /**

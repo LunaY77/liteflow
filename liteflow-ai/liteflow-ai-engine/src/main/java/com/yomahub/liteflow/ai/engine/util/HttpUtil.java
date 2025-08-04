@@ -1,8 +1,8 @@
 package com.yomahub.liteflow.ai.engine.util;
 
 import com.alibaba.fastjson2.JSON;
-import com.yomahub.liteflow.log.LFLog;
-import com.yomahub.liteflow.log.LFLoggerManager;
+import com.yomahub.liteflow.ai.engine.log.EngineLog;
+import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import okhttp3.*;
 
 import java.io.File;
@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public final class HttpUtil implements AutoCloseable {
 
-    private static final LFLog LOG = LFLoggerManager.getLogger(HttpUtil.class);
+    private static final EngineLog LOG = EngineLogManager.getLogger(HttpUtil.class);
     private static final MediaType JSON_MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
 
     private final OkHttpClient syncClient;

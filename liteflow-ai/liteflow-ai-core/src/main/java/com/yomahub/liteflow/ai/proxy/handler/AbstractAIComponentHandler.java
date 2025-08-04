@@ -131,7 +131,6 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
                     .implement(wrapBean.getInterfaceClass())
                     .method(getInterceptMethodName())
                     .intercept(InvocationHandlerAdapter.of(getInvocationHandler(wrapBean)))
-//                    .annotateType(wrapBean.getAiComponent(), wrapBean.getAnnotation())
                     .make()
                     .load(this.getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
                     .getLoaded()

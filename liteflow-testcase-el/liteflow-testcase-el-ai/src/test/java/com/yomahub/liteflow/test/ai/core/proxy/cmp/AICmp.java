@@ -14,7 +14,7 @@ import com.yomahub.liteflow.ai.domain.enums.ResponseType;
         nodeId = "aiCmpId",
         nodeName = "aiCmpName",
         provider = "ollama",
-        baseUrl = "http://localhost:11434",
+        apiUrl = "http://localhost:11434",
         model = "qwen3:32b"
 )
 @AIChat(

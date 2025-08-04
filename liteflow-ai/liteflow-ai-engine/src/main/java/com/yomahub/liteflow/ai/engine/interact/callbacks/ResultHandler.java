@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.engine.interact.callbacks;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChatContext;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 
 /**
@@ -15,17 +15,17 @@ public interface ResultHandler {
     static ResultHandler getDefault() {
         return new ResultHandler() {
             @Override
-            public ChatResponse onCompletion(ChatResponse response, ChatContext context) {
+            public ChatResponse onCompletion(ChatResponse response, InteractContext context) {
                 return response;
             }
 
             @Override
-            public ChatResponse onError(ChatResponse response, ChatContext context, Exception e) {
+            public ChatResponse onError(ChatResponse response, InteractContext context, Exception e) {
                 return response;
             }
 
             @Override
-            public ChatResponse onFinal(ChatResponse response, ChatContext context) {
+            public ChatResponse onFinal(ChatResponse response, InteractContext context) {
                 return response;
             }
         };
@@ -38,8 +38,7 @@ public interface ResultHandler {
      * @param context  聊天上下文，包含处理过程中的状态和信息
      * @return 处理后的结果
      */
-    // TODO args
-    ChatResponse onCompletion(ChatResponse response, ChatContext context);
+    ChatResponse onCompletion(ChatResponse response, InteractContext context);
 
     /**
      * 处理过程中发生错误的回调方法。
@@ -49,8 +48,7 @@ public interface ResultHandler {
      * @param e
      * @return 处理后的结果
      */
-    // TODO args
-    ChatResponse onError(ChatResponse response, ChatContext context, Exception e);
+    ChatResponse onError(ChatResponse response, InteractContext context, Exception e);
 
     /**
      * 最终结果处理的回调方法。无论是否发生错误均会调用此方法。
@@ -59,7 +57,6 @@ public interface ResultHandler {
      * @param context  聊天上下文，包含处理过程中的状态和信息
      * @return 处理后的结果
      */
-    // TODO args
-    ChatResponse onFinal(ChatResponse response, ChatContext context);
+    ChatResponse onFinal(ChatResponse response, InteractContext context);
 
 }

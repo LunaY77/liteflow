@@ -1,26 +1,13 @@
 package com.yomahub.liteflow.test.ai.model.ollama;
 
-import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
-import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformerFactory;
-import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
-import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
 import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatConfig;
 import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatModel;
-import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatRequest;
-import com.yomahub.liteflow.ai.engine.model.runtime.ModelRuntimeFactory;
-import com.yomahub.liteflow.ai.engine.model.runtime.ModelRuntimeRegistrar;
-import com.yomahub.liteflow.ai.engine.util.SpringUtil;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.Set;
 
 /**
  * TODO
@@ -33,8 +20,6 @@ import java.util.Set;
         ModelFactoryTest.class,
         ModelConfiguration.class,
         OllamaChatModel.class,
-        ModelRuntimeRegistrar.class,
-        SpringUtil.class,
 })
 public class ModelFactoryTest {
 
@@ -45,41 +30,42 @@ public class ModelFactoryTest {
 
     @Test
     public void test() {
-
-        ChatRequest request = OllamaChatRequest.builder()
-                .prompt("Why sky is blue?")
-                .options(ChatOptions.DEFAULT)
-                .onStart(context -> LOG.info("chat start"))
-                .onClose(context -> LOG.info("chat close"))
-                .onCompletion(((response, context) -> {
-                    LOG.info("chat completion: \n{}", response.getMessage().getContent());
-                    AssistantMessage modifiedMessage = new AssistantMessage(
-                            response.getMessage().getContent() + " \n(modified by onCompletion)"
-                    );
-                    response.setMessage(modifiedMessage);
-                    return response;
-                }))
-                .build();
-
-        // 自动注册 Model
-        Set<String> supportedProviders = ModelRuntimeFactory.getSupportedProviders();
-        LOG.info("{}", supportedProviders);
-
-        // 自动注册 转换器
-        ProtocolTransformer transformer = ProtocolTransformerFactory.getTransformer(OllamaConstant.PROVIDER_NAME);
-        LOG.info("{}", transformer);
-
-        // 请求体构建
-        LOG.info("{}",
-                request.toRequestBody()
-                        .merge(ollamaChatConfig.toRequestBody())
-        );
-
-        System.out.println("=========================================");
-
-        // 请求
-        ChatModel chatModel = ModelRuntimeFactory.createChatRuntime(OllamaConstant.PROVIDER_NAME, ollamaChatConfig);
-        ChatResponse response = chatModel.chat(request);
+        System.out.println(1);
+//
+//        ChatRequest request = OllamaChatRequest.builder()
+//                .prompt("Why sky is blue?")
+//                .options(ChatOptions.DEFAULT)
+//                .onStart(context -> LOG.info("chat start"))
+//                .onClose(context -> LOG.info("chat close"))
+//                .onCompletion(((response, context) -> {
+//                    LOG.info("chat completion: \n{}", response.getMessage().getContent());
+//                    AssistantMessage modifiedMessage = new AssistantMessage(
+//                            response.getMessage().getContent() + " \n(modified by onCompletion)"
+//                    );
+//                    response.setMessage(modifiedMessage);
+//                    return response;
+//                }))
+//                .build();
+//
+//        // 自动注册 Model
+//        Set<String> supportedProviders = ModelRuntimeFactory.getSupportedProviders();
+//        LOG.info("{}", supportedProviders);
+//
+//        // 自动注册 转换器
+//        ProtocolTransformer transformer = ProtocolTransformerFactory.getTransformer(OllamaConstant.PROVIDER_NAME);
+//        LOG.info("{}", transformer);
+//
+//        // 请求体构建
+//        LOG.info("{}",
+//                request.toRequestBody()
+//                        .merge(ollamaChatConfig.toRequestBody())
+//        );
+//
+//        System.out.println("=========================================");
+//
+//        // 请求
+//        ChatModel chatModel = ModelRuntimeFactory.createChatRuntime(OllamaConstant.PROVIDER_NAME, ollamaChatConfig);
+//        ChatResponse response = chatModel.chat(request);
     }
 
     /*

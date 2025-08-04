@@ -1,15 +1,17 @@
 package com.yomahub.liteflow.ai.engine.interact.pipeline;
 
+import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
+
 import java.util.UUID;
 
 /**
- * 大模型交互上下文，
+ * 大模型交互上下文(engine模块内部使用，非 LiteFlow 上下文类)
  *
  * @author 苍镜月
  * @since TODO
  */
 
-public class ChatContext {
+public class InteractContext {
 
     private final String chatId;
 
@@ -17,8 +19,7 @@ public class ChatContext {
 
     private final StringBuilder aggregatedThinking;
 
-    // TODO arg
-    private Object usage;
+    private TokenUsage usage;
 
     // TODO arg
     private Object grounding;
@@ -26,8 +27,8 @@ public class ChatContext {
     // TODO arg
     private Object toolsCalling;
 
-    public ChatContext() {
-        chatId = "chat_" + UUID.randomUUID();
+    public InteractContext() {
+        chatId = "interact_" + UUID.randomUUID();
         aggregatedText = new StringBuilder();
         aggregatedThinking = new StringBuilder();
     }

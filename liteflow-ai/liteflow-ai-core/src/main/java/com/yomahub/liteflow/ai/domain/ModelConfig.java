@@ -18,7 +18,8 @@ import java.util.Objects;
 public final class ModelConfig {
 
     private final String provider;
-    private final String baseUrl;
+    private final String apiUrl;
+    private final String endPoint;
     private final String model;
     private final String apiKey;
     private final String version;
@@ -38,14 +39,15 @@ public final class ModelConfig {
     private final TriState logResponses;
     private final List<KeyValue> customHeaders;
 
-    public ModelConfig(String provider, String baseUrl, String model, String apiKey, String version,
-                       String timeout, int maxRetries, double temperature, double topP, int topK,
-                       int maxTokens, List<String> stop, int seed, double repeatPenalty,
+    public ModelConfig(String provider, String apiUrl, String endPoint, String model, String apiKey,
+                       String version, String timeout, int maxRetries, double temperature, double topP,
+                       int topK, int maxTokens, List<String> stop, int seed, double repeatPenalty,
                        double presencePenalty, double frequencyPenalty,
                        TriState parallelToolCalls, TriState logRequests,
                        TriState logResponses, List<KeyValue> customHeaders) {
         this.provider = provider;
-        this.baseUrl = baseUrl;
+        this.apiUrl = apiUrl;
+        this.endPoint = endPoint;
         this.model = model;
         this.apiKey = apiKey;
         this.version = version;
@@ -68,11 +70,11 @@ public final class ModelConfig {
 
     public static ModelConfig fromAnnotation(AIComponent anno) {
         return new ModelConfig(
-                anno.provider(), anno.baseUrl(), anno.model(), anno.apiKey(), anno.version(), anno.timeout(), anno.maxRetries(),
-                anno.temperature(), anno.topP(), anno.topK(), anno.maxTokens(), Arrays.asList(anno.stop()),
-                anno.seed(), anno.repeatPenalty(), anno.presencePenalty(), anno.frequencyPenalty(),
-                anno.parallelToolCalls(), anno.logRequests(), anno.logResponses(),
-                Arrays.asList(anno.customHeaders())
+                anno.provider(), anno.apiUrl(), anno.endPoint(), anno.model(), anno.apiKey(), anno.version(),
+                anno.timeout(), anno.maxRetries(), anno.temperature(), anno.topP(), anno.topK(),
+                anno.maxTokens(), Arrays.asList(anno.stop()), anno.seed(), anno.repeatPenalty(),
+                anno.presencePenalty(), anno.frequencyPenalty(), anno.parallelToolCalls(), anno.logRequests(),
+                anno.logResponses(), Arrays.asList(anno.customHeaders())
         );
     }
 
@@ -80,8 +82,12 @@ public final class ModelConfig {
         return provider;
     }
 
-    public String getBaseUrl() {
-        return baseUrl;
+    public String getApiUrl() {
+        return apiUrl;
+    }
+
+    public String getEndPoint() {
+        return endPoint;
     }
 
     public String getModel() {
@@ -171,7 +177,8 @@ public final class ModelConfig {
                 Double.compare(that.presencePenalty, presencePenalty) == 0 &&
                 Double.compare(that.frequencyPenalty, frequencyPenalty) == 0 &&
                 Objects.equals(provider, that.provider) &&
-                Objects.equals(baseUrl, that.baseUrl) &&
+                Objects.equals(apiUrl, that.apiUrl) &&
+                Objects.equals(endPoint, that.endPoint) &&
                 Objects.equals(model, that.model) &&
                 Objects.equals(apiKey, that.apiKey) &&
                 Objects.equals(version, that.version) &&
@@ -185,14 +192,15 @@ public final class ModelConfig {
 
     @Override
     public int hashCode() {
-        return Objects.hash(provider, baseUrl, model, apiKey, version, timeout, maxRetries, temperature, topP, topK, maxTokens, stop, seed, repeatPenalty, presencePenalty, frequencyPenalty, parallelToolCalls, logRequests, logResponses, customHeaders);
+        return Objects.hash(provider, apiUrl, endPoint, model, apiKey, version, timeout, maxRetries, temperature, topP, topK, maxTokens, stop, seed, repeatPenalty, presencePenalty, frequencyPenalty, parallelToolCalls, logRequests, logResponses, customHeaders);
     }
 
     @Override
     public String toString() {
         return "ModelConfig{" +
                 "provider='" + provider + '\'' +
-                ", baseUrl='" + baseUrl + '\'' +
+                ", apiUrl='" + apiUrl + '\'' +
+                ", endPoint='" + endPoint + '\'' +
                 ", model='" + model + '\'' +
                 ", apiKey='" + apiKey + '\'' +
                 ", version='" + version + '\'' +

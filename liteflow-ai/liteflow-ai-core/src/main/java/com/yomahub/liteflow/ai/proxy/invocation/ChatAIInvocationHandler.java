@@ -1,5 +1,8 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
+import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
+import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import com.yomahub.liteflow.core.NodeComponent;
@@ -34,6 +37,7 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatPro
     }
 
     private Void processStreaming(NodeComponent nodeComponent) {
+        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
 //        StreamingChatModel streamingChatModel = ModelFactory.getStreamingChatModel(wrapBean);
 //        // 创建AI服务实例
 //        Object aiService = AiServiceFactory.createAiService(wrapBean.getEntityClass(), streamingChatModel);
@@ -54,6 +58,8 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatPro
     }
 
     private Object processBlocking(NodeComponent nodeComponent) {
+        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
+        chatModel.chat(ChatRequest.builder().build());
 //        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
 //
 //        // 创建AI服务实例

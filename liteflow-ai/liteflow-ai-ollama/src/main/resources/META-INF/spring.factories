@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.yomahub.liteflow.ai.ollama.config.OllamaAutoConfiguration
+  com.yomahub.liteflow.ai.model.ollama.config.OllamaAutoConfiguration

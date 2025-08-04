@@ -11,4 +11,7 @@ public interface OllamaConstant {
 
     String PROVIDER_NAME  = "ollama";
 
+    String DEFAULT_API_URL = "http://localhost:11434";
+
+    String DEFAULT_END_POINT = "api/chat";
 }

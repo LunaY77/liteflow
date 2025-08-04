@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.engine.interact.transport;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChatContext;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 
 /**
  * 传输监听器接口
@@ -14,11 +14,11 @@ public interface TransportListener {
     static TransportListener getDefault() {
         return new TransportListener() {
             @Override
-            public void onStart(ChatContext context) {
+            public void onStart(InteractContext context) {
             }
 
             @Override
-            public void onClose(ChatContext context) {
+            public void onClose(InteractContext context) {
             }
         };
     }
@@ -28,13 +28,13 @@ public interface TransportListener {
      *
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    void onStart(ChatContext context);
+    void onStart(InteractContext context);
 
     /**
      * 请求关闭时的回调方法
      *
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    void onClose(ChatContext context);
+    void onClose(InteractContext context);
 
 }

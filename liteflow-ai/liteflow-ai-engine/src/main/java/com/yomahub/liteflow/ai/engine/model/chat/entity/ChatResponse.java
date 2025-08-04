@@ -1,7 +1,11 @@
 package com.yomahub.liteflow.ai.engine.model.chat.entity;
 
-import com.yomahub.liteflow.ai.engine.model.ModelResponse;
 import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
+import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
+import com.yomahub.liteflow.ai.engine.model.output.Response;
+import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
+
+import java.util.Map;
 
 /**
  * chat 响应体
@@ -10,66 +14,38 @@ import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
  * @since TODO
  */
 
-public class ChatResponse implements ModelResponse {
+public class ChatResponse extends Response<AssistantMessage> {
 
-    /**
-     * 助手消息
-     */
-    private AssistantMessage message;
-
-    /**
-     * 聊天ID
-     */
-    private String chatId;
-
-    /**
-     * 是否完成
-     */
-    private boolean finished;
-
-    /**
-     * 使用情况统计
-     */
-    private Object usage;
-
-    public ChatResponse() {
+    public ChatResponse(AssistantMessage content) {
+        super(content);
     }
 
-    public ChatResponse(AssistantMessage message, String chatId, boolean finished) {
-        this.message = message;
-        this.chatId = chatId;
-        this.finished = finished;
+    public ChatResponse(AssistantMessage content, TokenUsage tokenUsage, FinishReason finishReason) {
+        super(content, tokenUsage, finishReason);
     }
 
-    public AssistantMessage getMessage() {
-        return message;
+    public ChatResponse(AssistantMessage content, TokenUsage tokenUsage, FinishReason finishReason, Map<String, Object> metadata) {
+        super(content, tokenUsage, finishReason, metadata);
     }
 
-    public void setMessage(AssistantMessage message) {
-        this.message = message;
+    public ChatResponse(Builder builder) {
+        super(builder);
     }
 
-    public String getChatId() {
-        return chatId;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setChatId(String chatId) {
-        this.chatId = chatId;
-    }
+    public static class Builder extends Response.Builder<AssistantMessage, Builder> {
 
-    public boolean isFinished() {
-        return finished;
-    }
+        @Override
+        protected Builder self() {
+            return this;
+        }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public Object getUsage() {
-        return usage;
-    }
-
-    public void setUsage(Object usage) {
-        this.usage = usage;
+        @Override
+        public Response<AssistantMessage> build() {
+            return new ChatResponse(this);
+        }
     }
 }

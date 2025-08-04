@@ -5,21 +5,16 @@ import com.yomahub.liteflow.ai.engine.interact.LlmInteractClient;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.engine.model.runtime.LiteFlowAIModel;
 
 import java.util.concurrent.CompletableFuture;
 
-import static com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant.PROVIDER_NAME;
-import static com.yomahub.liteflow.ai.engine.model.runtime.ModelType.CHAT_MODEL;
-
 /**
- * TODO
+ * Ollama 聊天模型
  *
  * @author 苍镜月
  * @since TODO
  */
 
-@LiteFlowAIModel(PROVIDER_NAME + CHAT_MODEL)
 public class OllamaChatModel implements ChatModel {
 
     private final OllamaChatConfig config;

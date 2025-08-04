@@ -2,18 +2,18 @@ package com.yomahub.liteflow.ai.engine.interact;
 
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChatContext;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformerFactory;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
+import com.yomahub.liteflow.ai.engine.log.EngineLog;
+import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.log.LFLog;
-import com.yomahub.liteflow.log.LFLoggerManager;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 public class LlmInteractClient implements InteractClient {
 
-    private static final LFLog LOG = LFLoggerManager.getLogger(LlmInteractClient.class);
+    private static final EngineLog LOG = EngineLogManager.getLogger(LlmInteractClient.class);
 
     @Override
     public void stream(ChatConfig config, ChatRequest request) {
@@ -67,7 +67,7 @@ public class LlmInteractClient implements InteractClient {
     private static class InteractManager {
         private final ChatConfig config;
         private final ChatRequest request;
-        private final ChatContext context;
+        private final InteractContext context;
         private final ChunkProcessPipeline pipeline;
         private final TransportListener externalTransportListener;
         private final ResultHandler resultHandler;
@@ -77,7 +77,7 @@ public class LlmInteractClient implements InteractClient {
         public InteractManager(ChatConfig config, ChatRequest request) {
             this.config = config;
             this.request = request;
-            this.context = new ChatContext();
+            this.context = new InteractContext();
             ProtocolTransformer protocolTransformer = ProtocolTransformerFactory.getTransformer(config.getProvider());
             this.pipeline = config.isStreaming()
                     ? ChunkProcessPipeline.createStreamingPipeline(context, protocolTransformer, request.getChunkCallbackTransformer())
@@ -107,12 +107,12 @@ public class LlmInteractClient implements InteractClient {
         private class InternalTransportListener implements TransportListener {
 
             @Override
-            public void onStart(ChatContext context) {
+            public void onStart(InteractContext context) {
                 externalTransportListener.onStart(context);
             }
 
             @Override
-            public void onClose(ChatContext context) {
+            public void onClose(InteractContext context) {
                 ChatResponse finalResponse = null;
                 try {
                     // 构造最终响应

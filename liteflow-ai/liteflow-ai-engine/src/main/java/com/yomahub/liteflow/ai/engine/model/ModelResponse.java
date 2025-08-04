@@ -7,5 +7,7 @@ package com.yomahub.liteflow.ai.engine.model;
  * @since TODO
  */
 
-public interface ModelResponse {
+public interface ModelResponse<T> {
+
+    T getContent();
 }

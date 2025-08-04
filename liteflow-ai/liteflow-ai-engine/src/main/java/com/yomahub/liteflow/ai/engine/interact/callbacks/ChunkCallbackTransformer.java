@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.engine.interact.callbacks;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChatContext;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkTransformer;
 import com.yomahub.liteflow.ai.engine.interact.protocol.StreamingProtocolChunk;
 
@@ -16,33 +16,33 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
     static ChunkCallbackTransformer getDefault() {
         return new ChunkCallbackTransformer() {
             @Override
-            public String onText(String content, ChatContext context) {
+            public String onText(String content, InteractContext context) {
                 return content;
             }
 
             @Override
-            public String onThinking(String content, ChatContext context) {
+            public String onThinking(String content, InteractContext context) {
                 return content;
             }
 
             @Override
-            public Object onToolsCalling(Object content, ChatContext context) {
+            public Object onToolsCalling(Object content, InteractContext context) {
                 return content;
             }
 
             @Override
-            public Object onUsage(Object content, ChatContext context) {
+            public Object onUsage(Object content, InteractContext context) {
                 return content;
             }
 
             @Override
-            public Object onGrounding(Object content, ChatContext context) {
+            public Object onGrounding(Object content, InteractContext context) {
                 return content;
             }
         };
     }
 
-    default StreamingProtocolChunk transform(StreamingProtocolChunk transformedChunk, ChatContext context) {
+    default StreamingProtocolChunk transform(StreamingProtocolChunk transformedChunk, InteractContext context) {
         switch (transformedChunk.getType()) {
             case TEXT:
                 String textContent = (String) transformedChunk.getData();
@@ -83,7 +83,7 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
      * @param content 文本内容
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    String onText(String content, ChatContext context);
+    String onText(String content, InteractContext context);
 
     /**
      * 处理思考消息的回调方法。
@@ -91,7 +91,7 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
      * @param content 思考内容
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    String onThinking(String content, ChatContext context);
+    String onThinking(String content, InteractContext context);
 
     /**
      * 处理工具调用消息的回调方法。
@@ -100,7 +100,7 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
     // TODO args
-    Object onToolsCalling(Object content, ChatContext context);
+    Object onToolsCalling(Object content, InteractContext context);
 
     /**
      * 处理 Token 统计信息的回调方法
@@ -109,7 +109,7 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
     // TODO args
-    Object onUsage(Object content, ChatContext context);
+    Object onUsage(Object content, InteractContext context);
 
     /**
      * 处理基础信息/搜索结果的回调方法
@@ -118,7 +118,7 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
     // TODO args
-    Object onGrounding(Object content, ChatContext context);
+    Object onGrounding(Object content, InteractContext context);
 
     @Override
     default String getTransformerType() {

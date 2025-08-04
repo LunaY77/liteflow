@@ -30,6 +30,8 @@ public class ChatAnnotationProcessor extends AbstractAnnotationProcessor<AIChat,
 
         // 处理结构化输出参数绑定
         parseOutput(context);
+
+        // TODO 组装 Request
     }
 
     @Override

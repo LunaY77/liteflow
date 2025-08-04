@@ -2,12 +2,12 @@ package com.yomahub.liteflow.ai.engine.model.chat.entity;
 
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChatContext;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.model.ModelRequest;
-import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
-import org.apache.commons.lang3.function.TriFunction;
+import com.yomahub.liteflow.ai.engine.util.TriFunction;
+import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,9 +166,9 @@ public class ChatRequest implements ModelRequest {
          * 请求开始时的回调方法
          *
          * @param onStart 请求开始时的回调函数
-         * @see TransportListener#onStart(ChatContext)
+         * @see TransportListener#onStart(InteractContext)
          */
-        public B onStart(Consumer<ChatContext> onStart) {
+        public B onStart(Consumer<InteractContext> onStart) {
             listenerAggregator.onStart = onStart;
             return self();
         }
@@ -177,9 +177,9 @@ public class ChatRequest implements ModelRequest {
          * 请求结束时的回调方法
          *
          * @param onClose 请求结束时的回调函数
-         * @see TransportListener#onClose(ChatContext)
+         * @see TransportListener#onClose(InteractContext)
          */
-        public B onClose(Consumer<ChatContext> onClose) {
+        public B onClose(Consumer<InteractContext> onClose) {
             listenerAggregator.onClose = onClose;
             return self();
         }
@@ -188,9 +188,9 @@ public class ChatRequest implements ModelRequest {
          * 文本消息的回调方法
          *
          * @param onText 文本消息的回调函数
-         * @see ChunkCallbackTransformer#onText(String, ChatContext)
+         * @see ChunkCallbackTransformer#onText(String, InteractContext)
          */
-        public B onText(BiFunction<String, ChatContext, String> onText) {
+        public B onText(BiFunction<String, InteractContext, String> onText) {
             listenerAggregator.onText = onText;
             return self();
         }
@@ -199,9 +199,9 @@ public class ChatRequest implements ModelRequest {
          * 思考消息的回调方法
          *
          * @param onThinking 思考消息的回调函数
-         * @see ChunkCallbackTransformer#onThinking(String, ChatContext)
+         * @see ChunkCallbackTransformer#onThinking(String, InteractContext)
          */
-        public B onThinking(BiFunction<String, ChatContext, String> onThinking) {
+        public B onThinking(BiFunction<String, InteractContext, String> onThinking) {
             listenerAggregator.onThinking = onThinking;
             return self();
         }
@@ -210,9 +210,9 @@ public class ChatRequest implements ModelRequest {
          * 工具调用消息的回调方法
          *
          * @param onToolsCalling 工具调用消息的回调函数
-         * @see ChunkCallbackTransformer#onToolsCalling(Object, ChatContext)
+         * @see ChunkCallbackTransformer#onToolsCalling(Object, InteractContext)
          */
-        public B onToolsCalling(BiFunction<Object, ChatContext, Object> onToolsCalling) {
+        public B onToolsCalling(BiFunction<Object, InteractContext, Object> onToolsCalling) {
             listenerAggregator.onToolsCalling = onToolsCalling;
             return self();
         }
@@ -221,9 +221,9 @@ public class ChatRequest implements ModelRequest {
          * Token 统计信息的回调方法
          *
          * @param onUsage Token 统计信息的回调函数
-         * @see ChunkCallbackTransformer#onUsage(Object, ChatContext)
+         * @see ChunkCallbackTransformer#onUsage(Object, InteractContext)
          */
-        public B onUsage(BiFunction<Object, ChatContext, Object> onUsage) {
+        public B onUsage(BiFunction<Object, InteractContext, Object> onUsage) {
             listenerAggregator.onUsage = onUsage;
             return self();
         }
@@ -232,9 +232,9 @@ public class ChatRequest implements ModelRequest {
          * 基础信息/搜索结果的回调方法
          *
          * @param onGrounding 基础信息/搜索结果的回调函数
-         * @see ChunkCallbackTransformer#onGrounding(Object, ChatContext)
+         * @see ChunkCallbackTransformer#onGrounding(Object, InteractContext)
          */
-        public B onGrounding(BiFunction<Object, ChatContext, Object> onGrounding) {
+        public B onGrounding(BiFunction<Object, InteractContext, Object> onGrounding) {
             listenerAggregator.onGrounding = onGrounding;
             return self();
         }
@@ -243,9 +243,9 @@ public class ChatRequest implements ModelRequest {
          * 请求完成时的回调方法
          *
          * @param onCompletion 请求完成时的回调函数
-         * @see ResultHandler#onCompletion(ChatResponse, ChatContext)
+         * @see ResultHandler#onCompletion(ChatResponse, InteractContext)
          */
-        public B onCompletion(BiFunction<ChatResponse, ChatContext, ChatResponse> onCompletion) {
+        public B onCompletion(BiFunction<ChatResponse, InteractContext, ChatResponse> onCompletion) {
             listenerAggregator.onCompletion = onCompletion;
             return self();
         }
@@ -254,9 +254,9 @@ public class ChatRequest implements ModelRequest {
          * 请求发生错误时的回调方法
          *
          * @param onError 请求发生错误时的回调函数
-         * @see ResultHandler#onError(ChatResponse, ChatContext, Exception)
+         * @see ResultHandler#onError(ChatResponse, InteractContext, Exception)
          */
-        public B onError(TriFunction<ChatResponse, ChatContext, Exception, ChatResponse> onError) {
+        public B onError(TriFunction<ChatResponse, InteractContext, Exception, ChatResponse> onError) {
             listenerAggregator.onError = onError;
             return self();
         }
@@ -265,9 +265,9 @@ public class ChatRequest implements ModelRequest {
          * 最终结果处理的回调方法。无论是否发生错误均会调用此方法。
          *
          * @param onFinal 请求最终结果的回调函数
-         * @see ResultHandler#onFinal(ChatResponse, ChatContext)
+         * @see ResultHandler#onFinal(ChatResponse, InteractContext)
          */
-        public B onFinal(BiFunction<ChatResponse, ChatContext, ChatResponse> onFinal) {
+        public B onFinal(BiFunction<ChatResponse, InteractContext, ChatResponse> onFinal) {
             listenerAggregator.onFinal = onFinal;
             return self();
         }
@@ -276,31 +276,31 @@ public class ChatRequest implements ModelRequest {
          * 内部聚合类
          */
         protected static class LlmListenerAggregator {
-            Consumer<ChatContext> onStart = context -> {};
-            Consumer<ChatContext> onClose = context -> {};
-            BiFunction<String, ChatContext, String> onText = (content, context) -> content;
-            BiFunction<String, ChatContext, String> onThinking = (content, context) -> content;
-            BiFunction<Object, ChatContext, Object> onToolsCalling = (content, context) -> content;
-            BiFunction<Object, ChatContext, Object> onUsage = (content, context) -> content;
-            BiFunction<Object, ChatContext, Object> onGrounding = (content, context) -> content;
-            BiFunction<ChatResponse, ChatContext, ChatResponse> onCompletion = (response, context) -> response;
-            TriFunction<ChatResponse, ChatContext, Exception, ChatResponse> onError = (response, context, e) -> {
+            Consumer<InteractContext> onStart = context -> {};
+            Consumer<InteractContext> onClose = context -> {};
+            BiFunction<String, InteractContext, String> onText = (content, context) -> content;
+            BiFunction<String, InteractContext, String> onThinking = (content, context) -> content;
+            BiFunction<Object, InteractContext, Object> onToolsCalling = (content, context) -> content;
+            BiFunction<Object, InteractContext, Object> onUsage = (content, context) -> content;
+            BiFunction<Object, InteractContext, Object> onGrounding = (content, context) -> content;
+            BiFunction<ChatResponse, InteractContext, ChatResponse> onCompletion = (response, context) -> response;
+            TriFunction<ChatResponse, InteractContext, Exception, ChatResponse> onError = (response, context, e) -> {
                 e.printStackTrace();
                 return response;
             };
-            BiFunction<ChatResponse, ChatContext, ChatResponse> onFinal = (response, context) -> response;
+            BiFunction<ChatResponse, InteractContext, ChatResponse> onFinal = (response, context) -> response;
 
             TransportListener toTransportListener() {
                 Objects.requireNonNull(onStart, "onStart cannot be null");
                 Objects.requireNonNull(onClose, "onClose cannot be null");
                 return new TransportListener() {
                     @Override
-                    public void onStart(ChatContext context) {
+                    public void onStart(InteractContext context) {
                         onStart.accept(context);
                     }
 
                     @Override
-                    public void onClose(ChatContext context) {
+                    public void onClose(InteractContext context) {
                         onClose.accept(context);
                     }
                 };
@@ -312,17 +312,17 @@ public class ChatRequest implements ModelRequest {
                 Objects.requireNonNull(onFinal, "onFinal cannot be null");
                 return new ResultHandler() {
                     @Override
-                    public ChatResponse onCompletion(ChatResponse response, ChatContext context) {
+                    public ChatResponse onCompletion(ChatResponse response, InteractContext context) {
                         return onCompletion.apply(response, context);
                     }
 
                     @Override
-                    public ChatResponse onError(ChatResponse response, ChatContext context, Exception e) {
+                    public ChatResponse onError(ChatResponse response, InteractContext context, Exception e) {
                         return onError.apply(response, context, e);
                     }
 
                     @Override
-                    public ChatResponse onFinal(ChatResponse response, ChatContext context) {
+                    public ChatResponse onFinal(ChatResponse response, InteractContext context) {
                         return onFinal.apply(response, context);
                     }
                 };
@@ -336,27 +336,27 @@ public class ChatRequest implements ModelRequest {
                 Objects.requireNonNull(onGrounding, "onGrounding cannot be null");
                 return new ChunkCallbackTransformer() {
                     @Override
-                    public String onText(String content, ChatContext context) {
+                    public String onText(String content, InteractContext context) {
                         return onText.apply(content, context);
                     }
 
                     @Override
-                    public String onThinking(String content, ChatContext context) {
+                    public String onThinking(String content, InteractContext context) {
                         return onThinking.apply(content, context);
                     }
 
                     @Override
-                    public Object onToolsCalling(Object content, ChatContext context) {
+                    public Object onToolsCalling(Object content, InteractContext context) {
                         return onToolsCalling.apply(content, context);
                     }
 
                     @Override
-                    public Object onUsage(Object content, ChatContext context) {
+                    public Object onUsage(Object content, InteractContext context) {
                         return onUsage.apply(content, context);
                     }
 
                     @Override
-                    public Object onGrounding(Object content, ChatContext context) {
+                    public Object onGrounding(Object content, InteractContext context) {
                         return onGrounding.apply(content, context);
                     }
                 };
