@@ -32,12 +32,12 @@ public class OllamaChatModel implements ChatModel {
 
     @Override
     public CompletableFuture<ChatResponse> chatAsync(ChatRequest request) {
-        return null;
+        return interactClient.chatAsync(config, request);
     }
 
     @Override
     public void stream(ChatRequest request) {
-
+        interactClient.stream(config, request);
     }
 
     @Override

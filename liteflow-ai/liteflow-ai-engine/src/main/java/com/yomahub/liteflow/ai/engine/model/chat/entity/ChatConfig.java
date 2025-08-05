@@ -71,7 +71,7 @@ public class ChatConfig extends ModelConfig {
      * 如果流式输出模式启用但传输类型为HTTP，则抛出异常。
      * 如果阻塞式输出模式启用但传输类型不是HTTP，则抛出异常。
      */
-    private void checkTransportConsistency() {
+    protected void checkTransportConsistency() {
         if (this.streaming && this.transportType == TransportType.HTTP) {
             throw new IllegalArgumentException("流式输出模式启用，但不支持HTTP传输。请使用SSE或WebSocket传输。");
         } else if (!this.streaming && this.transportType != TransportType.HTTP) {

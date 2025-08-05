@@ -35,6 +35,16 @@ public class OllamaChatConfig extends ChatConfig {
                 headersConfig, autoToolCallEnabled, streaming, transportType);
     }
 
+    @Override
+    protected void checkTransportConsistency() {
+        super.checkTransportConsistency();
+        // ollama 的流式传输不支持 SSE 格式
+        if (this.streaming && this.transportType == TransportType.SSE) {
+            throw new IllegalArgumentException("For streaming with Ollama, the transportType must be set to `DnJson`. " +
+                    "The currently configured type `SSE` is not supported.");
+        }
+    }
+
     public OllamaChatConfig(Builder builder) {
         super(builder);
     }

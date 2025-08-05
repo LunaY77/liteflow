@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.interact.transport;
 
+import com.yomahub.liteflow.ai.engine.interact.transport.impl.DnJsonTransport;
 import com.yomahub.liteflow.ai.engine.interact.transport.impl.HttpTransport;
 import com.yomahub.liteflow.ai.engine.interact.transport.impl.SseTransport;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public enum TransportType {
     HTTP(HttpTransport.class),
     SSE(SseTransport.class),
+    DnJson(DnJsonTransport.class),
     // TODO custom
     CUSTOM(null),
     ;

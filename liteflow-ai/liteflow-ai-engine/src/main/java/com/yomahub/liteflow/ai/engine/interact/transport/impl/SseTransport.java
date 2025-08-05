@@ -1,24 +1,23 @@
 package com.yomahub.liteflow.ai.engine.interact.transport.impl;
 
-import okhttp3.Headers;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Sse传输实现，基于Server-Sent Events的非阻塞式传输
@@ -33,6 +32,7 @@ public class SseTransport extends EventSourceListener implements Transport {
     private TransportListener listener;
     private OkHttpClient client;
     private EventSource eventSource;
+    private boolean isStop = false;
 
     @Override
     public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
@@ -66,7 +66,20 @@ public class SseTransport extends EventSourceListener implements Transport {
 
     @Override
     public void close() {
-        eventSource.cancel();
+        if (!this.isStop) {
+            try {
+                this.isStop = true;
+                this.listener.onClose(pipeline.getContext());
+            } finally {
+                if (Objects.nonNull(eventSource)) {
+                    eventSource.cancel();
+                }
+                if (Objects.nonNull(client)) {
+                    client.dispatcher().executorService().shutdown();
+                    client.connectionPool().evictAll();
+                }
+            }
+        }
     }
 
     @Override
@@ -87,15 +100,13 @@ public class SseTransport extends EventSourceListener implements Transport {
     @Override
     public void onClosed(@NotNull EventSource eventSource) {
         super.onClosed(eventSource);
-
-        // 通知连接关闭
-        listener.onClose(pipeline.getContext());
     }
 
     @Override
     public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
         super.onFailure(eventSource, t, response);
-        listener.onClose(pipeline.getContext());
+        this.listener.onError(pipeline.getContext(), t);
+        close();
     }
 
     private Request buildSseRequest(ChatConfig config, ChatRequest request) {

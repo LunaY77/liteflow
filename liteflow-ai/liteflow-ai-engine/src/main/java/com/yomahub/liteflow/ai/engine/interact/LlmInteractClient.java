@@ -92,13 +92,8 @@ public class LlmInteractClient implements InteractClient {
          * 流式调用
          */
         public void executeStreaming() {
-            ChatResponse response = null;
-            try {
-                // 启动传输，使用内部监听器
-                transport.start(config, request, pipeline, internalTransportListener);
-            } catch (Exception e) {
-                handleError(response, e);
-            }
+            // 启动传输，使用内部监听器
+            transport.start(config, request, pipeline, internalTransportListener);
         }
 
         /**
@@ -126,11 +121,16 @@ public class LlmInteractClient implements InteractClient {
                     // 调用外部监听器的关闭事件
                     externalTransportListener.onClose(context);
                 } catch (Exception e) {
-                    handleError(finalResponse, e);
+                    onError(context, e);
                 } finally {
                     // 清理资源
                     cleanup(finalResponse);
                 }
+            }
+
+            @Override
+            public void onError(InteractContext context, Throwable t) {
+                externalTransportListener.onError(context, t);
             }
         }
 
@@ -147,23 +147,11 @@ public class LlmInteractClient implements InteractClient {
 
                 return response;
             } catch (Exception e) {
-                return handleError(response, e);
+                this.externalTransportListener.onError(context, e);
+                return response;
             } finally {
                 cleanup(response);
             }
-        }
-
-        /**
-         * 处理异常
-         */
-        private ChatResponse handleError(ChatResponse response, Exception e) {
-            try {
-                response = resultHandler.onError(response, context, e);
-            } catch (Exception handlerException) {
-                LOG.error("ResultHandler.onError 执行失败: {}", handlerException.getMessage());
-            }
-
-            return response;
         }
 
         /**

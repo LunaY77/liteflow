@@ -1,17 +1,18 @@
 package com.yomahub.liteflow.ai.engine.model.chat.entity;
 
+import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.model.ModelRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
-import com.yomahub.liteflow.ai.engine.util.TriFunction;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -185,6 +186,17 @@ public class ChatRequest implements ModelRequest {
         }
 
         /**
+         * 请求发生错误时的回调方法
+         *
+         * @param onError 请求发生错误时的回调函数
+         * @see TransportListener#onError(InteractContext, Throwable)
+         */
+        public B onError(BiConsumer<InteractContext, Throwable> onError) {
+            listenerAggregator.onError = onError;
+            return self();
+        }
+
+        /**
          * 文本消息的回调方法
          *
          * @param onText 文本消息的回调函数
@@ -251,17 +263,6 @@ public class ChatRequest implements ModelRequest {
         }
 
         /**
-         * 请求发生错误时的回调方法
-         *
-         * @param onError 请求发生错误时的回调函数
-         * @see ResultHandler#onError(ChatResponse, InteractContext, Exception)
-         */
-        public B onError(TriFunction<ChatResponse, InteractContext, Exception, ChatResponse> onError) {
-            listenerAggregator.onError = onError;
-            return self();
-        }
-
-        /**
          * 最终结果处理的回调方法。无论是否发生错误均会调用此方法。
          *
          * @param onFinal 请求最终结果的回调函数
@@ -278,21 +279,21 @@ public class ChatRequest implements ModelRequest {
         protected static class LlmListenerAggregator {
             Consumer<InteractContext> onStart = context -> {};
             Consumer<InteractContext> onClose = context -> {};
+            BiConsumer<InteractContext, Throwable> onError = (context, t) -> {
+                throw new LiteFlowAIEngineException(t.getMessage(), t);
+            };
             BiFunction<String, InteractContext, String> onText = (content, context) -> content;
             BiFunction<String, InteractContext, String> onThinking = (content, context) -> content;
             BiFunction<Object, InteractContext, Object> onToolsCalling = (content, context) -> content;
             BiFunction<Object, InteractContext, Object> onUsage = (content, context) -> content;
             BiFunction<Object, InteractContext, Object> onGrounding = (content, context) -> content;
             BiFunction<ChatResponse, InteractContext, ChatResponse> onCompletion = (response, context) -> response;
-            TriFunction<ChatResponse, InteractContext, Exception, ChatResponse> onError = (response, context, e) -> {
-                e.printStackTrace();
-                return response;
-            };
             BiFunction<ChatResponse, InteractContext, ChatResponse> onFinal = (response, context) -> response;
 
             TransportListener toTransportListener() {
                 Objects.requireNonNull(onStart, "onStart cannot be null");
                 Objects.requireNonNull(onClose, "onClose cannot be null");
+                Objects.requireNonNull(onError, "onError cannot be null");
                 return new TransportListener() {
                     @Override
                     public void onStart(InteractContext context) {
@@ -303,22 +304,21 @@ public class ChatRequest implements ModelRequest {
                     public void onClose(InteractContext context) {
                         onClose.accept(context);
                     }
+
+                    @Override
+                    public void onError(InteractContext context, Throwable t) {
+                        onError.accept(context, t);
+                    }
                 };
             }
 
             ResultHandler toResultHandler() {
                 Objects.requireNonNull(onCompletion, "onCompletion cannot be null");
-                Objects.requireNonNull(onError, "onError cannot be null");
                 Objects.requireNonNull(onFinal, "onFinal cannot be null");
                 return new ResultHandler() {
                     @Override
                     public ChatResponse onCompletion(ChatResponse response, InteractContext context) {
                         return onCompletion.apply(response, context);
-                    }
-
-                    @Override
-                    public ChatResponse onError(ChatResponse response, InteractContext context, Exception e) {
-                        return onError.apply(response, context, e);
                     }
 
                     @Override

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelConfiguration {
 
-    @Bean
+    @Bean("ollamaChatConfig")
     public OllamaChatConfig ollamaChatConfig() {
         return OllamaChatConfig
                 .builder()
@@ -27,6 +27,19 @@ public class ModelConfiguration {
                 .model("qwen3:32b")
                 .streaming(false)
                 .transportType(TransportType.HTTP)
+                .build();
+    }
+
+    @Bean("streamingOllamaChatConfig")
+    public OllamaChatConfig streamingOllamaChatConfig() {
+        return OllamaChatConfig
+                .builder()
+                .apiUrl("http://localhost:11434/")
+                .endPoint("/api/generate")
+                .provider(OllamaConstant.PROVIDER_NAME)
+                .model("qwen3:32b")
+                .streaming(true)
+                .transportType(TransportType.SSE)
                 .build();
     }
 //

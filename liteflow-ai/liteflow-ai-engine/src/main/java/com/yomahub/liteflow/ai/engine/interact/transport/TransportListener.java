@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.interact.transport;
 
+import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 
 /**
@@ -20,6 +21,11 @@ public interface TransportListener {
             @Override
             public void onClose(InteractContext context) {
             }
+
+            @Override
+            public void onError(InteractContext context, Throwable t) {
+                throw new LiteFlowAIEngineException(t.getMessage(), t);
+            }
         };
     }
 
@@ -37,4 +43,11 @@ public interface TransportListener {
      */
     void onClose(InteractContext context);
 
+    /**
+     * 处理过程中发生错误的回调方法。
+     *
+     * @param context  聊天上下文，包含处理过程中的状态和信息
+     * @param t
+     */
+    void onError(InteractContext context, Throwable t);
 }

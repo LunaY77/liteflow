@@ -3,6 +3,7 @@ package com.yomahub.liteflow.ai.model.ollama.interact;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
 import com.yomahub.liteflow.ai.engine.interact.protocol.StreamingProtocolChunk;
+import com.yomahub.liteflow.ai.engine.interact.protocol.StreamingProtocolType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 
@@ -19,7 +20,12 @@ public class OllamaProtocolTransformer implements ProtocolTransformer {
 
     @Override
     public StreamingProtocolChunk transformStreamingChunk(String streamChunk, InteractContext context) {
-        return null;
+        System.out.println(streamChunk);
+        StreamingProtocolChunk streamingProtocolChunk = new StreamingProtocolChunk();
+        streamingProtocolChunk.setId(context.getChatId());
+        streamingProtocolChunk.setData(streamChunk);
+        streamingProtocolChunk.setType(StreamingProtocolType.TEXT);
+        return streamingProtocolChunk;
     }
 
     @Override
