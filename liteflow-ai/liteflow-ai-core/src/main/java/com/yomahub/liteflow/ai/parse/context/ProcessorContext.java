@@ -3,6 +3,8 @@ package com.yomahub.liteflow.ai.parse.context;
 import com.yomahub.liteflow.ai.annotation.AIInput;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
 import com.yomahub.liteflow.ai.context.ChatContext;
+import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
+import com.yomahub.liteflow.ai.engine.model.ModelRequest;
 import com.yomahub.liteflow.ai.parse.prompt.loader.DefaultPromptResourceLoader;
 import com.yomahub.liteflow.ai.parse.prompt.loader.PromptResourceLoader;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
@@ -18,14 +20,18 @@ import com.yomahub.liteflow.core.NodeComponent;
 public class ProcessorContext<T extends AIProxyWrapBean<?>> {
 
     private final T wrapBean;
+    private final ParsedAnnotationConfig parsedAnnotationConfig;
     private final ChatContext chatContext;
     private final NodeComponent nodeComponent;
     private final AIInput aiInputAnno;
     private final AIOutput aiOutputAnno;
     private final PromptResourceLoader resourceLoader;
 
+    private ModelRequest modelRequest;
+
     public ProcessorContext(T wrapBean, ChatContext chatContext, NodeComponent nodeComponent) {
         this.wrapBean = wrapBean;
+        parsedAnnotationConfig = new ParsedAnnotationConfig();
         this.chatContext = chatContext;
         this.nodeComponent = nodeComponent;
         this.aiInputAnno = wrapBean.getInterfaceClass().getAnnotation(AIInput.class);
@@ -55,5 +61,17 @@ public class ProcessorContext<T extends AIProxyWrapBean<?>> {
 
     public PromptResourceLoader getResourceLoader() {
         return resourceLoader;
+    }
+
+    public ParsedAnnotationConfig getParsedAnnotationConfig() {
+        return parsedAnnotationConfig;
+    }
+
+    public ModelRequest getModelRequest() {
+        return modelRequest;
+    }
+
+    public void setModelRequest(ModelRequest modelRequest) {
+        this.modelRequest = modelRequest;
     }
 }

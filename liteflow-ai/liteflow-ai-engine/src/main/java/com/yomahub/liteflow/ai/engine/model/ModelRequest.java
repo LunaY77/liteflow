@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model;
 
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBodyConvertible;
 
 /**
@@ -11,4 +12,7 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBodyConvertible;
 
 public interface ModelRequest extends RequestBodyConvertible {
 
+    default ChatRequest toChatRequest() {
+        return (ChatRequest) this;
+    }
 }

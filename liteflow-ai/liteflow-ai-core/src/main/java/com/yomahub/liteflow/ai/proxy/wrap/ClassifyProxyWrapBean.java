@@ -18,14 +18,8 @@ public class ClassifyProxyWrapBean extends AIProxyWrapBean<AIClassify> {
 
     private boolean multiLabel;
 
-    public ClassifyProxyWrapBean() {
-        super();
-    }
-
-    public ClassifyProxyWrapBean(AIComponent aiComponent, AIClassify annotation,
-                             Class<?> interfaceClass, String beanName) {
-        super(aiComponent, interfaceClass, beanName);
-        this.annotation = annotation;
+    public ClassifyProxyWrapBean(AIComponent aiComponent, AIClassify annotation, Class<?> interfaceClass, String beanName) {
+        super(aiComponent, annotation, interfaceClass, beanName);
     }
 
     public List<String> getCategories() {

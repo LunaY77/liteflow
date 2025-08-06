@@ -30,7 +30,7 @@ public class ContextAccessor {
      * @param context    处理器上下文
      * @return 查找到的值
      */
-    public static String searchContextByExpression(String expression, ProcessorContext<?> context) {
+    public static <T> T searchContextByExpression(String expression, ProcessorContext<?> context) {
         if (StrUtil.isBlank(expression)) {
             return null;
         }

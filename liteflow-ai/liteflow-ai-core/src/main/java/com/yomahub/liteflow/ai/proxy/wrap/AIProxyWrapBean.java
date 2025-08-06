@@ -1,8 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.wrap;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.domain.ModelConfig;
-import com.yomahub.liteflow.ai.domain.enums.ResponseType;
+import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 
 import java.lang.annotation.Annotation;
 
@@ -15,31 +14,24 @@ import java.lang.annotation.Annotation;
 
 public abstract class AIProxyWrapBean<T extends Annotation> {
 
-    protected T annotation;
+    // AI组件注解
+    protected final T annotation;
+    // AI 组件配置注解
+    protected final AIComponent aiComponent;
+    // LiteFlow Node ID
+    protected final String nodeId;
+    // LiteFlow Node 名称
+    protected final String nodeName;
+    // 代理接口名称
+    protected final Class<?> interfaceClass;
+    // Bean 名称
+    protected final String beanName;
+    // 模型配置聚合
+    protected ModelConfigAggregator config;
 
-    protected ModelConfig config;
-
-    protected String nodeId;
-
-    protected String nodeName;
-
-    protected Class<?> interfaceClass;
-
-    protected String beanName;
-
-    protected String systemPrompt;
-
-    protected String userPrompt;
-
-    protected ResponseType responseType = ResponseType.TEXT;
-
-    protected Class<?> entityClass = String.class;
-
-    public AIProxyWrapBean() {
-    }
-
-    public AIProxyWrapBean(AIComponent aiComponent, Class<?> interfaceClass, String beanName) {
-        this.config = ModelConfig.fromAnnotation(aiComponent);
+    public AIProxyWrapBean(AIComponent aiComponent, T annotation, Class<?> interfaceClass, String beanName) {
+        this.aiComponent = aiComponent;
+        this.annotation = annotation;
         this.nodeId = aiComponent.nodeId();
         this.nodeName = aiComponent.nodeName();
         this.interfaceClass = interfaceClass;
@@ -58,7 +50,11 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
         return nodeName;
     }
 
-    public ModelConfig getConfig() {
+    public AIComponent getAiComponent() {
+        return aiComponent;
+    }
+
+    public ModelConfigAggregator getConfig() {
         return config;
     }
 
@@ -70,55 +66,7 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
         return beanName;
     }
 
-    public String getSystemPrompt() {
-        return systemPrompt;
-    }
-
-    public String getUserPrompt() {
-        return userPrompt;
-    }
-
-    public ResponseType getResponseType() {
-        return responseType;
-    }
-
-    public Class<?> getEntityClass() {
-        return entityClass;
-    }
-
-    public void setNodeId(String nodeId) {
-        this.nodeId = nodeId;
-    }
-
-    public void setNodeName(String nodeName) {
-        this.nodeName = nodeName;
-    }
-
-    public void setConfig(ModelConfig config) {
+    public void setConfig(ModelConfigAggregator config) {
         this.config = config;
-    }
-
-    public void setInterfaceClass(Class<?> interfaceClass) {
-        this.interfaceClass = interfaceClass;
-    }
-
-    public void setBeanName(String beanName) {
-        this.beanName = beanName;
-    }
-
-    public void setSystemPrompt(String systemPrompt) {
-        this.systemPrompt = systemPrompt;
-    }
-
-    public void setUserPrompt(String userPrompt) {
-        this.userPrompt = userPrompt;
-    }
-
-    public void setResponseType(ResponseType responseType) {
-        this.responseType = responseType;
-    }
-
-    public void setEntityClass(Class<?> entityClass) {
-        this.entityClass = entityClass;
     }
 }

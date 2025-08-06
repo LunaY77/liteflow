@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.domain.enums;
+package com.yomahub.liteflow.ai.engine.model.output;
 
 /**
  * AI响应类型枚举

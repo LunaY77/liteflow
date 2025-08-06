@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
-import com.yomahub.liteflow.ai.domain.ModelConfig;
+import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.parse.AnnotationParser;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
@@ -77,19 +77,15 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
      * @param processorContext 处理器上下文
      */
     protected void checkValidation(ProcessorContext<T> processorContext) {
-        // 校验Prompt
-        if (SetUtil.isNotPresent(wrapBean.getUserPrompt()) && SetUtil.isNotPresent(wrapBean.getSystemPrompt())) {
-            throw new LiteFlowAIException("User prompt and system prompt cannot both be empty");
-        }
         // 校验必需参数
-        ModelConfig modelConfig = wrapBean.getConfig();
-        if (SetUtil.isNotPresent(modelConfig.getProvider())) {
+        ModelConfigAggregator modelConfigAggregator = wrapBean.getConfig();
+        if (SetUtil.isNotPresent(modelConfigAggregator.getProvider())) {
             throw new LiteFlowAIException("Provider cannot be empty for AI node: " + wrapBean.getNodeId());
         }
-        if (SetUtil.isNotPresent(modelConfig.getApiUrl())) {
+        if (SetUtil.isNotPresent(modelConfigAggregator.getApiUrl())) {
             throw new LiteFlowAIException("API URL cannot be empty for AI node: " + wrapBean.getNodeId());
         }
-        if (SetUtil.isNotPresent(modelConfig.getModel())) {
+        if (SetUtil.isNotPresent(modelConfigAggregator.getModel())) {
             throw new LiteFlowAIException("Model cannot be empty for AI node: " + wrapBean.getNodeId());
         }
     }

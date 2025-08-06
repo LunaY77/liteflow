@@ -1,10 +1,16 @@
 package com.yomahub.liteflow.ai.parse;
 
 import cn.hutool.core.util.StrUtil;
+import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.AIInput;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
+import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
+import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
-import com.yomahub.liteflow.ai.domain.enums.ResponseType;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
+import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
+import com.yomahub.liteflow.ai.parse.assemble.ChatRequestAssembler;
+import com.yomahub.liteflow.ai.parse.assemble.RequestAssembler;
 import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.parse.prompt.PromptTemplateParser;
@@ -31,6 +37,8 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, T extend
 
     protected final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
 
+    protected static final RequestAssembler<ChatRequest> CHAT_REQUEST_ASSEMBLER = new ChatRequestAssembler();
+
     @Override
     public void afterPropertiesSet() throws Exception {
         AnnotationParser.register(getAIType().getCode(), this);
@@ -42,6 +50,23 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, T extend
      * @return {@link AITypeEnum}
      */
     protected abstract AITypeEnum getAIType();
+
+    /**
+     * 解析 {@link AIComponent} 模型配置
+     *
+     * @param context 处理器上下文
+     */
+    protected void parseModelConfig(ProcessorContext<T> context) {
+        T wrapBean = context.getWrapBean();
+        // 获取模型配置聚合器
+        AIComponent aiComponent = wrapBean.getAiComponent();
+        if (Objects.isNull(aiComponent)) {
+            LOG.warn("AIComponent annotation is null, using default model configuration.");
+            wrapBean.setConfig(ModelConfigAggregator.getDefault());
+            return;
+        }
+        wrapBean.setConfig(ModelConfigAggregator.parseFromAnnotation(aiComponent));
+    }
 
     /**
      * 解析提示词
@@ -85,15 +110,16 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, T extend
         if (Objects.isNull(outputAnno)) return;
 
         // 这里仅处理结构化输出相关的参数，其他参数交给 after 逻辑进行处理
-        T wrapBean = context.getWrapBean();
+        ParsedAnnotationConfig annotationConfig = context.getParsedAnnotationConfig();
         // 是否需要结构化输出
         if (Objects.equals(ResponseType.JSON, outputAnno.responseType())) {
-            wrapBean.setResponseType(ResponseType.JSON);
+            annotationConfig.setResponseType(ResponseType.JSON);
             // 设置输出实体类
-            wrapBean.setEntityClass(outputAnno.entityClass());
+            annotationConfig.setEntityClass(outputAnno.entityClass());
         } else {
+            annotationConfig.setResponseType(ResponseType.TEXT);
             // 文本输出，设置 entityClass 为 String
-            wrapBean.setEntityClass(String.class);
+            annotationConfig.setEntityClass(String.class);
         }
     }
 

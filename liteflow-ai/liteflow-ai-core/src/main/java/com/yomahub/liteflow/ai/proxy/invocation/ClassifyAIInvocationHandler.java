@@ -1,6 +1,8 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
+import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
+import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ClassifyProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
@@ -37,9 +39,7 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
 
     @Override
     protected Object doExecuteAIProcess(ProcessorContext<ClassifyProxyWrapBean> processorContext, Object[] args) {
-
-//        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
-
-        return null;
+        ChatModel chatModel = ModelFactory.getChatModel(processorContext.getWrapBean());
+        return chatModel.chat(processorContext.getModelRequest().toChatRequest());
     }
 }

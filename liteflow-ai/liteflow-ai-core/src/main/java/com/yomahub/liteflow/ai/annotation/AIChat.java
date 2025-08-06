@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.annotation;
 
+import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 
@@ -22,8 +23,9 @@ public @interface AIChat {
     /**
      * 从上下文中获取的请求参数的上下文路径表达式。
      * <p>
-     * 如果你不希望在注解中进行静态的模型配置，请使用这个属性，
-     * 并在上下文中提供对应的 {@link ChatRequest} 值
+     * 如果你不希望在注解中进行静态的模型配置，或者你希望使用特定厂商实现的 ChatRequest(其中可能存在一些独有的参数)，
+     * 请使用这个属性，并在上下文中提供对应的 {@link ChatRequest} 值。
+     * 如果不提供，框架将统一使用 {@link ChatRequest} 发起请求。
      * <p>
      * {@link ChatRequest} 可以是对应提供商的具体实现类。
      * <p>
@@ -33,9 +35,10 @@ public @interface AIChat {
      * 以及，你会发现 {@link ChatRequest#getOptions()} 的 {@link ChatOptions} 和 {@link AIComponent} 中的配置有重合。
      * 同样的，即使你进行了 {@link AIComponent} 的配置，会优先使用 {@link ChatRequest} 的配置。
      * <p>
-     * 但是如果相关的配置为空或默认值，则会使用 {@link AIComponent} 和 {@link AIChat} 中的配置。
+     * <b>请注意：如果相关的配置为空或默认值，则会使用 {@link AIComponent} 和 {@link AIChat} 中的配置!!!</b>
      * <p>
-     * 用于从一个必须提供 {@code get} 方法的上下文中检索数据。
+     * 该方法用于从一个必须提供 {@code get} 方法的上下文中检索数据。
+     * <p>
      * 表达式支持以下两种形式：
      * <ul>
      * <li>
@@ -63,8 +66,15 @@ public @interface AIChat {
     String userPrompt() default "";
 
     /**
-     * 是否开启 stream，默认 false
+     * 是否开启 stream，默认 true
      */
-    boolean streaming() default false;
+    boolean streaming() default true;
+
+    /**
+     * 传输类型，默认 SSE
+     * <p>
+     * 请在此查看传输类型 -> {@link TransportType}
+     */
+    TransportType transportType() default TransportType.SSE;
 
 }

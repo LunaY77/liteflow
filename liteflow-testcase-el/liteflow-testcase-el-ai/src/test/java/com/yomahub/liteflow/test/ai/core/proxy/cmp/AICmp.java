@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.test.ai.core.proxy.cmp;
 
 import com.yomahub.liteflow.ai.annotation.*;
-import com.yomahub.liteflow.ai.domain.enums.ResponseType;
+import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
 /**
  * TODO

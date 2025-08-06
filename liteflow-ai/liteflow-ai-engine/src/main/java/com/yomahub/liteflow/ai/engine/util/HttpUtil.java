@@ -37,7 +37,6 @@ public final class HttpUtil implements AutoCloseable {
         this.syncClient = new OkHttpClient.Builder()
                 .connectTimeout(builder.connectTimeout)
                 .readTimeout(builder.readTimeout)
-                .writeTimeout(builder.writeTimeout)
                 .build();
     }
 
@@ -305,9 +304,8 @@ public final class HttpUtil implements AutoCloseable {
      * 用于创建 {@link HttpUtil} 的构建器。
      */
     public static class Builder {
-        private Duration connectTimeout = Duration.ofSeconds(30);
+        private Duration connectTimeout = Duration.ofSeconds(60);
         private Duration readTimeout = Duration.ofSeconds(60);
-        private Duration writeTimeout = Duration.ofSeconds(30);
 
         public Builder connectTimeout(Duration duration) {
             this.connectTimeout = Objects.requireNonNull(duration, "connectTimeout 不能为空");
@@ -316,11 +314,6 @@ public final class HttpUtil implements AutoCloseable {
 
         public Builder readTimeout(Duration duration) {
             this.readTimeout = Objects.requireNonNull(duration, "readTimeout 不能为空");
-            return this;
-        }
-
-        public Builder writeTimeout(Duration duration) {
-            this.writeTimeout = Objects.requireNonNull(duration, "writeTimeout 不能为空");
             return this;
         }
 

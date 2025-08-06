@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.annotation;
 
-import com.yomahub.liteflow.ai.domain.enums.ResponseType;
+import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -95,7 +95,7 @@ public @interface AIOutput {
     /**
      * 如需启用，请设置 {@link AIOutput#responseType()} 为 {@link ResponseType#JSON}
      * <p>
-     * 表示输出的 JSON Schema 定义。如果需要添加描述信息，请使用 LangChain4j 的相关注解
+     * 表示输出的 JSON Schema 定义。如果需要添加描述信息，请使用{@link com.yomahub.liteflow.ai.engine.model.output.structure.Description}
      */
     Class<?> entityClass() default String.class;
 

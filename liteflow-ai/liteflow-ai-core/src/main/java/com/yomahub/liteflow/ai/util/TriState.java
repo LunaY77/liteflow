@@ -11,4 +11,17 @@ public enum TriState {
     TRUE,
     FALSE,
     UNSET,
+    ;
+
+    public Boolean toBool() {
+        switch (this) {
+            case TRUE:
+                return true;
+            case FALSE:
+                return false;
+            case UNSET:
+            default:
+                return null;
+        }
+    }
 }

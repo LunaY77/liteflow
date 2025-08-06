@@ -19,7 +19,4 @@ public class UserMessage extends AbstractMessage {
     public UserMessage(String textContent) {
         this(textContent, new HashMap<>());
     }
-
-    // TODO 添加 Resource 支持
-
 }

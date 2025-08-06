@@ -13,23 +13,23 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 public class ChatOptions implements ModelOptions {
 
     public static final ChatOptions DEFAULT = ChatOptions.builder()
-            .temperature(0.8f)
-            .topP(0.9f)
-            .topK(50f)
+            .temperature(0.8)
+            .topP(0.9)
+            .topK(50)
             .maxTokens(512)
             .seed(null)
             .enableThinking(false)
             .build();
 
-    protected Float temperature;
+    protected Double temperature;
 
-    protected Float topP;
+    protected Double topP;
 
-    protected Float topK;
+    protected Integer topK;
 
     protected Integer maxTokens;
 
-    protected String seed;
+    protected Integer seed;
 
     protected Boolean enableThinking;
 
@@ -49,11 +49,11 @@ public class ChatOptions implements ModelOptions {
     }
 
     public ChatOptions(
-            Float temperature,
-            Float topP,
-            Float topK,
+            Double temperature,
+            Double topP,
+            Integer topK,
             Integer maxTokens,
-            String seed,
+            Integer seed,
             Boolean enableThinking
     ) {
         this.temperature = temperature;
@@ -83,15 +83,15 @@ public class ChatOptions implements ModelOptions {
                 .putIfNotEmpty(THINK_KEY, enableThinking);
     }
 
-    public Float getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
-    public Float getTopP() {
+    public Double getTopP() {
         return topP;
     }
 
-    public Float getTopK() {
+    public Integer getTopK() {
         return topK;
     }
 
@@ -99,7 +99,7 @@ public class ChatOptions implements ModelOptions {
         return maxTokens;
     }
 
-    public String getSeed() {
+    public Integer getSeed() {
         return seed;
     }
 
@@ -107,15 +107,15 @@ public class ChatOptions implements ModelOptions {
         return enableThinking;
     }
 
-    public void setTemperature(Float temperature) {
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 
-    public void setTopP(Float topP) {
+    public void setTopP(Double topP) {
         this.topP = topP;
     }
 
-    public void setTopK(Float topK) {
+    public void setTopK(Integer topK) {
         this.topK = topK;
     }
 
@@ -123,7 +123,7 @@ public class ChatOptions implements ModelOptions {
         this.maxTokens = maxTokens;
     }
 
-    public void setSeed(String seed) {
+    public void setSeed(Integer seed) {
         this.seed = seed;
     }
 
@@ -136,28 +136,28 @@ public class ChatOptions implements ModelOptions {
     }
 
     public static abstract class Builder<B extends Builder<B>> {
-        protected Float temperature;
-        protected Float topP;
-        protected Float topK;
+        protected Double temperature;
+        protected Double topP;
+        protected Integer topK;
         protected Integer maxTokens;
-        protected String seed;
+        protected Integer seed;
         protected Boolean enableThinking;
 
         protected abstract B self();
 
         public abstract ChatOptions build();
 
-        public B temperature(Float temperature) {
+        public B temperature(Double temperature) {
             this.temperature = temperature;
             return self();
         }
 
-        public B topP(Float topP) {
+        public B topP(Double topP) {
             this.topP = topP;
             return self();
         }
 
-        public B topK(Float topK) {
+        public B topK(Integer topK) {
             this.topK = topK;
             return self();
         }
@@ -167,7 +167,7 @@ public class ChatOptions implements ModelOptions {
             return self();
         }
 
-        public B seed(String seed) {
+        public B seed(Integer seed) {
             this.seed = seed;
             return self();
         }

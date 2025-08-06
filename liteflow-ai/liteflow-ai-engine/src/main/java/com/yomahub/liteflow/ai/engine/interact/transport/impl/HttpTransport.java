@@ -32,7 +32,6 @@ public class HttpTransport implements Transport {
                 .builder()
                 .connectTimeout(config.getTimeout())
                 .readTimeout(config.getTimeout())
-                .writeTimeout(config.getTimeout())
                 .build()) {
             // 构建请求体
             String requestBody = buildRequestBody(config, request);

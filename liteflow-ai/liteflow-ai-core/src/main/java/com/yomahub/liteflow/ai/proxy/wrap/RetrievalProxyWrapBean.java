@@ -12,13 +12,7 @@ import com.yomahub.liteflow.ai.annotation.AIRetrieval;
 
 public class RetrievalProxyWrapBean extends AIProxyWrapBean<AIRetrieval> {
 
-    public RetrievalProxyWrapBean() {
-        super();
-    }
-
-    public RetrievalProxyWrapBean(AIComponent aiComponent, AIRetrieval annotation,
-                                 Class<?> interfaceClass, String beanName) {
-        super(aiComponent, interfaceClass, beanName);
-        this.annotation = annotation;
+    public RetrievalProxyWrapBean(AIComponent aiComponent, AIRetrieval annotation, Class<?> interfaceClass, String beanName) {
+        super(aiComponent, annotation, interfaceClass, beanName);
     }
 }

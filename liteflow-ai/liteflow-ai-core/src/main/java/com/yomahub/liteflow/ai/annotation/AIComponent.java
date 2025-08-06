@@ -7,6 +7,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.time.Duration;
 
 /**
  * AI 组件注解，提供配置和标识功能
@@ -134,12 +135,90 @@ public @interface AIComponent {
      * 是否并行 ToolCall
      */
     TriState parallelToolCalls() default TriState.UNSET;
+    /**
+     * 是否自动进行 ToolCall
+     */
+    TriState autoToolCallEnabled() default TriState.UNSET;
 
     // --- 网络和日志参数 ---
     /**
-     * 超时时间
+     * <p>连接超时时间</p>
+     *
+     * <p>该值最终会被解析为一个 {@link Duration} 对象。为了提供灵活性，
+     * 支持以下两种字符串格式：</p>
+     *
+     * <ol>
+     * <li><b>标准 ISO-8601 格式</b>:
+     * 这是由 {@link Duration#parse(CharSequence)} 支持的标准格式。
+     * <p><b>示例:</b></p>
+     * <ul>
+     * <li>{@code "PT30S"} 代表 30 秒。</li>
+     * <li>{@code "PT10M"} 代表 10 分钟。</li>
+     * <li>{@code "PT2H"} 代表 2 小时。</li>
+     * <li>{@code "P1D"} 代表 1 天。</li>
+     * </ul>
+     * </li>
+     * <li><b>自定义简化格式</b>:
+     * 为了方便配置，也支持由数字和单位后缀组成的简化格式 (单位不区分大小写)。
+     * <p><b>支持的单位:</b></p>
+     * <ul>
+     * <li>{@code s} - 秒</li>
+     * <li>{@code m} - 分钟</li>
+     * <li>{@code h} - 小时</li>
+     * </ul>
+     * <p><b>示例:</b></p>
+     * <ul>
+     * <li>{@code "60s"} 代表 60 秒。</li>
+     * <li>{@code "5m"} 代表 5 分钟。</li>
+     * </ul>
+     * </li>
+     * </ol>
+     *
+     * <p><b>默认值行为:</b><br>
+     * 如果该值保持默认的空字符串 ({@code ""})，处理该注解的系统将会应用一个预设的、
+     * 全局的默认超时时间(60s)。</p>
+     * @see Duration
      */
-    String timeout() default "";
+    String connectTimeout() default "";
+    /**
+     * <p>读取超时时间</p>
+     *
+     * <p>该值最终会被解析为一个 {@link Duration} 对象。为了提供灵活性，
+     * 支持以下两种字符串格式：</p>
+     *
+     * <ol>
+     * <li><b>标准 ISO-8601 格式</b>:
+     * 这是由 {@link Duration#parse(CharSequence)} 支持的标准格式。
+     * <p><b>示例:</b></p>
+     * <ul>
+     * <li>{@code "PT30S"} 代表 30 秒。</li>
+     * <li>{@code "PT10M"} 代表 10 分钟。</li>
+     * <li>{@code "PT2H"} 代表 2 小时。</li>
+     * <li>{@code "P1D"} 代表 1 天。</li>
+     * </ul>
+     * </li>
+     * <li><b>自定义简化格式</b>:
+     * 为了方便配置，也支持由数字和单位后缀组成的简化格式 (单位不区分大小写)。
+     * <p><b>支持的单位:</b></p>
+     * <ul>
+     * <li>{@code s} - 秒</li>
+     * <li>{@code m} - 分钟</li>
+     * <li>{@code h} - 小时</li>
+     * </ul>
+     * <p><b>示例:</b></p>
+     * <ul>
+     * <li>{@code "60s"} 代表 60 秒。</li>
+     * <li>{@code "5m"} 代表 5 分钟。</li>
+     * </ul>
+     * </li>
+     * </ol>
+     *
+     * <p><b>默认值行为:</b><br>
+     * 如果该值保持默认的空字符串 ({@code ""})，处理该注解的系统将会应用一个预设的、
+     * 全局的默认超时时间(60s)。</p>
+     * @see Duration
+     */
+    String readTimeout() default "";
     /**
      * 最大重试次数
      */
@@ -158,5 +237,9 @@ public @interface AIComponent {
      * 自定义请求头
      */
     KeyValue[] customHeaders() default {};
+    /**
+     * 是否开启思考模式
+     */
+    TriState enableThinking() default TriState.UNSET;
 
 }
