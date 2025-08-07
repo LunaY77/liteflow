@@ -47,9 +47,8 @@ public class DnJsonTransport implements Transport, Callback {
         Request dnJsonRequest = buildDnJsonRequest(config, request);
 
         client = new okhttp3.OkHttpClient.Builder()
-                .connectTimeout(config.getTimeout())
-                .readTimeout(config.getTimeout())
-                .writeTimeout(config.getTimeout())
+                .connectTimeout(config.getConnectTimeout())
+                .readTimeout(config.getReadTimeout())
                 .build();
 
         this.listener.onStart(pipeline.getContext());

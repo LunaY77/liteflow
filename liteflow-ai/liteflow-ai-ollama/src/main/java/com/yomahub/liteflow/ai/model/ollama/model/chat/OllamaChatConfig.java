@@ -25,13 +25,14 @@ public class OllamaChatConfig extends ChatConfig {
             String apiKey,
             String provider,
             String model,
-            Duration timeout,
+            Duration connectTimeout,
+            Duration readTimeout,
             Map<String, Object> headersConfig,
             boolean autoToolCallEnabled,
             boolean streaming,
             TransportType transportType
     ) {
-        super(apiUrl, endPoint, apiKey, provider, model, timeout,
+        super(apiUrl, endPoint, apiKey, provider, model, connectTimeout, readTimeout,
                 headersConfig, autoToolCallEnabled, streaming, transportType);
     }
 

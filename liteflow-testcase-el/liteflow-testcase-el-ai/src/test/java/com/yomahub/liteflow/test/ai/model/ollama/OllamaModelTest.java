@@ -40,7 +40,8 @@ public class OllamaModelTest {
                 .provider(OllamaConstant.PROVIDER_NAME)
                 .model("qwen3:32b")
                 .streaming(false)
-                .timeout(Duration.of(10, ChronoUnit.MINUTES))
+                .connectTimeout(Duration.of(10, ChronoUnit.MINUTES))
+                .readTimeout(Duration.of(10, ChronoUnit.MINUTES))
                 .transportType(TransportType.HTTP)
                 .build();
 
@@ -93,7 +94,8 @@ public class OllamaModelTest {
                 .provider(OllamaConstant.PROVIDER_NAME)
                 .model("qwen3:32b")
                 .streaming(true)
-                .timeout(Duration.of(10, ChronoUnit.MINUTES))
+                .connectTimeout(Duration.of(10, ChronoUnit.MINUTES))
+                .readTimeout(Duration.of(10, ChronoUnit.MINUTES))
                 .transportType(TransportType.DnJson)
                 .build();
 

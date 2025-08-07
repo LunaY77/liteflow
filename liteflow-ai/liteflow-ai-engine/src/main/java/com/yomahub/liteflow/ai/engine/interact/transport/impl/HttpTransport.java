@@ -30,8 +30,8 @@ public class HttpTransport implements Transport {
     public ChatResponse startBlocking(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline) {
         try (HttpUtil httpUtil = HttpUtil
                 .builder()
-                .connectTimeout(config.getTimeout())
-                .readTimeout(config.getTimeout())
+                .connectTimeout(config.getConnectTimeout())
+                .readTimeout(config.getReadTimeout())
                 .build()) {
             // 构建请求体
             String requestBody = buildRequestBody(config, request);

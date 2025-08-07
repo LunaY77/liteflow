@@ -30,7 +30,9 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
 
     protected String model;
 
-    protected Duration timeout = Duration.ofSeconds(60);
+    protected Duration connectTimeout = Duration.ofSeconds(60);
+
+    protected Duration readTimeout = Duration.ofSeconds(60);
 
     protected Map<String, Object> headersConfig = new LinkedHashMap<>();
 
@@ -47,7 +49,8 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
             String apiKey,
             String provider,
             String model,
-            Duration timeout,
+            Duration connectTimeout,
+            Duration readTimeout,
             Map<String, Object> headersConfig
     ) {
         this.apiUrl = apiUrl;
@@ -55,7 +58,8 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.apiKey = apiKey;
         this.provider = provider;
         this.model = model;
-        this.timeout = timeout;
+        this.connectTimeout = connectTimeout;
+        this.readTimeout = readTimeout;
         this.headersConfig = headersConfig;
     }
 
@@ -65,7 +69,8 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.apiKey = builder.apiKey;
         this.provider = builder.provider;
         this.model = builder.model;
-        this.timeout = builder.timeout;
+        this.connectTimeout = builder.connectTimeout;
+        this.readTimeout = builder.readTimeout;
         this.headersConfig.putAll(builder.headersConfig);
     }
 
@@ -133,12 +138,20 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.model = model;
     }
 
-    public Duration getTimeout() {
-        return timeout;
+    public Duration getConnectTimeout() {
+        return connectTimeout;
     }
 
-    public void setTimeout(Duration timeout) {
-        this.timeout = timeout;
+    public void setConnectTimeout(Duration connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
+
+    public Duration getReadTimeout() {
+        return readTimeout;
+    }
+
+    public void setReadTimeout(Duration readTimeout) {
+        this.readTimeout = readTimeout;
     }
 
     public Map<String, Object> getHeadersConfig() {
@@ -168,7 +181,9 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
 
         protected String model;
 
-        protected Duration timeout = Duration.ofSeconds(60);
+        protected Duration connectTimeout = Duration.ofSeconds(60);
+
+        protected Duration readTimeout = Duration.ofSeconds(60);
 
         protected Map<String, Object> headersConfig = new LinkedHashMap<>();
 
@@ -199,8 +214,13 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
             return self();
         }
 
-        public B timeout(Duration timeout) {
-            this.timeout = timeout;
+        public B connectTimeout(Duration connectTimeout) {
+            this.connectTimeout = connectTimeout;
+            return self();
+        }
+
+        public B readTimeout(Duration readTimeout) {
+            this.readTimeout = readTimeout;
             return self();
         }
 

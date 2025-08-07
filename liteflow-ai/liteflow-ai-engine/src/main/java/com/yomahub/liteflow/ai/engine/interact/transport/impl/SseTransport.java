@@ -45,9 +45,8 @@ public class SseTransport extends EventSourceListener implements Transport {
 
             // 创建EventSource实例
             client = new okhttp3.OkHttpClient.Builder()
-                    .connectTimeout(config.getTimeout())
-                    .readTimeout(config.getTimeout())
-                    .writeTimeout(config.getTimeout())
+                    .connectTimeout(config.getConnectTimeout())
+                    .readTimeout(config.getReadTimeout())
                     .build();
 
             this.eventSource = EventSources.createFactory(client)
