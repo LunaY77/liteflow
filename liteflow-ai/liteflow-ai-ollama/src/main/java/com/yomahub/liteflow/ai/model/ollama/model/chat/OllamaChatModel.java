@@ -3,6 +3,7 @@ package com.yomahub.liteflow.ai.model.ollama.model.chat;
 import com.yomahub.liteflow.ai.engine.interact.InteractClient;
 import com.yomahub.liteflow.ai.engine.interact.LlmInteractClient;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 
@@ -17,10 +18,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class OllamaChatModel implements ChatModel {
 
-    private final OllamaChatConfig config;
+    private final ChatConfig config;
     private final InteractClient interactClient;
 
-    public OllamaChatModel(OllamaChatConfig config) {
+    public OllamaChatModel(ChatConfig config) {
         this.config = config;
         this.interactClient = new LlmInteractClient();
     }
@@ -41,7 +42,7 @@ public class OllamaChatModel implements ChatModel {
     }
 
     @Override
-    public OllamaChatConfig getModelConfig() {
+    public ChatConfig getModelConfig() {
         return config;
     }
 }

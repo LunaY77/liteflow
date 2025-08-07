@@ -1,5 +1,7 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
+import com.alibaba.fastjson2.annotation.JSONField;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -19,19 +21,20 @@ public enum MessageType {
     TOOL(4, "tool"),
     ;
     private final Integer code;
-    private final String desc;
+    private final String role;
 
     MessageType(Integer type, String desc) {
         this.code = type;
-        this.desc = desc;
+        this.role = desc;
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public String getDesc() {
-        return desc;
+    @JSONField(value = true)
+    public String getRole() {
+        return role;
     }
 
     private static final Map<Integer, MessageType> cache;

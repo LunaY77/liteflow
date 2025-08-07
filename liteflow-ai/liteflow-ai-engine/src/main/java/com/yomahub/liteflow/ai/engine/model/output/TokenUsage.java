@@ -96,4 +96,13 @@ public class TokenUsage {
             return a + b;
         }
     }
+
+    @Override
+    public String toString() {
+        return "TokenUsage{" +
+                "inputTokenCount=" + inputTokenCount +
+                ", outputTokenCount=" + outputTokenCount +
+                ", totalTokenCount=" + totalTokenCount +
+                '}';
+    }
 }

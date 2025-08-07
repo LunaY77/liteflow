@@ -28,7 +28,7 @@ public abstract class AbstractMessage implements Message {
     /**
      * 消息文本内容
      */
-    protected final String textContent;
+    protected final String content;
 
     /**
      * 元数据
@@ -39,10 +39,10 @@ public abstract class AbstractMessage implements Message {
      * 创建 AbstractMessage
      *
      * @param messageType 消息类型
-     * @param textContent 文本内容
+     * @param content 文本内容
      * @param metadata    元数据
      */
-    protected AbstractMessage(MessageType messageType, String textContent, Map<String, Object> metadata) {
+    protected AbstractMessage(MessageType messageType, String content, Map<String, Object> metadata) {
         if (Objects.isNull(messageType)) {
             throw new LiteFlowAIEngineException("消息类型不能为 null");
         }
@@ -50,7 +50,7 @@ public abstract class AbstractMessage implements Message {
             throw new LiteFlowAIEngineException("Metadata 不能为null");
         }
         this.messageType = messageType;
-        this.textContent = textContent;
+        this.content = content;
         this.metadata = new HashMap<>(metadata);
         this.metadata.put(MESSAGE_TYPE, messageType);
     }
@@ -62,7 +62,7 @@ public abstract class AbstractMessage implements Message {
 
     @Override
     public String getContent() {
-        return this.textContent;
+        return this.content;
     }
 
     @Override

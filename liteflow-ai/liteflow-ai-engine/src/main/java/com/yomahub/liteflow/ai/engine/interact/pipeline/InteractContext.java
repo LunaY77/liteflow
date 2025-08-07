@@ -19,13 +19,15 @@ public class InteractContext {
 
     private final StringBuilder aggregatedThinking;
 
-    private TokenUsage usage;
+    private TokenUsage tokenUsage;
 
     // TODO arg
     private Object grounding;
 
     // TODO arg
     private Object toolsCalling;
+
+    private boolean thinkingInContent;
 
     public InteractContext() {
         chatId = "interact_" + UUID.randomUUID();
@@ -51,5 +53,21 @@ public class InteractContext {
 
     public String getAggregatedThinking() {
         return aggregatedThinking.toString();
+    }
+
+    public TokenUsage getTokenUsage() {
+        return tokenUsage;
+    }
+
+    public boolean isThinkingInContent() {
+        return thinkingInContent;
+    }
+
+    public void setTokenUsage(TokenUsage tokenUsage) {
+        this.tokenUsage = tokenUsage;
+    }
+
+    public void setThinkingInContent(boolean thinkingInContent) {
+        this.thinkingInContent = thinkingInContent;
     }
 }

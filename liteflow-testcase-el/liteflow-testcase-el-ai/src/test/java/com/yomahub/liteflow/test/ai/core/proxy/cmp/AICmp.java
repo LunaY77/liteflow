@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.test.ai.core.proxy.cmp;
 
 import com.yomahub.liteflow.ai.annotation.*;
+import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
 /**
@@ -19,7 +20,9 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 )
 @AIChat(
         systemPrompt = "classpath:core/proxy/system_prompt.txt",
-        userPrompt = "{{question}}, {{answer}}"
+        userPrompt = "{{question}}, {{answer}}",
+        streaming = false,
+        transportType = TransportType.HTTP
 )
 @AIInput(
         mapping = {
