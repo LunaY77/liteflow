@@ -5,6 +5,7 @@ import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransforme
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
+import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.ModelRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
@@ -35,6 +36,16 @@ public class ChatRequest implements ModelRequest {
     protected final ChatOptions options;
 
     /**
+     * 流式输出模式，默认为 true
+     */
+    protected final boolean streaming;
+
+    /**
+     * 传输类型，默认为 SSE（Server-Sent Events）
+     */
+    protected final TransportType transportType;
+
+    /**
      * 传输监听器，用于处理请求的开始和结束事件
      */
     protected final TransportListener transportListener;
@@ -42,18 +53,23 @@ public class ChatRequest implements ModelRequest {
     /**
      * 结果处理器，用于处理消息全部发送完毕后的结果
      */
-    protected final ResultHandler resultHandler;
+    protected ResultHandler resultHandler;
 
     /**
      * 分块回调，用于处理消息分块的各种事件
      */
     protected final ChunkCallbackTransformer chunkCallbackTransformer;
 
+    // ==== RequestBody 相关参数 =====
     protected static final String MESSAGES_KEY = "messages";
+    protected static final String STREAM_KEY = "stream";
+    // ==== RequestBody 相关参数 =====
 
     public ChatRequest() {
         this.messages = new ArrayList<>();
         this.options = ChatOptions.DEFAULT;
+        this.streaming = true; // 默认启用流式输出
+        this.transportType = TransportType.SSE; // 默认使用 SSE 传输
         this.transportListener = TransportListener.getDefault();
         this.resultHandler = ResultHandler.getDefault();
         this.chunkCallbackTransformer = ChunkCallbackTransformer.getDefault();
@@ -62,15 +78,20 @@ public class ChatRequest implements ModelRequest {
     public ChatRequest(
             List<Message> messages,
             ChatOptions options,
+            boolean streaming,
+            TransportType transportType,
             TransportListener transportListener,
             ResultHandler resultHandler,
             ChunkCallbackTransformer chunkCallbackTransformer
     ) {
         this.messages = messages;
         this.options = options;
+        this.streaming = streaming;
+        this.transportType = transportType;
         this.transportListener = transportListener;
         this.resultHandler = resultHandler;
         this.chunkCallbackTransformer = chunkCallbackTransformer;
+        checkTransportConsistency();
     }
 
     /**
@@ -81,15 +102,33 @@ public class ChatRequest implements ModelRequest {
     public ChatRequest(Builder<?> builder) {
         this.messages = builder.messages;
         this.options = builder.options;
+        this.streaming = builder.streaming;
+        this.transportType = builder.transportType;
         this.transportListener = builder.transportListener;
         this.resultHandler = builder.resultHandler;
         this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
+        checkTransportConsistency();
+    }
+
+    /**
+     * 检查传输类型与流式输出模式的一致性。
+     * 如果流式输出模式启用但传输类型为HTTP，则抛出异常。
+     * 如果阻塞式输出模式启用但传输类型不是HTTP，则抛出异常。
+     */
+    protected void checkTransportConsistency() {
+        if (this.streaming && this.transportType == TransportType.HTTP) {
+            throw new IllegalArgumentException("流式输出模式启用，但不支持HTTP传输。请使用SSE或WebSocket传输。");
+        } else if (!this.streaming && this.transportType != TransportType.HTTP) {
+            throw new IllegalArgumentException("阻塞式输出模式启用，但传输类型不支持HTTP。请使用HTTP传输。");
+        }
     }
 
     @Override
     public RequestBody toRequestBody() {
         return RequestBody.of()
                 .putIfNotEmpty(MESSAGES_KEY, messages)
+                // 默认流式，如果不需要流式输出，则设置为false
+                .putIf(!streaming, STREAM_KEY, streaming)
                 .merge(options.toRequestBody());
     }
 
@@ -99,6 +138,14 @@ public class ChatRequest implements ModelRequest {
 
     public ChatOptions getOptions() {
         return options;
+    }
+
+    public boolean isStreaming() {
+        return streaming;
+    }
+
+    public TransportType getTransportType() {
+        return transportType;
     }
 
     public TransportListener getTransportListener() {
@@ -113,6 +160,10 @@ public class ChatRequest implements ModelRequest {
         return chunkCallbackTransformer;
     }
 
+    public void setResultHandler(ResultHandler resultHandler) {
+        this.resultHandler = resultHandler;
+    }
+
     public static Builder<?> builder() {
         return new Builder.BuilderImpl();
     }
@@ -120,6 +171,8 @@ public class ChatRequest implements ModelRequest {
     public static abstract class Builder<B extends Builder<B>> {
         protected List<Message> messages;
         protected ChatOptions options;
+        protected boolean streaming = true; // 默认启用流式输出
+        protected TransportType transportType = TransportType.SSE; // 默认使用 SSE 传输
         protected final LlmListenerAggregator listenerAggregator = new LlmListenerAggregator();
         protected TransportListener transportListener;
         protected ResultHandler resultHandler;
@@ -160,6 +213,27 @@ public class ChatRequest implements ModelRequest {
          */
         public B options(ChatOptions options) {
             this.options = options;
+            return self();
+        }
+
+        /**
+         * 设置是否启用流式输出
+         *
+         * @param streaming 是否启用流式输出
+         */
+        public B streaming(boolean streaming) {
+            this.streaming = streaming;
+            return self();
+        }
+
+        /**
+         * 设置传输类型
+         *
+         * @param transportType 传输类型
+         * @see TransportType
+         */
+        public B transportType(TransportType transportType) {
+            this.transportType = transportType;
             return self();
         }
 
@@ -277,8 +351,10 @@ public class ChatRequest implements ModelRequest {
          * 内部聚合类
          */
         protected static class LlmListenerAggregator {
-            Consumer<InteractContext> onStart = context -> {};
-            Consumer<InteractContext> onClose = context -> {};
+            Consumer<InteractContext> onStart = context -> {
+            };
+            Consumer<InteractContext> onClose = context -> {
+            };
             BiConsumer<InteractContext, Throwable> onError = (context, t) -> {
                 throw new LiteFlowAIEngineException(t.getMessage(), t);
             };

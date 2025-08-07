@@ -1,6 +1,5 @@
 package com.yomahub.liteflow.test.ai.model.ollama;
 
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
 import com.yomahub.liteflow.ai.model.ollama.interact.OllamaProtocolTransformer;
 import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatConfig;
@@ -25,8 +24,6 @@ public class ModelConfiguration {
                 .endPoint("/api/generate")
                 .provider(OllamaConstant.PROVIDER_NAME)
                 .model("qwen3:32b")
-                .streaming(false)
-                .transportType(TransportType.HTTP)
                 .build();
     }
 
@@ -38,8 +35,6 @@ public class ModelConfiguration {
                 .endPoint("/api/generate")
                 .provider(OllamaConstant.PROVIDER_NAME)
                 .model("qwen3:32b")
-                .streaming(true)
-                .transportType(TransportType.SSE)
                 .build();
     }
 //

@@ -11,10 +11,10 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
 public class ParsedAnnotationConfig {
 
-    private String systemPrompt;
-    private String userPrompt;
-    private ResponseType responseType = ResponseType.TEXT;
-    private Class<?> entityClass = String.class;
+    protected String systemPrompt;
+    protected String userPrompt;
+    protected ResponseType responseType = ResponseType.TEXT;
+    protected Class<?> entityClass = String.class;
 
     public String getSystemPrompt() {
         return systemPrompt;

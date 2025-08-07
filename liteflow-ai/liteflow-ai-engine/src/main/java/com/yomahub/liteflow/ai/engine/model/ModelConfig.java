@@ -36,9 +36,11 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
 
     protected Map<String, Object> headersConfig = new LinkedHashMap<>();
 
+    // ==== RequestBody、RequestHeader 相关参数 =====
     protected static final String MODEL_KEY = "model";
     protected static final String API_KEY_KEY = "Authorization";
     protected static final String BEARER_PREFIX = "Bearer ";
+    // ==== RequestBody、RequestHeader 相关参数 =====
 
     public ModelConfig() {
     }

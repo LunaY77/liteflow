@@ -7,6 +7,8 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 
+import java.time.Duration;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -44,5 +46,69 @@ public class OllamaChatModel implements ChatModel {
     @Override
     public ChatConfig getModelConfig() {
         return config;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private final OllamaChatConfig.Builder configBuilder;
+
+        public Builder() {
+            this.configBuilder = OllamaChatConfig.builder();
+        }
+
+        public Builder apiUrl(String apiUrl) {
+            this.configBuilder.apiUrl(apiUrl);
+            return this;
+        }
+
+        public Builder endPoint(String endPoint) {
+            this.configBuilder.endPoint(endPoint);
+            return this;
+        }
+
+        public Builder apiKey(String apiKey) {
+            this.configBuilder.apiKey(apiKey);
+            return this;
+        }
+
+        public Builder provider(String provider) {
+            this.configBuilder.provider(provider);
+            return this;
+        }
+
+        public Builder model(String model) {
+            this.configBuilder.model(model);
+            return this;
+        }
+
+        public Builder connectTimeout(Duration connectTimeout) {
+            this.configBuilder.connectTimeout(connectTimeout);
+            return this;
+        }
+
+        public Builder readTimeout(Duration readTimeout) {
+            this.configBuilder.readTimeout(readTimeout);
+            return this;
+        }
+
+        public Builder headersConfig(Map<String, Object> headersConfig) {
+            this.configBuilder.headersConfig(headersConfig);
+            return this;
+        }
+
+        public Builder autoToolCallEnabled(boolean autoToolCallEnabled) {
+            this.configBuilder.autoToolCallEnabled(autoToolCallEnabled);
+            return this;
+        }
+
+        public OllamaChatModel build() {
+            OllamaChatConfig config = this.configBuilder.build();
+
+            return new OllamaChatModel(config);
+        }
     }
 }

@@ -12,17 +12,7 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 
 public class ChatProxyWrapBean extends AIProxyWrapBean<AIChat> {
 
-    private boolean streaming;
-
     public ChatProxyWrapBean(AIComponent aiComponent, AIChat annotation, Class<?> interfaceClass, String beanName) {
         super(aiComponent, annotation, interfaceClass, beanName);
-    }
-
-    public boolean isStreaming() {
-        return streaming;
-    }
-
-    public void setStreaming(boolean streaming) {
-        this.streaming = streaming;
     }
 }

@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.wrap;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 
 import java.lang.annotation.Annotation;
 
@@ -26,8 +26,8 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
     protected final Class<?> interfaceClass;
     // Bean 名称
     protected final String beanName;
-    // 模型配置聚合
-    protected ModelConfigAggregator config;
+    // 处理器上下文
+    protected ProcessorContext<?> processorContext;
 
     public AIProxyWrapBean(AIComponent aiComponent, T annotation, Class<?> interfaceClass, String beanName) {
         this.aiComponent = aiComponent;
@@ -54,10 +54,6 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
         return aiComponent;
     }
 
-    public ModelConfigAggregator getConfig() {
-        return config;
-    }
-
     public Class<?> getInterfaceClass() {
         return interfaceClass;
     }
@@ -66,7 +62,11 @@ public abstract class AIProxyWrapBean<T extends Annotation> {
         return beanName;
     }
 
-    public void setConfig(ModelConfigAggregator config) {
-        this.config = config;
+    public ProcessorContext<?> getProcessorContext() {
+        return processorContext;
+    }
+
+    public void setProcessorContext(ProcessorContext<?> processorContext) {
+        this.processorContext = processorContext;
     }
 }

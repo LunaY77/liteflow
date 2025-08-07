@@ -1,8 +1,10 @@
 package com.yomahub.liteflow.ai.parse.context;
 
+import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.AIInput;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
 import com.yomahub.liteflow.ai.context.ChatContext;
+import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
 import com.yomahub.liteflow.ai.engine.model.ModelRequest;
 import com.yomahub.liteflow.ai.parse.prompt.loader.DefaultPromptResourceLoader;
@@ -17,21 +19,22 @@ import com.yomahub.liteflow.core.NodeComponent;
  * @since TODO
  */
 
-public class ProcessorContext<T extends AIProxyWrapBean<?>> {
+public class ProcessorContext<C extends ParsedAnnotationConfig> {
 
-    private final T wrapBean;
-    private final ParsedAnnotationConfig parsedAnnotationConfig;
+    private final AIComponent aiComponent;
     private final ChatContext chatContext;
     private final NodeComponent nodeComponent;
     private final AIInput aiInputAnno;
     private final AIOutput aiOutputAnno;
     private final PromptResourceLoader resourceLoader;
 
+    // 模型配置聚合
+    protected ModelConfigAggregator configAggregator;
+    private C parsedAnnotationConfig;
     private ModelRequest modelRequest;
 
-    public ProcessorContext(T wrapBean, ChatContext chatContext, NodeComponent nodeComponent) {
-        this.wrapBean = wrapBean;
-        parsedAnnotationConfig = new ParsedAnnotationConfig();
+    public ProcessorContext(AIProxyWrapBean<?> wrapBean, ChatContext chatContext, NodeComponent nodeComponent) {
+        this.aiComponent = wrapBean.getAiComponent();
         this.chatContext = chatContext;
         this.nodeComponent = nodeComponent;
         this.aiInputAnno = wrapBean.getInterfaceClass().getAnnotation(AIInput.class);
@@ -39,8 +42,8 @@ public class ProcessorContext<T extends AIProxyWrapBean<?>> {
         this.resourceLoader = new DefaultPromptResourceLoader();
     }
 
-    public T getWrapBean() {
-        return wrapBean;
+    public AIComponent getAiComponent() {
+        return aiComponent;
     }
 
     public ChatContext getChatContext() {
@@ -63,8 +66,20 @@ public class ProcessorContext<T extends AIProxyWrapBean<?>> {
         return resourceLoader;
     }
 
-    public ParsedAnnotationConfig getParsedAnnotationConfig() {
+    public ModelConfigAggregator getConfigAggregator() {
+        return configAggregator;
+    }
+
+    public void setConfigAggregator(ModelConfigAggregator configAggregator) {
+        this.configAggregator = configAggregator;
+    }
+
+    public C getParsedAnnotationConfig() {
         return parsedAnnotationConfig;
+    }
+
+    public void setParsedAnnotationConfig(C parsedAnnotationConfig) {
+        this.parsedAnnotationConfig = parsedAnnotationConfig;
     }
 
     public ModelRequest getModelRequest() {

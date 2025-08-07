@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.invocation;
 
+import com.yomahub.liteflow.ai.domain.dto.ParsedClassifyAnnotationConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.model.ModelFactory;
@@ -21,25 +22,26 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
     }
 
     @Override
-    protected void checkValidation(ProcessorContext<ClassifyProxyWrapBean> processorContext) {
+    protected void checkValidation(ProcessorContext<?> processorContext) {
         // 调用父类的校验方法
         super.checkValidation(processorContext);
+        ParsedClassifyAnnotationConfig annotationConfig = (ParsedClassifyAnnotationConfig) processorContext.getParsedAnnotationConfig();
         // 校验分类类别
-        if (SetUtil.isNotPresent(wrapBean.getCategories())) {
+        if (SetUtil.isNotPresent(annotationConfig.getCategories())) {
             throw new LiteFlowAIException("Categories cannot be empty for classification");
         }
         // 校验多标签分类
-        if (!wrapBean.isMultiLabel() && wrapBean.getCategories().size() > 1) {
+        if (!annotationConfig.isMultiLabel() && annotationConfig.getCategories().size() > 1) {
             throw new LiteFlowAIException("Multi-label classification is not allowed when multiLabel is false");
         }
-        if (wrapBean.isMultiLabel() && wrapBean.getCategories().size() < 2) {
+        if (annotationConfig.isMultiLabel() && annotationConfig.getCategories().size() < 2) {
             throw new LiteFlowAIException("At least two categories are required for multi-label classification");
         }
     }
 
     @Override
-    protected Object doExecuteAIProcess(ProcessorContext<ClassifyProxyWrapBean> processorContext, Object[] args) {
-        ChatModel chatModel = ModelFactory.getChatModel(processorContext.getWrapBean());
+    protected Object doExecuteAIProcess(ProcessorContext<?> processorContext, Object[] args) {
+        ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
         return chatModel.chat(processorContext.getModelRequest().toChatRequest());
     }
 }

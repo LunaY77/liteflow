@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * @since TODO
  */
 
-public abstract class AbstractRequestAssembler<R extends ModelRequest> implements RequestAssembler<R> {
+public abstract class AbstractRequestAssembler<R extends ModelRequest, C extends ParsedAnnotationConfig> implements RequestAssembler<R, C> {
 
     protected final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
 
@@ -28,9 +28,9 @@ public abstract class AbstractRequestAssembler<R extends ModelRequest> implement
      * @param contextRequest 上下文中的请求示例(可以为 null)
      * @param context        处理器上下文
      */
-    public final void assemble(R contextRequest, ProcessorContext<?> context) {
-        ParsedAnnotationConfig annotationConfig = context.getParsedAnnotationConfig();
-        ModelConfigAggregator config = context.getWrapBean().getConfig();
+    public final void assemble(R contextRequest, ProcessorContext<C> context) {
+        C annotationConfig = context.getParsedAnnotationConfig();
+        ModelConfigAggregator config = context.getConfigAggregator();
 
         // 组装请求
         R req = doAssemble(contextRequest, annotationConfig, config, context.getChatContext());
@@ -49,7 +49,7 @@ public abstract class AbstractRequestAssembler<R extends ModelRequest> implement
      */
     protected abstract R doAssemble(
             R contextRequest,
-            ParsedAnnotationConfig annotationConfig,
+            C annotationConfig,
             ModelConfigAggregator config,
             ChatContext context
     );

@@ -1,8 +1,10 @@
 package com.yomahub.liteflow.ai.model;
 
+import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
@@ -53,10 +55,12 @@ public class ModelFactory {
      */
     public static ChatModel getChatModel(AIProxyWrapBean<?> wrapBean) {
         return CHAT_MODEL_CACHE.computeIfAbsent(wrapBean.getNodeId(), id -> {
-            String providerName = wrapBean.getConfig().getProvider();
+            ProcessorContext<?> processorContext = wrapBean.getProcessorContext();
+            ModelConfigAggregator configAggregator = processorContext.getConfigAggregator();
+            String providerName = configAggregator.getProvider();
             ModelProvider provider = getProvider(providerName);
             // 创建 ChatModel 实例
-            return provider.createChatModel(wrapBean)
+            return provider.createChatModel(configAggregator)
                     .orElseThrow(() -> new LiteFlowAIException("ChatModel is not supported for provider: " + providerName));
         });
     }
@@ -69,10 +73,12 @@ public class ModelFactory {
      */
     public static EmbeddingModel getEmbeddingModel(AIProxyWrapBean<?> wrapBean) {
         return EMBEDDING_MODEL_CACHE.computeIfAbsent(wrapBean.getNodeId(), id -> {
-            String providerName = wrapBean.getConfig().getProvider();
+            ProcessorContext<?> processorContext = wrapBean.getProcessorContext();
+            ModelConfigAggregator configAggregator = processorContext.getConfigAggregator();
+            String providerName = configAggregator.getProvider();
             ModelProvider provider = getProvider(providerName);
             // 创建 EmbeddingModel 实例
-            return provider.createEmbeddingModel(wrapBean)
+            return provider.createEmbeddingModel(configAggregator)
                     .orElseThrow(() -> new LiteFlowAIException("EmbeddingModel is not supported for provider: " + providerName));
         });
     }

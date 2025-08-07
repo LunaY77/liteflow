@@ -18,7 +18,7 @@ public class ChatOptions implements ModelOptions {
             .topK(50)
             .maxTokens(512)
             .seed(null)
-            .enableThinking(false)
+            .enableThinking(true)
             .build();
 
     protected Double temperature;

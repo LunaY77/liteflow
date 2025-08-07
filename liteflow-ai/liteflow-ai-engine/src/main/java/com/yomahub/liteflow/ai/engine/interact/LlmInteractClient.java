@@ -79,10 +79,10 @@ public class LlmInteractClient implements InteractClient {
             this.request = request;
             this.context = new InteractContext();
             ProtocolTransformer protocolTransformer = ProtocolTransformerFactory.getTransformer(config.getProvider());
-            this.pipeline = config.isStreaming()
+            this.pipeline = request.isStreaming()
                     ? ChunkProcessPipeline.createStreamingPipeline(context, protocolTransformer, request.getChunkCallbackTransformer())
                     : ChunkProcessPipeline.createBlockingPipeline(context, protocolTransformer);
-            this.transport = TransportType.getTransportInstance(config.getTransportType());
+            this.transport = TransportType.getTransportInstance(request.getTransportType());
             this.externalTransportListener = request.getTransportListener();
             this.resultHandler = request.getResultHandler();
             this.internalTransportListener = new InternalTransportListener();

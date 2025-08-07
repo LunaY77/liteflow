@@ -1,13 +1,12 @@
 package com.yomahub.liteflow.ai.parse.anno;
 
 import com.yomahub.liteflow.ai.annotation.AIClassify;
-import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
+import com.yomahub.liteflow.ai.domain.dto.ParsedClassifyAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.parse.AbstractAnnotationProcessor;
 import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
-import com.yomahub.liteflow.ai.proxy.wrap.ClassifyProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
 import java.util.Arrays;
@@ -20,19 +19,20 @@ import java.util.stream.Collectors;
  * @since TODO
  */
 
-public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIClassify, ClassifyProxyWrapBean> {
+public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIClassify, ParsedClassifyAnnotationConfig> {
 
     @Override
-    public void postProcessBeforeTrigger(AIClassify annotation, ProcessorContext<ClassifyProxyWrapBean> context) {
+    public void postProcessBeforeTrigger(AIClassify annotation, ProcessorContext<ParsedClassifyAnnotationConfig> context) {
         // 解析模型配置
         parseModelConfig(context);
 
-        ClassifyProxyWrapBean wrapBean = context.getWrapBean();
-        ParsedAnnotationConfig annotationConfig = context.getParsedAnnotationConfig();
+        // 注解解析配置
+        ParsedClassifyAnnotationConfig annotationConfig = new ParsedClassifyAnnotationConfig();
+        context.setParsedAnnotationConfig(annotationConfig);
 
-        SetUtil.setIfPresent(wrapBean::setCategories, Arrays.stream(annotation.categories()).collect(Collectors.toList()));
+        SetUtil.setIfPresent(annotationConfig::setCategories, Arrays.stream(annotation.categories()).collect(Collectors.toList()));
 
-        SetUtil.setIfPresent(wrapBean::setMultiLabel, annotation.multiLabel());
+        SetUtil.setIfPresent(annotationConfig::setMultiLabel, annotation.multiLabel());
 
         // 处理系统提示词
         parsePrompt(annotation.systemPrompt(), context, annotationConfig::setSystemPrompt);
@@ -47,11 +47,11 @@ public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIC
         ChatRequest contextChatRequest = ContextAccessor.searchContextByExpression(annotation.getChatRequest(), context);
 
         // 组装 ChatRequest
-        CHAT_REQUEST_ASSEMBLER.assemble(contextChatRequest, context);
+        CLASSIFY_REQUEST_ASSEMBLER.assemble(contextChatRequest, context);
     }
 
     @Override
-    public void postProcessAfterTrigger(ProcessorContext<ClassifyProxyWrapBean> context, Object result) {
+    public void postProcessAfterTrigger(ProcessorContext<ParsedClassifyAnnotationConfig> context, Object result) {
         mapOutput2Context(context, result);
     }
 

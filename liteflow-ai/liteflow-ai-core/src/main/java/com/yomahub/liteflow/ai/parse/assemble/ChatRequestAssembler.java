@@ -3,7 +3,7 @@ package com.yomahub.liteflow.ai.parse.assemble;
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
-import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
+import com.yomahub.liteflow.ai.domain.dto.ParsedChatAnnotationConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
@@ -23,10 +23,10 @@ import java.util.Optional;
  * @since TODO
  */
 
-public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest> {
+public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, ParsedChatAnnotationConfig> {
 
     @Override
-    protected ChatRequest doAssemble(ChatRequest contextRequest, ParsedAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
+    protected ChatRequest doAssemble(ChatRequest contextRequest, ParsedChatAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
         ChatOptions contextOptions = Optional.ofNullable(contextRequest)
                 .map(ChatRequest::getOptions)
                 .orElse(ChatOptions.builder().build());
@@ -67,6 +67,16 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest> 
         builder.messages(
                 merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getMessages() : null, () -> messages)
         );
+
+        // 4. streaming 相关参数
+        builder.streaming(
+                Boolean.TRUE.equals(merge(() -> Objects.nonNull(contextRequest) ? contextRequest.isStreaming() : null, annotationConfig::isStreaming))
+        );
+        builder.transportType(
+                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getTransportType() : null, annotationConfig::getTransportType)
+        );
+
+        // TODO 4. 结构化输出
 
         return builder.build();
     }

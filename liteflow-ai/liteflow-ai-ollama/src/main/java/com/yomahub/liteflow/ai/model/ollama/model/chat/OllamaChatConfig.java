@@ -1,6 +1,5 @@
 package com.yomahub.liteflow.ai.model.ollama.model.chat;
 
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 
 import java.time.Duration;
@@ -28,22 +27,9 @@ public class OllamaChatConfig extends ChatConfig {
             Duration connectTimeout,
             Duration readTimeout,
             Map<String, Object> headersConfig,
-            boolean autoToolCallEnabled,
-            boolean streaming,
-            TransportType transportType
+            boolean autoToolCallEnabled
     ) {
-        super(apiUrl, endPoint, apiKey, provider, model, connectTimeout, readTimeout,
-                headersConfig, autoToolCallEnabled, streaming, transportType);
-    }
-
-    @Override
-    protected void checkTransportConsistency() {
-        super.checkTransportConsistency();
-        // ollama 的流式传输不支持 SSE 格式
-        if (this.streaming && this.transportType == TransportType.SSE) {
-            throw new IllegalArgumentException("For streaming with Ollama, the transportType must be set to `DnJson`. " +
-                    "The currently configured type `SSE` is not supported.");
-        }
+        super(apiUrl, endPoint, apiKey, provider, model, connectTimeout, readTimeout, headersConfig, autoToolCallEnabled);
     }
 
     public OllamaChatConfig(Builder builder) {

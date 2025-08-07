@@ -39,30 +39,24 @@ public class OllamaModelTest {
                 .endPoint("/api/chat")
                 .provider(OllamaConstant.PROVIDER_NAME)
                 .model("qwen3:32b")
-                .streaming(false)
                 .connectTimeout(Duration.of(10, ChronoUnit.MINUTES))
                 .readTimeout(Duration.of(10, ChronoUnit.MINUTES))
-                .transportType(TransportType.HTTP)
                 .build();
 
         List<Message> messages = new ArrayList<>();
         messages.add(new UserMessage("Why sky is blue?"));
 
         ChatOptions options = ChatOptions.DEFAULT;
+        // 关闭 Thinking
+        options.setEnableThinking(false);
 
         ChatRequest request = OllamaChatRequest.builder()
                 .messages(messages)
                 .options(options)
+                .streaming(false)
+                .transportType(TransportType.HTTP)
                 .onStart(context -> LOG.info("chat start"))
                 .onClose(context -> LOG.info("chat close"))
-                .onThinking((text, context) -> {
-                    LOG.info("chat thinking: {}", text);
-                    return text;
-                })
-                .onText(((text, context) -> {
-                    LOG.info("chat text: {}", text);
-                    return text;
-                }))
                 .onCompletion((response, context) -> {
                     LOG.info("response: \n{}", response);
                     LOG.info("content: \n{}", response.getContent().getContent());
@@ -93,22 +87,20 @@ public class OllamaModelTest {
                 .endPoint("/api/chat")
                 .provider(OllamaConstant.PROVIDER_NAME)
                 .model("qwen3:32b")
-                .streaming(true)
                 .connectTimeout(Duration.of(10, ChronoUnit.MINUTES))
                 .readTimeout(Duration.of(10, ChronoUnit.MINUTES))
-                .transportType(TransportType.DnJson)
                 .build();
 
         List<Message> messages = new ArrayList<>();
         messages.add(new UserMessage("Why sky is blue?"));
 
         ChatOptions options = ChatOptions.DEFAULT;
-        // 开启 thinking
-        options.setEnableThinking(true);
 
         ChatRequest request = OllamaChatRequest.builder()
                 .messages(messages)
                 .options(options)
+                .streaming(true)
+                .transportType(TransportType.DnJson)
                 .onStart(context -> LOG.info("chat start"))
                 .onClose(context -> {
                     LOG.info("chat close");

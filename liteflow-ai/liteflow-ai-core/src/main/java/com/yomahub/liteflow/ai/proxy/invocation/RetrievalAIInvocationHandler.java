@@ -17,7 +17,7 @@ public class RetrievalAIInvocationHandler extends AbstractAIInvocationHandler<Re
     }
 
     @Override
-    protected Object doExecuteAIProcess(ProcessorContext<RetrievalProxyWrapBean> processorContext, Object[] args) {
+    protected Object doExecuteAIProcess(ProcessorContext<?> processorContext, Object[] args) {
         return null;
     }
 }

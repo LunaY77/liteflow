@@ -45,11 +45,13 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
      */
     protected Object executeAIProcess(NodeComponent nodeComponent, Object[] args) {
         // 创建处理上下文
-        ProcessorContext<T> processorContext = new ProcessorContext<>(
+        ProcessorContext<?> processorContext = new ProcessorContext<>(
                 wrapBean,
                 nodeComponent.getContextBean(ChatContext.class),
                 nodeComponent
         );
+
+        wrapBean.setProcessorContext(processorContext);
 
         try {
             // 注解解析前置处理
@@ -76,9 +78,9 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
      *
      * @param processorContext 处理器上下文
      */
-    protected void checkValidation(ProcessorContext<T> processorContext) {
+    protected void checkValidation(ProcessorContext<?> processorContext) {
         // 校验必需参数
-        ModelConfigAggregator modelConfigAggregator = wrapBean.getConfig();
+        ModelConfigAggregator modelConfigAggregator = processorContext.getConfigAggregator();
         if (SetUtil.isNotPresent(modelConfigAggregator.getProvider())) {
             throw new LiteFlowAIException("Provider cannot be empty for AI node: " + wrapBean.getNodeId());
         }
@@ -97,5 +99,5 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
      * @param args             参数
      * @return 处理结果
      */
-    protected abstract Object doExecuteAIProcess(ProcessorContext<T> processorContext, Object[] args);
+    protected abstract Object doExecuteAIProcess(ProcessorContext<?> processorContext, Object[] args);
 }

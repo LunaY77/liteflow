@@ -2,9 +2,11 @@ package com.yomahub.liteflow.ai.util;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * TODO
@@ -18,6 +20,22 @@ public class SetUtil {
     /**
      * 如果给定的值不为 null 或 "空" 或 默认值，则调用消费者。
      *
+     * @param consumer     要执行的操作。
+     * @param value        要检查的值。
+     * @param defaultValue 默认值，如果 value 为 null 或 "空" 则使用此值。
+     * @param <T>          值的类型。
+     */
+    public static <T> void setIfPresent(Consumer<T> consumer, T value, T defaultValue) {
+        if (isPresent(value)) {
+            consumer.accept(value);
+        } else {
+            consumer.accept(defaultValue);
+        }
+    }
+
+    /**
+     * 如果给定的值不为 null 或 "空" 或 默认值，则调用消费者。
+     *
      * @param consumer 要执行的操作。
      * @param value    要检查的值。
      * @param <T>      值的类型。
@@ -25,6 +43,22 @@ public class SetUtil {
     public static <T> void setIfPresent(Consumer<T> consumer, T value) {
         if (isPresent(value)) {
             consumer.accept(value);
+        }
+    }
+
+    /**
+     * 如果给定的键值对列表不为 null 或 "空"，则调用消费者。（KeyValue 转换为 HeadersConfig 专用）
+     *
+     * @param consumer     设置 HeadersConfig 的消费者
+     * @param keyValueList 键值对列表
+     */
+    public static void setIfPresent(Consumer<Map<String, Object>> consumer, List<KeyValue> keyValueList) {
+        if (isPresent(keyValueList)) {
+            consumer.accept(
+                    keyValueList
+                            .stream()
+                            .collect(Collectors.toMap(KeyValue::key, KeyValue::value))
+            );
         }
     }
 
