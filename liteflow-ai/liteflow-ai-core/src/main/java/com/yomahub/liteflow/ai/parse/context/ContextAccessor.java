@@ -4,6 +4,7 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
 import com.yomahub.liteflow.ai.annotation.OutputField;
+import com.yomahub.liteflow.ai.engine.model.output.Response;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;
@@ -54,13 +55,11 @@ public class ContextAccessor {
     public static void setContextValueByExpression(String expression, ProcessorContext<?> context, Object value) {
         if (StrUtil.isBlank(expression) || Objects.isNull(value)) return;
 
-        // 检查结果是否为 Result 类型
-        // TODO result 类型的处理逻辑j
-//        if (!(value instanceof Result)) {
-//            throw new LiteFlowAIException("AIOutput annotation value must be of type Result.");
-//        }
-//        // 获取 Result 的内容
-//        value = ((Result<?>) value).content();
+        // 检查结果是否为 Response 类型
+        if (!(value instanceof Response)) {
+            throw new LiteFlowAIException("AI node output value must be of type Response.");
+        }
+        value = ((Response<?>) value).getContent();
 
         NodeComponent nodeComponent = context.getNodeComponent();
         AIOutput outputAnno = context.getAiOutputAnno();

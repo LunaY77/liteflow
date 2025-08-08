@@ -2,9 +2,6 @@ package com.yomahub.liteflow.test.ai.core.proxy;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.slot.DefaultContext;
@@ -41,65 +38,29 @@ public class ChatTest {
 
     @Test
     public void testStreaming() {
-        StreamHandler streamHandler = new StreamHandler() {
+        StreamHandler streamHandler = StreamHandler.builder()
+                .onStart(context -> System.out.println("chat start"))
+                .onClose(context -> System.out.println("chat close"))
+                .onError((context, t) -> {
+                    throw new RuntimeException(t);
+                })
+                .onText((content, context) -> {
+                    System.out.println("Received text: " + content);
+                    return content;
+                })
+                .onThinking((content, context) -> {
+                    System.out.println("Received thinking: " + content);
+                    return content;
+                })
+                .onCompletion((response, context) -> {
+                    System.out.println("Thinking: " + context.getAggregatedThinking());
+                    System.out.println("Text: " + context.getAggregatedText());
+                    System.out.println("Token Usage: " + response.getTokenUsage());
 
-            @Override
-            public void onStart(InteractContext context) {
-                System.out.println("chat start");
-            }
-
-            @Override
-            public void onClose(InteractContext context) {
-                System.out.println("chat close");
-            }
-
-            @Override
-            public void onError(InteractContext context, Throwable t) {
-                throw new RuntimeException(t);
-            }
-
-            @Override
-            public String onText(String content, InteractContext context) {
-                System.out.println("Received text: " + content);
-                return content;
-            }
-
-            @Override
-            public String onThinking(String content, InteractContext context) {
-                System.out.println("Received thinking: " + content);
-                return content;
-            }
-
-            @Override
-            public Object onToolsCalling(Object content, InteractContext context) {
-                return content;
-            }
-
-            @Override
-            public TokenUsage onUsage(Object content, InteractContext context) {
-                return null;
-            }
-
-            @Override
-            public Object onGrounding(Object content, InteractContext context) {
-                return null;
-            }
-
-            @Override
-            public ChatResponse onCompletion(ChatResponse response, InteractContext context) {
-                System.out.println("Thinking: " + context.getAggregatedThinking());
-                System.out.println("Text: " + context.getAggregatedText());
-                System.out.println("Token Usage: " + response.getTokenUsage());
-
-                System.out.println("response: \n" + response);
-                return response;
-            }
-
-            @Override
-            public ChatResponse onFinal(ChatResponse response, InteractContext context) {
-                return response;
-            }
-        };
+                    System.out.println("response: \n" + response);
+                    return response;
+                })
+                .build();
 
         ChatContext chatContext = new ChatContext(streamHandler);
 
