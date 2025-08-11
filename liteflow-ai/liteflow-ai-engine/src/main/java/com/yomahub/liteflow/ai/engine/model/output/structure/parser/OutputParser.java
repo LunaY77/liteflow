@@ -82,6 +82,27 @@ public class OutputParser<T> {
     }
 
     /**
+     * 获取输出格式的大模型提示词
+     *
+     * @return 提示词
+     */
+    public String getOutputInstruction() {
+        String template =
+                        "Your response should be in JSON format.\n" +
+                        "Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\n" +
+                        "Do not include markdown code blocks in your response.\n" +
+                        "Remove the ```json markdown from the output.\n" +
+                        "Here is the JSON Schema instance your output must adhere to:\n" +
+                        "```\n%s\n```";
+        try {
+            return String.format(template, objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.jsonSchema));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
      * JsonSchema
      *
      * @return JsonSchema

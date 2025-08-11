@@ -36,7 +36,7 @@ public class OutputParserTest {
     public void testComplexConvert() {
         OutputParser<OutputWithT<Output>> parser = new OutputParser<>("com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithT<com.yomahub.liteflow.test.ai.engine.structure.param.Output>");
         String jsonInput =
-                        "{\n" +
+                "{\n" +
                         "  \"data\": {\n" +
                         "    \"data\": \"This is a sample string.\",\n" +
                         "    \"lst\": [10, 20, 30]\n" +
@@ -135,5 +135,40 @@ public class OutputParserTest {
         JsonNode required = schema.get("required");
         Assertions.assertTrue(required.isArray());
         Assertions.assertEquals(2, required.size());
+    }
+
+    @Test
+    public void testOutputInstruction() {
+        OutputParser<Output> parser = new OutputParser<>(Output.class);
+
+        Assertions.assertEquals(
+                "Your response should be in JSON format.\n" +
+                        "Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\n" +
+                        "Do not include markdown code blocks in your response.\n" +
+                        "Remove the ```json markdown from the output.\n" +
+                        "Here is the JSON Schema instance your output must adhere to:\n" +
+                        "```\n" +
+                        "{\n" +
+                        "  \"type\" : \"object\",\n" +
+                        "  \"properties\" : {\n" +
+                        "    \"data\" : {\n" +
+                        "      \"type\" : \"string\",\n" +
+                        "      \"description\" : \"a data description\"\n" +
+                        "    },\n" +
+                        "    \"lst\" : {\n" +
+                        "      \"description\" : \"a list description\",\n" +
+                        "      \"type\" : \"array\",\n" +
+                        "      \"items\" : {\n" +
+                        "        \"type\" : \"integer\",\n" +
+                        "        \"description\" : \"a list description\"\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  },\n" +
+                        "  \"required\" : [ \"data\", \"lst\" ],\n" +
+                        "  \"additionalProperties\" : false\n" +
+                        "}\n" +
+                        "```",
+                parser.getOutputInstruction()
+        );
     }
 }
