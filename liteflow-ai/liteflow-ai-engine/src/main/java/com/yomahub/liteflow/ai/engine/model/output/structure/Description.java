@@ -20,4 +20,9 @@ public @interface Description {
      * 描述信息
      */
     String[] value();
+
+    /**
+     * 是否为必填项，默认为 true。
+     */
+    boolean required() default true;
 }

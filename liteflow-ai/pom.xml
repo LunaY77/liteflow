@@ -23,6 +23,7 @@
     <properties>
         <okhttp3.version>4.12.0</okhttp3.version>
         <fastjson.version>2.0.57</fastjson.version>
+        <victools.version>4.38.0</victools.version>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +50,18 @@
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.victools</groupId>
+                <artifactId>jsonschema-generator</artifactId>
+                <version>${victools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.victools</groupId>
+                <artifactId>jsonschema-module-jackson</artifactId>
+                <version>${victools.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

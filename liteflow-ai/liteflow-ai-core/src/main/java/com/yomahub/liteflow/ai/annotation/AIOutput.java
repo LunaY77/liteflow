@@ -93,11 +93,14 @@ public @interface AIOutput {
     int index() default -1;
 
     /**
+     * Json 输出的目标类名，格式为 {@code com.example.MyEntity} 或 {@code java.util.List<com.example.MyEntity>} 或 {@code java.util.Map<String, com.example.MyEntity>}
+     * <p>
      * 如需启用，请设置 {@link AIOutput#responseType()} 为 {@link ResponseType#JSON}
      * <p>
      * 表示输出的 JSON Schema 定义。如果需要添加描述信息，请使用{@link com.yomahub.liteflow.ai.engine.model.output.structure.Description}
      */
     Class<?> entityClass() default String.class;
+//    String entityClass() default "java.lang.String";
 
     /**
      * 如需启用，请设置 {@link AIOutput#responseType()} 为 {@link ResponseType#JSON}
