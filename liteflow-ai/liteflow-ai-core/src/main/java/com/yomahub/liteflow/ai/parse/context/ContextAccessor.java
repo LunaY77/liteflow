@@ -4,6 +4,8 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIOutput;
 import com.yomahub.liteflow.ai.annotation.OutputField;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.model.output.Response;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.util.SetUtil;
@@ -59,7 +61,13 @@ public class ContextAccessor {
         if (!(value instanceof Response)) {
             throw new LiteFlowAIException("AI node output value must be of type Response.");
         }
-        value = ((Response<?>) value).getContent();
+        // 如果 request 是 ChatRequest 且 value 是 ChatResponse，则尝试进行结构化转换
+        if (context.getModelRequest() instanceof ChatRequest && value instanceof ChatResponse) {
+            ChatRequest chatRequest = context.getModelRequest().toChatRequest();
+            value = ((ChatResponse) value).as(chatRequest.getOutputParser());
+        } else {
+            value = ((Response<?>) value).getContent();
+        }
 
         NodeComponent nodeComponent = context.getNodeComponent();
         AIOutput outputAnno = context.getAiOutputAnno();

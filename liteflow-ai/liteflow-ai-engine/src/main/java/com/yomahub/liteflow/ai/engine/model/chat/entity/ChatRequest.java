@@ -8,8 +8,12 @@ import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.ModelRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
+import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
+import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.engine.model.output.structure.parser.OutputParser;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -60,6 +64,16 @@ public class ChatRequest implements ModelRequest {
      */
     protected final ChunkCallbackTransformer chunkCallbackTransformer;
 
+    /**
+     * 响应类型，默认为文本类型
+     */
+    protected final ResponseType responseType;
+
+    /**
+     * 输出解析器，用于解析模型的输出结果，由 targetType 生成
+     */
+    protected final OutputParser<?> outputParser;
+
     // ==== RequestBody 相关参数 =====
     protected static final String MESSAGES_KEY = "messages";
     protected static final String STREAM_KEY = "stream";
@@ -73,6 +87,10 @@ public class ChatRequest implements ModelRequest {
         this.transportListener = TransportListener.getDefault();
         this.resultHandler = ResultHandler.getDefault();
         this.chunkCallbackTransformer = ChunkCallbackTransformer.getDefault();
+        this.responseType = ResponseType.TEXT; // 默认响应类型为文本
+        TypeReference<String> targetType = new TypeReference<String>() {
+        }; // 默认目标类型为 String
+        this.outputParser = OutputParser.fromTypeReference(targetType);
     }
 
     public ChatRequest(
@@ -82,7 +100,9 @@ public class ChatRequest implements ModelRequest {
             TransportType transportType,
             TransportListener transportListener,
             ResultHandler resultHandler,
-            ChunkCallbackTransformer chunkCallbackTransformer
+            ChunkCallbackTransformer chunkCallbackTransformer,
+            ResponseType responseType,
+            TypeReference<?> targetType
     ) {
         this.messages = messages;
         this.options = options;
@@ -91,7 +111,10 @@ public class ChatRequest implements ModelRequest {
         this.transportListener = transportListener;
         this.resultHandler = resultHandler;
         this.chunkCallbackTransformer = chunkCallbackTransformer;
+        this.responseType = responseType;
+        this.outputParser = OutputParser.fromTypeReference(targetType);
         checkTransportConsistency();
+        checkResponseTypeConsistency();
     }
 
     /**
@@ -107,7 +130,10 @@ public class ChatRequest implements ModelRequest {
         this.transportListener = builder.transportListener;
         this.resultHandler = builder.resultHandler;
         this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
+        this.responseType = builder.responseType;
+        this.outputParser = OutputParser.fromTypeReference(builder.targetType);
         checkTransportConsistency();
+        checkResponseTypeConsistency();
     }
 
     /**
@@ -117,9 +143,20 @@ public class ChatRequest implements ModelRequest {
      */
     protected void checkTransportConsistency() {
         if (this.streaming && this.transportType == TransportType.HTTP) {
-            throw new IllegalArgumentException("流式输出模式启用，但不支持HTTP传输。请使用SSE或WebSocket传输。");
+            throw new IllegalArgumentException("Streaming mode is enabled, but HTTP transport is not supported. Please use SSE or WebSocket transport.");
         } else if (!this.streaming && this.transportType != TransportType.HTTP) {
-            throw new IllegalArgumentException("阻塞式输出模式启用，但传输类型不支持HTTP。请使用HTTP传输。");
+            throw new IllegalArgumentException("Blocking mode is enabled, but the transport type does not support HTTP. Please use HTTP transport.");
+        }
+    }
+
+    /**
+     * 检查响应类型与目标类型的一致性。
+     * 如果响应类型为文本（TEXT），但目标类型不是 String，则抛出异常。
+     */
+    protected void checkResponseTypeConsistency() {
+        if (this.responseType == ResponseType.TEXT &&
+                !Objects.equals("java.lang.String", getTargetType().getTypeName())) {
+            throw new IllegalArgumentException("Response type is TEXT, but target type is not String. Please check the targetType setting.");
         }
     }
 
@@ -160,6 +197,18 @@ public class ChatRequest implements ModelRequest {
         return chunkCallbackTransformer;
     }
 
+    public ResponseType getResponseType() {
+        return responseType;
+    }
+
+    public Type getTargetType() {
+        return outputParser.getTargetType();
+    }
+
+    public OutputParser<?> getOutputParser() {
+        return outputParser;
+    }
+
     public void setResultHandler(ResultHandler resultHandler) {
         this.resultHandler = resultHandler;
     }
@@ -177,6 +226,9 @@ public class ChatRequest implements ModelRequest {
         protected TransportListener transportListener;
         protected ResultHandler resultHandler;
         protected ChunkCallbackTransformer chunkCallbackTransformer;
+        protected ResponseType responseType = ResponseType.TEXT;
+        protected TypeReference<?> targetType = new TypeReference<String>() {
+        };
 
         public abstract B self();
 
@@ -344,6 +396,28 @@ public class ChatRequest implements ModelRequest {
          */
         public B onFinal(BiFunction<ChatResponse, InteractContext, ChatResponse> onFinal) {
             listenerAggregator.onFinal = onFinal;
+            return self();
+        }
+
+        /**
+         * 设置响应类型
+         *
+         * @param responseType 响应类型
+         * @see ResponseType
+         */
+        public B responseType(ResponseType responseType) {
+            this.responseType = responseType;
+            return self();
+        }
+
+        /**
+         * 设置目标类型引用，用于指定响应体的具体类型
+         *
+         * @param targetType 目标类型引用
+         * @see TypeReference
+         */
+        public B targetType(TypeReference<?> targetType) {
+            this.targetType = targetType;
             return self();
         }
 

@@ -3,6 +3,7 @@ package com.yomahub.liteflow.ai.engine.model.output.structure.parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 
 import java.lang.reflect.Type;
@@ -19,6 +20,33 @@ public class OutputParser<T> {
     private final Type targetType;
     private final ObjectMapper objectMapper;
     private final JsonNode jsonSchema;
+
+    /**
+     * 通过 TypeReference 生成输出解析器
+     *
+     * @param reference TypeReference
+     */
+    public static <T> OutputParser<T> fromTypeReference(TypeReference<T> reference) {
+        return new OutputParser<>(reference.getType());
+    }
+
+    /**
+     * 通过 Type 生成输出解析器
+     *
+     * @param type 目标类型
+     */
+    public static <T> OutputParser<T> fromType(Type type) {
+        return new OutputParser<>(type);
+    }
+
+    /**
+     * 通过类型全限定名生成输出解析器
+     *
+     * @param typeName 目标类型的全限定名
+     */
+    public static <T> OutputParser<T> fromTypeName(String typeName) {
+        return new OutputParser<>(typeName);
+    }
 
     /**
      * 通过类型生成输出解析器
@@ -88,7 +116,7 @@ public class OutputParser<T> {
      */
     public String getOutputInstruction() {
         String template =
-                        "Your response should be in JSON format.\n" +
+                "Your response should be in JSON format.\n" +
                         "Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\n" +
                         "Do not include markdown code blocks in your response.\n" +
                         "Remove the ```json markdown from the output.\n" +
@@ -109,5 +137,14 @@ public class OutputParser<T> {
      */
     public JsonNode getJsonSchema() {
         return jsonSchema;
+    }
+
+    /**
+     * 获取目标类型
+     *
+     * @return 目标类型
+     */
+    public Type getTargetType() {
+        return targetType;
     }
 }

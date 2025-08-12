@@ -6,6 +6,7 @@ import com.github.victools.jsonschema.module.jackson.JacksonModule;
 import com.github.victools.jsonschema.module.jackson.JacksonOption;
 import com.yomahub.liteflow.ai.engine.model.output.structure.Description;
 import com.yomahub.liteflow.ai.engine.model.output.structure.ParameterizedTypeImpl;
+import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -68,6 +69,27 @@ public class JsonSchemaGenerator {
         configBuilder.forFields().withRequiredCheck(field -> true);
 
         return configBuilder;
+    }
+
+    /**
+     * 生成指定类型的 JSON Schema (默认严格模式)
+     *
+     * @param typeReference 类型引用
+     * @return 生成的 JSON Schema
+     */
+    public static JsonNode generate(TypeReference<?> typeReference) {
+        return generate(typeReference.getType(), true);
+    }
+
+    /**
+     * 生成指定类型的 JSON Schema (默认严格模式)
+     *
+     * @param typeReference 类型引用
+     * @param strict        是否为严格模式
+     * @return 生成的 JSON Schema
+     */
+    public static JsonNode generate(TypeReference<?> typeReference, boolean strict) {
+        return generate(typeReference.getType(), strict);
     }
 
     /**

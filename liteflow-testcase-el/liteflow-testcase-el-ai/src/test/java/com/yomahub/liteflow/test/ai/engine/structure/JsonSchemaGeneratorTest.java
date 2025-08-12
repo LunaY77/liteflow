@@ -2,11 +2,14 @@ package com.yomahub.liteflow.test.ai.engine.structure;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 import com.yomahub.liteflow.test.ai.engine.structure.param.Output;
 import com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithRequiredFalse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 /**
  * JsonSchemaGeneratorTest
@@ -24,6 +27,43 @@ public class JsonSchemaGeneratorTest {
         } catch (Exception e) {
             throw new RuntimeException("Failed to convert JsonNode to pretty string", e);
         }
+    }
+
+    @Test
+    public void testTypeReference() {
+        TypeReference<Object> typeReference1 = new TypeReference<Object>("java.util.List<java.lang.String>") {
+        };
+        JsonNode node1 = JsonSchemaGenerator.generate(typeReference1);
+        Assertions.assertEquals("java.util.List<java.lang.String>", typeReference1.getType().getTypeName());
+        Assertions.assertEquals(
+                "{\n" +
+                        "  \"type\" : \"array\",\n" +
+                        "  \"items\" : {\n" +
+                        "    \"type\" : \"string\"\n" +
+                        "  }\n" +
+                        "}",
+                toPrettyJson(node1)
+        );
+
+        TypeReference<List<String>> typeReference2 = new TypeReference<List<String>>() {
+        };
+        JsonNode node2 = JsonSchemaGenerator.generate(typeReference2);
+        Assertions.assertEquals("java.util.List<java.lang.String>", typeReference2.getType().getTypeName());
+        Assertions.assertEquals(
+                "{\n" +
+                        "  \"type\" : \"array\",\n" +
+                        "  \"items\" : {\n" +
+                        "    \"type\" : \"string\"\n" +
+                        "  }\n" +
+                        "}",
+                toPrettyJson(node2)
+        );
+    }
+
+    @Test
+    public void testInvalidTypeReference() {
+        Assertions.assertThrows(RuntimeException.class, () -> new TypeReference() {});
+        Assertions.assertThrows(RuntimeException.class, () -> new TypeReference<Object>("invalid.type.name") {});
     }
 
     @Test

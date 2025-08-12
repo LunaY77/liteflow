@@ -7,11 +7,13 @@ import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
+import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
+import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 
 import java.util.List;
 
 /**
- * TODO
+ * Ollama 聊天请求体
  *
  * @author 苍镜月
  * @since TODO
@@ -30,10 +32,13 @@ public class OllamaChatRequest extends ChatRequest {
             TransportType transportType,
             TransportListener transportListener,
             ResultHandler resultHandler,
-            ChunkCallbackTransformer chunkCallbackTransformer
+            ChunkCallbackTransformer chunkCallbackTransformer,
+            ResponseType responseType,
+            TypeReference<?> targetType
     ) {
         super(messages, options, streaming, transportType,
-                transportListener, resultHandler, chunkCallbackTransformer);
+                transportListener, resultHandler, chunkCallbackTransformer,
+                responseType, targetType);
     }
 
     public OllamaChatRequest(Builder builder) {
