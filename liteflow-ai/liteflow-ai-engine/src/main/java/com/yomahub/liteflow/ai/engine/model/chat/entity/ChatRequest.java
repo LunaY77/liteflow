@@ -71,6 +71,11 @@ public class ChatRequest implements ModelRequest {
     protected final ResponseType responseType;
 
     /**
+     * 是否为严格模式
+     */
+    protected final boolean strict;
+
+    /**
      * 输出解析器，用于解析模型的输出结果，由 targetType 生成
      */
     protected final OutputParser<?> outputParser;
@@ -91,6 +96,7 @@ public class ChatRequest implements ModelRequest {
         this.responseType = ResponseType.TEXT; // 默认响应类型为文本
         TypeReference<String> targetType = new TypeReference<String>() {
         }; // 默认目标类型为 String
+        this.strict = true;
         this.outputParser = OutputParser.fromTypeReference(targetType);
     }
 
@@ -114,6 +120,7 @@ public class ChatRequest implements ModelRequest {
         this.resultHandler = resultHandler;
         this.chunkCallbackTransformer = chunkCallbackTransformer;
         this.responseType = responseType;
+        this.strict = strict;
         this.outputParser = OutputParser.fromTypeReference(targetType, strict);
         checkTransportConsistency();
         checkResponseTypeConsistency();
@@ -133,7 +140,8 @@ public class ChatRequest implements ModelRequest {
         this.resultHandler = builder.resultHandler;
         this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
         this.responseType = builder.responseType;
-        this.outputParser = OutputParser.fromTypeReference(builder.targetType, builder().strict);
+        this.strict = builder.strict;
+        this.outputParser = OutputParser.fromType(builder.targetType, builder.strict);
         checkTransportConsistency();
         checkResponseTypeConsistency();
     }
@@ -220,6 +228,10 @@ public class ChatRequest implements ModelRequest {
         return outputParser;
     }
 
+    public boolean isStrict() {
+        return strict;
+    }
+
     public void setResultHandler(ResultHandler resultHandler) {
         this.resultHandler = resultHandler;
     }
@@ -238,8 +250,7 @@ public class ChatRequest implements ModelRequest {
         protected ResultHandler resultHandler;
         protected ChunkCallbackTransformer chunkCallbackTransformer;
         protected ResponseType responseType = ResponseType.TEXT;
-        protected TypeReference<?> targetType = new TypeReference<String>() {
-        };
+        protected Type targetType = String.class;
         protected boolean strict = true;
 
         public abstract B self();
@@ -428,7 +439,7 @@ public class ChatRequest implements ModelRequest {
          * @param targetType 目标类型引用
          * @see TypeReference
          */
-        public B targetType(TypeReference<?> targetType) {
+        public B targetType(Type targetType) {
             this.targetType = targetType;
             return self();
         }

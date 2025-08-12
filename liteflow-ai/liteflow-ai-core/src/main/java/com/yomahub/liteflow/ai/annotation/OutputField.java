@@ -19,7 +19,7 @@ public @interface OutputField {
     /**
      * 源字段名称（必需）。
      * <p>
-     * 指定要从结构化输出对象 ({@link AIOutput#entityClass()}) 中读取的字段名。
+     * 指定要从结构化输出对象 ({@link AIOutput#typeName()}) 中读取的字段名。
      */
     String sourceField();
 

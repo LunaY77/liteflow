@@ -14,7 +14,8 @@ public class ParsedAnnotationConfig {
     protected String systemPrompt;
     protected String userPrompt;
     protected ResponseType responseType = ResponseType.TEXT;
-    protected Class<?> entityClass = String.class;
+    protected String typeName = "java.lang.String";
+    protected boolean strict = true;
 
     public String getSystemPrompt() {
         return systemPrompt;
@@ -28,8 +29,12 @@ public class ParsedAnnotationConfig {
         return responseType;
     }
 
-    public Class<?> getEntityClass() {
-        return entityClass;
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public boolean isStrict() {
+        return strict;
     }
 
     public void setSystemPrompt(String systemPrompt) {
@@ -44,7 +49,11 @@ public class ParsedAnnotationConfig {
         this.responseType = responseType;
     }
 
-    public void setEntityClass(Class<?> entityClass) {
-        this.entityClass = entityClass;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public void setStrict(boolean strict) {
+        this.strict = strict;
     }
 }

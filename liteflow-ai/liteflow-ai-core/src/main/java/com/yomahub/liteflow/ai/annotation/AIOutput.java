@@ -99,8 +99,12 @@ public @interface AIOutput {
      * <p>
      * 表示输出的 JSON Schema 定义。如果需要添加描述信息，请使用{@link com.yomahub.liteflow.ai.engine.model.output.structure.Description}
      */
-    Class<?> entityClass() default String.class;
-//    String entityClass() default "java.lang.String";
+    String typeName() default "java.lang.String";
+
+    /**
+     * 是否严格模式（默认为 true，输出模式为 JSON 时使用）
+     */
+    boolean strict() default true;
 
     /**
      * 如需启用，请设置 {@link AIOutput#responseType()} 为 {@link ResponseType#JSON}

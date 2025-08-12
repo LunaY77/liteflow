@@ -2,10 +2,12 @@ package com.yomahub.liteflow.ai.model.ollama.model;
 
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 import com.yomahub.liteflow.ai.model.ModelProviderRegistrar;
 import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
 import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatModel;
+import com.yomahub.liteflow.ai.model.ollama.model.chat.OllamaChatRequest;
 
 import java.util.Optional;
 
@@ -19,6 +21,11 @@ import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
  */
 
 public class OllamaModelProvider extends ModelProviderRegistrar {
+
+    @Override
+    public Optional<ChatRequest.Builder<?>> createChatRequestBuilder() {
+        return Optional.of(OllamaChatRequest.builder());
+    }
 
     @Override
     public Optional<ChatModel> createChatModel(ModelConfigAggregator configAggregator) {

@@ -2,6 +2,7 @@ package com.yomahub.liteflow.ai.model;
 
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 
 import java.util.Optional;
@@ -21,6 +22,15 @@ public interface ModelProvider {
      * @return 模型提供者名称
      */
     String getProviderName();
+
+    /**
+     * 创建ChatRequest构建器
+     *
+     * @return ChatRequest 的建造者
+     */
+    default Optional<ChatRequest.Builder<?>> createChatRequestBuilder() {
+        return Optional.of(ChatRequest.builder());
+    }
 
     /**
      * 创建ChatModel实例

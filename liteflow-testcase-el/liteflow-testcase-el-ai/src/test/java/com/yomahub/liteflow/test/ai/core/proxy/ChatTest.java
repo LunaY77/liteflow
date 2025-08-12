@@ -4,7 +4,6 @@ import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
-import com.yomahub.liteflow.slot.DefaultContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -32,7 +31,7 @@ public class ChatTest {
 
     @Test
     public void testBlockingChat() {
-        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class, DefaultContext.class);
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
@@ -64,7 +63,7 @@ public class ChatTest {
 
         ChatContext chatContext = new ChatContext(streamHandler);
 
-        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain2", null, chatContext, DefaultContext.class);
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain2", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 }

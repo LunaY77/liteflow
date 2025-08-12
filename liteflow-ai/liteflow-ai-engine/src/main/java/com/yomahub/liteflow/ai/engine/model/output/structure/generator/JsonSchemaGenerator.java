@@ -66,6 +66,8 @@ public class JsonSchemaGenerator {
         });
 
         // 全部属性都应当为 required
+        // https://platform.openai.com/docs/guides/structured-outputs/supported-schemas?api-mode=chat#all-fields-must-be-required
+        // 详细可见 OpenAI 官方说明，翻译成人话就是，都得加上 Required，但是如果非 strict，那么 type 允许加个 null
         configBuilder.forFields().withRequiredCheck(field -> true);
 
         return configBuilder;

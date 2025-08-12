@@ -118,12 +118,13 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, C extend
         if (Objects.equals(ResponseType.JSON, outputAnno.responseType())) {
             annotationConfig.setResponseType(ResponseType.JSON);
             // 设置输出实体类
-            annotationConfig.setEntityClass(outputAnno.entityClass());
+            annotationConfig.setTypeName(outputAnno.typeName());
         } else {
             annotationConfig.setResponseType(ResponseType.TEXT);
             // 文本输出，设置 entityClass 为 String
-            annotationConfig.setEntityClass(String.class);
+            annotationConfig.setTypeName("java.lang.String");
         }
+        annotationConfig.setStrict(outputAnno.strict());
     }
 
     /**

@@ -9,6 +9,8 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.chat.message.SystemMessage;
 import com.yomahub.liteflow.ai.engine.model.chat.message.UserMessage;
+import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, 
                 .map(ChatRequest::getOptions)
                 .orElse(ChatOptions.builder().build());
 
-        ChatRequest.Builder<?> builder = ChatRequest.builder();
+        ChatRequest.Builder<?> builder = ModelFactory.getChatRequestBuilder(config.getProvider());
 
         // 1. 连接 StreamHandler 回调
         StreamHandler streamHandler = context.getStreamHandler();
@@ -76,7 +78,18 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, 
                 merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getTransportType() : null, annotationConfig::getTransportType)
         );
 
-        // TODO 4. 结构化输出
+        // 4. 结构化输出
+        builder.targetType(
+                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getTargetType() : null,
+                        () -> new TypeReference(annotationConfig.getTypeName()) {
+                        }.getType())
+        );
+        builder.responseType(
+                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getResponseType() : null, annotationConfig::getResponseType)
+        );
+        builder.strict(
+                Boolean.TRUE.equals(merge(() -> Objects.nonNull(contextRequest) ? contextRequest.isStrict() : null, annotationConfig::isStrict))
+        );
 
         return builder.build();
     }

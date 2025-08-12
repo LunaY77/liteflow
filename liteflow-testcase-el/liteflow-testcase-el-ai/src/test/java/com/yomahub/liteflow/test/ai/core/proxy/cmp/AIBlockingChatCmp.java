@@ -34,8 +34,8 @@ import com.yomahub.liteflow.ai.util.TriState;
         }
 )
 @AIOutput(
-        responseType = ResponseType.TEXT,
-        entityClass = Output.class,
+        responseType = ResponseType.JSON,
+        typeName = "com.yomahub.liteflow.test.ai.core.proxy.cmp.Output",
         methodExpress = "setData",
         useKeyIndex = true,
         key = "result"

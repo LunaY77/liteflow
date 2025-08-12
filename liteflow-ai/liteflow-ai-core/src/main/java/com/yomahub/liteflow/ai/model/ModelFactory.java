@@ -2,6 +2,7 @@ package com.yomahub.liteflow.ai.model;
 
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
@@ -45,6 +46,19 @@ public class ModelFactory {
         Objects.requireNonNull(provider.getProviderName(), "Provider name cannot be null");
         MODEL_PROVIDER_MAP.put(provider.getProviderName().toLowerCase(), provider);
         LOG.info("Registered model provider: {}", provider.getProviderName());
+    }
+
+    /**
+     * 获取指定提供者名称的ChatRequest.Builder
+     *
+     * @param providerName 模型提供者名称
+     * @return ChatRequest.Builder实例
+     */
+    public static ChatRequest.Builder<?> getChatRequestBuilder(String providerName) {
+        return MODEL_PROVIDER_MAP
+                .get(providerName)
+                .createChatRequestBuilder()
+                .orElseThrow(() -> new LiteFlowAIException("ChatRequest.Builder is not supported for provider: " + providerName));
     }
 
     /**
