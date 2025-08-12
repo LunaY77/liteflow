@@ -9,6 +9,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.util.List;
 
@@ -16,10 +17,17 @@ import java.util.List;
  * Ollama 聊天请求体
  *
  * @author 苍镜月
+ * @see <a href=
+ * "https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion">Chat
+ * Completion API</a>
  * @since TODO
  */
 
 public class OllamaChatRequest extends ChatRequest {
+
+    // ==== RequestBody 相关参数 =====
+    private static final String FORMAT_KEY = "format";
+    // ==== RequestBody 相关参数 =====
 
     public OllamaChatRequest() {
         super();
@@ -34,15 +42,22 @@ public class OllamaChatRequest extends ChatRequest {
             ResultHandler resultHandler,
             ChunkCallbackTransformer chunkCallbackTransformer,
             ResponseType responseType,
-            TypeReference<?> targetType
+            TypeReference<?> targetType,
+            boolean strict
     ) {
         super(messages, options, streaming, transportType,
                 transportListener, resultHandler, chunkCallbackTransformer,
-                responseType, targetType);
+                responseType, targetType, strict);
     }
 
     public OllamaChatRequest(Builder builder) {
         super(builder);
+    }
+
+    @Override
+    public RequestBody toRequestBody() {
+        return super.toRequestBody()
+                .putIf(ResponseType.JSON.equals(this.responseType), FORMAT_KEY, outputParser.getJsonSchema());
     }
 
     @Override

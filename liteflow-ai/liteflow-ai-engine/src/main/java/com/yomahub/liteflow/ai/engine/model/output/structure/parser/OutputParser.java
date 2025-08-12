@@ -27,7 +27,7 @@ public class OutputParser<T> {
      * @param reference TypeReference
      */
     public static <T> OutputParser<T> fromTypeReference(TypeReference<T> reference) {
-        return new OutputParser<>(reference.getType());
+        return new OutputParser<>(reference.getType(), true);
     }
 
     /**
@@ -36,7 +36,7 @@ public class OutputParser<T> {
      * @param type 目标类型
      */
     public static <T> OutputParser<T> fromType(Type type) {
-        return new OutputParser<>(type);
+        return new OutputParser<>(type, true);
     }
 
     /**
@@ -45,8 +45,36 @@ public class OutputParser<T> {
      * @param typeName 目标类型的全限定名
      */
     public static <T> OutputParser<T> fromTypeName(String typeName) {
-        return new OutputParser<>(typeName);
+        return new OutputParser<>(typeName, true);
     }
+
+    /**
+     * 通过 TypeReference 生成输出解析器
+     *
+     * @param reference TypeReference
+     */
+    public static <T> OutputParser<T> fromTypeReference(TypeReference<T> reference, boolean strict) {
+        return new OutputParser<>(reference.getType(), strict);
+    }
+
+    /**
+     * 通过 Type 生成输出解析器
+     *
+     * @param type 目标类型
+     */
+    public static <T> OutputParser<T> fromType(Type type, boolean strict) {
+        return new OutputParser<>(type, strict);
+    }
+
+    /**
+     * 通过类型全限定名生成输出解析器
+     *
+     * @param typeName 目标类型的全限定名
+     */
+    public static <T> OutputParser<T> fromTypeName(String typeName, boolean strict) {
+        return new OutputParser<>(typeName, strict);
+    }
+
 
     /**
      * 通过类型生成输出解析器
@@ -54,9 +82,7 @@ public class OutputParser<T> {
      * @param targetType 目标类型
      */
     public OutputParser(Type targetType) {
-        this.targetType = targetType;
-        this.objectMapper = new ObjectMapper();
-        this.jsonSchema = JsonSchemaGenerator.generate(targetType);
+        this(targetType, true);
     }
 
     /**
@@ -65,9 +91,29 @@ public class OutputParser<T> {
      * @param typeName 目标类型的全限定名
      */
     public OutputParser(String typeName) {
-        this.targetType = JsonSchemaGenerator.typeFromString(typeName);
+        this(JsonSchemaGenerator.typeFromString(typeName), true);
+    }
+
+    /**
+     * 通过类型生成输出解析器
+     *
+     * @param targetType 目标类型
+     * @param strict 严格模式
+     */
+    public OutputParser(Type targetType, boolean strict) {
+        this.targetType = targetType;
         this.objectMapper = new ObjectMapper();
-        this.jsonSchema = JsonSchemaGenerator.generate(typeName);
+        this.jsonSchema = JsonSchemaGenerator.generate(targetType, strict);
+    }
+
+    /**
+     * 通过类全限定名生成输出解析器
+     *
+     * @param typeName 目标类型的全限定名
+     * @param strict 严格模式
+     */
+    public OutputParser(String typeName, boolean strict) {
+        this(JsonSchemaGenerator.typeFromString(typeName), strict);
     }
 
     /**
@@ -137,6 +183,19 @@ public class OutputParser<T> {
      */
     public JsonNode getJsonSchema() {
         return jsonSchema;
+    }
+
+    /**
+     * JsonSchema
+     *
+     * @return JsonSchema
+     */
+    public String getJsonSchemaString() {
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.jsonSchema);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

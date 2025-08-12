@@ -10,6 +10,7 @@ import com.yomahub.liteflow.ai.engine.model.ModelRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 import com.yomahub.liteflow.ai.engine.model.output.structure.parser.OutputParser;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
@@ -102,7 +103,8 @@ public class ChatRequest implements ModelRequest {
             ResultHandler resultHandler,
             ChunkCallbackTransformer chunkCallbackTransformer,
             ResponseType responseType,
-            TypeReference<?> targetType
+            TypeReference<?> targetType,
+            boolean strict
     ) {
         this.messages = messages;
         this.options = options;
@@ -112,7 +114,7 @@ public class ChatRequest implements ModelRequest {
         this.resultHandler = resultHandler;
         this.chunkCallbackTransformer = chunkCallbackTransformer;
         this.responseType = responseType;
-        this.outputParser = OutputParser.fromTypeReference(targetType);
+        this.outputParser = OutputParser.fromTypeReference(targetType, strict);
         checkTransportConsistency();
         checkResponseTypeConsistency();
     }
@@ -131,7 +133,7 @@ public class ChatRequest implements ModelRequest {
         this.resultHandler = builder.resultHandler;
         this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
         this.responseType = builder.responseType;
-        this.outputParser = OutputParser.fromTypeReference(builder.targetType);
+        this.outputParser = OutputParser.fromTypeReference(builder.targetType, builder().strict);
         checkTransportConsistency();
         checkResponseTypeConsistency();
     }
@@ -163,10 +165,19 @@ public class ChatRequest implements ModelRequest {
     @Override
     public RequestBody toRequestBody() {
         return RequestBody.of()
-                .putIfNotEmpty(MESSAGES_KEY, messages)
+                .putIfNotEmpty(MESSAGES_KEY, appendFormatInstructionsIfNeeded())
                 // 默认流式，如果不需要流式输出，则设置为false
                 .putIf(!streaming, STREAM_KEY, streaming)
                 .merge(options.toRequestBody());
+    }
+
+    /**
+     * 对于某些模型，如果需要附加结构化输出提示词，可以在此方法中实现。
+     *
+     * @return 添加了结构化输出提示词的上下文
+     */
+    protected List<Message> appendFormatInstructionsIfNeeded() {
+        return this.messages;
     }
 
     public List<Message> getMessages() {
@@ -229,6 +240,7 @@ public class ChatRequest implements ModelRequest {
         protected ResponseType responseType = ResponseType.TEXT;
         protected TypeReference<?> targetType = new TypeReference<String>() {
         };
+        protected boolean strict = true;
 
         public abstract B self();
 
@@ -418,6 +430,17 @@ public class ChatRequest implements ModelRequest {
          */
         public B targetType(TypeReference<?> targetType) {
             this.targetType = targetType;
+            return self();
+        }
+
+        /**
+         * 是否为严格模式，默认开启
+         *
+         * @param strict 是否为严格模式
+         * @see JsonSchemaGenerator#generate(Type, boolean)
+         */
+        public B strict(boolean strict) {
+            this.strict = strict;
             return self();
         }
 
