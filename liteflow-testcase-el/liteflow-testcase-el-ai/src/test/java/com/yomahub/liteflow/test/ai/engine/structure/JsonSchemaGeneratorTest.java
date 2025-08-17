@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.test.ai.engine.structure;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 import com.yomahub.liteflow.test.ai.engine.structure.param.Output;
@@ -19,15 +18,6 @@ import java.util.List;
  */
 
 public class JsonSchemaGeneratorTest {
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    private String toPrettyJson(JsonNode jsonNode) {
-        try {
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to convert JsonNode to pretty string", e);
-        }
-    }
 
     @Test
     public void testTypeReference() {
@@ -42,7 +32,7 @@ public class JsonSchemaGeneratorTest {
                         "    \"type\" : \"string\"\n" +
                         "  }\n" +
                         "}",
-                toPrettyJson(node1)
+                node1.toPrettyString()
         );
 
         TypeReference<List<String>> typeReference2 = new TypeReference<List<String>>() {
@@ -56,7 +46,7 @@ public class JsonSchemaGeneratorTest {
                         "    \"type\" : \"string\"\n" +
                         "  }\n" +
                         "}",
-                toPrettyJson(node2)
+                node2.toPrettyString()
         );
     }
 
@@ -73,7 +63,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"string\"\n" +
                         "}",
-                toPrettyJson(stringJson)
+                stringJson.toPrettyString()
         );
 
         JsonNode intJson = JsonSchemaGenerator.generate(Integer.class);
@@ -81,7 +71,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"integer\"\n" +
                         "}",
-                toPrettyJson(intJson)
+                intJson.toPrettyString()
         );
 
         JsonNode booleanJson = JsonSchemaGenerator.generate(Boolean.class);
@@ -89,7 +79,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"boolean\"\n" +
                         "}",
-                toPrettyJson(booleanJson)
+                booleanJson.toPrettyString()
         );
 
         JsonNode doubleJson = JsonSchemaGenerator.generate(Double.class);
@@ -97,7 +87,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"number\"\n" +
                         "}",
-                toPrettyJson(doubleJson)
+                doubleJson.toPrettyString()
         );
 
         JsonNode longJson = JsonSchemaGenerator.generate(Long.class);
@@ -105,7 +95,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"integer\"\n" +
                         "}",
-                toPrettyJson(longJson)
+                longJson.toPrettyString()
         );
 
         JsonNode floatJson = JsonSchemaGenerator.generate(Float.class);
@@ -113,7 +103,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"number\"\n" +
                         "}",
-                toPrettyJson(floatJson)
+                floatJson.toPrettyString()
         );
 
         JsonNode charJson = JsonSchemaGenerator.generate(Character.class);
@@ -121,7 +111,7 @@ public class JsonSchemaGeneratorTest {
                 "{\n" +
                         "  \"type\" : \"string\"\n" +
                         "}",
-                toPrettyJson(charJson)
+                charJson.toPrettyString()
         );
     }
 
@@ -135,7 +125,7 @@ public class JsonSchemaGeneratorTest {
                         "    \"type\" : \"string\"\n" +
                         "  }\n" +
                         "}",
-                toPrettyJson(listStringJson)
+                listStringJson.toPrettyString()
         );
 
         JsonNode listIntJson = JsonSchemaGenerator.generate("java.util.List<java.lang.Integer>");
@@ -146,7 +136,7 @@ public class JsonSchemaGeneratorTest {
                         "    \"type\" : \"integer\"\n" +
                         "  }\n" +
                         "}",
-                toPrettyJson(listIntJson)
+                listIntJson.toPrettyString()
         );
     }
 
@@ -173,7 +163,7 @@ public class JsonSchemaGeneratorTest {
                         "  \"required\" : [ \"data\", \"lst\" ],\n" +
                         "  \"additionalProperties\" : false\n" +
                         "}",
-                toPrettyJson(strictOutputJson)
+                strictOutputJson.toPrettyString()
         );
 
         JsonNode nonStrictOutputJson = JsonSchemaGenerator.generate(Output.class, false);
@@ -197,7 +187,7 @@ public class JsonSchemaGeneratorTest {
                         "  \"required\" : [ \"data\", \"lst\" ],\n" +
                         "  \"additionalProperties\" : false\n" +
                         "}",
-                toPrettyJson(nonStrictOutputJson)
+                nonStrictOutputJson.toPrettyString()
         );
     }
 
@@ -227,7 +217,7 @@ public class JsonSchemaGeneratorTest {
                         "    \"additionalProperties\" : false\n" +
                         "  }\n" +
                         "}",
-                toPrettyJson(listOutputJson)
+                listOutputJson.toPrettyString()
         );
     }
 
@@ -254,7 +244,7 @@ public class JsonSchemaGeneratorTest {
                         "  \"required\" : [ \"data\", \"lst\" ],\n" +
                         "  \"additionalProperties\" : false\n" +
                         "}",
-                toPrettyJson(outputTJson)
+                outputTJson.toPrettyString()
         );
 
         JsonNode outputTComplexJson = JsonSchemaGenerator.generate("com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithT<com.yomahub.liteflow.test.ai.engine.structure.param.Output>");
@@ -294,7 +284,7 @@ public class JsonSchemaGeneratorTest {
                         "  \"required\" : [ \"data\", \"lst\" ],\n" +
                         "  \"additionalProperties\" : false\n" +
                         "}",
-                toPrettyJson(outputTComplexJson)
+                outputTComplexJson.toPrettyString()
         );
     }
 
@@ -313,7 +303,7 @@ public class JsonSchemaGeneratorTest {
                         "  \"required\" : [ \"data\" ],\n" +
                         "  \"additionalProperties\" : false\n" +
                         "}",
-                toPrettyJson(strictJson)
+                strictJson.toPrettyString()
         );
 
         JsonNode nonStrictJson = JsonSchemaGenerator.generate(OutputWithRequiredFalse.class, false);
@@ -329,7 +319,7 @@ public class JsonSchemaGeneratorTest {
                         "  \"required\" : [ \"data\" ],\n" +
                         "  \"additionalProperties\" : false\n" +
                         "}",
-                toPrettyJson(nonStrictJson)
+                nonStrictJson.toPrettyString()
         );
     }
 }

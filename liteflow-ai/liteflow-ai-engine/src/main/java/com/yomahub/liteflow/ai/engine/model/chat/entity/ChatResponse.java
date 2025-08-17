@@ -6,10 +6,11 @@ import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
 import com.yomahub.liteflow.ai.engine.model.output.Response;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
-import com.yomahub.liteflow.ai.engine.model.output.structure.parser.OutputParser;
+import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
 
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * chat 响应体
@@ -43,7 +44,7 @@ public class ChatResponse extends Response<AssistantMessage> {
      * @param <T>    目标类型
      * @return 转换后的对象
      */
-    public <T> T as(OutputParser<T> parser) {
+    public <T> T as(JsonSchemaParser<T> parser) {
         String rawTextContent = this.getContent().getContent();
         if (StrUtil.isBlank(rawTextContent)) {
             throw new IllegalStateException("Cannot convert empty content to target type: " + parser.getTargetType());
@@ -60,7 +61,7 @@ public class ChatResponse extends Response<AssistantMessage> {
      * @return 转换后的对象
      */
     public <T> T as(TypeReference<T> targetType) {
-        OutputParser<T> parser = OutputParser.fromTypeReference(targetType);
+        JsonSchemaParser<T> parser = JsonSchemaParser.fromTypeReference(targetType);
         return this.as(parser);
     }
 
@@ -74,6 +75,15 @@ public class ChatResponse extends Response<AssistantMessage> {
     public <T> T as(Type targetType) {
         return this.as(new TypeReference<T>(targetType.getTypeName()) {
         });
+    }
+
+    /**
+     * 检查响应是否包含工具调用
+     *
+     * @return 如果响应包含工具调用，则返回 true，否则返回 false
+     */
+    public boolean hasToolCalls() {
+        return Objects.nonNull(this.getContent()) && Objects.equals(this.finishReason, FinishReason.TOOL_CALL);
     }
 
     public static Builder builder() {

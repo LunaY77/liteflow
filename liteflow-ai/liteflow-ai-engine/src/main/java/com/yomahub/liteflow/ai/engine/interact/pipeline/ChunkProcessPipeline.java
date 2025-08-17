@@ -56,15 +56,12 @@ public class ChunkProcessPipeline {
      * 将流式响应的 chunk 转换为 LiteFlow-AI 支持的格式。
      *
      * @param chunk 流式响应的 chunk
-     * @return 转换后的 chunk
      */
-    public StreamingProtocolChunk processStreaming(String chunk) {
+    public void processStreaming(String chunk) {
         // 协议转换 chunk
         StreamingProtocolChunk transformedChunk = protocolTransformer.transformStreamingChunk(chunk, context);
-
-        transformedChunk = chunkCallbackTransformer.transform(transformedChunk, context);
-
-        return transformedChunk;
+        // 回调处理器进行回调
+        chunkCallbackTransformer.transform(transformedChunk, context);
     }
 
     /**

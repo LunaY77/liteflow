@@ -6,7 +6,9 @@ import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
+import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -65,11 +67,10 @@ public interface StreamHandler {
     /**
      * 处理工具调用消息的回调方法。需要启用流式调用
      *
-     * @param content 工具调用内容，可能是工具调用的结果或相关信息
-     * @param context 聊天上下文，包含处理过程中的状态和信息
+     * @param toolCalls 工具调用内容，可能是工具调用的结果或相关信息
+     * @param context   聊天上下文，包含处理过程中的状态和信息
      */
-    // TODO args
-    Object onToolsCalling(Object content, InteractContext context);
+    List<ToolCall> onToolsCalling(List<ToolCall> toolCalls, InteractContext context);
 
     /**
      * 处理 Token 统计信息的回调方法。需要启用流式调用
@@ -116,7 +117,7 @@ public interface StreamHandler {
         };
         BiFunction<String, InteractContext, String> onText = (content, context) -> content;
         BiFunction<String, InteractContext, String> onThinking = (content, context) -> content;
-        BiFunction<Object, InteractContext, Object> onToolsCalling = (content, context) -> content;
+        BiFunction<List<ToolCall>, InteractContext, List<ToolCall>> onToolsCalling = (toolCalls, context) -> toolCalls;
         BiFunction<Object, InteractContext, Object> onUsage = (content, context) -> content;
         BiFunction<Object, InteractContext, Object> onGrounding = (content, context) -> content;
         BiFunction<ChatResponse, InteractContext, ChatResponse> onCompletion = (response, context) -> response;
@@ -181,9 +182,9 @@ public interface StreamHandler {
          * 工具调用消息的回调方法
          *
          * @param onToolsCalling 工具调用消息的回调函数
-         * @see ChunkCallbackTransformer#onToolsCalling(Object, InteractContext)
+         * @see ChunkCallbackTransformer#onToolsCalling(List, InteractContext)
          */
-        public Builder onToolsCalling(BiFunction<Object, InteractContext, Object> onToolsCalling) {
+        public Builder onToolsCalling(BiFunction<List<ToolCall>, InteractContext, List<ToolCall>> onToolsCalling) {
             this.onToolsCalling = onToolsCalling;
             return this;
         }
@@ -260,8 +261,8 @@ public interface StreamHandler {
                 }
 
                 @Override
-                public Object onToolsCalling(Object content, InteractContext context) {
-                    return onToolsCalling.apply(content, context);
+                public List<ToolCall> onToolsCalling(List<ToolCall> toolCalls, InteractContext context) {
+                    return onToolsCalling.apply(toolCalls, context);
                 }
 
                 @Override

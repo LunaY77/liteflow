@@ -11,7 +11,11 @@ import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
-import com.yomahub.liteflow.ai.engine.model.output.structure.parser.OutputParser;
+import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
+import com.yomahub.liteflow.ai.engine.tool.ToolCall;
+import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
+import com.yomahub.liteflow.ai.engine.tool.ToolDefinition;
+import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.lang.reflect.Type;
@@ -21,6 +25,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Chat 请求体
@@ -78,11 +83,26 @@ public class ChatRequest implements ModelRequest {
     /**
      * 输出解析器，用于解析模型的输出结果，由 targetType 生成
      */
-    protected final OutputParser<?> outputParser;
+    protected final JsonSchemaParser<?> outputParser;
+
+    /**
+     * 可使用的工具注册表
+     */
+    protected final ToolRegistry toolRegistry;
 
     // ==== RequestBody 相关参数 =====
     protected static final String MESSAGES_KEY = "messages";
     protected static final String STREAM_KEY = "stream";
+    // 对于支持请求体中的结构化参数的模型，可以在实现类中添加结构化参数的 key，并自行添加到 RequestBody 中。
+    /**
+     * 对于某些模型，可能不支持请求体中的结构化参数，那么如果需要附加结构化输出提示词，可以在此方法中实现。
+     *
+     * @return 添加了结构化输出提示词的上下文
+     */
+    protected List<Message> appendFormatInstructionsIfNeeded() {
+        return this.messages;
+    }
+    protected static final String TOOLS_KEY = "tools";
     // ==== RequestBody 相关参数 =====
 
     public ChatRequest() {
@@ -97,7 +117,8 @@ public class ChatRequest implements ModelRequest {
         TypeReference<String> targetType = new TypeReference<String>() {
         }; // 默认目标类型为 String
         this.strict = true;
-        this.outputParser = OutputParser.fromTypeReference(targetType);
+        this.outputParser = JsonSchemaParser.fromTypeReference(targetType);
+        this.toolRegistry = null;
     }
 
     public ChatRequest(
@@ -110,7 +131,8 @@ public class ChatRequest implements ModelRequest {
             ChunkCallbackTransformer chunkCallbackTransformer,
             ResponseType responseType,
             TypeReference<?> targetType,
-            boolean strict
+            boolean strict,
+            ToolRegistry toolRegistry
     ) {
         this.messages = messages;
         this.options = options;
@@ -121,7 +143,8 @@ public class ChatRequest implements ModelRequest {
         this.chunkCallbackTransformer = chunkCallbackTransformer;
         this.responseType = responseType;
         this.strict = strict;
-        this.outputParser = OutputParser.fromTypeReference(targetType, strict);
+        this.outputParser = JsonSchemaParser.fromTypeReference(targetType, strict);
+        this.toolRegistry = toolRegistry;
         checkTransportConsistency();
         checkResponseTypeConsistency();
     }
@@ -141,7 +164,8 @@ public class ChatRequest implements ModelRequest {
         this.chunkCallbackTransformer = builder.chunkCallbackTransformer;
         this.responseType = builder.responseType;
         this.strict = builder.strict;
-        this.outputParser = OutputParser.fromType(builder.targetType, builder.strict);
+        this.outputParser = JsonSchemaParser.fromType(builder.targetType, builder.strict);
+        this.toolRegistry = builder.toolRegistry;
         checkTransportConsistency();
         checkResponseTypeConsistency();
     }
@@ -173,19 +197,19 @@ public class ChatRequest implements ModelRequest {
     @Override
     public RequestBody toRequestBody() {
         return RequestBody.of()
+                // messages
                 .putIfNotEmpty(MESSAGES_KEY, appendFormatInstructionsIfNeeded())
                 // 默认流式，如果不需要流式输出，则设置为false
                 .putIf(!streaming, STREAM_KEY, streaming)
-                .merge(options.toRequestBody());
-    }
-
-    /**
-     * 对于某些模型，如果需要附加结构化输出提示词，可以在此方法中实现。
-     *
-     * @return 添加了结构化输出提示词的上下文
-     */
-    protected List<Message> appendFormatInstructionsIfNeeded() {
-        return this.messages;
+                // chat options
+                .merge(options.toRequestBody())
+                // tools
+                .putIfNotEmpty(TOOLS_KEY,
+                        toolRegistry.getAllTools()
+                                .stream()
+                                .map(ToolCallBack::getDefinition)
+                                .map(ToolDefinition::toJsonSchema)
+                                .collect(Collectors.toList()));
     }
 
     public List<Message> getMessages() {
@@ -224,7 +248,7 @@ public class ChatRequest implements ModelRequest {
         return outputParser.getTargetType();
     }
 
-    public OutputParser<?> getOutputParser() {
+    public JsonSchemaParser<?> getOutputParser() {
         return outputParser;
     }
 
@@ -234,6 +258,10 @@ public class ChatRequest implements ModelRequest {
 
     public void setResultHandler(ResultHandler resultHandler) {
         this.resultHandler = resultHandler;
+    }
+
+    public ToolRegistry getToolRegistry() {
+        return toolRegistry;
     }
 
     public static Builder<?> builder() {
@@ -252,6 +280,7 @@ public class ChatRequest implements ModelRequest {
         protected ResponseType responseType = ResponseType.TEXT;
         protected Type targetType = String.class;
         protected boolean strict = true;
+        protected ToolRegistry toolRegistry;
 
         public abstract B self();
 
@@ -371,9 +400,9 @@ public class ChatRequest implements ModelRequest {
          * 工具调用消息的回调方法
          *
          * @param onToolsCalling 工具调用消息的回调函数
-         * @see ChunkCallbackTransformer#onToolsCalling(Object, InteractContext)
+         * @see ChunkCallbackTransformer#onToolsCalling(List, InteractContext)
          */
-        public B onToolsCalling(BiFunction<Object, InteractContext, Object> onToolsCalling) {
+        public B onToolsCalling(BiFunction<List<ToolCall>, InteractContext, List<ToolCall>> onToolsCalling) {
             listenerAggregator.onToolsCalling = onToolsCalling;
             return self();
         }
@@ -437,10 +466,21 @@ public class ChatRequest implements ModelRequest {
          * 设置目标类型引用，用于指定响应体的具体类型
          *
          * @param targetType 目标类型引用
-         * @see TypeReference
+         * @see Type
          */
         public B targetType(Type targetType) {
             this.targetType = targetType;
+            return self();
+        }
+
+        /**
+         * 设置目标类型引用，用于指定响应体的具体类型
+         *
+         * @param targetType 目标类型引用
+         * @see TypeReference
+         */
+        public B targetType(TypeReference<?> targetType) {
+            this.targetType = targetType.getType();
             return self();
         }
 
@@ -452,6 +492,19 @@ public class ChatRequest implements ModelRequest {
          */
         public B strict(boolean strict) {
             this.strict = strict;
+            return self();
+        }
+
+        /**
+         * 设置可使用的工具
+         * @param toolRegistry 工具注册
+         * @see ToolRegistry
+         * @see com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry
+         * @see com.yomahub.liteflow.ai.engine.tool.registry.DelegatingToolRegistry
+         * @see com.yomahub.liteflow.ai.engine.tool.registry.ScanningToolRegistry
+         */
+        public B toolRegistry(ToolRegistry toolRegistry) {
+            this.toolRegistry = toolRegistry;
             return self();
         }
 
@@ -468,7 +521,7 @@ public class ChatRequest implements ModelRequest {
             };
             BiFunction<String, InteractContext, String> onText = (content, context) -> content;
             BiFunction<String, InteractContext, String> onThinking = (content, context) -> content;
-            BiFunction<Object, InteractContext, Object> onToolsCalling = (content, context) -> content;
+            BiFunction<List<ToolCall>, InteractContext, List<ToolCall>> onToolsCalling = (toolCalls, context) -> toolCalls;
             BiFunction<Object, InteractContext, Object> onUsage = (content, context) -> content;
             BiFunction<Object, InteractContext, Object> onGrounding = (content, context) -> content;
             BiFunction<ChatResponse, InteractContext, ChatResponse> onCompletion = (response, context) -> response;
@@ -530,8 +583,8 @@ public class ChatRequest implements ModelRequest {
                     }
 
                     @Override
-                    public Object onToolsCalling(Object content, InteractContext context) {
-                        return onToolsCalling.apply(content, context);
+                    public List<ToolCall> onToolsCalling(List<ToolCall> toolCalls, InteractContext context) {
+                        return onToolsCalling.apply(toolCalls, context);
                     }
 
                     @Override

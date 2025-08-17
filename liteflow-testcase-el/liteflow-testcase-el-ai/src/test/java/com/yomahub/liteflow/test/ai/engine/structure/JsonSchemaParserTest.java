@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.test.ai.engine.structure;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.yomahub.liteflow.ai.engine.model.output.structure.parser.OutputParser;
+import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
 import com.yomahub.liteflow.test.ai.engine.structure.param.Output;
 import com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithT;
 import org.junit.jupiter.api.Assertions;
@@ -17,11 +17,11 @@ import java.util.List;
  * @since TODO
  */
 
-public class OutputParserTest {
+public class JsonSchemaParserTest {
 
     @Test
     public void testSimpleConvert() {
-        OutputParser<Output> parser = new OutputParser<>(Output.class);
+        JsonSchemaParser<Output> parser = new JsonSchemaParser<>(Output.class);
         String jsonInput = "{\"data\":\"test data\", \"lst\":[1, 2, 3]}";
 
         Output result = parser.convert(jsonInput);
@@ -34,7 +34,7 @@ public class OutputParserTest {
 
     @Test
     public void testComplexConvert() {
-        OutputParser<OutputWithT<Output>> parser = new OutputParser<>("com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithT<com.yomahub.liteflow.test.ai.engine.structure.param.Output>");
+        JsonSchemaParser<OutputWithT<Output>> parser = new JsonSchemaParser<>("com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithT<com.yomahub.liteflow.test.ai.engine.structure.param.Output>");
         String jsonInput =
                 "{\n" +
                         "  \"data\": {\n" +
@@ -59,7 +59,7 @@ public class OutputParserTest {
 
     @Test
     public void testConvertWithMarkdownBlock() {
-        OutputParser<Output> parser = new OutputParser<>(Output.class);
+        JsonSchemaParser<Output> parser = new JsonSchemaParser<>(Output.class);
         String jsonContent = "{\"data\":\"markdown data\", \"lst\":[10, 20]}";
         List<Integer> expectedList = Arrays.asList(10, 20);
 
@@ -92,7 +92,7 @@ public class OutputParserTest {
     @SuppressWarnings("rawtypes")
     public void testConvertWithGenericTypeString() {
         String typeName = "com.yomahub.liteflow.test.ai.engine.structure.param.OutputWithT<java.lang.String>";
-        OutputParser parser = new OutputParser(typeName);
+        JsonSchemaParser parser = new JsonSchemaParser(typeName);
         String jsonInput = "{\"data\":\"generic string\", \"lst\":[99, 100]}";
 
         Object resultObj = parser.convert(jsonInput);
@@ -109,7 +109,7 @@ public class OutputParserTest {
 
     @Test
     public void testConvertInvalidJson() {
-        OutputParser<Output> parser = new OutputParser<>(Output.class);
+        JsonSchemaParser<Output> parser = new JsonSchemaParser<>(Output.class);
         String invalidJsonInput = "{\"data\":\"test data, \"lst\":[1, 2, 3]}";
 
         Assertions.assertThrows(RuntimeException.class, () -> {
@@ -119,7 +119,7 @@ public class OutputParserTest {
 
     @Test
     public void testGetJsonSchema() {
-        OutputParser<Output> parser = new OutputParser<>(Output.class);
+        JsonSchemaParser<Output> parser = new JsonSchemaParser<>(Output.class);
 
         JsonNode schema = parser.getJsonSchema();
 
@@ -139,7 +139,7 @@ public class OutputParserTest {
 
     @Test
     public void testOutputInstruction() {
-        OutputParser<Output> parser = new OutputParser<>(Output.class);
+        JsonSchemaParser<Output> parser = new JsonSchemaParser<>(Output.class);
 
         Assertions.assertEquals(
                 "Your response should be in JSON format.\n" +

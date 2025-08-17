@@ -1,7 +1,5 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
-import java.util.Map;
-
 /**
  * 内容接口
  *
@@ -18,10 +16,4 @@ public interface Content {
      */
     String getContent();
 
-    /**
-     * 获取元信息
-     *
-     * @return 元信息
-     */
-    Map<String, Object> getMetaData();
 }

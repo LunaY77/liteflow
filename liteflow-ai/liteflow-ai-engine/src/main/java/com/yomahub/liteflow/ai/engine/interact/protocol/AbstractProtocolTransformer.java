@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.interact.protocol;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
@@ -8,7 +9,9 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
+import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -49,7 +52,15 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
 
         // 流式响应未结束
 
-        // TODO 解析 ToolCall
+        // 解析 ToolCall
+        parseStreamingToolCall(chunkJson, context);
+
+        // 如果上下文中存在工具调用，需要进行解析
+        if (context.hasToolCalls()) {
+            protocolChunk.setType(StreamingProtocolType.TOOL_CALLS);
+            protocolChunk.setData(context.getToolCalls());
+            return protocolChunk;
+        }
 
         // 判断是否为思考开始或结束
         if (isThinkingStart(message)) {
@@ -72,7 +83,10 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
 
     @Override
     public ChatResponse transformStreamingResponse(InteractContext context) {
-        // TODO 解析 ToolCall
+        // 从上下文中获取 ToolCall 列表
+        List<ToolCall> toolCalls = context.getToolCalls();
+        FinishReason finishReason = context.hasToolCalls() ?
+                FinishReason.TOOL_CALL : FinishReason.STOP;
 
         StringBuilder stringBuilder = new StringBuilder();
         if (StrUtil.isNotBlank(context.getAggregatedThinking())) {
@@ -83,9 +97,9 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
         }
         stringBuilder.append(context.getAggregatedText());
 
-        AssistantMessage assistantMessage = new AssistantMessage(stringBuilder.toString());
+        AssistantMessage assistantMessage = new AssistantMessage(stringBuilder.toString(), toolCalls);
 
-        return new ChatResponse(assistantMessage, context.getTokenUsage(), FinishReason.STOP);
+        return new ChatResponse(assistantMessage, context.getTokenUsage(), finishReason);
     }
 
     @Override
@@ -97,18 +111,42 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
             throw new LiteFlowAIEngineException("blocking response is not done yet, please check the response.");
         }
 
-        // TODO 解析 ToolCall
+        // 解析 ToolCall
+        List<ToolCall> toolCalls = extractToolCalls(responseJson);
+        FinishReason finishReason = CollectionUtil.isNotEmpty(toolCalls) ?
+                FinishReason.TOOL_CALL : FinishReason.STOP;
 
         // 解析 AI 消息内容
         JSONObject message = extractMessage(responseJson);
         // 组装 AI Message
-        AssistantMessage assistantMessage = new AssistantMessage(extractContent(message));
-
+        AssistantMessage assistantMessage = new AssistantMessage(extractContent(message), toolCalls);
         // 解析 Token 使用情况
         TokenUsage tokenUsage = extractTokenUsage(responseJson);
 
-        return new ChatResponse(assistantMessage, tokenUsage, FinishReason.STOP);
+        return new ChatResponse(assistantMessage, tokenUsage, finishReason);
     }
+
+    /**
+     * 从流式响应中的单个数据块中解析 ToolCall 信息，并将其添加到上下文中。
+     * <p>
+     * 对于流式响应的 ToolCall，可能存在两种情况：
+     * <ol>
+     *     <li>初始定义 + 增量解析：第一个块只包含 id，name，type 等信息。后续的块只包含 arguments 片段</li>
+     *     <li>全量解析：数据块中包含完整的 ToolCall 信息</li>
+     * </ol>
+     *
+     * @param responseJson 完整的响应 JSON 对象
+     * @param context      交互上下文
+     */
+    protected abstract void parseStreamingToolCall(JSONObject responseJson, InteractContext context);
+
+    /**
+     * 从（阻塞式响应）中提取 ToolCall 列表。（虽然这里是 List，但是暂时不支持并行工具调用）
+     *
+     * @param responseJson 完整的响应 JSON 对象
+     * @return ToolCall 列表
+     */
+    protected abstract List<ToolCall> extractToolCalls(JSONObject responseJson);
 
     /**
      * 从响应的 JSON 中提取 AI 的消息内容。

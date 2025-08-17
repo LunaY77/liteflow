@@ -27,6 +27,7 @@ import java.util.Optional;
 
 public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, ParsedChatAnnotationConfig> {
 
+    @SuppressWarnings("rawtypes")
     @Override
     protected ChatRequest doAssemble(ChatRequest contextRequest, ParsedChatAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
         ChatOptions contextOptions = Optional.ofNullable(contextRequest)

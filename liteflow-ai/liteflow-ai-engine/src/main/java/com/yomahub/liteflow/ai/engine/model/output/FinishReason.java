@@ -21,7 +21,7 @@ public enum FinishReason {
     /**
      * 需要进行工具调用
      */
-    TOOL_EXECUTION,
+    TOOL_CALL,
 
     /**
      * 其他原因

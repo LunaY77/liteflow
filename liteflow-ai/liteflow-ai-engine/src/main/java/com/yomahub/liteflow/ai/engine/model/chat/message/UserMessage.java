@@ -1,8 +1,5 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 用户消息
  *
@@ -12,11 +9,8 @@ import java.util.Map;
 
 public class UserMessage extends AbstractMessage {
 
-    private UserMessage(String textContent, Map<String, Object> metadata) {
-        super(MessageType.USER, textContent, metadata);
+    public UserMessage(String textContent) {
+        super(MessageType.USER, textContent);
     }
 
-    public UserMessage(String textContent) {
-        this(textContent, new HashMap<>());
-    }
 }

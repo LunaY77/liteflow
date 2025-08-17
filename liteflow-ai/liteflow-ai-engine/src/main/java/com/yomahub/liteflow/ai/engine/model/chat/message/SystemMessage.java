@@ -1,8 +1,5 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 系统消息
  *
@@ -12,11 +9,8 @@ import java.util.Map;
 
 public class SystemMessage extends AbstractMessage {
 
-    private SystemMessage(String textContent, Map<String, Object> metadata) {
-        super(MessageType.SYSTEM, textContent, metadata);
+    public SystemMessage(String textContent) {
+        super(MessageType.SYSTEM, textContent);
     }
 
-    public SystemMessage(String textContent) {
-        this(textContent, new HashMap<>());
-    }
 }

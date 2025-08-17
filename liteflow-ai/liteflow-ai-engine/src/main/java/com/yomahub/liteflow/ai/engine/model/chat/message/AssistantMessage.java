@@ -1,10 +1,8 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ToolCall;
+import java.util.List;
 
 /**
  * 大模型消息
@@ -19,21 +17,13 @@ public class AssistantMessage extends AbstractMessage {
      */
     private List<ToolCall> toolCalls;
 
-    private AssistantMessage(String textContent, Map<String, Object> metadata) {
-        super(MessageType.ASSISTANT, textContent, metadata);
-    }
-
-    private AssistantMessage(String textContent, List<ToolCall> toolCalls, Map<String, Object> metadata) {
-        super(MessageType.ASSISTANT, textContent, metadata);
-        this.toolCalls = toolCalls;
-    }
-
     public AssistantMessage(String textContent) {
-        this(textContent, new HashMap<>());
+        super(MessageType.ASSISTANT, textContent);
     }
 
     public AssistantMessage(String textContent, List<ToolCall> toolCalls) {
-        this(textContent, toolCalls, new HashMap<>());
+        super(MessageType.ASSISTANT, textContent);
+        this.toolCalls = toolCalls;
     }
 
     public List<ToolCall> getToolCalls() {

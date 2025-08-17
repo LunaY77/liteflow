@@ -1,7 +1,11 @@
 package com.yomahub.liteflow.ai.engine.interact.pipeline;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
+import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -24,8 +28,8 @@ public class InteractContext {
     // TODO arg
     private Object grounding;
 
-    // TODO arg
-    private Object toolsCalling;
+    // 设计上支持并行工具调用，但是目前仅支持单轮单次调用
+    private List<ToolCall> toolCalls;
 
     private boolean thinkingInContent;
 
@@ -33,6 +37,7 @@ public class InteractContext {
         chatId = "interact_" + UUID.randomUUID();
         aggregatedText = new StringBuilder();
         aggregatedThinking = new StringBuilder();
+        toolCalls = new ArrayList<>();
     }
 
     public String getChatId() {
@@ -69,5 +74,48 @@ public class InteractContext {
 
     public void setThinkingInContent(boolean thinkingInContent) {
         this.thinkingInContent = thinkingInContent;
+    }
+
+    public List<ToolCall> getToolCalls() {
+        return toolCalls;
+    }
+
+    /**
+     * 设置工具调用列表
+     *
+     * @param toolCalls 工具调用列表
+     */
+    public void setToolCalls(List<ToolCall> toolCalls) {
+        this.toolCalls = toolCalls;
+    }
+
+    /**
+     * 添加工具调用
+     *
+     * @param toolCall 工具调用
+     */
+    public void addToolCall(ToolCall toolCall) {
+        this.toolCalls.add(toolCall);
+    }
+
+    /**
+     * 是否存在工具调用
+     *
+     * @return true 存在工具调用，false 不存在工具调用
+     */
+    public boolean hasToolCalls() {
+        return CollectionUtil.isNotEmpty(this.toolCalls);
+    }
+
+    /**
+     * 对当前（最后一个）工具调用添加参数。
+     *
+     * @param argumentsChunk 工具调用参数片段
+     */
+    public void addToolCallArguments(String argumentsChunk) {
+        if (hasToolCalls()) {
+            this.toolCalls.get(this.toolCalls.size() - 1)
+                    .addArguments(argumentsChunk);
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.util.List;
@@ -43,11 +44,12 @@ public class OllamaChatRequest extends ChatRequest {
             ChunkCallbackTransformer chunkCallbackTransformer,
             ResponseType responseType,
             TypeReference<?> targetType,
-            boolean strict
+            boolean strict,
+            ToolRegistry toolRegistry
     ) {
         super(messages, options, streaming, transportType,
                 transportListener, resultHandler, chunkCallbackTransformer,
-                responseType, targetType, strict);
+                responseType, targetType, strict, toolRegistry);
     }
 
     public OllamaChatRequest(Builder builder) {

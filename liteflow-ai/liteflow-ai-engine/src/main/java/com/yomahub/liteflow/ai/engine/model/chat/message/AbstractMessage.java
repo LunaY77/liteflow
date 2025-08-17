@@ -3,8 +3,6 @@ package com.yomahub.liteflow.ai.engine.model.chat.message;
 
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -15,8 +13,6 @@ import java.util.Objects;
  */
 
 public abstract class AbstractMessage implements Message {
-
-    public static final String MESSAGE_TYPE = "message_type";
 
     /**
      * 消息类型
@@ -31,33 +27,17 @@ public abstract class AbstractMessage implements Message {
     protected final String content;
 
     /**
-     * 元数据
-     */
-    protected final Map<String, Object> metadata;
-
-    /**
      * 创建 AbstractMessage
      *
      * @param messageType 消息类型
      * @param content 文本内容
-     * @param metadata    元数据
      */
-    protected AbstractMessage(MessageType messageType, String content, Map<String, Object> metadata) {
+    protected AbstractMessage(MessageType messageType, String content) {
         if (Objects.isNull(messageType)) {
             throw new LiteFlowAIEngineException("消息类型不能为 null");
         }
-        if (Objects.isNull(metadata)) {
-            throw new LiteFlowAIEngineException("Metadata 不能为null");
-        }
         this.messageType = messageType;
         this.content = content;
-        this.metadata = new HashMap<>(metadata);
-        this.metadata.put(MESSAGE_TYPE, messageType);
-    }
-
-    @Override
-    public Map<String, Object> getMetaData() {
-        return this.metadata;
     }
 
     @Override

@@ -132,6 +132,7 @@ public @interface AIComponent {
 
     // --- Tool Calling ----
     /**
+     * TODO not implement
      * 是否并行 ToolCall
      */
     TriState parallelToolCalls() default TriState.UNSET;

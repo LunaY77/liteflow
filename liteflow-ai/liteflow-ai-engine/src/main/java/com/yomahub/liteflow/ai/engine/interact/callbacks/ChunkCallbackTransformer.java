@@ -1,8 +1,11 @@
 package com.yomahub.liteflow.ai.engine.interact.callbacks;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkTransformer;
+import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.protocol.StreamingProtocolChunk;
+import com.yomahub.liteflow.ai.engine.tool.ToolCall;
+
+import java.util.List;
 
 /**
  * 流式消息处理管道的回调接口。根据块数据的类型进行具体回调
@@ -26,8 +29,8 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
             }
 
             @Override
-            public Object onToolsCalling(Object content, InteractContext context) {
-                return content;
+            public List<ToolCall> onToolsCalling(List<ToolCall> toolCalls, InteractContext context) {
+                return toolCalls;
             }
 
             @Override
@@ -42,7 +45,8 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
         };
     }
 
-    default StreamingProtocolChunk transform(StreamingProtocolChunk transformedChunk, InteractContext context) {
+    @SuppressWarnings("unchecked")
+    default void transform(StreamingProtocolChunk transformedChunk, InteractContext context) {
         switch (transformedChunk.getType()) {
             case TEXT:
                 String textContent = (String) transformedChunk.getData();
@@ -57,8 +61,8 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
                 context.addThinking(callbackThinking);
                 break;
             case TOOL_CALLS:
-                Object toolCallsContent = transformedChunk.getData();
-                Object responseToolCalls = this.onToolsCalling(toolCallsContent, context);
+                List<ToolCall> toolCallsContent = (List<ToolCall>) transformedChunk.getData();
+                List<ToolCall> responseToolCalls = this.onToolsCalling(toolCallsContent, context);
                 transformedChunk.setData(responseToolCalls);
                 break;
             case USAGE:
@@ -74,7 +78,6 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
                 // 其他类型暂不处理
                 break;
         }
-        return transformedChunk;
     }
 
     /**
@@ -96,11 +99,10 @@ public interface ChunkCallbackTransformer extends ChunkTransformer {
     /**
      * 处理工具调用消息的回调方法。
      *
-     * @param content 工具调用内容，可能是工具调用的结果或相关信息
+     * @param toolCalls 工具调用内容，可能是工具调用的结果或相关信息
      * @param context 聊天上下文，包含处理过程中的状态和信息
      */
-    // TODO args
-    Object onToolsCalling(Object content, InteractContext context);
+    List<ToolCall> onToolsCalling(List<ToolCall> toolCalls, InteractContext context);
 
     /**
      * 处理 Token 统计信息的回调方法
