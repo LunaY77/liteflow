@@ -7,6 +7,7 @@ import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 
 import java.lang.reflect.Type;
+import java.util.Map;
 
 /**
  * JsonSchema解析器
@@ -20,6 +21,15 @@ public class JsonSchemaParser<T> {
     private final Type targetType;
     private final ObjectMapper objectMapper;
     private final JsonNode jsonSchema;
+
+    /**
+     * 通过 JsonSchema 动态创建，适用于没有静态 Java 类对应的场景
+     *
+     * @param jsonSchema JsonSchema
+     */
+    public static JsonSchemaParser<Map<String, Object>> fromJsonNode(JsonNode jsonSchema) {
+        return new JsonSchemaParser<>(jsonSchema);
+    }
 
     /**
      * 通过 TypeReference 生成JsonSchema解析器
@@ -75,6 +85,16 @@ public class JsonSchemaParser<T> {
         return new JsonSchemaParser<>(typeName, strict);
     }
 
+    /**
+     * 通过 JsonSchema 动态创建，适用于没有静态 Java 类对应的场景
+     *
+     * @param jsonSchema JsonSchema
+     */
+    public JsonSchemaParser(JsonNode jsonSchema) {
+        this.targetType = Map.class;
+        this.objectMapper = new ObjectMapper();
+        this.jsonSchema = jsonSchema;
+    }
 
     /**
      * 通过类型生成JsonSchema解析器
@@ -120,7 +140,7 @@ public class JsonSchemaParser<T> {
      * 将JsonSchema字符串转换为目标类型的对象
      *
      * @param output JsonSchema
-     *            字符串
+     *               字符串
      * @return 转换后的对象
      */
     public T convert(String output) {

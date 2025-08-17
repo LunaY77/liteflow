@@ -1,10 +1,14 @@
 package com.yomahub.liteflow.ai.config;
 
+import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.parse.anno.ChatAnnotationProcessor;
 import com.yomahub.liteflow.ai.parse.anno.ClassifyAnnotationProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentBeanPostProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentProxyRegistrar;
+import com.yomahub.liteflow.ai.tool.SpringBeanToolRegistry;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -16,6 +20,12 @@ import org.springframework.context.annotation.Bean;
 
 @ConditionalOnProperty(prefix = "liteflow.ai", name = "enable", havingValue = "true")
 public class LiteFlowAIAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ToolRegistry toolRegistry(ApplicationContext applicationContext) {
+        return new SpringBeanToolRegistry(applicationContext);
+    }
 
     @Bean
     public static AIComponentProxyRegistrar aiComponentProxyRegistrar() {

@@ -139,7 +139,7 @@ public @interface AIComponent {
     /**
      * 是否自动进行 ToolCall
      */
-    TriState autoToolCallEnabled() default TriState.UNSET;
+    TriState autoToolCallEnabled() default TriState.TRUE;
 
     // --- 网络和日志参数 ---
     /**

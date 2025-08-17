@@ -9,6 +9,8 @@ import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
+import java.util.Arrays;
+
 /**
  * AI聊天注解处理器
  *
@@ -29,6 +31,7 @@ public class ChatAnnotationProcessor extends AbstractAnnotationProcessor<AIChat,
         // 设置基本属性
         SetUtil.setIfPresent(annotationConfig::setStreaming, annotation.streaming());
         SetUtil.setIfPresent(annotationConfig::setTransportType, annotation.transportType());
+        SetUtil.setIfPresent(annotationConfig::setToolNames, Arrays.asList(annotation.toolNames()));
 
         // 处理系统提示词
         parsePrompt(annotation.systemPrompt(), context, annotationConfig::setSystemPrompt);

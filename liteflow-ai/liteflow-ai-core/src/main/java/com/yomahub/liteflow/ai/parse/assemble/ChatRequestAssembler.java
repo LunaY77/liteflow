@@ -10,13 +10,12 @@ import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.chat.message.SystemMessage;
 import com.yomahub.liteflow.ai.engine.model.chat.message.UserMessage;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry;
+import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * ChatRequest 组装器
@@ -91,6 +90,18 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, 
         builder.strict(
                 Boolean.TRUE.equals(merge(() -> Objects.nonNull(contextRequest) ? contextRequest.isStrict() : null, annotationConfig::isStrict))
         );
+
+        // 5. 工具调用
+        ToolRegistry toolRegistry = merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getToolRegistry() : null, context::getToolRegistry);
+        if (Objects.nonNull(toolRegistry)) {
+            StaticToolRegistry staticToolRegistry = new StaticToolRegistry();
+            HashSet<String> targetToolNames = new HashSet<>(annotationConfig.getToolNames());
+            toolRegistry.getAllTools()
+                    .stream()
+                    .filter(tool -> targetToolNames.isEmpty() || targetToolNames.contains(tool.getName()))
+                    .forEach(staticToolRegistry::register);
+            builder.toolRegistry(staticToolRegistry);
+        }
 
         return builder.build();
     }

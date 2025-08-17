@@ -7,6 +7,7 @@ import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 /**
  * 工具定义
@@ -36,10 +37,11 @@ public class ToolDefinition<I> {
         inputParser = JsonSchemaParser.fromType(inputType);
     }
 
-    private ToolDefinition(Builder<I> builder) {
-        this.name = builder.name;
-        this.description = builder.description;
-        this.inputParser = JsonSchemaParser.fromType(builder.inputType);
+    @SuppressWarnings("unchecked")
+    public ToolDefinition(String name, String description, JsonNode inputSchema) {
+        this.name = name;
+        this.description = description;
+        this.inputParser = (JsonSchemaParser<I>) JsonSchemaParser.fromJsonNode(inputSchema);
     }
 
     /**
@@ -106,6 +108,7 @@ public class ToolDefinition<I> {
         private String name;
         private String description;
         private Type inputType;
+        private JsonNode inputSchema;
 
         public Builder<I> name(String name) {
             this.name = name;
@@ -127,6 +130,11 @@ public class ToolDefinition<I> {
             return this;
         }
 
+        public Builder<I> inputType(JsonNode inputSchema) {
+            this.inputSchema = inputSchema;
+            return this;
+        }
+
         public Builder<I> copy(ToolDefinition<I> toolDefinition) {
             this.name = toolDefinition.getName();
             this.description = toolDefinition.getDescription();
@@ -135,7 +143,11 @@ public class ToolDefinition<I> {
         }
 
         public ToolDefinition<I> build() {
-            return new ToolDefinition<>(this);
+            if (Objects.nonNull(inputType)) {
+                return new ToolDefinition<>(name, description, inputType);
+            } else {
+                return new ToolDefinition<>(name, description, inputSchema);
+            }
         }
     }
 }

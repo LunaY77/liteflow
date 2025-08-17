@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.ai.engine.tool.function;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
@@ -108,6 +109,11 @@ public class FunctionToolCallback<I, O> implements ToolCallBack {
 
         public Builder<I, O> inputType(TypeReference<I> inputType) {
             this.toolDefinitionBuilder.inputType(inputType);
+            return this;
+        }
+
+        public Builder<I, O> inputType(JsonNode inputSchema) {
+            this.toolDefinitionBuilder.inputType(inputSchema);
             return this;
         }
 

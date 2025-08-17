@@ -1,7 +1,10 @@
 package com.yomahub.liteflow.ai.context;
 
+import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
+import com.yomahub.liteflow.ai.util.SpringUtil;
 import com.yomahub.liteflow.slot.DefaultContext;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -19,14 +22,23 @@ public class ChatContext extends DefaultContext {
 
     private StreamHandler streamHandler;
 
+    private ToolRegistry toolRegistry;
+
     public ChatContext() {
         this.chatId = "chat_" + UUID.randomUUID();
         this.streamHandler = null;
     }
 
+    public ChatContext(StreamHandler streamHandler, ToolRegistry toolRegistry) {
+        this.chatId = "chat_" + UUID.randomUUID();
+        this.streamHandler = streamHandler;
+        this.toolRegistry = toolRegistry;
+    }
+
     public ChatContext(StreamHandler streamHandler) {
         this.chatId = "chat_" + UUID.randomUUID();
         this.streamHandler = streamHandler;
+        this.toolRegistry = SpringUtil.getBean(ToolRegistry.class);
     }
 
     public String getChatId() {
@@ -43,5 +55,40 @@ public class ChatContext extends DefaultContext {
 
     public void setStreamHandler(StreamHandler streamHandler) {
         this.streamHandler = streamHandler;
+    }
+
+    public ToolRegistry getToolRegistry() {
+        return toolRegistry;
+    }
+
+    public void setToolRegistry(ToolRegistry toolRegistry) {
+        this.toolRegistry = toolRegistry;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private StreamHandler streamHandler;
+        private ToolRegistry toolRegistry;
+
+        public Builder streamHandler(StreamHandler streamHandler) {
+            this.streamHandler = streamHandler;
+            return this;
+        }
+
+        public Builder toolRegistry(ToolRegistry toolRegistry) {
+            this.toolRegistry = toolRegistry;
+            return this;
+        }
+
+        public ChatContext build() {
+            if (Objects.isNull(toolRegistry)) {
+                return new ChatContext(streamHandler);
+            } else {
+                return new ChatContext(streamHandler, toolRegistry);
+            }
+        }
     }
 }

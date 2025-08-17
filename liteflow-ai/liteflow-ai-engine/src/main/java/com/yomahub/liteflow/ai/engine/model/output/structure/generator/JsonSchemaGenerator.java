@@ -1,6 +1,9 @@
 package com.yomahub.liteflow.ai.engine.model.output.structure.generator;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.victools.jsonschema.generator.*;
 import com.github.victools.jsonschema.module.jackson.JacksonModule;
 import com.github.victools.jsonschema.module.jackson.JacksonOption;
@@ -9,9 +12,8 @@ import com.yomahub.liteflow.ai.engine.model.output.structure.ParameterizedTypeIm
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * JsonSchema生成器
@@ -27,6 +29,7 @@ public class JsonSchemaGenerator {
     private static final Character COMMA = ',';
     private static final SchemaGenerator strictSchemaGenerator;
     private static final SchemaGenerator schemagenerator;
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     static {
         // 配置 JSON Schema 生成器
@@ -72,6 +75,8 @@ public class JsonSchemaGenerator {
 
         return configBuilder;
     }
+
+    // ===== 根据 Type 静态生成 =====
 
     /**
      * 生成指定类型的 JSON Schema (默认严格模式)
@@ -225,5 +230,113 @@ public class JsonSchemaGenerator {
         }
 
         return arguments;
+    }
+
+    // ===== 根据 Map 动态生成 =====
+
+    /**
+     * 根据 <参数名，参数类型> 的 Map 动态生成 Json
+     *
+     * @param map    参数名和类型的映射
+     * @param strict 是否为严格模式
+     * @return 生成的 JSON Schema
+     */
+    public static JsonNode generateFromTypeMap(Map<String, Type> map, boolean strict) {
+        ObjectNode root = MAPPER.createObjectNode();
+        root.put("type", "object");
+
+        ObjectNode properties = MAPPER.createObjectNode();
+        ArrayNode required = MAPPER.createArrayNode();
+
+        map.forEach((name, type) -> {
+            JsonNode paramSchema = generate(type, strict);
+            properties.set(name, paramSchema);
+            required.add(name);
+        });
+
+        root.set("properties", properties);
+        if (!required.isEmpty()) {
+            root.set("required", required);
+        }
+        root.put("additionalProperties", false);
+        return root;
+    }
+
+    /**
+     * 根据 Map 示例动态生成 JSON Schema（默认严格模式）
+     *
+     * @param map map
+     * @return 生成的 JSON Schema
+     */
+    public static JsonNode generate(Map<String, Object> map) {
+        return generate(map, true);
+    }
+
+    /**
+     * 根据 Map 示例动态生成 JSON Schema
+     *
+     * @param map map
+     * @return 生成的 JSON Schema
+     */
+    public static JsonNode generate(Map<String, Object> map, boolean strict) {
+        ObjectNode root = MAPPER.createObjectNode();
+        root.put("type", "object");
+
+        ObjectNode properties = MAPPER.createObjectNode();
+        ArrayNode required = MAPPER.createArrayNode();
+
+        map.forEach((key, value) -> {
+            // 根据值推断类型
+            properties.set(key, inferSchemaFromValue(value, strict));
+            required.add(key);
+        });
+
+        root.set("properties", properties);
+        if (!required.isEmpty()) {
+            root.set("required", required);
+        }
+        root.put("additionalProperties", false);
+        return root;
+    }
+
+    /**
+     * 动态推断对象的 JsonSchema 类型
+     *
+     * @param value  对象值
+     * @param strict 是否为严格模式
+     * @return JsonNode
+     */
+    private static JsonNode inferSchemaFromValue(Object value, boolean strict) {
+        ObjectNode node = MAPPER.createObjectNode();
+        if (Objects.isNull(value)) {
+            node.put("type", "null");
+        } else if (value instanceof String) {
+            node.put("type", "string");
+        } else if (value instanceof Integer || value instanceof Long || value instanceof Short || value instanceof Byte) {
+            node.put("type", "integer");
+        } else if (value instanceof Double || value instanceof Float || value instanceof BigDecimal) {
+            node.put("type", "number");
+        } else if (value instanceof Boolean) {
+            node.put("type", "boolean");
+        } else if (value instanceof List) {
+            node.put("type", "array");
+            List<?> lst = (List<?>) value;
+            if (!lst.isEmpty()) {
+                // 根据列表的第一个元素推断类型
+                node.set("items", inferSchemaFromValue(lst.get(0), strict));
+            } else {
+                node.set("items", MAPPER.createObjectNode().put("type", "object"));
+            }
+        } else if (value instanceof Map) {
+            // 嵌套 map，递归调用 generate
+            @SuppressWarnings("unchecked")
+            Map<String, Object> map = (Map<String, Object>) value;
+            return generate(map, strict);
+        } else {
+            // 其他对象类型，使用静态类型推断
+            return generate(value.getClass(), strict);
+        }
+
+        return node;
     }
 }
