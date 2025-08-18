@@ -2,6 +2,7 @@ package com.yomahub.liteflow.test.ai.core.tool;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
+import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.util.SpringUtil;
 import com.yomahub.liteflow.core.FlowExecutor;
@@ -39,9 +40,14 @@ public class ToolTest {
     public void testToolRegistry() {
         Assertions.assertNotNull(toolRegistry);
         Assertions.assertFalse(toolRegistry.getAllTools().isEmpty(), "Tool registry should contain tools");
-        Assertions.assertEquals(2, toolRegistry.getAllTools().size());
+        Assertions.assertEquals(4, toolRegistry.getAllTools().size());
         Assertions.assertEquals("weather_tool", toolRegistry.getTool("weather_tool").getName());
         Assertions.assertEquals("assemble_tool", toolRegistry.getTool("assemble_tool").getName());
+        ToolCallBack testTool = toolRegistry.getTool("test_tool");
+        String res = testTool.call("{\"arg0\": \"Hello\", \"arg1\": \"World\"}");
+        System.out.println(res);
+        String nullRes = toolRegistry.getTool("null_tool").call(null);
+        System.out.println(nullRes);
     }
 
     @Test

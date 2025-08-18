@@ -23,4 +23,14 @@ public class ToolConfig {
     public String assemble(@ToolParam("a") String a, @ToolParam("b") String b) {
         return "Assembled result: " + a + " and " + b;
     }
+
+    @Tool(name = "test_tool", value = {"测试工具", "不使用 ToolParam 注解，参数名应当为 arg0 和 arg1"})
+    public String tesTool(String input1, String input2) {
+        return "Test tool executed with inputs: " + input1 + " and " + input2;
+    }
+
+    @Tool(name = "null_tool", value = {"空工具", "不执行任何操作"})
+    public void nullTool() {
+        System.out.println("这是一个空工具，不执行任何操作");
+    }
 }

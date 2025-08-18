@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.output.structure.generator;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -10,7 +11,10 @@ import com.github.victools.jsonschema.module.jackson.JacksonOption;
 import com.yomahub.liteflow.ai.engine.model.output.structure.Description;
 import com.yomahub.liteflow.ai.engine.model.output.structure.ParameterizedTypeImpl;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
+import com.yomahub.liteflow.ai.engine.tool.annotation.ToolParam;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.*;
@@ -230,6 +234,52 @@ public class JsonSchemaGenerator {
         }
 
         return arguments;
+    }
+
+    // ===== 根据 Method 的参数 动态生成 =====
+
+    /**
+     * 根据 Method 的参数动态生成 JSON Schema
+     *
+     * @param method 方法实例
+     * @param strict 是否为严格模式
+     * @return 生成的 JSON Schema
+     */
+    public static JsonNode generate(Method method, boolean strict) {
+        if (method.getParameterCount() == 1 && !method.getParameterTypes()[0].isPrimitive()) {
+            // 如果方法参数只有一个非原始类型的参数，则直接使用该参数的类型作为 schema
+            Type paramType = method.getGenericParameterTypes()[0];
+            return generate(paramType, strict);
+        } else {
+            // 多个参数，提取为 Map，最后聚合为 Schema
+            Map<String, Type> typeMap = extractMethodParamsAsTypeMap(method);
+            return generateFromTypeMap(typeMap, strict);
+        }
+    }
+
+    /**
+     * 提取方法参数名称和类型
+     *
+     * @param method 方法实例
+     * @return 参数名和类型的映射
+     */
+    private static Map<String, Type> extractMethodParamsAsTypeMap(Method method) {
+        Map<String, Type> paramsMap = new LinkedHashMap<>();
+        for (Parameter parameter : method.getParameters()) {
+            ToolParam toolParam = parameter.getAnnotation(ToolParam.class);
+
+            String paramName;
+            // 这里将注解的 value 作为参数名，如果注解不存在，那么将使用方法参数的名字
+            // 但是需要开启 -parameters 参数，否则可能无法获取到
+            // 如果未开启获取到的是 arg0, arg1, ... 的形式
+            if (Objects.nonNull(toolParam) && StrUtil.isNotBlank(toolParam.value())) {
+                paramName = toolParam.value();
+            } else {
+                paramName = parameter.getName();
+            }
+            paramsMap.put(paramName, parameter.getParameterizedType());
+        }
+        return paramsMap;
     }
 
     // ===== 根据 Map 动态生成 =====

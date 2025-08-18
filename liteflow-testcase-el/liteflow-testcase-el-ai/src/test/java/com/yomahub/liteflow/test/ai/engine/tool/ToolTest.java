@@ -2,16 +2,19 @@ package com.yomahub.liteflow.test.ai.engine.tool;
 
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
+import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.ToolDefinition;
 import com.yomahub.liteflow.ai.engine.tool.annotation.Tool;
 import com.yomahub.liteflow.ai.engine.tool.annotation.ToolParam;
 import com.yomahub.liteflow.ai.engine.tool.function.FunctionToolCallback;
+import com.yomahub.liteflow.ai.engine.tool.registry.ScanningToolRegistry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,6 +49,14 @@ public class ToolTest {
         public void setValue(T value) {
             this.value = value;
         }
+    }
+
+    @Test
+    public void testScanningToolRegistry() {
+        ScanningToolRegistry scanningToolRegistry = new ScanningToolRegistry("com.yomahub.liteflow.test.ai.engine.tool.domain");
+        Collection<ToolCallBack> tools = scanningToolRegistry.getAllTools();
+        Assertions.assertEquals(4, tools.size());
+        System.out.println(tools);
     }
 
     @Test

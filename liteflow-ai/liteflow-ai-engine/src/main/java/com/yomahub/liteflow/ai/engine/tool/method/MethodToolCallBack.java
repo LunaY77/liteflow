@@ -66,6 +66,7 @@ public class MethodToolCallBack implements ToolCallBack {
                     String paramName;
                     // 这里将注解的 value 作为参数名，如果注解不存在，那么将使用方法参数的名字
                     // 但是需要开启 -parameters 参数，否则可能无法获取到
+                    // 如果未开启获取到的是 arg0, arg1, ... 的形式
                     if (Objects.nonNull(toolParam) && StrUtil.isNotBlank(toolParam.value())) {
                         paramName = toolParam.value();
                     } else {
@@ -73,7 +74,7 @@ public class MethodToolCallBack implements ToolCallBack {
                     }
                     JsonNode argNode = inputNode.get(paramName);
                     if (argNode.isNull()) {
-                        if (toolParam.required()) {
+                        if (Objects.nonNull(toolParam) && toolParam.required()) {
                             throw new IllegalArgumentException("Missing required parameter: " + paramName);
                         }
                         args[i] = null;
