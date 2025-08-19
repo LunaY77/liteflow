@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.model.ollama.constants;
 
 /**
- * TODO
+ * Ollama 模型常量定义
  *
  * @author 苍镜月
  * @since TODO

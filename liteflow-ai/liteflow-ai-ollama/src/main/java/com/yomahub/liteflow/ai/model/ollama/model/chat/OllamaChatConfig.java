@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.Map;
 
 /**
- * TODO
+ * Ollama 聊天配置类
  *
  * @author 苍镜月
  * @since TODO
