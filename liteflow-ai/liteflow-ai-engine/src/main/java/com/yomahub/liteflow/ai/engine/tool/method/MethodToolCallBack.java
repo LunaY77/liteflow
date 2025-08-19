@@ -8,6 +8,7 @@ import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.ToolDefinition;
 import com.yomahub.liteflow.ai.engine.tool.annotation.ToolParam;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -24,7 +25,7 @@ import java.util.Objects;
 public class MethodToolCallBack implements ToolCallBack {
 
     private static final EngineLog LOG = EngineLogManager.getLogger(MethodToolCallBack.class);
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = ObjectMapperHolder.getInstance();
 
     private final ToolDefinition<?> toolDefinition;
     private final Object bean;

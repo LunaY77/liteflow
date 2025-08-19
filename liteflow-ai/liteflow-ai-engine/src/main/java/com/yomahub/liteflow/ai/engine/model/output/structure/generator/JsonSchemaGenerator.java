@@ -12,6 +12,7 @@ import com.yomahub.liteflow.ai.engine.model.output.structure.Description;
 import com.yomahub.liteflow.ai.engine.model.output.structure.ParameterizedTypeImpl;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.tool.annotation.ToolParam;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -33,7 +34,7 @@ public class JsonSchemaGenerator {
     private static final Character COMMA = ',';
     private static final SchemaGenerator strictSchemaGenerator;
     private static final SchemaGenerator schemagenerator;
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = ObjectMapperHolder.getInstance();
 
     static {
         // 配置 JSON Schema 生成器

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.lang.reflect.Type;
 import java.util.Objects;
@@ -19,7 +20,7 @@ import java.util.Objects;
 
 public class ToolDefinition<I> {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = ObjectMapperHolder.getInstance();
 
     private final String name;
 

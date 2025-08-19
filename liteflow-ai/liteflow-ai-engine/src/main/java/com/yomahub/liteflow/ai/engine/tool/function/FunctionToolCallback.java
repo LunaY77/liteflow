@@ -8,6 +8,7 @@ import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.ToolDefinition;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.lang.reflect.Type;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class FunctionToolCallback<I, O> implements ToolCallBack {
     public FunctionToolCallback(ToolDefinition<I> toolDefinition, Function<I, O> function) {
         this.toolDefinition = toolDefinition;
         this.function = function;
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = ObjectMapperHolder.getInstance();
     }
 
     @Override

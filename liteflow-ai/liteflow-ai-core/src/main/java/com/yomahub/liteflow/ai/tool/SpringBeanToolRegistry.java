@@ -2,7 +2,6 @@ package com.yomahub.liteflow.ai.tool;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.ToolDefinition;
@@ -30,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SpringBeanToolRegistry implements ToolRegistry {
 
     private static final LFLog LOG = LFLoggerManager.getLogger(SpringBeanToolRegistry.class);
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ApplicationContext applicationContext;
     private final Map<String, ToolCallBack> toolCache = new ConcurrentHashMap<>();

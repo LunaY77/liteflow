@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class JsonSchemaParser<T> {
      */
     public JsonSchemaParser(JsonNode jsonSchema) {
         this.targetType = Map.class;
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = ObjectMapperHolder.getInstance();
         this.jsonSchema = jsonSchema;
     }
 
@@ -122,7 +123,7 @@ public class JsonSchemaParser<T> {
      */
     public JsonSchemaParser(Type targetType, boolean strict) {
         this.targetType = targetType;
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = ObjectMapperHolder.getInstance();
         this.jsonSchema = JsonSchemaGenerator.generate(targetType, strict);
     }
 

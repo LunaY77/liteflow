@@ -31,7 +31,6 @@ public class OllamaChatRequest extends ChatRequest {
     // ==== RequestBody 相关参数 =====
 
     public OllamaChatRequest() {
-        super();
     }
 
     public OllamaChatRequest(
