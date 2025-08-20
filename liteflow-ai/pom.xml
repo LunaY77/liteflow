@@ -13,10 +13,9 @@
 
     <modules>
         <module>liteflow-ai-core</module>
-        <module>liteflow-ai-ollama</module>
         <module>liteflow-ai-engine</module>
         <module>liteflow-ai-bom</module>
-        <module>liteflow-ai-openai</module>
+        <module>liteflow-ai-model</module>
     </modules>
 
     <artifactId>liteflow-ai</artifactId>

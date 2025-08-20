@@ -38,6 +38,11 @@
                 <artifactId>liteflow-ai-openai</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>liteflow-ai-dashscope</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- model end -->
         </dependencies>
     </dependencyManagement>
