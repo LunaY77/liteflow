@@ -9,6 +9,7 @@ import com.yomahub.liteflow.ai.engine.interact.protocol.AbstractProtocolTransfor
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -43,12 +44,12 @@ public class OllamaProtocolTransformer extends AbstractProtocolTransformer {
 
     private List<ToolCall> extractToolCallsFromMessage(JSONObject messageJson) {
         if (!messageJson.containsKey("tool_calls")) {
-            return null;
+            return Collections.emptyList();
         }
 
         JSONArray toolCalls = messageJson.getJSONArray("tool_calls");
         if (CollectionUtil.isEmpty(toolCalls)) {
-            return null;
+            return Collections.emptyList();
         }
 
         return IntStream.range(0, toolCalls.size())

@@ -7,6 +7,7 @@ import com.yomahub.liteflow.ai.annotation.OutputField;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.model.output.Response;
+import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;
@@ -64,7 +65,11 @@ public class ContextAccessor {
         // 如果 request 是 ChatRequest 且 value 是 ChatResponse，则尝试进行结构化转换
         if (context.getModelRequest() instanceof ChatRequest && value instanceof ChatResponse) {
             ChatRequest chatRequest = context.getModelRequest().toChatRequest();
-            value = ((ChatResponse) value).as(chatRequest.getOutputParser());
+            if (ResponseType.JSON.equals(chatRequest.getResponseType())) {
+                value = ((ChatResponse) value).as(chatRequest.getOutputParser());
+            } else {
+                value = ((ChatResponse) value).getContent();
+            }
         } else {
             value = ((Response<?>) value).getContent();
         }

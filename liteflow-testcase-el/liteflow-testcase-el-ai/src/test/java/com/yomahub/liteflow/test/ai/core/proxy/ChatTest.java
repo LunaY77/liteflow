@@ -2,6 +2,7 @@ package com.yomahub.liteflow.test.ai.core.proxy;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
+import com.yomahub.liteflow.ai.util.SpringUtil;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import org.junit.jupiter.api.Assertions;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
  */
 
 @TestPropertySource(properties = {"spring.config.location=classpath:core/proxy/application.yaml"})
-@SpringBootTest(classes = {ChatTest.class})
+@SpringBootTest(classes = {ChatTest.class, SpringUtil.class})
 @EnableAutoConfiguration
 @ComponentScan({"com.yomahub.liteflow.test.ai.core.proxy.cmp"})
 public class ChatTest {
@@ -56,7 +57,7 @@ public class ChatTest {
                     System.out.println("Text: " + context.getAggregatedText());
                     System.out.println("Token Usage: " + response.getTokenUsage());
 
-                    System.out.println("response: \n" + response);
+                    System.out.println("response: \n" + response.getContent().getContent());
                     return response;
                 })
                 .build();

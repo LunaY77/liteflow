@@ -13,6 +13,7 @@ import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 抽象协议转换器
@@ -27,27 +28,41 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
 
     @Override
     public StreamingProtocolChunk transformStreamingChunk(String streamChunk, InteractContext context) {
-        JSONObject chunkJson = JSONObject.parseObject(streamChunk);
         StreamingProtocolChunk protocolChunk = new StreamingProtocolChunk();
         protocolChunk.setId(context.getChatId());
 
+        if ("[DONE]".equals(streamChunk)) {
+            protocolChunk.setType(StreamingProtocolType.STOP);
+            protocolChunk.setData(streamChunk);
+            return protocolChunk;
+        }
+        JSONObject chunkJson = JSONObject.parseObject(streamChunk);
+
+        // 尝试获取 Token 使用情况
+        Optional.ofNullable(extractTokenUsage(chunkJson))
+                .ifPresent(context::setTokenUsage);
+
         // 获取响应消息
         JSONObject message = extractMessage(chunkJson);
-        String content = extractContent(message);
+
+        // 如果 message 为空，表示当前 chunk 没有 AI 响应内容
+        // 可能是收尾数据块，比如 TokenUsage
+        if (Objects.isNull(message)) {
+            protocolChunk.setType(StreamingProtocolType.TEXT);
+            protocolChunk.setData("");
+            return protocolChunk;
+        }
+
+        String content = Optional.ofNullable(extractContent(message)).orElse("");
         boolean isDone = isResponseDone(chunkJson);
 
         // 流式响应结束
-        if (isDone) {
-            // 获取 Token 使用情况
-            TokenUsage tokenUsage = extractTokenUsage(chunkJson);
-            context.setTokenUsage(tokenUsage);
-
-            // 转换为流式协议
-            if (Objects.isNull(message) || (StrUtil.isBlank(content))) {
-                protocolChunk.setType(StreamingProtocolType.STOP);
-                protocolChunk.setData(FINISHED_DATA);
-                return protocolChunk;
-            }
+        // 这里的结束代表模型给出了具体的 FinishReason，但是不代表流式传输结束
+        // 例如 OpenAI 的流式响应，可能在 FinisReason 之后会给出 TokenUsage 数据块
+        if (isDone && StrUtil.isBlank(content)) {
+            protocolChunk.setType(StreamingProtocolType.STOP);
+            protocolChunk.setData(FINISHED_DATA);
+            return protocolChunk;
         }
 
         // 流式响应未结束

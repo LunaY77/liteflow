@@ -38,4 +38,13 @@ public class StreamingProtocolChunk {
     public StreamingProtocolType getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "StreamingProtocolChunk{" +
+                "id='" + id + '\'' +
+                ", data=" + data +
+                ", type=" + type +
+                '}';
+    }
 }

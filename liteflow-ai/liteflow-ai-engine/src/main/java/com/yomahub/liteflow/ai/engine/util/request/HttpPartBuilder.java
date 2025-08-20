@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * 创建 Http 请求体和请求头的构建器
@@ -121,7 +122,7 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
     }
 
     /**
-     *向数据映射中添加一个键值对。
+     * 向数据映射中添加一个键值对。
      *
      * @param key   键。
      * @param value 值。
@@ -147,6 +148,21 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
     }
 
     /**
+     * 当值不为"空"时，添加一个键值对。
+     *
+     * @param key      键。
+     * @param value    要检查并添加的值。
+     * @param supplier 提供值的函数。
+     * @return 当前构建器实例，用于链式调用。
+     */
+    public T putIfNotEmpty(String key, Object value, Supplier<Object> supplier) {
+        if (isPresent(value)) {
+            this.data.put(key, supplier.get());
+        }
+        return self();
+    }
+
+    /**
      * 当值不为 null 时，添加一个键值对。
      *
      * @param key   键。
@@ -156,6 +172,20 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
     public T putIfNotNull(String key, Object value) {
         if (isPresent(value)) {
             this.data.put(key, value);
+        }
+        return self();
+    }
+
+    /**
+     * 当值不为 null 时，添加一个键值对。
+     *
+     * @param key   键。
+     * @param value 要检查并添加的值。
+     * @return 当前构建器实例，用于链式调用。
+     */
+    public T putIfNotNull(String key, Object value, Supplier<Object> supplier) {
+        if (isPresent(value)) {
+            this.data.put(key, supplier.get());
         }
         return self();
     }

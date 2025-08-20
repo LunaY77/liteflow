@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.chat.entity;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
@@ -20,6 +21,7 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -94,6 +96,7 @@ public class ChatRequest implements ModelRequest {
     protected static final String MESSAGES_KEY = "messages";
     protected static final String STREAM_KEY = "stream";
     // 对于支持请求体中的结构化参数的模型，可以在实现类中添加结构化参数的 key，并自行添加到 RequestBody 中。
+
     /**
      * 对于某些模型，可能不支持请求体中的结构化参数，那么如果需要附加结构化输出提示词，可以在此方法中实现。
      *
@@ -102,6 +105,7 @@ public class ChatRequest implements ModelRequest {
     protected List<Message> appendFormatInstructionsIfNeeded() {
         return this.messages;
     }
+
     protected static final String TOOLS_KEY = "tools";
     // ==== RequestBody 相关参数 =====
 
@@ -199,17 +203,28 @@ public class ChatRequest implements ModelRequest {
         return RequestBody.of()
                 // messages
                 .putIfNotEmpty(MESSAGES_KEY, appendFormatInstructionsIfNeeded())
-                // 默认流式，如果不需要流式输出，则设置为false
-                .putIf(!streaming, STREAM_KEY, streaming)
+                // 是否开启流式输出
+                .put(STREAM_KEY, streaming)
                 // chat options
                 .merge(options.toRequestBody())
                 // tools
-                .putIfNotEmpty(TOOLS_KEY,
-                        toolRegistry.getAllTools()
-                                .stream()
-                                .map(ToolCallBack::getDefinition)
-                                .map(ToolDefinition::toJsonSchema)
-                                .collect(Collectors.toList()));
+                .putIfNotEmpty(TOOLS_KEY, getToolsJsonSchema());
+    }
+
+    /**
+     * 获取可用工具的 JSON Schema 列表。
+     *
+     * @return 工具的 JSON Schema 列表，如果没有可用工具则返回空列表。
+     */
+    protected List<JsonNode> getToolsJsonSchema() {
+        if (Objects.isNull(toolRegistry) || toolRegistry.getAllTools().isEmpty()) {
+            return Collections.emptyList();
+        }
+        return toolRegistry.getAllTools()
+                .stream()
+                .map(ToolCallBack::getDefinition)
+                .map(ToolDefinition::toJsonSchema)
+                .collect(Collectors.toList());
     }
 
     public List<Message> getMessages() {
@@ -497,6 +512,7 @@ public class ChatRequest implements ModelRequest {
 
         /**
          * 设置可使用的工具
+         *
          * @param toolRegistry 工具注册
          * @see ToolRegistry
          * @see com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry

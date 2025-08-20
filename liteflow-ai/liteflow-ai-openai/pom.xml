@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>liteflow-testcase-el</artifactId>
+        <artifactId>liteflow-ai</artifactId>
         <groupId>com.yomahub</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>liteflow-testcase-el-ai</artifactId>
+    <artifactId>liteflow-ai-openai</artifactId>
 
     <dependencies>
         <dependency>
@@ -19,29 +19,16 @@
             <version>${revision}</version>
         </dependency>
 
-
         <dependency>
-            <groupId>com.yomahub</groupId>
-            <artifactId>liteflow-ai-ollama</artifactId>
-            <version>${revision}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.yomahub</groupId>
-            <artifactId>liteflow-ai-ollama</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yomahub</groupId>
-            <artifactId>liteflow-ai-openai</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
 
 </project>

@@ -91,6 +91,10 @@ public class SseTransport extends EventSourceListener implements Transport {
         super.onEvent(eventSource, id, type, data);
         try {
             pipeline.processStreaming(data);
+            // 手动关闭，流式传输
+            if ("[DONE]".equalsIgnoreCase(data)) {
+                close();
+            }
         } catch (Exception e) {
             onFailure(eventSource, e, null);
         }
@@ -117,7 +121,7 @@ public class SseTransport extends EventSourceListener implements Transport {
                 .headers(Headers.of(requestHeader))
                 .addHeader("Accept", "text/event-stream")
                 .addHeader("Cache-Control", "no-cache")
-                .post(okhttp3.RequestBody.create(requestBody, okhttp3.MediaType.parse("application/json")))
+                .post(okhttp3.RequestBody.create(requestBody, okhttp3.MediaType.parse("application/json; charset=utf-8")))
                 .build();
     }
 }
