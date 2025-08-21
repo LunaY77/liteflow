@@ -3,9 +3,7 @@ package com.yomahub.liteflow.ai.parse.anno;
 import com.yomahub.liteflow.ai.annotation.AIClassify;
 import com.yomahub.liteflow.ai.domain.dto.ParsedClassifyAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.parse.AbstractAnnotationProcessor;
-import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
@@ -43,11 +41,8 @@ public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIC
         // 处理结构化输出参数绑定
         parseOutput(context);
 
-        // 从上下文获取动态 ChatRequest
-        ChatRequest contextChatRequest = ContextAccessor.searchContextByExpression(annotation.getChatRequest(), context);
-
         // 组装 ChatRequest
-        CLASSIFY_REQUEST_ASSEMBLER.assemble(contextChatRequest, context);
+        CLASSIFY_REQUEST_ASSEMBLER.assemble(context);
     }
 
     @Override

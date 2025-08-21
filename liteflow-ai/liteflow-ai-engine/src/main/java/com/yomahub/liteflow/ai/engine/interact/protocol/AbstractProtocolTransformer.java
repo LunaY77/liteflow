@@ -29,6 +29,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
 
     @Override
     public StreamingProtocolChunk transformStreamingChunk(String streamChunk, InteractContext context) {
+        System.out.println(streamChunk);
         StreamingProtocolChunk protocolChunk = new StreamingProtocolChunk();
         protocolChunk.setId(context.getChatId());
 
@@ -91,8 +92,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
         // 设置 message
         protocolChunk.setType(context.isThinkingInContent() ?
                 StreamingProtocolType.THINKING : StreamingProtocolType.TEXT);
-        protocolChunk.setData(context.isThinkingInContent() ?
-                extractThinkingContent(message) : content);
+        protocolChunk.setData(extractThinkingContent(message));
 
         return protocolChunk;
     }

@@ -81,7 +81,7 @@ public class OllamaProtocolTransformer extends AbstractProtocolTransformer {
 
     @Override
     protected String extractThinkingContent(JsonNode messageJson) {
-        return extractContent(messageJson).replaceAll("<?think>", "");
+        return extractContent(messageJson).replaceAll("</?think>", "");
     }
 
     @Override

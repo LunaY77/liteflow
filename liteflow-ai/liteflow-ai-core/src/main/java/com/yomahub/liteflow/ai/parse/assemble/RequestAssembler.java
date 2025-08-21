@@ -11,13 +11,12 @@ import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
  * @since TODO
  */
 
-public interface RequestAssembler<R extends ModelRequest, C extends ParsedAnnotationConfig> {
+public interface RequestAssembler<C extends ParsedAnnotationConfig> {
 
     /**
      * 组装请求对象(最终请求对象存储于 {@link ProcessorContext} 中的 {@link ModelRequest} 属性中)
      *
-     * @param contextRequest 上下文中的请求示例(可以为 null)
      * @param context        处理器上下文
      */
-    void assemble(R contextRequest, ProcessorContext<C> context);
+    void assemble(ProcessorContext<C> context);
 }

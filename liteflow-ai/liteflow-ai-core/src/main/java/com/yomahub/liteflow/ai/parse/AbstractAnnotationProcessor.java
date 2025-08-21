@@ -9,7 +9,6 @@ import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.dto.ParsedChatAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.dto.ParsedClassifyAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.parse.assemble.ChatRequestAssembler;
 import com.yomahub.liteflow.ai.parse.assemble.ClassifyRequestAssembler;
@@ -39,8 +38,8 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, C extend
     protected final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
 
     // ==== RequestAssembler ====
-    protected static final RequestAssembler<ChatRequest, ParsedChatAnnotationConfig> CHAT_REQUEST_ASSEMBLER = new ChatRequestAssembler();
-    protected static final RequestAssembler<ChatRequest, ParsedClassifyAnnotationConfig> CLASSIFY_REQUEST_ASSEMBLER = new ClassifyRequestAssembler();
+    protected static final RequestAssembler<ParsedChatAnnotationConfig> CHAT_REQUEST_ASSEMBLER = new ChatRequestAssembler();
+    protected static final RequestAssembler<ParsedClassifyAnnotationConfig> CLASSIFY_REQUEST_ASSEMBLER = new ClassifyRequestAssembler();
     // ==== RequestAssembler ====
 
     @Override

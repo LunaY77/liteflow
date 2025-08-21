@@ -15,7 +15,10 @@ import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * ChatRequest 组装器
@@ -24,15 +27,11 @@ import java.util.*;
  * @since TODO
  */
 
-public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, ParsedChatAnnotationConfig> {
+public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnnotationConfig> {
 
     @SuppressWarnings("rawtypes")
     @Override
-    protected ChatRequest doAssemble(ChatRequest contextRequest, ParsedChatAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
-        ChatOptions contextOptions = Optional.ofNullable(contextRequest)
-                .map(ChatRequest::getOptions)
-                .orElse(ChatOptions.builder().build());
-
+    protected ChatRequest doAssemble(ParsedChatAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
         ChatRequest.Builder<?> builder = ModelFactory.getChatRequestBuilder(config.getProvider());
 
         // 1. 连接 StreamHandler 回调
@@ -51,48 +50,35 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ChatRequest, 
                     .onFinal(streamHandler::onFinal);
         }
 
-        // 2. 合并 ChatOptions
+        // 2. ChatOptions
         ChatOptions.Builder<?> optionsBuilder = ChatOptions.builder();
-        optionsBuilder.temperature(merge(contextOptions::getTemperature, config::getTemperature));
-        optionsBuilder.topP(merge(contextOptions::getTopP, config::getTopP));
-        optionsBuilder.topK(merge(contextOptions::getTopK, config::getTopK));
-        optionsBuilder.maxTokens(merge(contextOptions::getMaxTokens, config::getMaxTokens));
-        optionsBuilder.seed(merge(contextOptions::getSeed, config::getSeed));
-        optionsBuilder.enableThinking(merge(contextOptions::getEnableThinking, () -> config.getEnableThinking().toBool()));
+        optionsBuilder.temperature(config.getTemperature());
+        optionsBuilder.topP(config.getTopP());
+        optionsBuilder.topK(config.getTopK());
+        optionsBuilder.maxTokens(config.getMaxTokens());
+        optionsBuilder.seed(config.getSeed());
+        optionsBuilder.enableThinking(config.getEnableThinking().toBool());
         builder.options(optionsBuilder.build());
 
-        // 3. 合并 Message
+        // 3. Message
         List<Message> messages = new ArrayList<>();
         SetUtil.setIfPresent(t -> messages.add(new SystemMessage(t)), annotationConfig.getSystemPrompt());
         SetUtil.setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
 
-        builder.messages(
-                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getMessages() : null, () -> messages)
-        );
+        builder.messages(messages);
 
         // 4. streaming 相关参数
-        builder.streaming(
-                Boolean.TRUE.equals(merge(() -> Objects.nonNull(contextRequest) ? contextRequest.isStreaming() : null, annotationConfig::isStreaming))
-        );
-        builder.transportType(
-                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getTransportType() : null, annotationConfig::getTransportType)
-        );
+        builder.streaming(annotationConfig.isStreaming());
+        builder.transportType(annotationConfig.getTransportType());
 
         // 4. 结构化输出
-        builder.targetType(
-                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getTargetType() : null,
-                        () -> new TypeReference(annotationConfig.getTypeName()) {
-                        }.getType())
-        );
-        builder.responseType(
-                merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getResponseType() : null, annotationConfig::getResponseType)
-        );
-        builder.strict(
-                Boolean.TRUE.equals(merge(() -> Objects.nonNull(contextRequest) ? contextRequest.isStrict() : null, annotationConfig::isStrict))
-        );
+        builder.targetType(new TypeReference(annotationConfig.getTypeName()) {
+        }.getType());
+        builder.responseType(annotationConfig.getResponseType());
+        builder.strict(annotationConfig.isStrict());
 
         // 5. 工具调用
-        ToolRegistry toolRegistry = merge(() -> Objects.nonNull(contextRequest) ? contextRequest.getToolRegistry() : null, context::getToolRegistry);
+        ToolRegistry toolRegistry = context.getToolRegistry();
         if (Objects.nonNull(toolRegistry)) {
             StaticToolRegistry staticToolRegistry = new StaticToolRegistry();
             HashSet<String> targetToolNames = new HashSet<>(annotationConfig.getToolNames());

@@ -31,7 +31,7 @@ import com.yomahub.liteflow.ai.util.TriState;
 )
 @AIInput(
         mapping = {
-                @InputField(name = "question",  expression = "test", defaultValue = "What is LiteFlow?"),
+                @InputField(name = "question",  expression = "test", defaultValue = "简短讲解什么是 LiteFlow？"),
         }
 )
 @AIOutput(

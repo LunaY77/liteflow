@@ -12,10 +12,10 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
  * @since TODO
  */
 
-public class ClassifyRequestAssembler extends AbstractRequestAssembler<ChatRequest, ParsedClassifyAnnotationConfig> {
+public class ClassifyRequestAssembler extends AbstractRequestAssembler<ParsedClassifyAnnotationConfig> {
 
     @Override
-    protected ChatRequest doAssemble(ChatRequest contextRequest, ParsedClassifyAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
+    protected ChatRequest doAssemble(ParsedClassifyAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
         // TODO
 
         // 定死使用阻塞式传输
