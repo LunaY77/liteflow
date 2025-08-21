@@ -33,11 +33,14 @@ public class ChatOptions implements ModelOptions {
 
     protected Boolean enableThinking;
 
-    protected static final String TEMPERATURE_KEY = "options.temperature";
-    protected static final String TOP_P_KEY = "options.top_p";
-    protected static final String TOP_K_KEY = "options.top_k";
-    protected static final String SEED_KEY = "options.seed";
-    protected static final String THINK_KEY = "think";
+    // ==== RequestBody 相关参数 =====
+    // TODO options 重构
+    protected static final String TEMPERATURE_KEY = "temperature";
+    protected static final String TOP_P_KEY = "top_p";
+    protected static final String TOP_K_KEY = "top_k";
+    protected static final String SEED_KEY = "seed";
+    protected static final String THINK_KEY = "enable_thinking";
+    // ==== RequestBody 相关参数 =====
 
     public ChatOptions() {
         this.temperature = DEFAULT.temperature;

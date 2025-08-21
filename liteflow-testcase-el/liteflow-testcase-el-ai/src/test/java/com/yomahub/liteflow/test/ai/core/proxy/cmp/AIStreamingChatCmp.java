@@ -15,9 +15,9 @@ import com.yomahub.liteflow.ai.util.TriState;
 @AIComponent(
         nodeId = "aiStreamingChatCmpId",
         nodeName = "aiStreamingChatCmpName",
-        provider = "openai",
-        apiUrl = "https://api.ohmygpt.com/v1",
-        model = "gpt-4o-mini",
+        provider = "ollama",
+        apiUrl = "http://localhost:11434",
+        model = "qwen3:32b",
         apiKey = "",
         enableThinking = TriState.TRUE,
         readTimeout = "10m",
@@ -27,7 +27,7 @@ import com.yomahub.liteflow.ai.util.TriState;
         systemPrompt = "classpath:core/proxy/system_prompt.txt",
         userPrompt = "{{question}}",
         streaming = true,
-        transportType = TransportType.SSE
+        transportType = TransportType.DnJson
 )
 @AIInput(
         mapping = {

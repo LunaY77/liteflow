@@ -3,7 +3,6 @@ package com.yomahub.liteflow.ai.model;
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 
 import java.util.Optional;
 
@@ -41,15 +40,4 @@ public interface ModelProvider {
     default Optional<ChatModel> createChatModel(ModelConfigAggregator configAggregator) {
         return Optional.empty();
     }
-
-    /**
-     * 创建EmbeddingModel实例
-     *
-     * @param configAggregator 模型配置聚合信息
-     * @return EmbeddingModel实例
-     */
-    default Optional<EmbeddingModel> createEmbeddingModel(ModelConfigAggregator configAggregator) {
-        return Optional.empty();
-    }
-
 }

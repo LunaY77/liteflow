@@ -23,7 +23,6 @@ import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 大模型交互客户端，统筹消息传输、协议转换等功能。
@@ -44,11 +43,8 @@ public class LlmInteractClient implements InteractClient {
 
     @Override
     public ChatResponse chat(ChatConfig config, ChatRequest request) {
-        try {
-            return chatAsync(config, request).get();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new LiteFlowAIEngineException("同步调用大模型失败", e.getCause());
-        }
+        InteractManager interactManager = new InteractManager(config, request);
+        return interactManager.executeBlocking();
     }
 
     @Override
@@ -57,9 +53,7 @@ public class LlmInteractClient implements InteractClient {
 
         CompletableFuture.runAsync(() -> {
             try {
-                InteractManager manager = new InteractManager(config, request);
-                ChatResponse response = manager.executeBlocking();
-                future.complete(response);
+                future.complete(chat(config, request));
             } catch (Exception e) {
                 future.completeExceptionally(new LiteFlowAIEngineException("异步调用大模型失败", e));
             }

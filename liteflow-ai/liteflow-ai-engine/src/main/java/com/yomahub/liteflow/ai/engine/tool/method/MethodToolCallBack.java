@@ -2,7 +2,6 @@ package com.yomahub.liteflow.ai.engine.tool.method;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yomahub.liteflow.ai.engine.log.EngineLog;
 import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
@@ -25,7 +24,6 @@ import java.util.Objects;
 public class MethodToolCallBack implements ToolCallBack {
 
     private static final EngineLog LOG = EngineLogManager.getLogger(MethodToolCallBack.class);
-    private static final ObjectMapper OBJECT_MAPPER = ObjectMapperHolder.getInstance();
 
     private final ToolDefinition<?> toolDefinition;
     private final Object bean;
@@ -55,10 +53,10 @@ public class MethodToolCallBack implements ToolCallBack {
             if (method.getParameterCount() == 1 && !method.getParameterTypes()[0].isPrimitive()) {
                 // 方法只有一个非原始类型参数时，尝试将输入解析为该参数类型
                 Type paramType = method.getGenericParameterTypes()[0];
-                args[0] = OBJECT_MAPPER.readValue(input, OBJECT_MAPPER.constructType(paramType));
+                args[0] = ObjectMapperHolder.readValue(input, paramType);
             } else if (method.getParameterCount() > 0) {
                 // 方法有多个参数
-                JsonNode inputNode = OBJECT_MAPPER.readTree(input);
+                JsonNode inputNode = ObjectMapperHolder.readTree(input);
                 Parameter[] parameters = method.getParameters();
                 for (int i = 0; i < parameters.length; i++) {
                     Parameter parameter = parameters[i];
@@ -80,7 +78,7 @@ public class MethodToolCallBack implements ToolCallBack {
                         }
                         args[i] = null;
                     } else {
-                        args[i] = OBJECT_MAPPER.treeToValue(argNode, parameter.getType());
+                        args[i] = ObjectMapperHolder.treeToValue(argNode, parameter.getType());
                     }
                 }
             }
@@ -92,7 +90,7 @@ public class MethodToolCallBack implements ToolCallBack {
                 return null;
             }
 
-            return OBJECT_MAPPER.writeValueAsString(res);
+            return ObjectMapperHolder.writeValueAsString(res);
         } catch (Exception e) {
             // 4. 异常处理
             Throwable cause = (e instanceof java.lang.reflect.InvocationTargetException) ? e.getCause() : e;

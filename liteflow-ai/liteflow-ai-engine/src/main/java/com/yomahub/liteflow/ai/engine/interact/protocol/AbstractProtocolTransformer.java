@@ -2,7 +2,7 @@ package com.yomahub.liteflow.ai.engine.interact.protocol;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
@@ -10,6 +10,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,24 +37,24 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
             protocolChunk.setData(streamChunk);
             return protocolChunk;
         }
-        JSONObject chunkJson = JSONObject.parseObject(streamChunk);
+        JsonNode chunkJson = ObjectMapperHolder.readTree(streamChunk);
 
         // 尝试获取 Token 使用情况
         Optional.ofNullable(extractTokenUsage(chunkJson))
                 .ifPresent(context::setTokenUsage);
 
         // 获取响应消息
-        JSONObject message = extractMessage(chunkJson);
+        JsonNode message = extractMessage(chunkJson);
 
         // 如果 message 为空，表示当前 chunk 没有 AI 响应内容
         // 可能是收尾数据块，比如 TokenUsage
-        if (Objects.isNull(message)) {
+        if (Objects.isNull(message) || message.isNull()) {
             protocolChunk.setType(StreamingProtocolType.TEXT);
             protocolChunk.setData("");
             return protocolChunk;
         }
 
-        String content = Optional.ofNullable(extractContent(message)).orElse("");
+        String content = extractContent(message);
         boolean isDone = isResponseDone(chunkJson);
 
         // 流式响应结束
@@ -103,23 +104,22 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
         FinishReason finishReason = context.hasToolCalls() ?
                 FinishReason.TOOL_CALL : FinishReason.STOP;
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder answer = new StringBuilder();
         if (StrUtil.isNotBlank(context.getAggregatedThinking())) {
-            stringBuilder.append("<think>");
-            stringBuilder.append(context.getAggregatedThinking());
-            stringBuilder.append("</think>");
-            stringBuilder.append("\n");
+            answer.append("<think>").append("\n");
+            answer.append(context.getAggregatedThinking());
+            answer.append("</think>").append("\n");
         }
-        stringBuilder.append(context.getAggregatedText());
+        answer.append(context.getAggregatedText());
 
-        AssistantMessage assistantMessage = new AssistantMessage(stringBuilder.toString(), toolCalls);
+        AssistantMessage assistantMessage = new AssistantMessage(answer.toString(), toolCalls);
 
         return new ChatResponse(assistantMessage, context.getTokenUsage(), finishReason);
     }
 
     @Override
     public ChatResponse transformBlockingResponse(String blockingResponse, InteractContext context) {
-        JSONObject responseJson = JSONObject.parseObject(blockingResponse);
+        JsonNode responseJson = ObjectMapperHolder.readTree(blockingResponse);
 
         boolean isDone = isResponseDone(responseJson);
         if (!isDone) {
@@ -132,7 +132,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
                 FinishReason.TOOL_CALL : FinishReason.STOP;
 
         // 解析 AI 消息内容
-        JSONObject message = extractMessage(responseJson);
+        JsonNode message = extractMessage(responseJson);
         // 组装 AI Message
         AssistantMessage assistantMessage = new AssistantMessage(extractContent(message), toolCalls);
         // 解析 Token 使用情况
@@ -146,14 +146,14 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * <p>
      * 对于流式响应的 ToolCall，可能存在两种情况：
      * <ol>
-     *     <li>初始定义 + 增量解析：第一个块只包含 id，name，type 等信息。后续的块只包含 arguments 片段</li>
-     *     <li>全量解析：数据块中包含完整的 ToolCall 信息</li>
+     * <li>初始定义 + 增量解析：第一个块只包含 id，name，type 等信息。后续的块只包含 arguments 片段</li>
+     * <li>全量解析：数据块中包含完整的 ToolCall 信息</li>
      * </ol>
      *
      * @param responseJson 完整的响应 JSON 对象
      * @param context      交互上下文
      */
-    protected abstract void parseStreamingToolCall(JSONObject responseJson, InteractContext context);
+    protected abstract void parseStreamingToolCall(JsonNode responseJson, InteractContext context);
 
     /**
      * 从（阻塞式响应）中提取 ToolCall 列表。（虽然这里是 List，但是暂时不支持并行工具调用）
@@ -161,7 +161,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param responseJson 完整的响应 JSON 对象
      * @return ToolCall 列表
      */
-    protected abstract List<ToolCall> extractToolCalls(JSONObject responseJson);
+    protected abstract List<ToolCall> extractToolCalls(JsonNode responseJson);
 
     /**
      * 从响应的 JSON 中提取 AI 的消息内容。
@@ -169,7 +169,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param responseJson 完整的响应 JSON 对象
      * @return AI 消息内容
      */
-    protected abstract JSONObject extractMessage(JSONObject responseJson);
+    protected abstract JsonNode extractMessage(JsonNode responseJson);
 
     /**
      * 从响应的 JSON 中提取 AI 的消息字符串。
@@ -177,7 +177,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param messageJson Message JSON 对象
      * @return 消息内容字符串
      */
-    protected abstract String extractContent(JSONObject messageJson);
+    protected abstract String extractContent(JsonNode messageJson);
 
     /**
      * 从响应的 JSON 中提取 AI 的思考内容。
@@ -185,7 +185,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param messageJson Message JSON 对象
      * @return 思考内容字符串
      */
-    protected abstract String extractThinkingContent(JSONObject messageJson);
+    protected abstract String extractThinkingContent(JsonNode messageJson);
 
     /**
      * 检查响应是否已完成且成功。
@@ -193,7 +193,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param responseJson 完整的响应 JSON 对象
      * @return 如果响应完成且成功，则为 true
      */
-    protected abstract boolean isResponseDone(JSONObject responseJson);
+    protected abstract boolean isResponseDone(JsonNode responseJson);
 
     /**
      * 从阻塞式响应的 JSON 中提取 Token 使用情况。
@@ -201,7 +201,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param responseJson 完整的响应 JSON 对象
      * @return TokenUsage 实例
      */
-    protected abstract TokenUsage extractTokenUsage(JSONObject responseJson);
+    protected abstract TokenUsage extractTokenUsage(JsonNode responseJson);
 
     /**
      * 判断当前 chunk 是否为思考开始的标志(流式解析专用)
@@ -209,7 +209,7 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param messageJson Message JSON 对象
      * @return 如果当前 chunk 表示思考开始，则为 true
      */
-    protected abstract boolean isThinkingStart(JSONObject messageJson);
+    protected abstract boolean isThinkingStart(JsonNode messageJson);
 
     /**
      * 判断当前 chunk 是否为思考结束的标志(流式解析专用)
@@ -217,5 +217,5 @@ public abstract class AbstractProtocolTransformer implements ProtocolTransformer
      * @param messageJson Message JSON 对象
      * @return 如果当前 chunk 表示思考结束，则为 true
      */
-    protected abstract boolean isThinkingEnd(JSONObject messageJson);
+    protected abstract boolean isThinkingEnd(JsonNode messageJson);
 }

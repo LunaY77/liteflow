@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 消息接口
@@ -15,7 +15,7 @@ public interface Message extends Content {
      * 获取消息类型
      * @return 消息类型
      */
-    @JSONField(name = "role")
+    @JsonProperty("role")
     MessageType getMessageType();
 
 }

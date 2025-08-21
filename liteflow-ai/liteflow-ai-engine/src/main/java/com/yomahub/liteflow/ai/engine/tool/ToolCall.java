@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.engine.tool;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Objects;
 
@@ -97,9 +97,9 @@ public class ToolCall {
             return this;
         }
 
-        public Builder arguments(JSONObject argumentsJson) {
+        public Builder arguments(JsonNode argumentsJson) {
             if (Objects.nonNull(argumentsJson)) {
-                this.arguments = argumentsJson.toJSONString();
+                this.arguments = argumentsJson.toPrettyString();
             }
             return this;
         }

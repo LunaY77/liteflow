@@ -3,7 +3,6 @@ package com.yomahub.liteflow.ai.model.openai.model;
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 import com.yomahub.liteflow.ai.model.ModelProviderRegistrar;
 import com.yomahub.liteflow.ai.model.openai.constants.OpenAIConstant;
 import com.yomahub.liteflow.ai.model.openai.model.chat.OpenAIChatModel;
@@ -45,11 +44,6 @@ public class OpenAIModelProvider extends ModelProviderRegistrar {
                 })
                 // 构建模型
                 .map(OpenAIChatModel.Builder::build);
-    }
-
-    @Override
-    public Optional<EmbeddingModel> createEmbeddingModel(ModelConfigAggregator configAggregator) {
-        return super.createEmbeddingModel(configAggregator);
     }
 
     @Override

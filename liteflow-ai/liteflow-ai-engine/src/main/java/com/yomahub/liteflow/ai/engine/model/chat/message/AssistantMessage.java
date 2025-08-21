@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
  * @author 苍镜月
  * @since TODO
  */
+
+@JsonPropertyOrder({"role", "content"})
 public class AssistantMessage extends AbstractMessage {
 
     /**

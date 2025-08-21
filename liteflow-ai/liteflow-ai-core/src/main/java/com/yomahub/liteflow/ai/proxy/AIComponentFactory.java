@@ -4,7 +4,6 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.proxy.handler.AbstractAIComponentHandler;
 import com.yomahub.liteflow.ai.proxy.handler.ChatComponentHandler;
 import com.yomahub.liteflow.ai.proxy.handler.ClassifyComponentHandler;
-import com.yomahub.liteflow.ai.proxy.handler.RetrievalComponentHandler;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
@@ -52,7 +51,6 @@ public class AIComponentFactory {
         // 注册不同类型的AI组件处理器
         registerHandler(new ChatComponentHandler());
         registerHandler(new ClassifyComponentHandler());
-        registerHandler(new RetrievalComponentHandler());
 
         LOG.info("Initialized AI component handlers: {}", handlerMap.keySet());
     }

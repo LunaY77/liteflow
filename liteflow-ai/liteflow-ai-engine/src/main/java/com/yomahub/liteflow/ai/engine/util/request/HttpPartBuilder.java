@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.ai.engine.util.request;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONWriter;
+import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -70,7 +69,7 @@ public abstract class HttpPartBuilder<T extends HttpPartBuilder<T, R>, R> {
      * @return 一个格式化的JSON字符串。
      */
     protected String toJsonString() {
-        return JSON.toJSONString(this.data, JSONWriter.Feature.PrettyFormat);
+        return ObjectMapperHolder.writeValueAsString(this.data);
     }
 
     /**

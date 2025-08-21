@@ -1,8 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.output.structure.parser;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.generator.JsonSchemaGenerator;
 import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
@@ -20,7 +18,6 @@ import java.util.Map;
 public class JsonSchemaParser<T> {
 
     private final Type targetType;
-    private final ObjectMapper objectMapper;
     private final JsonNode jsonSchema;
 
     /**
@@ -93,7 +90,6 @@ public class JsonSchemaParser<T> {
      */
     public JsonSchemaParser(JsonNode jsonSchema) {
         this.targetType = Map.class;
-        this.objectMapper = ObjectMapperHolder.getInstance();
         this.jsonSchema = jsonSchema;
     }
 
@@ -123,7 +119,6 @@ public class JsonSchemaParser<T> {
      */
     public JsonSchemaParser(Type targetType, boolean strict) {
         this.targetType = targetType;
-        this.objectMapper = ObjectMapperHolder.getInstance();
         this.jsonSchema = JsonSchemaGenerator.generate(targetType, strict);
     }
 
@@ -145,13 +140,8 @@ public class JsonSchemaParser<T> {
      * @return 转换后的对象
      */
     public T convert(String output) {
-        try {
-            String cleanJson = extractJsonFromMarkdown(output);
-
-            return this.objectMapper.readValue(cleanJson, this.objectMapper.constructType(this.targetType));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        String cleanJson = extractJsonFromMarkdown(output);
+        return ObjectMapperHolder.readValue(cleanJson, this.targetType);
     }
 
     private static String extractJsonFromMarkdown(String output) {

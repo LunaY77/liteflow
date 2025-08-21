@@ -2,7 +2,6 @@ package com.yomahub.liteflow.ai.engine.model.output.structure.generator;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.victools.jsonschema.generator.*;
@@ -34,7 +33,6 @@ public class JsonSchemaGenerator {
     private static final Character COMMA = ',';
     private static final SchemaGenerator strictSchemaGenerator;
     private static final SchemaGenerator schemagenerator;
-    private static final ObjectMapper MAPPER = ObjectMapperHolder.getInstance();
 
     static {
         // 配置 JSON Schema 生成器
@@ -293,11 +291,11 @@ public class JsonSchemaGenerator {
      * @return 生成的 JSON Schema
      */
     public static JsonNode generateFromTypeMap(Map<String, Type> map, boolean strict) {
-        ObjectNode root = MAPPER.createObjectNode();
+        ObjectNode root = ObjectMapperHolder.createObjectNode();
         root.put("type", "object");
 
-        ObjectNode properties = MAPPER.createObjectNode();
-        ArrayNode required = MAPPER.createArrayNode();
+        ObjectNode properties = ObjectMapperHolder.createObjectNode();
+        ArrayNode required = ObjectMapperHolder.createArrayNode();
 
         map.forEach((name, type) -> {
             JsonNode paramSchema = generate(type, strict);
@@ -330,11 +328,11 @@ public class JsonSchemaGenerator {
      * @return 生成的 JSON Schema
      */
     public static JsonNode generate(Map<String, Object> map, boolean strict) {
-        ObjectNode root = MAPPER.createObjectNode();
+        ObjectNode root = ObjectMapperHolder.createObjectNode();
         root.put("type", "object");
 
-        ObjectNode properties = MAPPER.createObjectNode();
-        ArrayNode required = MAPPER.createArrayNode();
+        ObjectNode properties = ObjectMapperHolder.createObjectNode();
+        ArrayNode required = ObjectMapperHolder.createArrayNode();
 
         map.forEach((key, value) -> {
             // 根据值推断类型
@@ -358,7 +356,7 @@ public class JsonSchemaGenerator {
      * @return JsonNode
      */
     private static JsonNode inferSchemaFromValue(Object value, boolean strict) {
-        ObjectNode node = MAPPER.createObjectNode();
+        ObjectNode node = ObjectMapperHolder.createObjectNode();
         if (Objects.isNull(value)) {
             node.put("type", "null");
         } else if (value instanceof String) {
@@ -376,7 +374,7 @@ public class JsonSchemaGenerator {
                 // 根据列表的第一个元素推断类型
                 node.set("items", inferSchemaFromValue(lst.get(0), strict));
             } else {
-                node.set("items", MAPPER.createObjectNode().put("type", "object"));
+                node.set("items", ObjectMapperHolder.createObjectNode().put("type", "object"));
             }
         } else if (value instanceof Map) {
             // 嵌套 map，递归调用 generate

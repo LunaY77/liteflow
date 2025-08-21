@@ -1,9 +1,6 @@
 package com.yomahub.liteflow.ai.engine.tool.function;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
@@ -30,12 +27,10 @@ public class FunctionToolCallback<I, O> implements ToolCallBack {
 
     private final ToolDefinition<I> toolDefinition;
     private final Function<I, O> function;
-    private final ObjectMapper objectMapper;
 
     public FunctionToolCallback(ToolDefinition<I> toolDefinition, Function<I, O> function) {
         this.toolDefinition = toolDefinition;
         this.function = function;
-        this.objectMapper = ObjectMapperHolder.getInstance();
     }
 
     @Override
@@ -53,11 +48,7 @@ public class FunctionToolCallback<I, O> implements ToolCallBack {
         JsonSchemaParser<I> inputParser = toolDefinition.getInputParser();
         I request = inputParser.convert(input);
         O response = this.function.apply(request);
-        try {
-            return this.objectMapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            throw new LiteFlowAIEngineException("Failed to serialize function response", e);
-        }
+        return ObjectMapperHolder.writeValueAsString(response);
     }
 
     public static <I, O> Builder<I, O> builder(Function<I, O> function) {
@@ -67,7 +58,7 @@ public class FunctionToolCallback<I, O> implements ToolCallBack {
 
     public static <I> Builder<I, Void> builder(Consumer<I> consumer) {
         Objects.requireNonNull(consumer, "consumer cannot be null");
-        Function<I,Void> function = input -> {
+        Function<I, Void> function = input -> {
             consumer.accept(input);
             return null;
         };

@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -32,7 +32,7 @@ public enum MessageType {
         return code;
     }
 
-    @JSONField(value = true)
+    @JsonValue
     public String getRole() {
         return role;
     }

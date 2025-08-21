@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.ai.engine.tool;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.model.output.structure.parser.JsonSchemaParser;
@@ -19,8 +18,6 @@ import java.util.Objects;
  */
 
 public class ToolDefinition<I> {
-
-    private static final ObjectMapper MAPPER = ObjectMapperHolder.getInstance();
 
     private final String name;
 
@@ -52,10 +49,10 @@ public class ToolDefinition<I> {
      */
     public JsonNode toJsonSchema() {
         // root
-        ObjectNode root = MAPPER.createObjectNode();
+        ObjectNode root = ObjectMapperHolder.createObjectNode();
         root.put("type", "function");
         // function
-        ObjectNode function = MAPPER.createObjectNode();
+        ObjectNode function = ObjectMapperHolder.createObjectNode();
         function.put("name", name);
         function.put("description", description);
 

@@ -15,9 +15,9 @@ import com.yomahub.liteflow.ai.util.TriState;
 @AIComponent(
         nodeId = "aiBlockingChatCmpId",
         nodeName = "aiBlockingChatCmpName",
-        provider = "openai",
-        apiUrl = "https://api.ohmygpt.com/v1",
-        model = "gpt-4o-mini",
+        provider = "ollama",
+        apiUrl = "http://localhost:11434",
+        model = "qwen3:32b",
         apiKey = "",
         enableThinking = TriState.FALSE,
         readTimeout = "10m",
@@ -31,7 +31,7 @@ import com.yomahub.liteflow.ai.util.TriState;
 )
 @AIInput(
         mapping = {
-                @InputField(name = "question",  expression = "test", defaultValue = "What is LiteFlow?"),
+                @InputField(name = "question", expression = "test", defaultValue = "What is LiteFlow?"),
         }
 )
 @AIOutput(

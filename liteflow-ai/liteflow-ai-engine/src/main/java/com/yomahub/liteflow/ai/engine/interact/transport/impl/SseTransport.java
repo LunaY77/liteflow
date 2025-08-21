@@ -109,7 +109,6 @@ public class SseTransport extends EventSourceListener implements Transport {
     public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
         super.onFailure(eventSource, t, response);
         this.listener.onError(pipeline.getContext(), t);
-        close();
     }
 
     private Request buildSseRequest(ChatConfig config, ChatRequest request) {

@@ -1,11 +1,15 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 /**
  * 工具调用消息
  *
  * @author 苍镜月
  * @since TODO
  */
+
+@JsonPropertyOrder({"role", "content"})
 public class ToolMessage extends AbstractMessage {
 
     /**

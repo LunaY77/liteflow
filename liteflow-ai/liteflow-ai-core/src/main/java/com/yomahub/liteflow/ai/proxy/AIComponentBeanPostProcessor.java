@@ -33,7 +33,7 @@ public class AIComponentBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> clazz = bean.getClass();
 
-        // 增加更详细的日志，输出bean的类信息
+        // bean的类信息
         LOG.info("Processing bean: {}, class: {}, interfaces: {}",
                 beanName, clazz.getName(), clazz.getInterfaces());
 

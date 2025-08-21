@@ -27,6 +27,7 @@ import java.util.List;
 public class OllamaChatRequest extends ChatRequest {
 
     // ==== RequestBody 相关参数 =====
+    private static final String THINKING_KEY = "thinking";
     private static final String FORMAT_KEY = "format";
     // ==== RequestBody 相关参数 =====
 
@@ -58,6 +59,8 @@ public class OllamaChatRequest extends ChatRequest {
     @Override
     public RequestBody toRequestBody() {
         return super.toRequestBody()
+                .remove("enableThinking")
+                .put(THINKING_KEY, this.options.getEnableThinking())
                 .putIf(ResponseType.JSON.equals(this.responseType), FORMAT_KEY, outputParser.getJsonSchema());
     }
 

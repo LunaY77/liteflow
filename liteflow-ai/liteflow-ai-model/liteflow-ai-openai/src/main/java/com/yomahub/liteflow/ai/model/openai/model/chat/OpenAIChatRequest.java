@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.ai.model.openai.model.chat;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
 import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
@@ -30,6 +29,7 @@ import java.util.Objects;
 public class OpenAIChatRequest extends ChatRequest {
 
     // ==== RequestBody 相关参数 =====
+    private static final String THINKING_KEY = "enable_thinking";
     private static final String FORMAT_KEY = "response_format";
     // OpenAI 结构化输出请求参数缓存
     private volatile JsonNode responseFormat;
@@ -75,11 +75,9 @@ public class OpenAIChatRequest extends ChatRequest {
         if (Objects.isNull(this.responseFormat)) {
             synchronized (this) {
                 if (Objects.isNull(this.responseFormat)) {
-                    ObjectMapper mapper = ObjectMapperHolder.getInstance();
-
-                    ObjectNode responseFormat = mapper.createObjectNode();
+                    ObjectNode responseFormat = ObjectMapperHolder.createObjectNode();
                     responseFormat.put("type", "json_schema");
-                    ObjectNode jsonSchema = mapper.createObjectNode();
+                    ObjectNode jsonSchema = ObjectMapperHolder.createObjectNode();
                     jsonSchema.put("name", ((Class<?>) outputParser.getTargetType()).getSimpleName());
                     jsonSchema.set("schema", outputParser.getJsonSchema());
 

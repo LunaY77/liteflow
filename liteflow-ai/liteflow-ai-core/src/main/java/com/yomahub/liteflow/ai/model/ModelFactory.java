@@ -3,7 +3,6 @@ package com.yomahub.liteflow.ai.model;
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.embedding.EmbeddingModel;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
@@ -30,7 +29,6 @@ public class ModelFactory {
 
     // 模型类型缓存 key: nodeId, value: 模型实例
     private static final Map<String, ChatModel> CHAT_MODEL_CACHE = new ConcurrentHashMap<>();
-    private static final Map<String, EmbeddingModel> EMBEDDING_MODEL_CACHE = new ConcurrentHashMap<>();
 
     // 私有化构造函数
     private ModelFactory() {
@@ -76,24 +74,6 @@ public class ModelFactory {
             // 创建 ChatModel 实例
             return provider.createChatModel(configAggregator)
                     .orElseThrow(() -> new LiteFlowAIException("ChatModel is not supported for provider: " + providerName));
-        });
-    }
-
-    /**
-     * 获取指定提供者名称的EmbeddingModel实例
-     *
-     * @param wrapBean AI 节点包装 Bean，从中获取模型配置信息
-     * @return EmbeddingModel实例
-     */
-    public static EmbeddingModel getEmbeddingModel(AIProxyWrapBean<?> wrapBean) {
-        return EMBEDDING_MODEL_CACHE.computeIfAbsent(wrapBean.getNodeId(), id -> {
-            ProcessorContext<?> processorContext = wrapBean.getProcessorContext();
-            ModelConfigAggregator configAggregator = processorContext.getConfigAggregator();
-            String providerName = configAggregator.getProvider();
-            ModelProvider provider = getProvider(providerName);
-            // 创建 EmbeddingModel 实例
-            return provider.createEmbeddingModel(configAggregator)
-                    .orElseThrow(() -> new LiteFlowAIException("EmbeddingModel is not supported for provider: " + providerName));
         });
     }
 

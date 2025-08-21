@@ -1,6 +1,5 @@
 package com.yomahub.liteflow.ai.engine.util;
 
-import com.alibaba.fastjson2.JSON;
 import com.yomahub.liteflow.ai.engine.log.EngineLog;
 import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import okhttp3.*;
@@ -86,7 +85,7 @@ public final class HttpUtil implements AutoCloseable {
     /**
      * 执行同步 DELETE 请求。
      *
-     * @param url     目标 URL。
+     * @param url 目标 URL。
      * @return 作为字符串的响应体。
      * @throws IOException 如果请求失败。
      */
@@ -104,7 +103,7 @@ public final class HttpUtil implements AutoCloseable {
      * @throws IOException 如果请求失败。
      */
     public String post(String url, Object payload, Map<String, String> headers) throws IOException {
-        String jsonBody = JSON.toJSONString(payload);
+        String jsonBody = ObjectMapperHolder.writeValueAsString(payload);
         return post(url, jsonBody, headers);
     }
 
@@ -158,7 +157,7 @@ public final class HttpUtil implements AutoCloseable {
      * @throws IOException 如果请求失败。
      */
     public String put(String url, Object payload, Map<String, String> headers) throws IOException {
-        String jsonBody = JSON.toJSONString(payload);
+        String jsonBody = ObjectMapperHolder.writeValueAsString(payload);
         return put(url, jsonBody, headers);
     }
 
@@ -245,7 +244,8 @@ public final class HttpUtil implements AutoCloseable {
      * @param callback 用于处理响应或失败的 OkHttp 回调。
      */
     public void postAsync(String url, Object payload, Map<String, String> headers, Callback callback) {
-        String jsonBody = JSON.toJSONString(payload);
+        String jsonBody;
+        jsonBody = ObjectMapperHolder.writeValueAsString(payload);
         RequestBody body = RequestBody.create(jsonBody, JSON_MEDIA_TYPE);
         Request.Builder requestBuilder = new Request.Builder().url(url).post(body);
         addHeaders(requestBuilder, headers);
