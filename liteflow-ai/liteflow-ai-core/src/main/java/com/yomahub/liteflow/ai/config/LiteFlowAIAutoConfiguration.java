@@ -6,10 +6,13 @@ import com.yomahub.liteflow.ai.parse.anno.ClassifyAnnotationProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentBeanPostProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentProxyRegistrar;
 import com.yomahub.liteflow.ai.tool.SpringBeanToolRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 /**
  * LiteFlow-AI 主配置
@@ -47,9 +50,10 @@ public class LiteFlowAIAutoConfiguration {
         return new ClassifyAnnotationProcessor();
     }
 
-//    @Bean
-//    public RetrievalAnnotationProcessor retrievalAnnotationProcessor() {
-//        return new RetrievalAnnotationProcessor();
-//    }
-
+    @Bean
+    @ConditionalOnMissingBean
+    public LiteFlowAIModelPropertyRegistry liteFlowAIModelPropertyRegistry(
+            @Autowired(required = false) List<LiteFlowAIModelProperty> modelPropertyList) {
+        return new LiteFlowAIModelPropertyRegistry(modelPropertyList);
+    }
 }

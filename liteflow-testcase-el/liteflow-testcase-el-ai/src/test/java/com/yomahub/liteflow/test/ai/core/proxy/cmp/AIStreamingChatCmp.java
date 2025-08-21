@@ -15,10 +15,12 @@ import com.yomahub.liteflow.ai.util.TriState;
 @AIComponent(
         nodeId = "aiStreamingChatCmpId",
         nodeName = "aiStreamingChatCmpName",
-        provider = "ollama",
-        apiUrl = "http://localhost:11434",
-        model = "qwen3:32b",
-        apiKey = "",
+//        provider = "ollama",
+//        apiUrl = "http://localhost:11434",
+//        model = "qwen3:32b",
+        provider = "openai",
+        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        model = "qwen-flash",
         enableThinking = TriState.TRUE,
         readTimeout = "10m",
         connectTimeout = "10m"
@@ -27,7 +29,7 @@ import com.yomahub.liteflow.ai.util.TriState;
         systemPrompt = "classpath:core/proxy/system_prompt.txt",
         userPrompt = "{{question}}",
         streaming = true,
-        transportType = TransportType.DnJson
+        transportType = TransportType.SSE
 )
 @AIInput(
         mapping = {

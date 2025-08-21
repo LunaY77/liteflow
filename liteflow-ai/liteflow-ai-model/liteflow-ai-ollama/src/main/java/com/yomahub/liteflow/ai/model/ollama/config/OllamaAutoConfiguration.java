@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.ai.model.ollama.config;
 
 import com.yomahub.liteflow.ai.model.ollama.model.OllamaModelProvider;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
+@EnableConfigurationProperties(OllamaModelProperty.class)
 public class OllamaAutoConfiguration {
 
     @Bean

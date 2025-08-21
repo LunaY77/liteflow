@@ -6,14 +6,13 @@ import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.protocol.AbstractProtocolTransformer;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
+import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import static com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant.PROVIDER_NAME;
 
 /**
  * Ollama 协议转换器
@@ -109,6 +108,6 @@ public class OllamaProtocolTransformer extends AbstractProtocolTransformer {
 
     @Override
     public String getProviderName() {
-        return PROVIDER_NAME;
+        return OllamaConstant.PROVIDER_NAME;
     }
 }

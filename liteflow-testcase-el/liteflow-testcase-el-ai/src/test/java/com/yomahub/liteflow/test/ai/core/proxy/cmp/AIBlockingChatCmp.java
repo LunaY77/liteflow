@@ -18,7 +18,6 @@ import com.yomahub.liteflow.ai.util.TriState;
         provider = "ollama",
         apiUrl = "http://localhost:11434",
         model = "qwen3:32b",
-        apiKey = "",
         enableThinking = TriState.FALSE,
         readTimeout = "10m",
         connectTimeout = "10m"

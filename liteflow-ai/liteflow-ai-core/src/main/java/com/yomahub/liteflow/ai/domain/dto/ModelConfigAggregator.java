@@ -1,8 +1,10 @@
 package com.yomahub.liteflow.ai.domain.dto;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
+import com.yomahub.liteflow.ai.config.LiteFlowAIModelPropertyRegistry;
 import com.yomahub.liteflow.ai.util.DurationUtil;
 import com.yomahub.liteflow.ai.util.KeyValue;
+import com.yomahub.liteflow.ai.util.SpringUtil;
 import com.yomahub.liteflow.ai.util.TriState;
 
 import java.time.Duration;
@@ -63,7 +65,8 @@ public final class ModelConfigAggregator {
                 aiComponent.apiUrl(),
                 aiComponent.endPoint(),
                 aiComponent.model(),
-                aiComponent.apiKey(),
+                SpringUtil.getBean(LiteFlowAIModelPropertyRegistry.class)
+                        .getApiKey(aiComponent.provider()).orElse(null),
                 aiComponent.version(),
                 aiComponent.temperature(),
                 aiComponent.topP(),

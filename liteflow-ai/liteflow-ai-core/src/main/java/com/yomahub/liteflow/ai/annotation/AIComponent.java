@@ -82,10 +82,6 @@ public @interface AIComponent {
      */
     String model() default "";
     /**
-     * API KEY
-     */
-    String apiKey() default "";
-    /**
      * 版本
      */
     String version() default "";
