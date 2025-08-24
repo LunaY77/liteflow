@@ -15,6 +15,7 @@ public class BCmp extends NodeComponent {
 
     @Override
     public void process() throws Exception {
-        System.out.println("BCmp executed!");
+        Output res = this.getContextValue("dataMap.result");
+        System.out.println(res.getContent());
     }
 }

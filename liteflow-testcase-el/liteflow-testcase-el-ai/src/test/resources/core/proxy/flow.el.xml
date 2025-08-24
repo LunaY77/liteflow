@@ -2,7 +2,7 @@
 <!DOCTYPE flow PUBLIC  "liteflow" "liteflow.dtd">
 <flow>
     <chain name="chain1">
-        THEN(a, aiBlockingChatCmpId.retry(3));
+        THEN(a, aiBlockingChatCmpId, b);
     </chain>
 
     <chain name="chain2">

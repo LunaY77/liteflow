@@ -13,12 +13,13 @@ import com.yomahub.liteflow.ai.engine.model.output.structure.TypeReference;
 import com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.model.ModelFactory;
-import com.yomahub.liteflow.ai.util.SetUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+
+import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
 
 /**
  * ChatRequest 组装器
@@ -52,18 +53,18 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnn
 
         // 2. ChatOptions
         ChatOptions.Builder<?> optionsBuilder = ChatOptions.builder();
-        optionsBuilder.temperature(config.getTemperature());
-        optionsBuilder.topP(config.getTopP());
-        optionsBuilder.topK(config.getTopK());
-        optionsBuilder.maxTokens(config.getMaxTokens());
-        optionsBuilder.seed(config.getSeed());
-        optionsBuilder.enableThinking(config.getEnableThinking().toBool());
+        setIfPresent(optionsBuilder::temperature, config.getTemperature());
+        setIfPresent(optionsBuilder::topP, config.getTopP());
+        setIfPresent(optionsBuilder::topK, config.getTopK());
+        setIfPresent(optionsBuilder::maxTokens, config.getMaxTokens());
+        setIfPresent(optionsBuilder::seed, config.getSeed());
+        setIfPresent(optionsBuilder::enableThinking, config.getEnableThinking().toBool());
         builder.options(optionsBuilder.build());
 
         // 3. Message
         List<Message> messages = new ArrayList<>();
-        SetUtil.setIfPresent(t -> messages.add(new SystemMessage(t)), annotationConfig.getSystemPrompt());
-        SetUtil.setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
+        setIfPresent(t -> messages.add(new SystemMessage(t)), annotationConfig.getSystemPrompt());
+        setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
 
         builder.messages(messages);
 

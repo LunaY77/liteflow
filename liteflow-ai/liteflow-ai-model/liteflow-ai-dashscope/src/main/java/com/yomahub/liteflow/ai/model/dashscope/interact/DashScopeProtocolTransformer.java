@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.model.openai.interact;
+package com.yomahub.liteflow.ai.model.dashscope.interact;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
@@ -14,7 +14,7 @@ import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 import com.yomahub.liteflow.ai.engine.util.ObjectMapperHolder;
-import com.yomahub.liteflow.ai.model.openai.constants.OpenAIConstant;
+import com.yomahub.liteflow.ai.model.dashscope.constants.DashScopeConstant;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,57 +24,45 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * OpenAI 协议转换器
+ * DashScope 协议转换器
  *
  * @author 苍镜月
  * @since TODO
  */
 
-public class OpenAIProtocolTransformer implements ProtocolTransformer {
+public class DashScopeProtocolTransformer implements ProtocolTransformer {
 
     @Override
     public StreamingProtocolChunk transformStreamingChunk(String streamChunk, InteractContext context) {
         StreamingProtocolChunk protocolChunk = new StreamingProtocolChunk();
         protocolChunk.setId(context.getChatId());
 
-        // OpenAI 流结束的标志
-        if ("[DONE]".equals(streamChunk.trim())) {
-            protocolChunk.setType(StreamingProtocolType.STOP);
-            protocolChunk.setData("[DONE]");
-            return protocolChunk;
+        JsonNode chunkJson = ObjectMapperHolder.readTree(streamChunk);
+        JsonNode output = chunkJson.path("output");
+        if (output.isMissingNode() || output.isEmpty()) {
+            throw new LiteFlowAIEngineException("Invalid DashScope response: 'output' field is missing.");
         }
 
-        JsonNode chunkJson = ObjectMapperHolder.readTree(streamChunk);
-        JsonNode choices = chunkJson.path("choices");
-
+        JsonNode choices = output.path("choices");
         if (choices.isMissingNode() || choices.isEmpty()) {
-            // 检查流式响应最后的 usage
-            if (chunkJson.has("usage") && !chunkJson.get("usage").isNull()) {
-                context.setTokenUsage(extractTokenUsage(chunkJson));
-                protocolChunk.setType(StreamingProtocolType.USAGE);
-                protocolChunk.setData(context.getTokenUsage());
-            } else {
-                protocolChunk.setType(StreamingProtocolType.TEXT);
-                protocolChunk.setData("");
-            }
+            protocolChunk.setType(StreamingProtocolType.TEXT);
+            protocolChunk.setData("");
             return protocolChunk;
         }
 
         JsonNode firstChoice = choices.get(0);
-        JsonNode delta = firstChoice.path("delta");
+        JsonNode message = firstChoice.path("message");
 
         // 解析 ToolCall (增量)
-        if (delta.has("tool_calls")) {
-            parseStreamingToolCall(delta, context);
+        if (message.has("tool_calls")) {
+            parseStreamingToolCall(message, context);
             protocolChunk.setType(StreamingProtocolType.TOOL_CALLS);
             protocolChunk.setData(context.getToolCalls());
-            return protocolChunk;
         }
 
         // 解析 content
-        String content = extractContentFromDelta(delta);
+        String content = message.path("content").asText(null);
         if (Objects.nonNull(content)) {
-            // 判断是否为思考内容
             if (content.contains("<think>")) {
                 context.setThinkingInContent(true);
             }
@@ -88,7 +76,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
             }
         } else {
             // content 为 null，可能使用了思考模式，输出内容在 reasoning_content 字段
-            String reasoningContent = delta.path("reasoning_content").asText(null);
+            String reasoningContent = output.path("reasoning_content").asText(null);
             if (Objects.nonNull(reasoningContent)) {
                 protocolChunk.setType(StreamingProtocolType.THINKING);
                 protocolChunk.setData(reasoningContent.replaceAll("</?think>", ""));
@@ -97,6 +85,17 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
                 protocolChunk.setType(StreamingProtocolType.TEXT);
                 protocolChunk.setData("");
             }
+        }
+
+        // 检查流式响应是否结束
+        String finishReason = firstChoice.path("finish_reason").asText();
+        if (StrUtil.isNotBlank(finishReason) && !finishReason.equalsIgnoreCase("null")) {
+            // 这是最后一个数据块, 包含 TokenUsage
+            TokenUsage tokenUsage = extractTokenUsage(chunkJson);
+            context.setTokenUsage(tokenUsage);
+            // 发送 STOP 信号
+            protocolChunk.setType(StreamingProtocolType.STOP);
+            protocolChunk.setData(finishReason);
         }
 
         return protocolChunk;
@@ -121,10 +120,16 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
     @Override
     public ChatResponse transformBlockingResponse(String blockingResponse, InteractContext context) {
         JsonNode responseJson = ObjectMapperHolder.readTree(blockingResponse);
-        JsonNode choices = responseJson.path("choices");
-        if (choices.isMissingNode() || choices.isEmpty()) {
-            throw new LiteFlowAIEngineException("Invalid OpenAI response: 'choices' field is missing or empty.");
+        JsonNode output = responseJson.path("output");
+        if (output.isMissingNode() || output.isEmpty()) {
+            throw new LiteFlowAIEngineException("Invalid DashScope response: 'output' field is missing.");
         }
+
+        JsonNode choices = output.path("choices");
+        if (choices.isMissingNode() || choices.isEmpty()) {
+            throw new LiteFlowAIEngineException("Invalid DashScope response: 'choices' field is missing.");
+        }
+
         JsonNode firstChoice = choices.get(0);
         JsonNode message = firstChoice.path("message");
 
@@ -136,7 +141,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
         FinishReason finishReason = mapFinishReason(reasonStr, toolCalls);
 
         // 解析 AI 消息内容
-        String content = extractContentFromMessage(message);
+        String content = message.path("content").asText(null);
         AssistantMessage assistantMessage = new AssistantMessage(content, toolCalls);
 
         // 解析 Token 使用情况
@@ -146,16 +151,16 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
     }
 
     /**
-     * OpenAI 的流式响应的 ToolCall 属于初始定义 + 增量解析
+     * DashScope 的流式工具调用需要进行增量解析
      *
-     * @param deltaJson choices中的delta节点
-     * @param context   交互上下文
-     * @see <a href="https://platform.openai.com/docs/guides/function-calling#streaming">OpenAI Function Calling</a>
+     * @param messageJson message 节点
+     * @param context     交互上下文
      */
-    private void parseStreamingToolCall(JsonNode deltaJson, InteractContext context) {
-        JsonNode toolCallChunks = deltaJson.get("tool_calls");
+    private void parseStreamingToolCall(JsonNode messageJson, InteractContext context) {
+        JsonNode toolCallChunks = messageJson.get("tool_calls");
         toolCallChunks.forEach(toolCallChunk -> {
             JsonNode functionJson = toolCallChunk.get("function");
+
             // 如果 name 不为空，那么认为这是一次新的工具调用
             if (functionJson.has("name") && StrUtil.isNotBlank(functionJson.get("name").asText())) {
                 context.addToolCall(
@@ -163,7 +168,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
                                 .id(toolCallChunk.path("id").asText())
                                 .type(toolCallChunk.path("type").asText())
                                 .name(functionJson.path("name").asText())
-                                .arguments(functionJson.path("arguments").asText("")) // arguments可能为空
+                                .arguments(functionJson.path("arguments").asText(""))
                                 .build()
                 );
             } else if (functionJson.has("arguments")) {
@@ -176,7 +181,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
     }
 
     private List<ToolCall> extractToolCallsFromMessage(JsonNode messageJson) {
-        if (Objects.isNull(messageJson) || !messageJson.has("tool_calls")) {
+        if (!messageJson.has("tool_calls")) {
             return Collections.emptyList();
         }
 
@@ -191,7 +196,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
                     if (Objects.nonNull(functionJson) && !functionJson.isNull()) {
                         return ToolCall.builder()
                                 .id(toolCallJson.path("id").asText())
-                                .type(toolCallJson.path("type").asText())
+                                .type(toolCallJson.path("type").asText("function"))
                                 .name(functionJson.path("name").asText())
                                 .arguments(functionJson.path("arguments").asText())
                                 .build();
@@ -202,30 +207,20 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
                 .collect(Collectors.toList());
     }
 
-    private String extractContentFromMessage(JsonNode messageJson) {
-        if (Objects.isNull(messageJson) || !messageJson.has("content")) return null;
-        return messageJson.path("content").asText(null);
-    }
-
-    private String extractContentFromDelta(JsonNode deltaJson) {
-        if (Objects.isNull(deltaJson) || !deltaJson.has("content")) return null;
-        return deltaJson.path("content").asText(null);
-    }
-
     private TokenUsage extractTokenUsage(JsonNode responseJson) {
         JsonNode usageJson = responseJson.path("usage");
         if (usageJson.isMissingNode() || usageJson.isNull()) {
             return null;
         }
 
-        Integer promptTokens = usageJson.path("prompt_tokens").asInt();
-        Integer completionTokens = usageJson.path("completion_tokens").asInt();
+        Integer inputTokens = usageJson.path("input_tokens").asInt();
+        Integer outputTokens = usageJson.path("output_tokens").asInt();
         Integer totalTokens = usageJson.path("total_tokens").asInt();
-        return new TokenUsage(promptTokens, completionTokens, totalTokens);
+        return new TokenUsage(inputTokens, outputTokens, totalTokens);
     }
 
     private FinishReason mapFinishReason(String reason, List<ToolCall> toolCalls) {
-        if (CollectionUtil.isNotEmpty(toolCalls) && "tool_calls".equals(reason)) {
+        if ("tool_calls".equals(reason) || CollectionUtil.isNotEmpty(toolCalls)) {
             return FinishReason.TOOL_CALL;
         }
         if ("stop".equals(reason)) {
@@ -239,6 +234,6 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
 
     @Override
     public String getProviderName() {
-        return OpenAIConstant.PROVIDER_NAME;
+        return DashScopeConstant.PROVIDER_NAME;
     }
 }
