@@ -21,8 +21,8 @@ import com.yomahub.liteflow.ai.util.TriState;
 //        provider = "openai",
 //        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
         provider = "dashscope",
-        apiUrl = "https://dashscope.aliyuncs.com/api/v1",
-        model = "qwen-flash",
+        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        model = "deepseek-r1",
         enableThinking = TriState.TRUE,
         readTimeout = "10m",
         connectTimeout = "10m"

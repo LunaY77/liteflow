@@ -11,7 +11,7 @@ public interface DashScopeConstant {
 
     String PROVIDER_NAME  = "dashscope";
 
-    String DEFAULT_API_URL = "https://dashscope.aliyuncs.com/api/v1";
+    String DEFAULT_API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1";
 
-    String DEFAULT_END_POINT = "/services/aigc/text-generation/generation";
+    String DEFAULT_END_POINT = "/chat/completions";
 }

@@ -39,7 +39,6 @@ public class HttpTransport implements Transport {
             Map<String, String> requestHeader = buildRequestHeader(config);
 
             // 发送HTTP请求
-            System.out.println(requestBody);
             String responseBody = httpUtil.post(config.resolveUrl(), requestBody, requestHeader);
 
             // 处理响应

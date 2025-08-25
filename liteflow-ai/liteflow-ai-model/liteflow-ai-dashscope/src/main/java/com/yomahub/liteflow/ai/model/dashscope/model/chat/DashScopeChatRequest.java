@@ -18,6 +18,7 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * DashScope 聊天请求类
@@ -29,10 +30,12 @@ import java.util.List;
 public class DashScopeChatRequest extends ChatRequest {
 
     // ==== RequestBody 相关参数 =====
-    private static final String INPUT_KEY = "input";
     private static final String FORMAT_KEY = "response_format";
     private static final String RESPONSE_FORMAT_TEXT = "text";
     private static final String RESPONSE_FORMAT_JSON = "json_object";
+    // DashScope 结构化输出请求参数缓存
+    private volatile JsonNode responseFormat;
+    // ==== RequestBody 相关参数 =====
 
     @Override
     protected List<Message> appendFormatInstructionsIfNeeded() {
@@ -73,24 +76,24 @@ public class DashScopeChatRequest extends ChatRequest {
     @Override
     public RequestBody toRequestBody() {
         return super.toRequestBody()
-                .put("parameters", getParameters())
-                .remove(MESSAGES_KEY)
-                .put(INPUT_KEY, getInput())
-                .put(FORMAT_KEY, ResponseType.JSON.equals(this.responseType) ?
-                        RESPONSE_FORMAT_JSON : RESPONSE_FORMAT_TEXT);
+                .put(FORMAT_KEY, getResponseFormat());
     }
 
-    public JsonNode getParameters() {
-        ObjectNode parametersNode = ObjectMapperHolder.createObjectNode();
-        parametersNode.put("result_format", "message");
-        parametersNode.put("incremental_output", true);
-        return parametersNode;
-    }
-
-    private JsonNode getInput() {
-        ObjectNode inputNode = ObjectMapperHolder.createObjectNode();
-        inputNode.set("messages", ObjectMapperHolder.valueToTree(this.messages));
-        return inputNode;
+    /**
+     * 获取 DashScope 结构化输出的请求格式
+     */
+    private JsonNode getResponseFormat() {
+        if (Objects.isNull(this.responseFormat)) {
+            synchronized (this) {
+                if (Objects.isNull(this.responseFormat)) {
+                    ObjectNode responseFormat = ObjectMapperHolder.createObjectNode();
+                    responseFormat.put("type", ResponseType.JSON.equals(this.responseType) ?
+                            RESPONSE_FORMAT_JSON : RESPONSE_FORMAT_TEXT);
+                    this.responseFormat = responseFormat;
+                }
+            }
+        }
+        return this.responseFormat;
     }
 
     public static Builder builder() {
