@@ -96,6 +96,7 @@ public class DashScopeProtocolTransformer implements ProtocolTransformer {
             // 发送 STOP 信号
             protocolChunk.setType(StreamingProtocolType.STOP);
             protocolChunk.setData(finishReason);
+            context.setFinished(true);
         }
 
         return protocolChunk;

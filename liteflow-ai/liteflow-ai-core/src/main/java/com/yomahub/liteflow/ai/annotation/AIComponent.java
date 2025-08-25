@@ -16,7 +16,6 @@ import java.time.Duration;
  * <ul>
  *     <li>{@link AIChat}</li>
  *     <li>{@link AIClassify}</li>
- *     <li>{@link AIRetrieval}</li>
  * </ul>
  *
  * @author 苍镜月

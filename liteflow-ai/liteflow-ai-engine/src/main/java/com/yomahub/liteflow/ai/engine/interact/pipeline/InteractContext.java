@@ -25,13 +25,12 @@ public class InteractContext {
 
     private TokenUsage tokenUsage;
 
-    // TODO arg
-    private Object grounding;
-
     // 设计上支持并行工具调用，但是目前仅支持单轮单次调用
     private List<ToolCall> toolCalls;
 
     private boolean thinkingInContent;
+
+    private boolean isFinished = false;
 
     public InteractContext() {
         chatId = "interact_" + UUID.randomUUID();
@@ -117,5 +116,13 @@ public class InteractContext {
             this.toolCalls.get(this.toolCalls.size() - 1)
                     .addArguments(argumentsChunk);
         }
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }

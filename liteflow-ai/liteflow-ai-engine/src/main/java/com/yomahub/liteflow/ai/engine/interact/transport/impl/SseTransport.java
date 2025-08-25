@@ -89,14 +89,9 @@ public class SseTransport extends EventSourceListener implements Transport {
     @Override
     public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
         super.onEvent(eventSource, id, type, data);
-        try {
-            pipeline.processStreaming(data);
-            // 手动关闭，流式传输
-            if ("[DONE]".equalsIgnoreCase(data)) {
-                close();
-            }
-        } catch (Exception e) {
-            onFailure(eventSource, e, null);
+        // 如果返回 true 表示流式响应结束，关闭连接, 有一些模型不会主动关闭连接，需要在这里判断
+        if (pipeline.processStreaming(data)) {
+            close();
         }
     }
 

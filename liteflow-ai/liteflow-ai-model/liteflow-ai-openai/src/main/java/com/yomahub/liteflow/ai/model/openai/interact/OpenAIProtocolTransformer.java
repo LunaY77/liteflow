@@ -41,6 +41,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
         if ("[DONE]".equals(streamChunk.trim())) {
             protocolChunk.setType(StreamingProtocolType.STOP);
             protocolChunk.setData("[DONE]");
+            context.setFinished(true);
             return protocolChunk;
         }
 
