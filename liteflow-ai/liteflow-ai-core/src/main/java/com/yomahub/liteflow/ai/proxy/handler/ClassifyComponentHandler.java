@@ -21,7 +21,8 @@ import java.lang.reflect.InvocationHandler;
  */
 public class ClassifyComponentHandler extends AbstractAIComponentHandler<AIClassify> {
 
-    private static final String INTERCEPT_METHOD_NAME = "processSwitch";
+    private static final String INTERCEPT_SWITCH_METHOD_NAME = "processSwitch";
+    private static final String INTERCEPT_MULTI_SWITCH_METHOD_NAME = "processMultiSwitch";
 
     @Override
     public AITypeEnum getAIType() {
@@ -45,7 +46,11 @@ public class ClassifyComponentHandler extends AbstractAIComponentHandler<AIClass
     }
 
     @Override
-    protected ElementMatcher<? super MethodDescription> getInterceptMethodName() {
-        return ElementMatchers.named(INTERCEPT_METHOD_NAME);
+    protected ElementMatcher<? super MethodDescription> getInterceptMethodName(AIProxyWrapBean<AIClassify> wrapBean) {
+        if (wrapBean.getAnnotation().multiLabel()) {
+            return ElementMatchers.named(INTERCEPT_MULTI_SWITCH_METHOD_NAME);
+        } else {
+            return ElementMatchers.named(INTERCEPT_SWITCH_METHOD_NAME);
+        }
     }
 }

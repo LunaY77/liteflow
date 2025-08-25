@@ -129,7 +129,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
                     .subclass(nodeComponentClass)
                     .name(generateProxyClassName(wrapBean))
                     .implement(wrapBean.getInterfaceClass())
-                    .method(getInterceptMethodName())
+                    .method(getInterceptMethodName(wrapBean))
                     .intercept(InvocationHandlerAdapter.of(getInvocationHandler(wrapBean)))
                     .make()
                     .load(this.getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
@@ -174,7 +174,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
      *
      * @return 拦截方法名称
      */
-    protected abstract ElementMatcher<? super MethodDescription> getInterceptMethodName();
+    protected abstract ElementMatcher<? super MethodDescription> getInterceptMethodName(AIProxyWrapBean<T> wrapBean);
 
     /**
      * 判断是否支持指定的注解类型

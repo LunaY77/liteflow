@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.test.ai.core.proxy.cmp;
+package com.yomahub.liteflow.test.ai.core.chat.cmp.openai;
 
 import com.yomahub.liteflow.ai.annotation.*;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
@@ -13,22 +13,17 @@ import com.yomahub.liteflow.ai.util.TriState;
  */
 
 @AIComponent(
-        nodeId = "aiStreamingChatCmpId",
-        nodeName = "aiStreamingChatCmpName",
-//        provider = "ollama",
-//        apiUrl = "http://localhost:11434",
-//        model = "qwen3:32b",
-//        provider = "openai",
-//        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        provider = "dashscope",
-        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        model = "deepseek-r1",
+        nodeId = "OpenAIStream",
+        nodeName = "OpenAIStream",
+        provider = "openai",
+        apiUrl = "https://ark.cn-beijing.volces.com/api/v3",
+        model = "doubao-seed-1-6-250615",
         enableThinking = TriState.TRUE,
         readTimeout = "10m",
         connectTimeout = "10m"
 )
 @AIChat(
-        systemPrompt = "classpath:core/proxy/system_prompt.txt",
+        systemPrompt = "classpath:core/chat/system_prompt.txt",
         userPrompt = "{{question}}",
         streaming = true,
         transportType = TransportType.SSE
@@ -40,10 +35,10 @@ import com.yomahub.liteflow.ai.util.TriState;
 )
 @AIOutput(
         responseType = ResponseType.TEXT,
-        typeName = "com.yomahub.liteflow.test.ai.core.proxy.cmp.Output",
+        typeName = "com.yomahub.liteflow.test.ai.core.chat.cmp.Output",
         methodExpress = "setData",
         useKeyIndex = true,
         key = "result"
 )
-public interface AIStreamingChatCmp {
+public interface OpenAIStreamCmp {
 }

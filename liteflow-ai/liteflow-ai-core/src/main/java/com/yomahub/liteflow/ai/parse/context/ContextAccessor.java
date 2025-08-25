@@ -59,19 +59,18 @@ public class ContextAccessor {
         if (StrUtil.isBlank(expression) || Objects.isNull(value)) return;
 
         // 检查结果是否为 Response 类型
-        if (!(value instanceof Response)) {
-            throw new LiteFlowAIException("AI node output value must be of type Response.");
-        }
-        // 如果 request 是 ChatRequest 且 value 是 ChatResponse，则尝试进行结构化转换
-        if (context.getModelRequest() instanceof ChatRequest && value instanceof ChatResponse) {
-            ChatRequest chatRequest = context.getModelRequest().toChatRequest();
-            if (ResponseType.JSON.equals(chatRequest.getResponseType())) {
-                value = ((ChatResponse) value).as(chatRequest.getOutputParser());
+        if (value instanceof Response) {
+            // 如果 request 是 ChatRequest 且 value 是 ChatResponse，则尝试进行结构化转换
+            if (context.getModelRequest() instanceof ChatRequest && value instanceof ChatResponse) {
+                ChatRequest chatRequest = context.getModelRequest().toChatRequest();
+                if (ResponseType.JSON.equals(chatRequest.getResponseType())) {
+                    value = ((ChatResponse) value).as(chatRequest.getOutputParser());
+                } else {
+                    value = ((ChatResponse) value).getContent();
+                }
             } else {
-                value = ((ChatResponse) value).getContent();
+                value = ((Response<?>) value).getContent();
             }
-        } else {
-            value = ((Response<?>) value).getContent();
         }
 
         NodeComponent nodeComponent = context.getNodeComponent();

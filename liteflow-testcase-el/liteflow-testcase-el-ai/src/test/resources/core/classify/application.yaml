@@ -1,0 +1,10 @@
+liteflow:
+  rule-source: core/classify/flow.el.xml
+  ai:
+    base-packages:
+      - com.yomahub.liteflow.test.ai.core.classify.cmp
+    enable: true
+    openai:
+      api-key:
+    dashscope:
+      api-key:

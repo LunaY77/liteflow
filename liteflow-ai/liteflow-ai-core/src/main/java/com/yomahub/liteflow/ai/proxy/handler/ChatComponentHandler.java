@@ -45,7 +45,7 @@ public class ChatComponentHandler extends AbstractAIComponentHandler<AIChat> {
     }
 
     @Override
-    protected ElementMatcher<? super MethodDescription> getInterceptMethodName() {
+    protected ElementMatcher<? super MethodDescription> getInterceptMethodName(AIProxyWrapBean<AIChat> wrapBean) {
         return ElementMatchers.named(INTERCEPT_METHOD_NAME);
     }
 }

@@ -1,6 +1,0 @@
-liteflow:
-  rule-source: core/proxy/flow.el.xml
-  ai:
-    base-packages:
-      - com.yomahub.liteflow.test.ai.core.proxy.cmp
-    enable: true

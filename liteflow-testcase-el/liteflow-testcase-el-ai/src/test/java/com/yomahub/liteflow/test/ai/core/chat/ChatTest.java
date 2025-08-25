@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.test.ai.core.proxy;
+package com.yomahub.liteflow.test.ai.core.chat;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
@@ -21,24 +21,17 @@ import javax.annotation.Resource;
  * @since TODO
  */
 
-@TestPropertySource(properties = {"spring.config.location=classpath:core/proxy/application.yaml"})
+@TestPropertySource(properties = {"spring.config.location=classpath:core/chat/application.yaml"})
 @SpringBootTest(classes = {ChatTest.class, SpringUtil.class})
 @EnableAutoConfiguration
-@ComponentScan({"com.yomahub.liteflow.test.ai.core.proxy.cmp"})
+@ComponentScan({"com.yomahub.liteflow.test.ai.core.chat.cmp"})
 public class ChatTest {
 
     @Resource
     private FlowExecutor flowExecutor;
 
-    @Test
-    public void testBlockingChat() {
-        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
-        Assertions.assertTrue(liteflowResponse.isSuccess());
-    }
-
-    @Test
-    public void testStreaming() {
-        StreamHandler streamHandler = StreamHandler.builder()
+    private StreamHandler getStreamHandler() {
+        return StreamHandler.builder()
                 .onStart(context -> System.out.println("chat start"))
                 .onClose(context -> System.out.println("chat close"))
                 .onError((context, t) -> {
@@ -61,10 +54,45 @@ public class ChatTest {
                     return response;
                 })
                 .build();
+    }
 
-        ChatContext chatContext = new ChatContext(streamHandler);
+    @Test
+    public void testDashScopeChat() {
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
+        Assertions.assertTrue(liteflowResponse.isSuccess());
+    }
 
+    @Test
+    public void testDashScopeStream() {
+        ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain2", null, chatContext);
+        Assertions.assertTrue(liteflowResponse.isSuccess());
+    }
+
+
+    @Test
+    public void testOllamaChat() {
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain3", null, ChatContext.class);
+        Assertions.assertTrue(liteflowResponse.isSuccess());
+    }
+
+    @Test
+    public void testOllamaStream() {
+        ChatContext chatContext = new ChatContext(getStreamHandler());
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain4", null, chatContext);
+        Assertions.assertTrue(liteflowResponse.isSuccess());
+    }
+
+    @Test
+    public void testOpenAIChat() {
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain5", null, ChatContext.class);
+        Assertions.assertTrue(liteflowResponse.isSuccess());
+    }
+
+    @Test
+    public void testOpenAIStream() {
+        ChatContext chatContext = new ChatContext(getStreamHandler());
+        LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain6", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 }

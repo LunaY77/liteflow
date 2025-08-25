@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.test.ai.core.proxy.cmp;
+package com.yomahub.liteflow.test.ai.core.classify.cmp;
 
 import com.yomahub.liteflow.core.NodeComponent;
 import org.springframework.stereotype.Component;

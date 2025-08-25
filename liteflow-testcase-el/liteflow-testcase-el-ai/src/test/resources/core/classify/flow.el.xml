@@ -2,10 +2,6 @@
 <!DOCTYPE flow PUBLIC  "liteflow" "liteflow.dtd">
 <flow>
     <chain name="chain1">
-        THEN(a, aiBlockingChatCmpId, b);
-    </chain>
-
-    <chain name="chain2">
-        THEN(a, aiStreamingChatCmpId);
+        THEN(a, SWITCH(ai).TO(java, python));
     </chain>
 </flow>

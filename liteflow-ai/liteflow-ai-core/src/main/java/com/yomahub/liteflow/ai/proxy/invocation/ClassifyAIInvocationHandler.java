@@ -2,6 +2,7 @@ package com.yomahub.liteflow.ai.proxy.invocation;
 
 import com.yomahub.liteflow.ai.domain.dto.ParsedClassifyAnnotationConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
+import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
@@ -30,18 +31,18 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
         if (SetUtil.isNotPresent(annotationConfig.getCategories())) {
             throw new LiteFlowAIException("Categories cannot be empty for classification");
         }
-        // 校验多标签分类
-        if (!annotationConfig.isMultiLabel() && annotationConfig.getCategories().size() > 1) {
-            throw new LiteFlowAIException("Multi-label classification is not allowed when multiLabel is false");
-        }
-        if (annotationConfig.isMultiLabel() && annotationConfig.getCategories().size() < 2) {
-            throw new LiteFlowAIException("At least two categories are required for multi-label classification");
-        }
     }
 
     @Override
     protected Object doExecuteAIProcess(ProcessorContext<?> processorContext, Object[] args) {
         ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
-        return chatModel.chat(processorContext.getModelRequest().toChatRequest());
+        ChatResponse response = chatModel.chat(processorContext.getModelRequest().toChatRequest());
+        ParsedClassifyAnnotationConfig annotationConfig = (ParsedClassifyAnnotationConfig) processorContext.getParsedAnnotationConfig();
+        // 如果是多标签则返回结构化转换的list, 单标签返回 String
+        if (annotationConfig.isMultiLabel()) {
+            return response.as(processorContext.getModelRequest().toChatRequest().getOutputParser());
+        } else {
+            return response.getContent().getContent();
+        }
     }
 }
