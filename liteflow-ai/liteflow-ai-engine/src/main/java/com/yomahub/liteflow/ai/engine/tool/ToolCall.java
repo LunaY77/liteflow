@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.tool;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Objects;
@@ -14,25 +15,17 @@ import java.util.Objects;
 public class ToolCall {
     private String id;
     private String type;
-    private String name;
-    private String arguments;
-
-    public ToolCall(String id, String type, String name, String arguments) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.arguments = arguments;
-    }
+    @JsonProperty("function")
+    private Function function;
 
     private ToolCall(Builder builder) {
         this.id = builder.id;
         this.type = builder.type;
-        this.name = builder.name;
-        this.arguments = builder.arguments;
+        this.function = new Function(builder.name, builder.arguments);
     }
 
     public void addArguments(String argumentsChunk) {
-        arguments += argumentsChunk;
+        this.function.arguments += argumentsChunk;
     }
 
     public String getId() {
@@ -44,11 +37,15 @@ public class ToolCall {
     }
 
     public String getName() {
-        return name;
+        return this.function.name;
     }
 
     public String getArguments() {
-        return arguments;
+        return this.function.arguments;
+    }
+
+    public Function getFunction() {
+        return function;
     }
 
     public void setId(String id) {
@@ -60,11 +57,51 @@ public class ToolCall {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.function.name = name;
     }
 
     public void setArguments(String arguments) {
-        this.arguments = arguments;
+        this.function.arguments = arguments;
+    }
+
+    public void setFunction(Function function) {
+        this.function = function;
+    }
+
+    public static class Function {
+        private String name;
+
+        private String arguments;
+
+        public Function(String name, String arguments) {
+            this.name = name;
+            this.arguments = arguments;
+        }
+
+        // Getters and Setters
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getArguments() {
+            return arguments;
+        }
+
+        public void setArguments(String arguments) {
+            this.arguments = arguments;
+        }
+
+        @Override
+        public String toString() {
+            return "Function{" +
+                    "name='" + name + '\'' +
+                    ", arguments=" + arguments +
+                    '}';
+        }
     }
 
     public static Builder builder() {
@@ -114,8 +151,7 @@ public class ToolCall {
         return "ToolCall{" +
                 "id='" + id + '\'' +
                 ", type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", arguments='" + arguments + '\'' +
+                ", function=" + function +
                 '}';
     }
 }

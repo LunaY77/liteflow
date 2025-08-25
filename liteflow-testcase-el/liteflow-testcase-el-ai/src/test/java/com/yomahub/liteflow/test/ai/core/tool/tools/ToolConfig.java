@@ -16,7 +16,7 @@ public class ToolConfig {
 
     @Tool(name = "weather_tool", value = {"查询天气", "获取指定位置的天气信息"})
     public String queryWeatherWithLocation(@ToolParam("location") ToolInput location) {
-        return "The weather in " + location + " is sunny, 25°C.";
+        return "The weather in " + location.getContent() + " is sunny, 25°C.";
     }
 
     @Tool(name = "assemble_tool", value = {"组装工具", "将 a 和 b 组装成答案"})

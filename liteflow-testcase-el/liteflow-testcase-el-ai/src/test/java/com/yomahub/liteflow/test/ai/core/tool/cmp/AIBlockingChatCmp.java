@@ -17,9 +17,12 @@ import com.yomahub.liteflow.ai.util.TriState;
 @AIComponent(
         nodeId = "aiBlockingChatCmpId",
         nodeName = "aiBlockingChatCmpName",
-        provider = "ollama",
-        apiUrl = "http://localhost:11434",
-        model = "qwen3:32b",
+//        provider = "ollama",
+//        apiUrl = "http://localhost:11434",
+//        model = "qwen3:32b",
+        provider = "openai",
+        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        model = "qwen-flash",
         enableThinking = TriState.FALSE,
         readTimeout = "10m",
         connectTimeout = "10m"

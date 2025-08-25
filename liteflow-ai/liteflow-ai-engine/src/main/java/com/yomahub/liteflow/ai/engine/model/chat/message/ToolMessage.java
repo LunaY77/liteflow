@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
@@ -9,12 +10,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * @since TODO
  */
 
-@JsonPropertyOrder({"role", "content"})
+@JsonPropertyOrder({"role", "content", "tool_call_id"})
 public class ToolMessage extends AbstractMessage {
 
     /**
      * 工具调用ID
      */
+    @JsonProperty("tool_call_id")
     private String id;
 
     /**
