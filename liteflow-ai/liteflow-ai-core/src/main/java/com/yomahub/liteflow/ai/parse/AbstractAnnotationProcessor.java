@@ -2,8 +2,8 @@ package com.yomahub.liteflow.ai.parse;
 
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.annotation.AIInput;
-import com.yomahub.liteflow.ai.annotation.AIOutput;
+import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
+import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.dto.ParsedChatAnnotationConfig;

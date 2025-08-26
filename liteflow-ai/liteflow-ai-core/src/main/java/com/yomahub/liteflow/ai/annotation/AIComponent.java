@@ -1,5 +1,7 @@
 package com.yomahub.liteflow.ai.annotation;
 
+import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
+import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.util.KeyValue;
 import com.yomahub.liteflow.ai.util.TriState;
 

@@ -74,7 +74,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
 
         // 解析 content
         String content = extractContentFromDelta(delta);
-        if (Objects.nonNull(content)) {
+        if (StrUtil.isNotBlank(content)) {
             // 判断是否为思考内容
             if (content.contains("<think>")) {
                 context.setThinkingInContent(true);
@@ -90,7 +90,7 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
         } else {
             // content 为 null，可能使用了思考模式，输出内容在 reasoning_content 字段
             String reasoningContent = delta.path("reasoning_content").asText(null);
-            if (Objects.nonNull(reasoningContent)) {
+            if (StrUtil.isNotBlank(reasoningContent)) {
                 protocolChunk.setType(StreamingProtocolType.THINKING);
                 protocolChunk.setData(reasoningContent.replaceAll("</?think>", ""));
             } else {

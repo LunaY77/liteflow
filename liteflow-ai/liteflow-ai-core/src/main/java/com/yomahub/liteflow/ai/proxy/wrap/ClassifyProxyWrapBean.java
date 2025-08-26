@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.wrap;
 
-import com.yomahub.liteflow.ai.annotation.AIClassify;
+import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 
 /**

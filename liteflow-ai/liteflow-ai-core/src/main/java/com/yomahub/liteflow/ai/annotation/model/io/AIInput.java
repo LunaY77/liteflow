@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.annotation;
+package com.yomahub.liteflow.ai.annotation.model.io;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

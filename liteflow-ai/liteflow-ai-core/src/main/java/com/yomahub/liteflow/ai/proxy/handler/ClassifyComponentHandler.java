@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.handler;
 
-import com.yomahub.liteflow.ai.annotation.AIClassify;
+import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.ClassifyAIInvocationHandler;

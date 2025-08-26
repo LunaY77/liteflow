@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.annotation;
+package com.yomahub.liteflow.ai.annotation.model.io;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

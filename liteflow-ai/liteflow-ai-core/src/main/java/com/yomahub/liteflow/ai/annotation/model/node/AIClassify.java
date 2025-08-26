@@ -1,7 +1,6 @@
-package com.yomahub.liteflow.ai.annotation;
+package com.yomahub.liteflow.ai.annotation.model.node;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.tool.registry.DelegatingToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.ScanningToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry;
@@ -14,7 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * AI Chat 节点注解
+ * AI 分类节点注解
  *
  * @author 苍镜月
  * @since TODO
@@ -22,12 +21,12 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface AIChat {
+public @interface AIClassify {
 
     /**
      * 系统提示词
      */
-    String systemPrompt() default "";
+    String systemPrompt() default "你是一个意图分类助手";
 
     /**
      * 用户提示词
@@ -35,16 +34,14 @@ public @interface AIChat {
     String userPrompt() default "";
 
     /**
-     * 是否开启 stream，默认 true
+     * 预定义分类列表
      */
-    boolean streaming() default true;
+    String[] categories() default {};
 
     /**
-     * 传输类型，默认 SSE
-     * <p>
-     * 请在此查看传输类型 -> {@link TransportType}
+     * 是否多标签分类，默认 false
      */
-    TransportType transportType() default TransportType.SSE;
+    boolean multiLabel() default false;
 
     /**
      * 需要启用的工具名列表（默认全部启用）

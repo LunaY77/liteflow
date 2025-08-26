@@ -1,6 +1,6 @@
 package com.yomahub.liteflow.ai.proxy.handler;
 
-import com.yomahub.liteflow.ai.annotation.AIChat;
+import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.ChatAIInvocationHandler;

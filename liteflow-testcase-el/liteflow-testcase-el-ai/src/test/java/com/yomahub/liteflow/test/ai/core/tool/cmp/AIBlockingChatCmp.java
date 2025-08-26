@@ -1,9 +1,9 @@
 package com.yomahub.liteflow.test.ai.core.tool.cmp;
 
-import com.yomahub.liteflow.ai.annotation.AIChat;
+import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.annotation.AIInput;
-import com.yomahub.liteflow.ai.annotation.InputField;
+import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
+import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.util.TriState;
 

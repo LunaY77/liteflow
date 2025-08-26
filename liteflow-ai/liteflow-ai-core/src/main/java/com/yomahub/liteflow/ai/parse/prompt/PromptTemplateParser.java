@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.parse.prompt;
 
 import cn.hutool.core.util.StrUtil;
-import com.yomahub.liteflow.ai.annotation.InputField;
+import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;

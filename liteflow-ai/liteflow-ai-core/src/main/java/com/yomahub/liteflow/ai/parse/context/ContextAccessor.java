@@ -2,8 +2,8 @@ package com.yomahub.liteflow.ai.parse.context;
 
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.yomahub.liteflow.ai.annotation.AIOutput;
-import com.yomahub.liteflow.ai.annotation.OutputField;
+import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
+import com.yomahub.liteflow.ai.annotation.model.io.OutputField;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.model.output.Response;

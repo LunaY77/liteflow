@@ -1,6 +1,10 @@
 package com.yomahub.liteflow.test.ai.core.classify.cmp;
 
-import com.yomahub.liteflow.ai.annotation.*;
+import com.yomahub.liteflow.ai.annotation.AIComponent;
+import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
+import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
+import com.yomahub.liteflow.ai.annotation.model.io.InputField;
+import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.util.TriState;
 
 /**

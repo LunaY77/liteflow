@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.annotation;
+package com.yomahub.liteflow.ai.annotation.model.io;
 
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
