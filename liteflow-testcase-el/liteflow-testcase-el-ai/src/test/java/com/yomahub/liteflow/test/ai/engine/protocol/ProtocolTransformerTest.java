@@ -32,11 +32,11 @@ public class ProtocolTransformerTest {
         ChatResponse chatResponse = transformer.transformStreamingResponse(context);
         System.out.println("==========================");
         System.out.println(chatResponse.hasToolCalls());
-        System.out.println(chatResponse.getContent().getContent());
+        System.out.println(chatResponse.getOutput().getContent());
         System.out.println(chatResponse.getTokenUsage());
         System.out.println(chatResponse.getFinishReason());
 
-        for (ToolCall toolCall : chatResponse.getContent().getToolCalls()) {
+        for (ToolCall toolCall : chatResponse.getOutput().getToolCalls()) {
             System.out.println(toolCall.getId());
             System.out.println(toolCall.getName());
             System.out.println(toolCall.getType());

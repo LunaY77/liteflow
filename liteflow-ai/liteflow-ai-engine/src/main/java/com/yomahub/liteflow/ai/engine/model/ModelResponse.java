@@ -9,5 +9,5 @@ package com.yomahub.liteflow.ai.engine.model;
 
 public interface ModelResponse<T> {
 
-    T getContent();
+    T getOutput();
 }

@@ -62,7 +62,7 @@ public class OllamaModelTest {
                 .onClose(context -> LOG.info("chat close"))
                 .onCompletion((response, context) -> {
                     LOG.info("response: \n{}", response);
-                    LOG.info("content: \n{}", response.getContent().getContent());
+                    LOG.info("content: \n{}", response.getOutput().getContent());
                     LOG.info("TokenUsage: \n{}", response.getTokenUsage());
                     LOG.info("FinishReason: \n{}", response.getFinishReason());
                     return response;
@@ -173,7 +173,7 @@ public class OllamaModelTest {
                 .onClose(context -> LOG.info("chat close"))
                 .onCompletion((response, context) -> {
                     LOG.info("response: \n{}", response);
-                    LOG.info("content: \n{}", response.getContent().getContent());
+                    LOG.info("content: \n{}", response.getOutput().getContent());
                     LOG.info("TokenUsage: \n{}", response.getTokenUsage());
                     LOG.info("FinishReason: \n{}", response.getFinishReason());
                     return response;
@@ -196,7 +196,7 @@ public class OllamaModelTest {
         ChatModel chatModel = new OllamaChatModel(config);
         ChatResponse response = chatModel.chat(request);
         Assertions.assertTrue(response.hasToolCalls());
-        LOG.info("ToolCalls: \n{}", response.getContent().getToolCalls().get(0));
+        LOG.info("ToolCalls: \n{}", response.getOutput().getToolCalls().get(0));
     }
 
     @Test
@@ -229,7 +229,7 @@ public class OllamaModelTest {
                 .onClose(context -> LOG.info("chat close"))
                 .onCompletion((response, context) -> {
                     LOG.info("response: \n{}", response);
-                    LOG.info("content: \n{}", response.getContent().getContent());
+                    LOG.info("content: \n{}", response.getOutput().getContent());
                     LOG.info("TokenUsage: \n{}", response.getTokenUsage());
                     LOG.info("FinishReason: \n{}", response.getFinishReason());
                     return response;
@@ -252,7 +252,7 @@ public class OllamaModelTest {
         ChatModel chatModel = new OllamaChatModel(config);
         ChatResponse response = chatModel.chat(request);
         Assertions.assertFalse(response.hasToolCalls());
-        LOG.info("response: \n{}", response.getContent().getContent());
+        LOG.info("response: \n{}", response.getOutput().getContent());
     }
 
     @Test

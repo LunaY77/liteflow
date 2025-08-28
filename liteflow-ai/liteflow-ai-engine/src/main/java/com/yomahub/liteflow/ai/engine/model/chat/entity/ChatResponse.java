@@ -45,7 +45,7 @@ public class ChatResponse extends Response<AssistantMessage> {
      * @return 转换后的对象
      */
     public <T> T as(JsonSchemaParser<T> parser) {
-        String rawTextContent = this.getContent().getContent();
+        String rawTextContent = this.getOutput().getContent();
         if (StrUtil.isBlank(rawTextContent)) {
             throw new IllegalStateException("Cannot convert empty content to target type: " + parser.getTargetType());
         }
@@ -83,7 +83,7 @@ public class ChatResponse extends Response<AssistantMessage> {
      * @return 如果响应包含工具调用，则返回 true，否则返回 false
      */
     public boolean hasToolCalls() {
-        return Objects.nonNull(this.getContent()) && Objects.equals(this.finishReason, FinishReason.TOOL_CALL);
+        return Objects.nonNull(this.getOutput()) && Objects.equals(this.finishReason, FinishReason.TOOL_CALL);
     }
 
     public static Builder builder() {

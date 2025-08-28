@@ -50,7 +50,7 @@ public class ChatTest {
                     System.out.println("Text: " + context.getAggregatedText());
                     System.out.println("Token Usage: " + response.getTokenUsage());
 
-                    System.out.println("response: \n" + response.getContent().getContent());
+                    System.out.println("response: \n" + response.getOutput().getContent());
                     return response;
                 })
                 .build();

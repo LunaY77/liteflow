@@ -55,7 +55,7 @@ public class ToolTest {
         ChatContext chatContext = ChatContext.builder()
                 .streamHandler(StreamHandler.builder()
                         .onCompletion((response, context) -> {
-                            System.out.println("response content: " + response.getContent().getContent());
+                            System.out.println("response content: " + response.getOutput().getContent());
                             System.out.println("Token Usage: " + response.getTokenUsage());
                             System.out.println("Finish Reason: " + response.getFinishReason());
                             return response;

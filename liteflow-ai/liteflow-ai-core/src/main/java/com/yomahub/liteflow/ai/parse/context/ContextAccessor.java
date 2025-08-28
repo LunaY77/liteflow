@@ -66,10 +66,10 @@ public class ContextAccessor {
                 if (ResponseType.JSON.equals(chatRequest.getResponseType())) {
                     value = ((ChatResponse) value).as(chatRequest.getOutputParser());
                 } else {
-                    value = ((ChatResponse) value).getContent();
+                    value = ((ChatResponse) value).getOutput();
                 }
             } else {
-                value = ((Response<?>) value).getContent();
+                value = ((Response<?>) value).getOutput();
             }
         }
 

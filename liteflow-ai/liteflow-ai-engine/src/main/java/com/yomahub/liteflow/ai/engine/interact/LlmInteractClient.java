@@ -122,7 +122,7 @@ public class LlmInteractClient implements InteractClient {
                     // 工具调用
                     if (finalResponse.hasToolCalls() && config.isAutoToolCallEnabled()) {
                         // 1. 获取并执行工具调用
-                        List<ToolCall> toolCalls = finalResponse.getContent().getToolCalls();
+                        List<ToolCall> toolCalls = finalResponse.getOutput().getToolCalls();
                         // 目前只执行单轮单次的工具调用
                         ToolMessage toolMessage = executeToolCall(toolCalls.get(0), request.getToolRegistry());
 
@@ -172,7 +172,7 @@ public class LlmInteractClient implements InteractClient {
                 // 处理工具调用
                 if (response.hasToolCalls() && config.isAutoToolCallEnabled()) {
                     // 1. 获取并执行工具调用
-                    List<ToolCall> toolCalls = response.getContent().getToolCalls();
+                    List<ToolCall> toolCalls = response.getOutput().getToolCalls();
                     // 目前只执行单轮单次的工具调用
                     ToolMessage toolMessage = executeToolCall(toolCalls.get(0), request.getToolRegistry());
 
@@ -222,7 +222,7 @@ public class LlmInteractClient implements InteractClient {
          */
         private void buildNextRoundMessages(ChatRequest request, ChatResponse response, ToolMessage toolMessage) {
             List<Message> messagesHistory = request.getMessages();
-            messagesHistory.add(response.getContent());
+            messagesHistory.add(response.getOutput());
             messagesHistory.add(toolMessage);
         }
 
