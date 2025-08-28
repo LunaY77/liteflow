@@ -2,6 +2,10 @@
 <!DOCTYPE flow PUBLIC  "liteflow" "liteflow.dtd">
 <flow>
     <chain name="chain1">
-        THEN(a, SWITCH(ai).TO(java, python));
+        THEN(a, SWITCH(aiSwitch).TO(java, python));
+    </chain>
+
+    <chain name="chain2">
+        THEN(a, SWITCH(aiMultiSwitch).TO(java, python));
     </chain>
 </flow>

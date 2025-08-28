@@ -15,8 +15,8 @@ import com.yomahub.liteflow.ai.util.TriState;
  */
 
 @AIComponent(
-        nodeId = "aiSwitch",
-        nodeName = "aiSwitch",
+        nodeId = "aiMultiSwitch",
+        nodeName = "aiMultiSwitch",
 //        provider = "ollama",
 //        apiUrl = "http://localhost:11434",
 //        model = "qwen3:32b",
@@ -29,11 +29,12 @@ import com.yomahub.liteflow.ai.util.TriState;
 )
 @AIClassify(
         userPrompt = "{{question}}",
-        categories = {"java", "python"}
+        categories = {"java", "python"},
+        multiLabel = true
 )
 @AIInput(
         mapping = {
-                @InputField(name = "question", expression = "test", defaultValue = "请帮我写一段Java代码"),
+                @InputField(name = "question", expression = "test", defaultValue = "请帮我写一段Java代码, 同时给出 Python 代码"),
         }
 )
 @AIOutput(
@@ -41,5 +42,5 @@ import com.yomahub.liteflow.ai.util.TriState;
         useKeyIndex = true,
         key = "result"
 )
-public interface AIClassifyCmp {
+public interface AIMultiClassifyCmp {
 }

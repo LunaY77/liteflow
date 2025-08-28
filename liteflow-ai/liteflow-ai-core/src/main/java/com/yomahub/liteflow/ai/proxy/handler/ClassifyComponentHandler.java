@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.proxy.handler;
 
-import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
+import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
 import com.yomahub.liteflow.ai.proxy.invocation.ClassifyAIInvocationHandler;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationHandler;
 public class ClassifyComponentHandler extends AbstractAIComponentHandler<AIClassify> {
 
     private static final String INTERCEPT_SWITCH_METHOD_NAME = "processSwitch";
-    private static final String INTERCEPT_MULTI_SWITCH_METHOD_NAME = "processMultiSwitch";
 
     @Override
     public AITypeEnum getAIType() {
@@ -47,10 +46,6 @@ public class ClassifyComponentHandler extends AbstractAIComponentHandler<AIClass
 
     @Override
     protected ElementMatcher<? super MethodDescription> getInterceptMethodName(AIProxyWrapBean<AIClassify> wrapBean) {
-        if (wrapBean.getAnnotation().multiLabel()) {
-            return ElementMatchers.named(INTERCEPT_MULTI_SWITCH_METHOD_NAME);
-        } else {
-            return ElementMatchers.named(INTERCEPT_SWITCH_METHOD_NAME);
-        }
+        return ElementMatchers.named(INTERCEPT_SWITCH_METHOD_NAME);
     }
 }

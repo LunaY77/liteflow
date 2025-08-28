@@ -78,7 +78,7 @@ public class OpenAIChatRequest extends ChatRequest {
                     ObjectNode responseFormat = ObjectMapperHolder.createObjectNode();
                     responseFormat.put("type", "json_schema");
                     ObjectNode jsonSchema = ObjectMapperHolder.createObjectNode();
-                    jsonSchema.put("name", ((Class<?>) outputParser.getTargetType()).getSimpleName());
+                    jsonSchema.put("name", outputParser.getTargetType().getTypeName());
                     jsonSchema.set("schema", outputParser.getJsonSchema());
 
                     responseFormat.set("json_schema", jsonSchema);

@@ -172,6 +172,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
     /**
      * 获取拦截方法名称
      *
+     * @param wrapBean 包装bean，现在暂时不用，后续如果单节点需要根据条件判断拦截方法，可以用上
      * @return 拦截方法名称
      */
     protected abstract ElementMatcher<? super MethodDescription> getInterceptMethodName(AIProxyWrapBean<T> wrapBean);

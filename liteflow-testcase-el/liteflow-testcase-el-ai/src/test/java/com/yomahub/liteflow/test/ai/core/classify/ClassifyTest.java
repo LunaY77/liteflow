@@ -33,5 +33,14 @@ public class ClassifyTest {
     public void testClassify() {
         LiteflowResponse response = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
         Assertions.assertTrue(response.isSuccess());
+        Assertions.assertEquals("a==>aiSwitch[aiSwitch]==>java", response.getExecuteStepStr());
     }
+
+    @Test
+    public void testMultiClassify() {
+        LiteflowResponse response = flowExecutor.execute2Resp("chain2", null, ChatContext.class);
+        Assertions.assertTrue(response.isSuccess());
+        Assertions.assertEquals("a==>aiMultiSwitch[aiMultiSwitch]==>java==>python", response.getExecuteStepStr());
+    }
+
 }

@@ -9,6 +9,8 @@ import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ClassifyProxyWrapBean;
 import com.yomahub.liteflow.ai.util.SetUtil;
 
+import java.util.List;
+
 /**
  * 分类组件的调用处理器
  *
@@ -33,6 +35,7 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Object doExecuteAIProcess(ProcessorContext<?> processorContext, Object[] args) {
         ChatModel chatModel = ModelFactory.getChatModel(wrapBean);
@@ -40,7 +43,8 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
         ParsedClassifyAnnotationConfig annotationConfig = (ParsedClassifyAnnotationConfig) processorContext.getParsedAnnotationConfig();
         // 如果是多标签则返回结构化转换的list, 单标签返回 String
         if (annotationConfig.isMultiLabel()) {
-            return response.as(processorContext.getModelRequest().toChatRequest().getOutputParser());
+            List<String> resList = (List<String>) response.as(processorContext.getModelRequest().toChatRequest().getOutputParser());
+            return String.join(",", resList);
         } else {
             return response.getContent().getContent();
         }
