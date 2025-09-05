@@ -9,6 +9,7 @@ import com.yomahub.liteflow.ai.domain.dto.ParsedAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.dto.ParsedChatAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.dto.ParsedClassifyAnnotationConfig;
 import com.yomahub.liteflow.ai.domain.enums.AITypeEnum;
+import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.parse.assemble.ChatRequestAssembler;
 import com.yomahub.liteflow.ai.parse.assemble.ClassifyRequestAssembler;
@@ -22,6 +23,7 @@ import com.yomahub.liteflow.log.LFLoggerManager;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -68,6 +70,30 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, C extend
             return;
         }
         context.setConfigAggregator(ModelConfigAggregator.parseFromAnnotation(aiComponent));
+    }
+
+    /**
+     * 解析历史消息
+     *
+     * @param historyExpression 历史消息表达式
+     * @param context           处理器上下文
+     * @param setConsumer       设置方法，接受解析后的历史消息列表
+     */
+    protected void parseHistory(String historyExpression, ProcessorContext<C> context, Consumer<List<Message>> setConsumer) {
+        if (StrUtil.isNotBlank(historyExpression)) {
+            Object historyObj = ContextAccessor.searchContextByExpression(historyExpression, context);
+            if (Objects.nonNull(historyObj) && historyObj instanceof List) {
+                try {
+                    @SuppressWarnings("unchecked")
+                    List<Message> history = (List<Message>) historyObj;
+                    setConsumer.accept(history);
+                } catch (ClassCastException e) {
+                    LOG.warn("History expression does not evaluate to List<Message>: {}, ignoring history.", historyExpression, e);
+                }
+            } else {
+                LOG.warn("History expression does not evaluate to a List: {}, ignoring history.", historyExpression);
+            }
+        }
     }
 
     /**

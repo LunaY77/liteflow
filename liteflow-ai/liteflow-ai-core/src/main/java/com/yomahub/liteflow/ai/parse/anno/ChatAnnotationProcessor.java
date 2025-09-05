@@ -31,6 +31,9 @@ public class ChatAnnotationProcessor extends AbstractAnnotationProcessor<AIChat,
         SetUtil.setIfPresent(annotationConfig::setTransportType, annotation.transportType());
         SetUtil.setIfPresent(annotationConfig::setToolNames, Arrays.asList(annotation.toolNames()));
 
+        // 处理历史消息
+        parseHistory(annotation.history(), context, annotationConfig::setHistory);
+
         // 处理系统提示词
         parsePrompt(annotation.systemPrompt(), context, annotationConfig::setSystemPrompt);
 

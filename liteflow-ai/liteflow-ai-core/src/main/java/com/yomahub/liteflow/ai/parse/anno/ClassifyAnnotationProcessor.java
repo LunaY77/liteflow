@@ -32,6 +32,9 @@ public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIC
 
         SetUtil.setIfPresent(annotationConfig::setMultiLabel, annotation.multiLabel());
 
+        // 处理历史消息
+        parseHistory(annotation.history(), context, annotationConfig::setHistory);
+
         // 处理系统提示词
         parsePrompt(annotation.systemPrompt(), context, annotationConfig::setSystemPrompt);
 

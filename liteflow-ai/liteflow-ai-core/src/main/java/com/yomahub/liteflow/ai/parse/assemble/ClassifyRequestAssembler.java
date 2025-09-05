@@ -16,10 +16,7 @@ import com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.model.ModelFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
@@ -66,11 +63,17 @@ public class ClassifyRequestAssembler extends AbstractRequestAssembler<ParsedCla
 
 
         // 3. Message
-        List<Message> messages = new ArrayList<>();
-        // 意图分类的系统消息
-        messages.add(buildClassifyMessage(annotationConfig));
-        setIfPresent(t -> messages.add(new SystemMessage(t)), annotationConfig.getSystemPrompt());
-        setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
+        List<Message> messages = Optional.ofNullable(annotationConfig.getHistory())
+                .orElse(new ArrayList<>());
+        if (messages.isEmpty()) {
+            // 意图分类的系统消息
+            setIfPresent(
+                    t -> messages.add(new SystemMessage(t)),
+                    annotationConfig.getSystemPrompt(),
+                    buildClassifyMessage(annotationConfig)
+            );
+            setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
+        }
 
         builder.messages(messages);
 
@@ -114,7 +117,7 @@ public class ClassifyRequestAssembler extends AbstractRequestAssembler<ParsedCla
      * @param annotationConfig 注解配置
      * @return 系统消息
      */
-    private Message buildClassifyMessage(ParsedClassifyAnnotationConfig annotationConfig) {
+    private String buildClassifyMessage(ParsedClassifyAnnotationConfig annotationConfig) {
         StringBuilder sb = new StringBuilder();
         sb.append("You are an expert intent classifier.\n");
         sb.append("Your task is to analyze the user's query and classify it based on the predefined categories.\n\n");
@@ -140,6 +143,6 @@ public class ClassifyRequestAssembler extends AbstractRequestAssembler<ParsedCla
 
         sb.append("4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format.");
 
-        return new SystemMessage(sb.toString());
+        return sb.toString();
     }
 }

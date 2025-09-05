@@ -14,10 +14,7 @@ import com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.model.ModelFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
 
@@ -62,9 +59,12 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnn
         builder.options(optionsBuilder.build());
 
         // 3. Message
-        List<Message> messages = new ArrayList<>();
-        setIfPresent(t -> messages.add(new SystemMessage(t)), annotationConfig.getSystemPrompt());
-        setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
+        List<Message> messages = Optional.ofNullable(annotationConfig.getHistory())
+                .orElse(new ArrayList<>());
+        if (messages.isEmpty()) {
+            setIfPresent(t -> messages.add(new SystemMessage(t)), annotationConfig.getSystemPrompt());
+            setIfPresent(t -> messages.add(new UserMessage(t)), annotationConfig.getUserPrompt());
+        }
 
         builder.messages(messages);
 

@@ -1,5 +1,7 @@
 package com.yomahub.liteflow.ai.domain.dto;
 
+import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +14,17 @@ import java.util.List;
 
 public class ParsedClassifyAnnotationConfig extends ParsedAnnotationConfig {
 
+    private List<Message> history;
+
     private List<String> categories;
 
     private boolean multiLabel;
 
     private List<String> toolNames = new ArrayList<>();
+
+    public List<Message> getHistory() {
+        return history;
+    }
 
     public List<String> getCategories() {
         return categories;
@@ -28,6 +36,10 @@ public class ParsedClassifyAnnotationConfig extends ParsedAnnotationConfig {
 
     public List<String> getToolNames() {
         return toolNames;
+    }
+
+    public void setHistory(List<Message> history) {
+        this.history = history;
     }
 
     public void setCategories(List<String> categories) {

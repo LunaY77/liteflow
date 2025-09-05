@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.ai.domain.dto;
 
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
+import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,14 @@ import java.util.List;
 
 public class ParsedChatAnnotationConfig extends ParsedAnnotationConfig {
 
+    private List<Message> history;
     private boolean streaming = true;
     private TransportType transportType = TransportType.SSE;
     private List<String> toolNames = new ArrayList<>();
+
+    public List<Message> getHistory() {
+        return history;
+    }
 
     public boolean isStreaming() {
         return streaming;
@@ -28,6 +34,10 @@ public class ParsedChatAnnotationConfig extends ParsedAnnotationConfig {
 
     public List<String> getToolNames() {
         return toolNames;
+    }
+
+    public void setHistory(List<Message> history) {
+        this.history = history;
     }
 
     public void setStreaming(boolean streaming) {
