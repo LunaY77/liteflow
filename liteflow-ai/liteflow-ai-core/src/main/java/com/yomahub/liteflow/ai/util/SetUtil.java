@@ -1,11 +1,18 @@
 package com.yomahub.liteflow.ai.util;
 
+import cn.hutool.core.util.StrUtil;
+import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
+import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
+
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -16,6 +23,89 @@ import java.util.stream.Collectors;
  */
 
 public class SetUtil {
+
+    /**
+     * 占位符正则表达式 {{变量名}}
+     */
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\{\\{(.+?)\\}\\}");
+
+    /**
+     * 如果表达式不为空且解析结果不为空，则调用消费者
+     */
+    public static void setIfPresent(Consumer<String> consumer, String expression, ProcessorContext<?> context) {
+        if (isPresent(expression)) {
+            String value = isTemplate(expression) ?
+                    resolveContextExpression(expression, context) :
+                    expression;
+            if (StrUtil.isNotBlank(value)) {
+                consumer.accept(value);
+            }
+        }
+    }
+
+    /**
+     * 如果表达式不为空且解析结果不为空，则调用消费者
+     */
+    public static <Res> void setIfPresent(Consumer<Res> consumer, String expression, ProcessorContext<?> context, Class<Res> type) {
+        setIfPresent(consumer, expression, context, type, null);
+    }
+
+    /**
+     * 如果表达式不为空且解析结果不为空，则调用消费者
+     *
+     * @param defaultValue 默认值转换器，当表达式不是模板时生效
+     */
+    public static <Res> void setIfPresent(Consumer<Res> consumer, String expression, ProcessorContext<?> context, Class<Res> type, Function<String, Res> defaultValue) {
+        if (isPresent(expression)) {
+            if (isTemplate(expression)) {
+                Res value = resolveContextExpression(expression, context);
+                if (Objects.nonNull(value)) {
+                    consumer.accept(value);
+                }
+            } else {
+                if (Objects.nonNull(defaultValue)) {
+                    consumer.accept(defaultValue.apply(expression));
+                }
+            }
+        }
+    }
+
+    /**
+     * 判断是否为模板表达式
+     *
+     * @param expression 表达式
+     * @return 是否为模板
+     */
+    public static boolean isTemplate(String expression) {
+        if (StrUtil.isBlank(expression)) {
+            return false;
+        }
+        Matcher matcher = PLACEHOLDER_PATTERN.matcher(expression);
+        return matcher.find();
+    }
+
+    /**
+     * 解析上下文表达式，上下文表达式通过 {{变量名}} 形式引用上下文中的变量
+     *
+     * @param expression 表达式
+     * @param context    处理上下文
+     * @param <Res>      结果类型
+     * @return 解析结果
+     */
+    public static <Res> Res resolveContextExpression(String expression, ProcessorContext<?> context) {
+        if (StrUtil.isBlank(expression)) {
+            return null;
+        }
+
+        // 解析
+        Matcher matcher = PLACEHOLDER_PATTERN.matcher(expression);
+
+        if (matcher.find()) {
+            String placeholder = matcher.group(1).trim();
+            return ContextAccessor.searchContextByExpression(placeholder, context);
+        }
+        return null;
+    }
 
     /**
      * 如果给定的值不为 null 或 "空" 或 默认值，则调用消费者。

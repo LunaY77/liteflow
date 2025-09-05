@@ -3,6 +3,7 @@ package com.yomahub.liteflow.ai.config;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.parse.anno.ChatAnnotationProcessor;
 import com.yomahub.liteflow.ai.parse.anno.ClassifyAnnotationProcessor;
+import com.yomahub.liteflow.ai.parse.anno.WorkflowAnnotationProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentBeanPostProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentProxyRegistrar;
 import com.yomahub.liteflow.ai.tool.SpringBeanToolRegistry;
@@ -48,6 +49,11 @@ public class LiteFlowAIAutoConfiguration {
     @Bean
     public ClassifyAnnotationProcessor classifyAnnotationProcessor() {
         return new ClassifyAnnotationProcessor();
+    }
+
+    @Bean
+    public WorkflowAnnotationProcessor workflowAnnotationProcessor() {
+        return new WorkflowAnnotationProcessor();
     }
 
     @Bean

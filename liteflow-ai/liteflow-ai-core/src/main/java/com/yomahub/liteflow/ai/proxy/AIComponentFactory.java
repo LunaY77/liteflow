@@ -1,9 +1,8 @@
 package com.yomahub.liteflow.ai.proxy;
 
+import cn.hutool.core.util.ServiceLoaderUtil;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
-import com.yomahub.liteflow.ai.proxy.handler.AbstractAIComponentHandler;
-import com.yomahub.liteflow.ai.proxy.handler.ChatComponentHandler;
-import com.yomahub.liteflow.ai.proxy.handler.ClassifyComponentHandler;
+import com.yomahub.liteflow.ai.proxy.handler.AIComponentHandler;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
@@ -12,6 +11,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * AI组件工厂
@@ -24,47 +24,22 @@ public class AIComponentFactory {
 
     private static final LFLog LOG = LFLoggerManager.getLogger(AIComponentFactory.class);
 
-    private final Map<Class<? extends Annotation>, AbstractAIComponentHandler<?>> handlerMap;
+    private static final Map<Class<? extends Annotation>, AIComponentHandler<?>> HANDLER_REGISTRY;
+
+    static {
+        // 使用SPI机制注册所有AI组件处理器
+        HANDLER_REGISTRY = ServiceLoaderUtil.loadList(AIComponentHandler.class)
+                .stream()
+                .peek(h -> LOG.info("Discovered AI component handler: {} for annotation: {}",
+                        h.getClass().getName(),
+                        h.getSupportedAnnotationType().getSimpleName()))
+                .collect(Collectors.toConcurrentMap(
+                        AIComponentHandler::getSupportedAnnotationType,
+                        h -> h));
+    }
 
     private AIComponentFactory() {
-        this.handlerMap = new HashMap<>();
-        initializeHandlers();
-    }
-
-    private static class Holder {
-        private static final AIComponentFactory INSTANCE = new AIComponentFactory();
-    }
-
-    /**
-     * 获取AIComponentFactory单例实例
-     *
-     * @return AIComponentFactory实例
-     */
-    public static AIComponentFactory getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    /**
-     * 初始化处理器映射
-     */
-    private void initializeHandlers() {
-        // 注册不同类型的AI组件处理器
-        registerHandler(new ChatComponentHandler());
-        registerHandler(new ClassifyComponentHandler());
-
-        LOG.info("Initialized AI component handlers: {}", handlerMap.keySet());
-    }
-
-    /**
-     * 注册处理器
-     *
-     * @param handler 处理器实例
-     */
-    private void registerHandler(AbstractAIComponentHandler<?> handler) {
-        handlerMap.put(handler.getSupportedAnnotationType(), handler);
-        LOG.debug("Registered handler: {} for annotation: {}",
-                handler.getClass().getSimpleName(),
-                handler.getSupportedAnnotationType().getSimpleName());
+        // 私有构造函数，使用静态方法访问
     }
 
     /**
@@ -74,7 +49,7 @@ public class AIComponentFactory {
      * @param beanName       bean名称
      * @return NodeComponent实例，如果不是AI组件则返回null
      */
-    public NodeComponent createAIComponent(Class<?> interfaceClass, String beanName) {
+    public static NodeComponent createAIComponent(Class<?> interfaceClass, String beanName) {
         // 检查是否是AI组件
         AIComponent aiComponent = interfaceClass.getAnnotation(AIComponent.class);
         if (Objects.isNull(aiComponent)) {
@@ -83,7 +58,7 @@ public class AIComponentFactory {
         }
 
         // 查找对应的处理器
-        AbstractAIComponentHandler<?> handler = findHandler(interfaceClass);
+        AIComponentHandler<?> handler = findHandler(interfaceClass);
         if (Objects.isNull(handler)) {
             LOG.warn("No handler found for AI component interface: {}", interfaceClass.getName());
             return null;
@@ -109,9 +84,9 @@ public class AIComponentFactory {
      * @param interfaceClass 接口类
      * @return 处理器实例，如果没有找到则返回null
      */
-    private AbstractAIComponentHandler<?> findHandler(Class<?> interfaceClass) {
+    private static AIComponentHandler<?> findHandler(Class<?> interfaceClass) {
         // 遍历所有支持的注解类型，查找匹配的处理器
-        for (Map.Entry<Class<? extends Annotation>, AbstractAIComponentHandler<?>> entry : handlerMap.entrySet()) {
+        for (Map.Entry<Class<? extends Annotation>, AIComponentHandler<?>> entry : HANDLER_REGISTRY.entrySet()) {
             Class<? extends Annotation> annotationType = entry.getKey();
             if (interfaceClass.isAnnotationPresent(annotationType)) {
                 LOG.debug("Found handler: {} for annotation: {} on interface: {}",
@@ -130,8 +105,8 @@ public class AIComponentFactory {
      * @param clazz 类
      * @return 如果是AI组件
      */
-    public boolean isAIComponent(Class<?> clazz) {
-        // 判断是否实现了唯一标识 ProxyMetadataAware 接口
+    public static boolean isAIComponent(Class<?> clazz) {
+        // 判断是否实现了唯一标识 ProxyInterfaceAware 接口
         return ProxyInterfaceAware.class.isAssignableFrom(clazz);
     }
 
@@ -141,16 +116,15 @@ public class AIComponentFactory {
      * @param clazz 类
      * @return 如果类被AIComponent注解标记，并且至少有一个支持的AI注解
      */
-    public boolean isAIAnnotated(Class<?> clazz) {
+    public static boolean isAIAnnotated(Class<?> clazz) {
         // 检查是否有AIComponent注解
         if (!clazz.isAnnotationPresent(AIComponent.class)) {
             return false;
         }
 
-        // 检查是否只有一个支持的AI注解
-        return handlerMap.keySet().stream()
-                .filter(clazz::isAnnotationPresent)
-                .count() == 1;
+        // 检查是否有支持的AI注解
+        return HANDLER_REGISTRY.keySet().stream()
+                .anyMatch(clazz::isAnnotationPresent);
     }
 
     /**
@@ -158,7 +132,7 @@ public class AIComponentFactory {
      *
      * @return 支持的注解类型集合
      */
-    public Map<Class<? extends Annotation>, AbstractAIComponentHandler<?>> getSupportedAnnotations() {
-        return new HashMap<>(handlerMap);
+    public static Map<Class<? extends Annotation>, AIComponentHandler<?>> getSupportedAnnotations() {
+        return new HashMap<>(HANDLER_REGISTRY);
     }
 }

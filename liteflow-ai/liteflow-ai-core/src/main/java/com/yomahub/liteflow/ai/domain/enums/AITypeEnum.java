@@ -6,6 +6,7 @@ import com.yomahub.liteflow.core.NodeSwitchComponent;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,9 +29,9 @@ public enum AITypeEnum {
     CLASSIFY(2, "AIClassify", NodeSwitchComponent.class),
 
     /**
-     * AI检索 - 对应 NodeComponent
+     * AI工作流 - 对应 NodeComponent
      */
-    RETRIEVAL(3, "AIRetrieval", NodeComponent.class);
+    WORKFLOW(3, "AIWorkflow", NodeComponent.class);
 
     private final Integer code;
     private final String type;
@@ -67,13 +68,15 @@ public enum AITypeEnum {
      * @return {@link AITypeEnum}
      */
     public static AITypeEnum fromAnnotationType(Annotation annotation) {
-        return cache.get(
-                // 通过反射获取到的注解类名为代理类名，需要进行特殊处理
-                Arrays.stream(annotation.getClass().getInterfaces())
-                        .filter(Annotation.class::isAssignableFrom)
-                        .findAny()
-                        .map(Class::getSimpleName)
-                        .orElseGet(() -> annotation.getClass().getSimpleName())
-        );
+        return Optional.ofNullable(
+                cache.get(
+                        // 通过反射获取到的注解类名为代理类名，需要进行特殊处理
+                        Arrays.stream(annotation.getClass().getInterfaces())
+                                .filter(Annotation.class::isAssignableFrom)
+                                .findAny()
+                                .map(Class::getSimpleName)
+                                .orElseGet(() -> annotation.getClass().getSimpleName()))
+        // 如果没有找到对应的类型，可能是 WORKFLOW 类型
+        ).orElse(AITypeEnum.WORKFLOW);
     }
 }

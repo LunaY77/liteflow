@@ -16,8 +16,8 @@ import java.time.Duration;
  * <p>
  * 配合具体的 AI 组件使用
  * <ul>
- *     <li>{@link AIChat}</li>
- *     <li>{@link AIClassify}</li>
+ * <li>{@link AIChat}</li>
+ * <li>{@link AIClassify}</li>
  * </ul>
  *
  * @author 苍镜月
@@ -54,13 +54,14 @@ public @interface AIComponent {
      * <p>
      * 例如：
      * <ul>
-     *     <li>
-     *         openai-apiUrl: {@code https://api.openai.com/v1}<br>
-     *         openai-endPoint: {@code chat/completions}
-     *     </li>
+     * <li>
+     * openai-apiUrl: {@code https://api.openai.com/v1}<br>
+     * openai-endPoint: {@code chat/completions}
+     * </li>
      * </ul>
      */
     String apiUrl() default "";
+
     /**
      * API 端点，和 apiUrl 配合使用
      * <p>
@@ -71,17 +72,19 @@ public @interface AIComponent {
      * <p>
      * 例如：
      * <ul>
-     *     <li>
-     *         openai-apiUrl: {@code https://api.openai.com/v1}<br>
-     *         openai-endPoint: {@code chat/completions}
-     *     </li>
+     * <li>
+     * openai-apiUrl: {@code https://api.openai.com/v1}<br>
+     * openai-endPoint: {@code chat/completions}
+     * </li>
      * </ul>
      */
     String endPoint() default "";
+
     /**
      * 模型名
      */
     String model() default "";
+
     /**
      * 版本
      */
@@ -92,22 +95,27 @@ public @interface AIComponent {
      * 温度参数
      */
     double temperature() default -1.0;
+
     /**
      * Top P 参数
      */
     double topP() default -1.0;
+
     /**
      * Top K 参数
      */
     int topK() default -1;
+
     /**
      * 最大 Token 数量
      */
     int maxTokens() default -1;
+
     /**
      * 停止序列
      */
     String[] stop() default {};
+
     /**
      * seed
      */
@@ -118,10 +126,12 @@ public @interface AIComponent {
      * 重复惩罚
      */
     double repeatPenalty() default -1.0;
+
     /**
      * 存在惩罚
      */
     double presencePenalty() default -1.0;
+
     /**
      * 频率惩罚
      */
@@ -133,6 +143,7 @@ public @interface AIComponent {
      * 是否并行 ToolCall
      */
     TriState parallelToolCalls() default TriState.UNSET;
+
     /**
      * 是否自动进行 ToolCall
      */
@@ -140,15 +151,21 @@ public @interface AIComponent {
 
     // --- 网络和日志参数 ---
     /**
-     * <p>连接超时时间</p>
+     * <p>
+     * 连接超时时间
+     * </p>
      *
-     * <p>该值最终会被解析为一个 {@link Duration} 对象。为了提供灵活性，
-     * 支持以下两种字符串格式：</p>
+     * <p>
+     * 该值最终会被解析为一个 {@link Duration} 对象。为了提供灵活性，
+     * 支持以下两种字符串格式：
+     * </p>
      *
      * <ol>
      * <li><b>标准 ISO-8601 格式</b>:
      * 这是由 {@link Duration#parse(CharSequence)} 支持的标准格式。
-     * <p><b>示例:</b></p>
+     * <p>
+     * <b>示例:</b>
+     * </p>
      * <ul>
      * <li>{@code "PT30S"} 代表 30 秒。</li>
      * <li>{@code "PT10M"} 代表 10 分钟。</li>
@@ -158,13 +175,17 @@ public @interface AIComponent {
      * </li>
      * <li><b>自定义简化格式</b>:
      * 为了方便配置，也支持由数字和单位后缀组成的简化格式 (单位不区分大小写)。
-     * <p><b>支持的单位:</b></p>
+     * <p>
+     * <b>支持的单位:</b>
+     * </p>
      * <ul>
      * <li>{@code s} - 秒</li>
      * <li>{@code m} - 分钟</li>
      * <li>{@code h} - 小时</li>
      * </ul>
-     * <p><b>示例:</b></p>
+     * <p>
+     * <b>示例:</b>
+     * </p>
      * <ul>
      * <li>{@code "60s"} 代表 60 秒。</li>
      * <li>{@code "5m"} 代表 5 分钟。</li>
@@ -172,22 +193,32 @@ public @interface AIComponent {
      * </li>
      * </ol>
      *
-     * <p><b>默认值行为:</b><br>
+     * <p>
+     * <b>默认值行为:</b><br>
      * 如果该值保持默认的空字符串 ({@code ""})，处理该注解的系统将会应用一个预设的、
-     * 全局的默认超时时间(60s)。</p>
+     * 全局的默认超时时间(60s)。
+     * </p>
+     * 
      * @see Duration
      */
     String connectTimeout() default "";
+
     /**
-     * <p>读取超时时间</p>
+     * <p>
+     * 读取超时时间
+     * </p>
      *
-     * <p>该值最终会被解析为一个 {@link Duration} 对象。为了提供灵活性，
-     * 支持以下两种字符串格式：</p>
+     * <p>
+     * 该值最终会被解析为一个 {@link Duration} 对象。为了提供灵活性，
+     * 支持以下两种字符串格式：
+     * </p>
      *
      * <ol>
      * <li><b>标准 ISO-8601 格式</b>:
      * 这是由 {@link Duration#parse(CharSequence)} 支持的标准格式。
-     * <p><b>示例:</b></p>
+     * <p>
+     * <b>示例:</b>
+     * </p>
      * <ul>
      * <li>{@code "PT30S"} 代表 30 秒。</li>
      * <li>{@code "PT10M"} 代表 10 分钟。</li>
@@ -197,13 +228,17 @@ public @interface AIComponent {
      * </li>
      * <li><b>自定义简化格式</b>:
      * 为了方便配置，也支持由数字和单位后缀组成的简化格式 (单位不区分大小写)。
-     * <p><b>支持的单位:</b></p>
+     * <p>
+     * <b>支持的单位:</b>
+     * </p>
      * <ul>
      * <li>{@code s} - 秒</li>
      * <li>{@code m} - 分钟</li>
      * <li>{@code h} - 小时</li>
      * </ul>
-     * <p><b>示例:</b></p>
+     * <p>
+     * <b>示例:</b>
+     * </p>
      * <ul>
      * <li>{@code "60s"} 代表 60 秒。</li>
      * <li>{@code "5m"} 代表 5 分钟。</li>
@@ -211,20 +246,26 @@ public @interface AIComponent {
      * </li>
      * </ol>
      *
-     * <p><b>默认值行为:</b><br>
+     * <p>
+     * <b>默认值行为:</b><br>
      * 如果该值保持默认的空字符串 ({@code ""})，处理该注解的系统将会应用一个预设的、
-     * 全局的默认超时时间(60s)。</p>
+     * 全局的默认超时时间(60s)。
+     * </p>
+     * 
      * @see Duration
      */
     String readTimeout() default "";
+
     /**
      * 最大重试次数
      */
     int maxRetries() default -1;
+
     /**
      * 是否记录请求日志
      */
     TriState logRequests() default TriState.UNSET;
+
     /**
      * 是否记录响应日志
      */
@@ -235,6 +276,7 @@ public @interface AIComponent {
      * 自定义请求头
      */
     KeyValue[] customHeaders() default {};
+
     /**
      * 是否开启思考模式
      */

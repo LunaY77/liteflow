@@ -22,8 +22,6 @@ public class AIComponentBeanPostProcessor implements BeanPostProcessor {
 
     private static final LFLog LOG = LFLoggerManager.getLogger(AIComponentBeanPostProcessor.class);
 
-    private final AIComponentFactory componentFactory = AIComponentFactory.getInstance();
-
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
@@ -33,23 +31,19 @@ public class AIComponentBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> clazz = bean.getClass();
 
-        // bean的类信息
-        LOG.info("Processing bean: {}, class: {}, interfaces: {}",
-                beanName, clazz.getName(), clazz.getInterfaces());
-
         // 检查是否是AI组件接口
-        if (componentFactory.isAIComponent(clazz)) {
+        if (AIComponentFactory.isAIComponent(clazz)) {
             LOG.info("Detected AI component interface: {} with beanName: {}", clazz.getName(), beanName);
 
             try {
                 // 获取原始接口类
                 Class<?> interfaceClass = ((ProxyInterfaceAware<?>) bean).getProxiedInterface();
                 // 检查接口类是否被AI组件注解标记
-                if (!componentFactory.isAIAnnotated(interfaceClass)) {
+                if (!AIComponentFactory.isAIAnnotated(interfaceClass)) {
                     throw new LiteFlowAIException("AI component interface must be annotated with @AIComponent and exactly one type of AI annotation, beanName: " + beanName);
                 }
                 // 使用工厂创建AI组件
-                NodeComponent aiComponent = componentFactory.createAIComponent(interfaceClass, beanName);
+                NodeComponent aiComponent = AIComponentFactory.createAIComponent(interfaceClass, beanName);
 
                 if (Objects.isNull(aiComponent)) return bean;
 

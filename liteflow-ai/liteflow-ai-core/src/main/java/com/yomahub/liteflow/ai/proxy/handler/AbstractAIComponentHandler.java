@@ -26,7 +26,7 @@ import java.util.Objects;
  * @author 苍镜月
  * @since TODO
  */
-public abstract class AbstractAIComponentHandler<T extends Annotation> {
+public abstract class AbstractAIComponentHandler<T extends Annotation> implements AIComponentHandler<T> {
 
     protected final LFLog LOG = LFLoggerManager.getLogger(this.getClass());
 
@@ -35,14 +35,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
      *
      * @return {@link AITypeEnum}
      */
-    public abstract AITypeEnum getAIType();
-
-    /**
-     * 获取支持的注解类型
-     *
-     * @return 注解Class
-     */
-    public abstract Class<T> getSupportedAnnotationType();
+    protected abstract AITypeEnum getAIType();
 
     /**
      * 创建AI组件
@@ -176,14 +169,4 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> {
      * @return 拦截方法名称
      */
     protected abstract ElementMatcher<? super MethodDescription> getInterceptMethodName(AIProxyWrapBean<T> wrapBean);
-
-    /**
-     * 判断是否支持指定的注解类型
-     *
-     * @param annotationType 注解类型
-     * @return true如果支持
-     */
-    public boolean supports(Class<? extends Annotation> annotationType) {
-        return getSupportedAnnotationType().equals(annotationType);
-    }
 }
