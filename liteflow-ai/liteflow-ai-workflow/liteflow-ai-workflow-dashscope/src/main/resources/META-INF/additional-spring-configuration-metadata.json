@@ -3,13 +3,13 @@
     {
       "name": "liteflow.ai.workflow.dashscope.apiKey",
       "type": "java.lang.String",
-      "description": "apikey for openai AI service.",
+      "description": "apikey for dashscope workflow service.",
       "sourceType": "com.yomahub.liteflow.ai.workflow.dashscope.config.DashScopeWorkflowProperty"
     },
     {
       "name": "liteflow.ai.workflow.dashscope.apiUrl",
       "type": "java.lang.String",
-      "description": "apiUrl for dashscope AI service.",
+      "description": "apiUrl for dashscope workflow service.",
       "sourceType": "com.yomahub.liteflow.ai.workflow.dashscope.config.DashScopeWorkflowProperty",
       "defaultValue": "https://dashscope.aliyuncs.com/api/v1"
     }
