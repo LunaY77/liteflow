@@ -23,6 +23,7 @@ import java.util.Optional;
  * @since TODO
  */
 
+@Deprecated
 public abstract class AbstractProtocolTransformer implements ProtocolTransformer {
 
     private static final String FINISHED_DATA = "finished";

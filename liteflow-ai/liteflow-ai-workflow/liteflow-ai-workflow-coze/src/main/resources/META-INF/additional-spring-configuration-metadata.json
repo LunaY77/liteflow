@@ -11,7 +11,7 @@
       "type": "java.lang.String",
       "description": "apiUrl for coze service.",
       "sourceType": "com.yomahub.liteflow.ai.workflow.coze.config.CozeWorkflowProperty",
-      "defaultValue": "https://api.coze.com"
+      "defaultValue": "https://api.coze.cn"
     }
   ]
 }

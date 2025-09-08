@@ -45,7 +45,7 @@ public class CozeWorkflowRunInvocationHandler extends AbstractAIInvocationHandle
                 .auth(new TokenAuth(property.getApiKey()))
                 .baseURL(
                         StrUtil.isBlank(property.getBaseUrl()) ?
-                                Consts.COZE_COM_BASE_URL :
+                                Consts.COZE_CN_BASE_URL :
                                 property.getBaseUrl()
                 )
                 .build();
@@ -93,5 +93,10 @@ public class CozeWorkflowRunInvocationHandler extends AbstractAIInvocationHandle
         } else {
             return runs.create(builder.build());
         }
+    }
+
+    @Override
+    protected void checkValidation(ProcessorContext<?> processorContext) {
+        // 空实现
     }
 }

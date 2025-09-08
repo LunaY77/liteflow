@@ -44,7 +44,7 @@ public class CozeWorkflowChatInvocationHandler extends AbstractAIInvocationHandl
                 .auth(new TokenAuth(property.getApiKey()))
                 .baseURL(
                         StrUtil.isBlank(property.getBaseUrl()) ?
-                                Consts.COZE_COM_BASE_URL :
+                                Consts.COZE_CN_BASE_URL :
                                 property.getBaseUrl()
                 )
                 .build();

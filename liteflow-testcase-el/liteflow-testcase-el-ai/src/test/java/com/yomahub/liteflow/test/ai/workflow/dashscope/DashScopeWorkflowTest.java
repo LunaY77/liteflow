@@ -15,10 +15,10 @@ import org.springframework.test.context.TestPropertySource;
 import javax.annotation.Resource;
 
 @TestPropertySource(properties = {"spring.config.location=classpath:workflow/dashscope/application.yaml"})
-@SpringBootTest(classes = {WorkflowTest.class, SpringUtil.class})
+@SpringBootTest(classes = {DashScopeWorkflowTest.class, SpringUtil.class})
 @EnableAutoConfiguration
 @ComponentScan({"com.yomahub.liteflow.test.ai.workflow.dashscope.cmp"})
-public class WorkflowTest {
+public class DashScopeWorkflowTest {
 
     @Resource
     private FlowExecutor flowExecutor;

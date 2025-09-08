@@ -45,6 +45,11 @@
             <artifactId>liteflow-ai-workflow-dashscope</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.yomahub</groupId>
+            <artifactId>liteflow-ai-workflow-coze</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- model end -->
     </dependencies>
 

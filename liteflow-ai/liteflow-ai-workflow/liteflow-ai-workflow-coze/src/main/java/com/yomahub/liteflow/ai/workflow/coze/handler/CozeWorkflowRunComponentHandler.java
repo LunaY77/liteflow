@@ -4,6 +4,7 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.proxy.handler.WorkflowComponentHandler;
 import com.yomahub.liteflow.ai.proxy.wrap.AIProxyWrapBean;
 import com.yomahub.liteflow.ai.workflow.coze.annotation.CozeWorkflowRun;
+import com.yomahub.liteflow.ai.workflow.coze.invocation.CozeWorkflowRunInvocationHandler;
 import com.yomahub.liteflow.ai.workflow.coze.wrap.CozeWorkflowRunProxyWrapBean;
 
 import java.lang.reflect.InvocationHandler;
@@ -29,6 +30,6 @@ public class CozeWorkflowRunComponentHandler extends WorkflowComponentHandler<Co
 
     @Override
     protected InvocationHandler getInvocationHandler(AIProxyWrapBean<CozeWorkflowRun> wrapBean) {
-        return null;
+        return new CozeWorkflowRunInvocationHandler((CozeWorkflowRunProxyWrapBean) wrapBean);
     }
 }
