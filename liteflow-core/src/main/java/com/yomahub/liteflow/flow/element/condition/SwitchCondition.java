@@ -7,7 +7,6 @@ import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.enums.ConditionTypeEnum;
 import com.yomahub.liteflow.exception.NoSwitchTargetNodeException;
 import com.yomahub.liteflow.exception.SwitchTargetCannotBePreOrFinallyException;
-import com.yomahub.liteflow.flow.element.Condition;
 import com.yomahub.liteflow.flow.element.Executable;
 import com.yomahub.liteflow.flow.element.Node;
 import com.yomahub.liteflow.slot.DataBus;
@@ -22,13 +21,23 @@ import java.util.stream.Collectors;
  * @author Bryan.Zhang
  * @since 2.8.0
  */
-public class SwitchCondition extends Condition {
+public class SwitchCondition extends AbstractParallelCondition {
 
 	private final String TAG_PREFIX = "tag";
 
 	private final String TAG_FLAG = ":";
 
 	private static final String MULTI_TARGET_SPLITTER = ",";
+
+	private String threadPoolExecutorClass;
+
+	public String getThreadPoolExecutorClass() {
+		return threadPoolExecutorClass;
+	}
+
+	public void setThreadPoolExecutorClass(String threadPoolExecutorClass) {
+		this.threadPoolExecutorClass = threadPoolExecutorClass;
+	}
 
 	@Override
 	public void executeCondition(Integer slotIndex) throws Exception {
@@ -154,6 +163,8 @@ public class SwitchCondition extends Condition {
 							.forEach(resultSet::add);
 				}
 			}
+
+			// 4. 收集结果并进行字典序排序
 			matchedExecutors = resultSet.stream()
 					.sorted(Comparator.comparing(Executable::getId))
 					.collect(Collectors.toList());
@@ -168,17 +179,25 @@ public class SwitchCondition extends Condition {
 		}
 
 		if (CollectionUtil.isNotEmpty(matchedExecutors)) {
-			// TODO 实现并行
-			for (Executable targetExecutor : matchedExecutors) {
-				// switch的目标不能是Pre节点或者Finally节点
-				if (targetExecutor instanceof PreCondition || targetExecutor instanceof FinallyCondition) {
-					String errorInfo = StrUtil.format(
-							"[{}]:switch component[{}] error, switch target node cannot be pre or finally",
-							slot.getRequestId(), this.getSwitchNode().getInstance().getDisplayName());
-					throw new SwitchTargetCannotBePreOrFinallyException(errorInfo);
+			// 判断是否并行
+			if (isParallel()) {
+				// 复用 WhenCondition
+				WhenCondition whenCondition = new WhenCondition();
+				matchedExecutors.forEach(whenCondition::addExecutable);
+				whenCondition.setThreadExecutorClass(this.getThreadPoolExecutorClass());
+				whenCondition.executeCondition(slotIndex);
+			} else {
+				for (Executable targetExecutor : matchedExecutors) {
+					// switch的目标不能是Pre节点或者Finally节点
+					if (targetExecutor instanceof PreCondition || targetExecutor instanceof FinallyCondition) {
+						String errorInfo = StrUtil.format(
+								"[{}]:switch component[{}] error, switch target node cannot be pre or finally",
+								slot.getRequestId(), this.getSwitchNode().getInstance().getDisplayName());
+						throw new SwitchTargetCannotBePreOrFinallyException(errorInfo);
+					}
+					targetExecutor.setCurrChainId(this.getCurrChainId());
+					targetExecutor.execute(slotIndex);
 				}
-				targetExecutor.setCurrChainId(this.getCurrChainId());
-				targetExecutor.execute(slotIndex);
 			}
 		} else {
 			String errorInfo = StrUtil.format("[{}]:no target node find for the component[{}],targetIds are {}",

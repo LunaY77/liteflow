@@ -82,4 +82,11 @@ public class SwitchTest extends BaseTest {
 		Assertions.assertTrue(response.isSuccess());
 		Assertions.assertEquals("a==>l==>a==>b==>d", response.getExecuteStepStr());
 	}
+
+	@Test
+	public void testMultiSwitchParallel1() throws Exception {
+		LiteflowResponse response = flowExecutor.execute2Resp("chain10", "arg");
+		Assertions.assertTrue(response.isSuccess());
+		Assertions.assertEquals("a==>m==>a==>b==>c", response.getExecuteStepStr());
+	}
 }

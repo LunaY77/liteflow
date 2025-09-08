@@ -13,6 +13,7 @@
         <node id="j" class="com.yomahub.liteflow.test.switchcase.cmp.JMultiSwitchCmp"/>
         <node id="k" class="com.yomahub.liteflow.test.switchcase.cmp.KMultiSwitchCmp"/>
         <node id="l" class="com.yomahub.liteflow.test.switchcase.cmp.LMultiSwitchCmp"/>
+        <node id="m" class="com.yomahub.liteflow.test.switchcase.cmp.MMultiSwitchParallelCmp"/>
     </nodes>
 
     <chain name="chain1">
@@ -76,6 +77,13 @@
         THEN(
             a,
             SWITCH(l).to(b.tag("td"), d.tag("td"), a, c)
+        );
+    </chain>
+
+    <chain name="chain10">
+        THEN(
+            a,
+            SWITCH(m).to(a, b, c, d).parallel(true)
         );
     </chain>
 </flow>
