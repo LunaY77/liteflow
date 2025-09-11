@@ -5,6 +5,7 @@ import com.yomahub.liteflow.ai.engine.model.ModelResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 响应
@@ -37,7 +38,9 @@ public class Response<T> implements ModelResponse<T> {
         this.output = output;
         this.tokenUsage = tokenUsage;
         this.finishReason = finishReason;
-        this.metadata = new HashMap<>(metadata);
+        this.metadata = Optional.ofNullable(metadata)
+                .map(HashMap::new)
+                .orElseGet(HashMap::new);
     }
 
     public Response(Builder<T, ?> builder) {

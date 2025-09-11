@@ -420,6 +420,7 @@
 				<module>liteflow-testcase-el</module>
 				<module>liteflow-el-builder</module>
 				<module>liteflow-benchmark</module>
+				<module>liteflow-ai</module>
 			</modules>
 			<activation>
 				<activeByDefault>true</activeByDefault>

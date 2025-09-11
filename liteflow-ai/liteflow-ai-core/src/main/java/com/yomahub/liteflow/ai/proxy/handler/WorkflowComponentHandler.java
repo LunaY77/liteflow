@@ -11,8 +11,7 @@ import java.lang.annotation.Annotation;
 /**
  * Workflow AI 组件处理器
  * <p>
- * 处理带有工作流类型配置的 @AIComponent 注解的组件
- * 当 @AIComponent 的 workflowType 属性有值时，认为是工作流组件
+ * 处理同时带有工作流注解和 @AIComponent 注解的组件
  *
  * @author 苍镜月
  * @since TODO
