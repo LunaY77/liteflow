@@ -19,7 +19,7 @@ class ResponseTypeTest {
     @Test
     void testEnumValues() {
         ResponseType[] values = ResponseType.values();
-        
+
         assertEquals(2, values.length);
         assertTrue(containsValue(values, ResponseType.TEXT));
         assertTrue(containsValue(values, ResponseType.JSON));
@@ -39,14 +39,14 @@ class ResponseTypeTest {
      */
     @Test
     void testValueOfInvalidValue() {
-        assertThrows(IllegalArgumentException.class, () -> 
-            ResponseType.valueOf("INVALID"));
-        
-        assertThrows(IllegalArgumentException.class, () -> 
-            ResponseType.valueOf("xml"));
-        
-        assertThrows(NullPointerException.class, () -> 
-            ResponseType.valueOf(null));
+        assertThrows(IllegalArgumentException.class, () ->
+                ResponseType.valueOf("INVALID"));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                ResponseType.valueOf("xml"));
+
+        assertThrows(NullPointerException.class, () ->
+                ResponseType.valueOf(null));
     }
 
     /**
@@ -104,7 +104,7 @@ class ResponseTypeTest {
     void testSwitchStatement() {
         String textResult = processResponseType(ResponseType.TEXT);
         String jsonResult = processResponseType(ResponseType.JSON);
-        
+
         assertEquals("处理文本响应", textResult);
         assertEquals("处理JSON响应", jsonResult);
     }
@@ -118,7 +118,7 @@ class ResponseTypeTest {
         ResponseType textType = ResponseType.TEXT;
         assertNotNull(textType);
         assertEquals("TEXT", textType.name());
-        
+
         // 验证JSON类型用于JSON格式响应
         ResponseType jsonType = ResponseType.JSON;
         assertNotNull(jsonType);
@@ -132,7 +132,7 @@ class ResponseTypeTest {
     void testImmutability() {
         ResponseType original = ResponseType.TEXT;
         ResponseType same = ResponseType.TEXT;
-        
+
         assertSame(original, same);
         assertEquals(original, same);
     }
@@ -143,7 +143,7 @@ class ResponseTypeTest {
     @Test
     void testInCollections() {
         java.util.Set<ResponseType> types = java.util.EnumSet.allOf(ResponseType.class);
-        
+
         assertEquals(2, types.size());
         assertTrue(types.contains(ResponseType.TEXT));
         assertTrue(types.contains(ResponseType.JSON));

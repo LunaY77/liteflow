@@ -1,0 +1,26 @@
+{
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "[\n  {\n    \"姓名\": \"林星辰\",\n    \"职业\": \"星际导航员\",\n    \"年龄\": 28\n  },\n  {\n    \"姓名\": \"艾瑞斯·莫兰\",\n    \"职业\": \"梦境设计师\",\n    \"年龄\": 34\n  },\n  {\n    \"姓名\": \"古洛·铁砧\",\n    \"职业\": \"机械巨匠\",\n    \"年龄\": 41\n  }\n]"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 44,
+    "completion_tokens": 95,
+    "total_tokens": 139,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "created": 1758103381,
+  "system_fingerprint": null,
+  "model": "qwen-plus",
+  "id": "chatcmpl-33fe8bed-6bdb-4d22-a75b-fcf13dc956bf"
+}

@@ -27,8 +27,12 @@ public @interface AIChat {
     /**
      * 聊天历史的上下文路径表达式(需在上下文中设置对应的 List&lt;Message&gt; 对象)
      *
-     * <p>启用后将不使用 {@code systemPrompt()} 和 {@code userPrompt()}</p>
-     * <p>{@link com.yomahub.liteflow.ai.engine.model.chat.message.Message}</p>
+     * <p>
+     * 启用后将不使用 {@code systemPrompt()} 和 {@code userPrompt()}
+     * </p>
+     * <p>
+     * {@link com.yomahub.liteflow.ai.engine.model.chat.message.Message}
+     * </p>
      *
      * <p>
      * 用于从一个必须提供 {@code get} 方法的上下文中检索数据。
@@ -46,15 +50,65 @@ public @interface AIChat {
      * </li>
      * </ul>
      */
-   String history() default "";
+    String history() default "";
 
     /**
      * 系统提示词
+     * <p>
+     * 支持多种类型的 prompt 注入解决方案：
+     * <ul>
+     * <li>
+     * <b>直接文本:</b><br>
+     * 直接在注解中定义提示词文本，例如：{@code "你是一个专业的AI助手"}
+     * </li>
+     * <li>
+     * <b>类路径资源:</b><br>
+     * 从类路径中读取提示词文件，格式：{@code "classpath:prompts/system-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文件系统资源:</b><br>
+     * 从文件系统中读取提示词文件，格式：{@code "file:/path/to/prompts/system-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>URL资源:</b><br>
+     * 从网络URL中读取提示词内容，格式：{@code "http://example.com/prompts/system-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文本资源:</b><br>
+     * 使用文本前缀标识直接文本内容，格式：{@code "text:你是一个专业的AI助手"}
+     * </li>
+     * </ul>
+     * </p>
      */
     String systemPrompt() default "";
 
     /**
      * 用户提示词
+     * <p>
+     * 支持多种类型的 prompt 注入解决方案：
+     * <ul>
+     * <li>
+     * <b>直接文本:</b><br>
+     * 直接在注解中定义提示词文本，例如：{@code "请分析以下数据"}
+     * </li>
+     * <li>
+     * <b>类路径资源:</b><br>
+     * 从类路径中读取提示词文件，格式：{@code "classpath:prompts/user-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文件系统资源:</b><br>
+     * 从文件系统中读取提示词文件，格式：{@code "file:/path/to/prompts/user-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>URL资源:</b><br>
+     * 从网络URL中读取提示词内容，格式：{@code "http://example.com/prompts/user-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文本资源:</b><br>
+     * 使用文本前缀标识直接文本内容，格式：{@code "text:请分析以下数据"}
+     * </li>
+     * </ul>
+     * </p>
      */
     String userPrompt() default "";
 

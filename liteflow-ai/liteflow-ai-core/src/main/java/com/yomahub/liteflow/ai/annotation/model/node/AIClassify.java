@@ -51,11 +51,61 @@ public @interface AIClassify {
      * 系统提示词 (如果该参数为空，框架将自动生成意图识别的系统提示词)
      * <p>
      * 请查看{@link com.yomahub.liteflow.ai.parse.assemble.ClassifyRequestAssembler}
+     * <p>
+     * 支持多种类型的 prompt 注入解决方案：
+     * <ul>
+     * <li>
+     * <b>直接文本:</b><br>
+     * 直接在注解中定义提示词文本，例如：{@code "你是一个专业的AI助手"}
+     * </li>
+     * <li>
+     * <b>类路径资源:</b><br>
+     * 从类路径中读取提示词文件，格式：{@code "classpath:prompts/system-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文件系统资源:</b><br>
+     * 从文件系统中读取提示词文件，格式：{@code "file:/path/to/prompts/system-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>URL资源:</b><br>
+     * 从网络URL中读取提示词内容，格式：{@code "http://example.com/prompts/system-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文本资源:</b><br>
+     * 使用文本前缀标识直接文本内容，格式：{@code "text:你是一个专业的AI助手"}
+     * </li>
+     * </ul>
+     * </p>
      */
     String systemPrompt() default "";
 
     /**
      * 用户提示词
+     * <p>
+     * 支持多种类型的 prompt 注入解决方案：
+     * <ul>
+     * <li>
+     * <b>直接文本:</b><br>
+     * 直接在注解中定义提示词文本，例如：{@code "请分析以下数据"}
+     * </li>
+     * <li>
+     * <b>类路径资源:</b><br>
+     * 从类路径中读取提示词文件，格式：{@code "classpath:prompts/user-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文件系统资源:</b><br>
+     * 从文件系统中读取提示词文件，格式：{@code "file:/path/to/prompts/user-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>URL资源:</b><br>
+     * 从网络URL中读取提示词内容，格式：{@code "http://example.com/prompts/user-prompt.txt"}
+     * </li>
+     * <li>
+     * <b>文本资源:</b><br>
+     * 使用文本前缀标识直接文本内容，格式：{@code "text:请分析以下数据"}
+     * </li>
+     * </ul>
+     * </p>
      */
     String userPrompt() default "";
 
