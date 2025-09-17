@@ -69,7 +69,6 @@ public class ChatConfig extends ModelConfig {
 
             @Override
             public ChatConfig build() {
-                checkRequiredFields();
                 return new ChatConfig(this);
             }
         }

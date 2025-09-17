@@ -49,7 +49,6 @@ public class OllamaChatConfig extends ChatConfig {
 
         @Override
         public OllamaChatConfig build() {
-            checkRequiredFields();
             return new OllamaChatConfig(this);
         }
     }

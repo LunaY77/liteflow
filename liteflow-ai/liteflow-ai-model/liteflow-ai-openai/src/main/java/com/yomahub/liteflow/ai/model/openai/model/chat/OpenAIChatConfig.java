@@ -4,6 +4,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * OpenAI 聊天配置类
@@ -32,6 +33,12 @@ public class OpenAIChatConfig extends ChatConfig {
         super(apiUrl, endPoint, apiKey, provider, model, connectTimeout, readTimeout, headersConfig, autoToolCallEnabled);
     }
 
+    @Override
+    protected void checkRequiredFields() {
+        super.checkRequiredFields();
+        Objects.requireNonNull(this.apiKey, "API Key must not be null, please set it via configuration: {liteflow.ai.openai.api-key}");
+    }
+
     public OpenAIChatConfig(Builder builder) {
         super(builder);
     }
@@ -49,7 +56,6 @@ public class OpenAIChatConfig extends ChatConfig {
 
         @Override
         public OpenAIChatConfig build() {
-            checkRequiredFields();
             return new OpenAIChatConfig(this);
         }
     }

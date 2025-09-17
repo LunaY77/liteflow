@@ -4,6 +4,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * DashScope 聊天配置类
@@ -36,6 +37,12 @@ public class DashScopeChatConfig extends ChatConfig {
         super(builder);
     }
 
+    @Override
+    protected void checkRequiredFields() {
+        super.checkRequiredFields();
+        Objects.requireNonNull(this.apiKey, "API Key must not be null, please set it via configuration: {liteflow.ai.dashscope.api-key}");
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -49,7 +56,6 @@ public class DashScopeChatConfig extends ChatConfig {
 
         @Override
         public DashScopeChatConfig build() {
-            checkRequiredFields();
             return new DashScopeChatConfig(this);
         }
     }

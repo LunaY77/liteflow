@@ -63,6 +63,7 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.headersConfig = headersConfig;
+        checkRequiredFields();
     }
 
     protected ModelConfig(Builder<?> builder) {
@@ -74,6 +75,17 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.connectTimeout = builder.connectTimeout;
         this.readTimeout = builder.readTimeout;
         this.headersConfig.putAll(builder.headersConfig);
+        checkRequiredFields();
+    }
+
+    /**
+     * 检查必填字段
+     */
+    protected void checkRequiredFields() {
+        Objects.requireNonNull(this.apiUrl, "API URL must not be null");
+        Objects.requireNonNull(this.endPoint, "End Point must not be null");
+        Objects.requireNonNull(this.provider, "Provider must not be null");
+        Objects.requireNonNull(this.model, "Model must not be null");
     }
 
     @Override
@@ -231,13 +243,6 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
             return self();
         }
 
-        protected void checkRequiredFields() {
-            Objects.requireNonNull(apiUrl, "API URL must not be null");
-            Objects.requireNonNull(endPoint, "End Point must not be null");
-            Objects.requireNonNull(provider, "Provider must not be null");
-            Objects.requireNonNull(model, "Model must not be null");
-        }
-
         public abstract ModelConfig build();
 
         private static class BuilderImpl extends Builder<BuilderImpl> {
@@ -249,7 +254,6 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
 
             @Override
             public ModelConfig build() {
-                checkRequiredFields();
                 return new ModelConfig(this);
             }
         }
