@@ -208,7 +208,7 @@ public class LlmInteractClient implements InteractClient {
                     .orElseThrow(() ->
                             new LiteFlowAIEngineException("Unable to find target tool with tool name: " + toolCall.getName()));
             // 调用工具
-            String toolResult = toolCallBack.call(toolCall.getArguments());
+            String toolResult = toolCallBack.call(toolCall.getArguments().toString());
             // 返回工具调用结果
             return new ToolMessage(toolResult, toolCall.getId(), toolCall.getName());
         }

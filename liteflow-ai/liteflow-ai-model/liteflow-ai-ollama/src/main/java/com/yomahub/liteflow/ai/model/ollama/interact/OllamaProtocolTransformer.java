@@ -69,7 +69,7 @@ public class OllamaProtocolTransformer implements ProtocolTransformer {
 
         // 解析 content
         String content = message.path("content").asText(null);
-        if (content != null) {
+        if (StrUtil.isNotBlank(content)) {
             // 判断是否为思考内容
             if (content.contains("<think>")) {
                 context.setThinkingInContent(true);
@@ -83,8 +83,16 @@ public class OllamaProtocolTransformer implements ProtocolTransformer {
                 context.setThinkingInContent(false);
             }
         } else {
-            protocolChunk.setType(StreamingProtocolType.TEXT);
-            protocolChunk.setData("");
+            // content 为空，可能使用了思考模式，输出内容在 thinking 字段中
+            String thinking = message.path("thinking").asText(null);
+            if (StrUtil.isNotBlank(thinking)) {
+                protocolChunk.setType(StreamingProtocolType.THINKING);
+                protocolChunk.setData(thinking.replaceAll("</?think>", ""));
+            } else {
+                // 都不符合，则发送空文本块
+                protocolChunk.setType(StreamingProtocolType.TEXT);
+                protocolChunk.setData("");
+            }
         }
 
         return protocolChunk;
@@ -153,7 +161,7 @@ public class OllamaProtocolTransformer implements ProtocolTransformer {
                         return ToolCall.builder()
                                 .type("function")
                                 .name(functionJson.path("name").asText())
-                                .arguments(functionJson.path("arguments").toString()) // Ollama arguments 是一个JSON对象
+                                .arguments(functionJson.path("arguments"))
                                 .build();
                     }
                     return null;

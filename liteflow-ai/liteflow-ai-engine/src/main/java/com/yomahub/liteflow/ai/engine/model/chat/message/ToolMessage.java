@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * @since TODO
  */
 
-@JsonPropertyOrder({"role", "content", "tool_call_id"})
+@JsonPropertyOrder({"role", "content", "tool_call_id", "tool_name"})
 public class ToolMessage extends AbstractMessage {
 
     /**
@@ -22,6 +22,7 @@ public class ToolMessage extends AbstractMessage {
     /**
      * 工具名称
      */
+    @JsonProperty("tool_name")
     private String name;
 
     public ToolMessage(String toolResult, String id, String name) {

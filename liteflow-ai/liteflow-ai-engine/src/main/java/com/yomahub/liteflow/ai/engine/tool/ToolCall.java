@@ -1,9 +1,6 @@
 package com.yomahub.liteflow.ai.engine.tool;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-
-import java.util.Objects;
 
 /**
  * 大模型回复的 ToolCall 参数
@@ -40,7 +37,7 @@ public class ToolCall {
         return this.function.name;
     }
 
-    public String getArguments() {
+    public Object getArguments() {
         return this.function.arguments;
     }
 
@@ -71,9 +68,9 @@ public class ToolCall {
     public static class Function {
         private String name;
 
-        private String arguments;
+        private Object arguments;
 
-        public Function(String name, String arguments) {
+        public Function(String name, Object arguments) {
             this.name = name;
             this.arguments = arguments;
         }
@@ -87,11 +84,11 @@ public class ToolCall {
             this.name = name;
         }
 
-        public String getArguments() {
+        public Object getArguments() {
             return arguments;
         }
 
-        public void setArguments(String arguments) {
+        public void setArguments(Object arguments) {
             this.arguments = arguments;
         }
 
@@ -112,7 +109,7 @@ public class ToolCall {
         private String id;
         private String type;
         private String name;
-        private String arguments;
+        private Object arguments;
 
         public Builder id(String id) {
             this.id = id;
@@ -129,15 +126,8 @@ public class ToolCall {
             return this;
         }
 
-        public Builder arguments(String arguments) {
+        public Builder arguments(Object arguments) {
             this.arguments = arguments;
-            return this;
-        }
-
-        public Builder arguments(JsonNode argumentsJson) {
-            if (Objects.nonNull(argumentsJson)) {
-                this.arguments = argumentsJson.toPrettyString();
-            }
             return this;
         }
 

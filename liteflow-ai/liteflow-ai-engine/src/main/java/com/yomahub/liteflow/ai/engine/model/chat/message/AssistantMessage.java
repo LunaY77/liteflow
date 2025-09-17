@@ -1,6 +1,7 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
@@ -45,6 +46,7 @@ public class AssistantMessage extends AbstractMessage {
      *
      * @return 清理后的消息内容
      */
+    @JsonIgnore
     public String getContentWithoutThink() {
         String content = this.getContent();
         if (StrUtil.isBlank(content)) {

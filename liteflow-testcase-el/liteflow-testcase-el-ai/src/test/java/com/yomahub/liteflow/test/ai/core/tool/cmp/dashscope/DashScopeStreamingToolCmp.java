@@ -1,32 +1,25 @@
-package com.yomahub.liteflow.test.ai.core.tool.cmp;
+package com.yomahub.liteflow.test.ai.core.tool.cmp.dashscope;
 
-import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
+import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.util.TriState;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
-
 @AIComponent(
-        nodeId = "aiStreamingChatCmpId",
-        nodeName = "aiStreamingChatCmpName",
-        provider = "ollama",
-        apiUrl = "http://localhost:11434",
-        model = "qwen3:32b",
+        nodeId = "dashscopeStreamingToolCmpId",
+        nodeName = "dashscopeStreamingToolCmpName",
+        provider = "dashscope",
+        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        model = "qwen-flash",
         enableThinking = TriState.TRUE,
         readTimeout = "10m",
         connectTimeout = "10m"
 )
 @AIChat(
         userPrompt = "{{question}}",
-        transportType = TransportType.DnJson,
+        transportType = TransportType.SSE,
         toolNames = "assemble_tool"
 )
 @AIInput(
@@ -34,5 +27,5 @@ import com.yomahub.liteflow.ai.util.TriState;
                 @InputField(name = "question", expression = "test", defaultValue = "调用工具组装 QQ 和 微信"),
         }
 )
-public interface AIStreamingChatCmp {
+public interface DashScopeStreamingToolCmp {
 }

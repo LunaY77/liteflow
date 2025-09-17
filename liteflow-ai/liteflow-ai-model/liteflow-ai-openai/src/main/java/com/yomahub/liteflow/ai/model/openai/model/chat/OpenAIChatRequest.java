@@ -29,7 +29,7 @@ import java.util.Objects;
 public class OpenAIChatRequest extends ChatRequest {
 
     // ==== RequestBody 相关参数 =====
-    private static final String THINKING_KEY = "enable_thinking";
+    private static final String THINKING_KEY = "thinking";
     private static final String FORMAT_KEY = "response_format";
     // OpenAI 结构化输出请求参数缓存
     private volatile JsonNode responseFormat;
@@ -63,7 +63,19 @@ public class OpenAIChatRequest extends ChatRequest {
     @Override
     public RequestBody toRequestBody() {
         return super.toRequestBody()
+                .remove("enable_thinking")
+                .put(THINKING_KEY, getThinking())
                 .putIf(ResponseType.JSON.equals(this.responseType), FORMAT_KEY, getResponseFormat());
+    }
+
+    private JsonNode getThinking() {
+        ObjectNode thinking = ObjectMapperHolder.createObjectNode();
+        if (Boolean.TRUE.equals(this.options.getEnableThinking())) {
+            thinking.put("type", "enabled");
+        } else {
+            thinking.put("type", "disabled");
+        }
+        return thinking;
     }
 
     /**

@@ -1,31 +1,18 @@
-package com.yomahub.liteflow.test.ai.core.tool.cmp;
+package com.yomahub.liteflow.test.ai.core.tool.cmp.dashscope;
 
-import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
+import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.util.TriState;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
-
 @AIComponent(
-        nodeId = "aiBlockingChatCmpId",
-        nodeName = "aiBlockingChatCmpName",
-//        provider = "ollama",
-//        apiUrl = "http://localhost:11434",
-//        model = "qwen3:32b",
-//        provider = "dashscope",
-//        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
-//        model = "deepseek-r1",
-        provider = "openai",
-        apiUrl = "https://ark.cn-beijing.volces.com/api/v3",
-        model = "doubao-seed-1-6-250615",
+        nodeId = "dashscopeBlockingToolCmpId",
+        nodeName = "dashscopeBlockingToolCmpName",
+        provider = "dashscope",
+        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        model = "qwen-flash",
         enableThinking = TriState.FALSE,
         readTimeout = "10m",
         connectTimeout = "10m"
@@ -41,5 +28,5 @@ import com.yomahub.liteflow.ai.util.TriState;
                 @InputField(name = "question", expression = "nothing", defaultValue = "北京今天天气怎么样")
         }
 )
-public interface AIBlockingChatCmp {
+public interface DashScopeBlockingToolCmp {
 }
