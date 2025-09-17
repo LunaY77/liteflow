@@ -45,7 +45,7 @@ public class ChatResponse extends Response<AssistantMessage> {
      * @return 转换后的对象
      */
     public <T> T as(JsonSchemaParser<T> parser) {
-        String rawTextContent = this.getOutput().getContent();
+        String rawTextContent = this.getOutput().getContentWithoutThink();
         if (StrUtil.isBlank(rawTextContent)) {
             throw new IllegalStateException("Cannot convert empty content to target type: " + parser.getTargetType());
         }

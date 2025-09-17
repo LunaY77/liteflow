@@ -138,6 +138,10 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
 
         // 解析 AI 消息内容
         String content = extractContentFromMessage(message);
+        String thinking = extractThinkingFromMessage(message);
+        if (StrUtil.isNotBlank(thinking)) {
+            content = "<think>\n" + thinking + "\n</think>\n" + (StrUtil.isNotBlank(content) ? content : "");
+        }
         AssistantMessage assistantMessage = new AssistantMessage(content, toolCalls);
 
         // 解析 Token 使用情况
@@ -206,6 +210,11 @@ public class OpenAIProtocolTransformer implements ProtocolTransformer {
     private String extractContentFromMessage(JsonNode messageJson) {
         if (Objects.isNull(messageJson) || !messageJson.has("content")) return null;
         return messageJson.path("content").asText(null);
+    }
+
+    private String extractThinkingFromMessage(JsonNode messageJson) {
+        if (Objects.isNull(messageJson) || !messageJson.has("reasoning_content")) return null;
+        return messageJson.path("reasoning_content").asText(null);
     }
 
     private String extractContentFromDelta(JsonNode deltaJson) {

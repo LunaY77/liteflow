@@ -34,7 +34,6 @@ public class ChatOptions implements ModelOptions {
     protected Boolean enableThinking;
 
     // ==== RequestBody 相关参数 =====
-    // TODO options 重构
     protected static final String TEMPERATURE_KEY = "temperature";
     protected static final String TOP_P_KEY = "top_p";
     protected static final String TOP_K_KEY = "top_k";

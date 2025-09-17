@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.engine.model.chat.message;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
@@ -37,5 +38,18 @@ public class AssistantMessage extends AbstractMessage {
 
     public void setToolCalls(List<ToolCall> toolCalls) {
         this.toolCalls = toolCalls;
+    }
+
+    /**
+     * 获取不包含 <think> 标签内容的消息内容
+     *
+     * @return 清理后的消息内容
+     */
+    public String getContentWithoutThink() {
+        String content = this.getContent();
+        if (StrUtil.isBlank(content)) {
+            return "";
+        }
+        return content.replaceAll("(?s)<think>.*?</think>", "").trim();
     }
 }

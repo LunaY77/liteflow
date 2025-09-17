@@ -46,7 +46,7 @@ public class ClassifyAIInvocationHandler extends AbstractAIInvocationHandler<Cla
             List<String> resList = (List<String>) response.as(processorContext.getModelRequest().toChatRequest().getOutputParser());
             return String.join(",", resList);
         } else {
-            return response.getOutput().getContent();
+            return response.getOutput().getContentWithoutThink();
         }
     }
 }

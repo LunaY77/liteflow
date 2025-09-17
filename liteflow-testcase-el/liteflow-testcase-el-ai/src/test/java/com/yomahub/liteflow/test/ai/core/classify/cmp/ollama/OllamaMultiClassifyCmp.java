@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.test.ai.core.classify.cmp;
+package com.yomahub.liteflow.test.ai.core.classify.cmp.ollama;
 
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
@@ -7,22 +7,12 @@ import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.util.TriState;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
-
 @AIComponent(
-        nodeId = "aiMultiSwitch",
-        nodeName = "aiMultiSwitch",
-//        provider = "ollama",
-//        apiUrl = "http://localhost:11434",
-//        model = "qwen3:32b",
-        provider = "openai",
-        apiUrl = "https://ark.cn-beijing.volces.com/api/v3",
-        model = "doubao-seed-1-6-250615",
+        nodeId = "ollamaMultiSwitch",
+        nodeName = "ollamaMultiSwitch",
+        provider = "ollama",
+        apiUrl = "http://localhost:11434",
+        model = "qwen3:32b",
         enableThinking = TriState.FALSE,
         readTimeout = "10m",
         connectTimeout = "10m"
@@ -42,5 +32,5 @@ import com.yomahub.liteflow.ai.util.TriState;
         useKeyIndex = true,
         key = "result"
 )
-public interface AIMultiClassifyCmp {
+public interface OllamaMultiClassifyCmp {
 }
