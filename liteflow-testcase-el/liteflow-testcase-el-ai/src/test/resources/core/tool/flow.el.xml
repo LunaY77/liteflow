@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC  "liteflow" "liteflow.dtd">
+<flow>
+    <chain name="chain1">
+        THEN(a, openaiBlockingToolCmpId);
+    </chain>
+
+    <chain name="chain2">
+        THEN(a, openaiStreamingToolCmpId);
+    </chain>
+
+    <chain name="chain3">
+        THEN(a, dashscopeBlockingToolCmpId);
+    </chain>
+
+    <chain name="chain4">
+        THEN(a, dashscopeStreamingToolCmpId);
+    </chain>
+
+    <chain name="chain5">
+        THEN(a, ollamaBlockingToolCmpId);
+    </chain>
+
+    <chain name="chain6">
+        THEN(a, ollamaStreamingToolCmpId);
+    </chain>
+</flow>

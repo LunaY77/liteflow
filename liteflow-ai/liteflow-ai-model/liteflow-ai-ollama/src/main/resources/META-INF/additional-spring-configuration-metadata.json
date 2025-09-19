@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "liteflow.ai.ollama.apikey",
+      "type": "java.lang.String",
+      "description": "apikey for ollama AI service.",
+      "sourceType": "com.yomahub.liteflow.ai.model.ollama.config.OllamaModelProperty"
+    }
+  ]
+}

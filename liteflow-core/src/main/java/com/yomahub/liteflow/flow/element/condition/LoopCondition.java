@@ -1,7 +1,5 @@
 package com.yomahub.liteflow.flow.element.condition;
 
-import com.yomahub.liteflow.flow.element.Chain;
-import com.yomahub.liteflow.flow.element.Condition;
 import com.yomahub.liteflow.flow.element.Executable;
 import com.yomahub.liteflow.flow.element.Node;
 import com.yomahub.liteflow.flow.parallel.LoopFutureObj;
@@ -9,7 +7,6 @@ import com.yomahub.liteflow.meta.LiteflowMetaOperator;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -19,9 +16,7 @@ import java.util.function.Supplier;
  * @author jason
  * @since 2.9.0
  */
-public abstract class LoopCondition extends Condition {
-    //判断循环是否并行执行，默认为false
-    private boolean parallel = false;
+public abstract class LoopCondition extends AbstractParallelCondition {
     //loop condition层级的线程池
     private String threadPoolExecutorClass;
 
@@ -65,14 +60,6 @@ public abstract class LoopCondition extends Condition {
 
     protected void removeCurrLoopObject(Executable executableItem) {
         LiteflowMetaOperator.getNodes(executableItem).forEach(Node::removeCurrLoopObject);
-    }
-
-    public boolean isParallel() {
-        return parallel;
-    }
-
-    public void setParallel(boolean parallel) {
-        this.parallel = parallel;
     }
 
     //循环并行执行的futureList处理

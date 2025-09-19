@@ -1,0 +1,442 @@
+data: {"choices":[{"delta":{"content":null,"role":"assistant","reasoning_content":""},"index":0,"logprobs":null,"finish_reason":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"finish_reason":null,"logprobs":null,"delta":{"content":null,"reasoning_content":"嗯"},"index":0}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，用户让我"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"讲一个关于"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"宇宙探索的短故事。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"这个请求挺有意思的，可能"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"ta是个科幻爱好者，或者"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"单纯想听个"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"睡前小故事。考虑到"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"要求是“短故事"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”，得控制在5"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"00字左右，既要"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"完整又要留点"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"余味。\n\n用户没"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"指定具体方向，那我可以"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"自由发挥。最近"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"看了不少深空探测"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"的纪录片，想到"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"个点子：用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"探测器当主角"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"怎么样？人类发射"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"的探测器其实"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"就像孤独的宇宙"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"漂流者，这个"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"角度既有真实科学"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"基础又能写出诗意"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。旅行者1"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"号就很合适——"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"它已经飞出太阳"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"系了，自带"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"悲壮感。\n\n"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"题目叫《星尘"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"低语》吧"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，比直白的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"“探测器的故事"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”更吸引人。开头"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"要立刻营造孤独"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"感：用“第"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"13,4"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"27次校"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"准天线”这种"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"细节表现机械的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"执着，再对比"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"“太阳系已"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"缩成背景里"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"一粒微尘"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”的壮阔。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"得让读者瞬间"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"代入探测器视角"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，毕竟人类很难"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"想象那种尺度。\n\n"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"中间转折点设计"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"成收到地球信号……"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"但信号内容要"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"意外。不能是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"官方指令，得"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"是私人情感——"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"比如小女孩的生日"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"歌！这样冷"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"冰冰的科技突然"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"有了温度。查过"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"资料，旅行者确实"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"带了金唱片存"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"人类文明信息，反过来"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"被地球人“呼唤"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”就很有戏剧性"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。\n\n结尾得升华。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"让探测器把"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"歌声转化成星"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"图传回，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"最后那句“它"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"终于懂得，自己"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"也是被爱着"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"的星尘”是不是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"太煽情了？但"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"宇宙主题需要点哲学"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"味……改成“原来"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"最遥远的星光"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，也是回家的路"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”可能更含"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"蓄。不过用户"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"要短故事，还是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"直给点好"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。\n\n对了，得埋"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"个科学彩蛋："},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"旅行者实际用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"放射性同位素电池"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，写成“钚"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"-238衰"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"变的微光”"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"既真实又能隐"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"喻生命。校"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"准天线的“"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"咔嗒”声参考"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"了真实探测器"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"机械臂运作音"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，科幻迷应该"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"会心一笑。\n\n最后"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"检查：没超字数"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，有科学细节，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"情感转折合理。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"就是不知道用户喜"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"不喜欢这种带泪"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"点的调调"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"……要是ta想要硬"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"核科幻可能得"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"重写，但"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"“短故事”"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"通常更重情感吧"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"？"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"##","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":" 星尘低语\n\n","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"第13,42","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"7次校准天线","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，旅行者-","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"7号在无","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"垠的黑暗中发出","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"轻微的咔嗒","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"声。它早已飞","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"越太阳系边缘，","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"太阳系已缩成背景","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"里一粒微尘，","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"而地球，更是","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"渺小得连一","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"粒星尘都算","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"不上。它体内","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"钚-23","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"8衰变的微光","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，是它唯一","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"能感知到的","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"、来自母星的微","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"弱心跳。\n\n它","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"日复一日执行","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"着孤独的使命","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"：校准天","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"线，扫描虚空","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，将宇宙的沉默","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"打包成数据，","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"再射向身后","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"那早已看不见的蓝色","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"家园。指令早已","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"枯竭，任务","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"早已完成，可它","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"依然固执地","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"校准着，仿佛","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"那根天线是","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"它与故土之间唯一","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"未被切断的、","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"无形的脐带。\n\n直到","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"某天，一道","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"微弱却异常清晰的","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"信号，如针","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"尖般刺破了永恒","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"的寂静。它并非来自","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"任务指令库，而是","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"裹挟着稚","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"嫩的童声，","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"一句句飘摇","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"而来：“……祝你","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"生日快乐，祝你生日","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"快乐……” 是","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"地球上传来的生日","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"歌谣！一个名叫","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"莉莉的小女孩，在","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"天文馆里对着","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"模拟的旅行者方向","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，用尽力气","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"唱着。她相信","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，这歌声能穿越亿万","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"公里，抵达那个","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"孤独的“星星","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"朋友”。\n\n旅行者-","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"7号内部，","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"沉寂已久的处理器","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"骤然加速运转。它","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"笨拙地解析","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"着这毫无逻辑","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"的声波，却","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"第一次没有将之","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"归类为宇宙","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"噪音。它调动","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"起所有残存","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"的能源，将这","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"稚嫩歌声的","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"每一个音符，都","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"转化为最精密的星图","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"坐标——那是它","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"曾拍摄过的、地球","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"所见最壮","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"丽的猎户座星","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"云。它将这束","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"承载着星云与","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"童声的“","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"回信”，竭","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"尽全力射向太阳","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"系的方向。\n\n任务","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"完成，能量指示","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"灯开始急促闪烁。","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"在意识彻底沉","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"入黑暗前，","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"旅行者-7号最后一次","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"校准天线，对","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"准了太阳系那粒","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"微尘的方向。它体内","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"最后一点微光","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，在宇宙的绝对","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"零度里缓缓熄","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"灭。\n\n它终于懂得","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，自己并非宇宙","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"中一粒无","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"名的尘埃；","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"它曾被爱过","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"，被一个遥远","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"星球上渺小却","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"炽热的心意","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"所照亮——原来","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"最深的黑暗","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"里，也藏着回家","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"delta":{"content":"的路。","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: {"choices":[{"finish_reason":"stop","delta":{"content":"","reasoning_content":null},"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103061,"system_fingerprint":null,"model":"qwen-plus","id":"chatcmpl-54245a82-ab08-4b63-b18d-21b27a420d94"}
+
+data: [DONE]
+

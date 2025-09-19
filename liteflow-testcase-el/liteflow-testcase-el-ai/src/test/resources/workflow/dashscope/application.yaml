@@ -1,0 +1,13 @@
+liteflow:
+  rule-source: workflow/dashscope/flow.el.xml
+  ai:
+    base-packages:
+      - com.yomahub.liteflow.test.ai.workflow.dashscope.cmp
+    enable: true
+    openai:
+      api-key:
+    dashscope:
+      api-key:
+    workflow:
+      dashscope:
+        api-key:

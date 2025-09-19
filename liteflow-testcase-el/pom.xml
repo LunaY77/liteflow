@@ -15,6 +15,7 @@
     <artifactId>liteflow-testcase-el</artifactId>
 
     <modules>
+        <module>liteflow-testcase-el-ai</module>
         <module>liteflow-testcase-el-springboot</module>
         <module>liteflow-testcase-el-springnative</module>
         <module>liteflow-testcase-el-nospring</module>

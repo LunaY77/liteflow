@@ -1,17 +1,19 @@
 package com.yomahub.liteflow.flow.element.condition;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.Pair;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.enums.ConditionTypeEnum;
 import com.yomahub.liteflow.exception.NoSwitchTargetNodeException;
 import com.yomahub.liteflow.exception.SwitchTargetCannotBePreOrFinallyException;
-import com.yomahub.liteflow.flow.element.Condition;
 import com.yomahub.liteflow.flow.element.Executable;
 import com.yomahub.liteflow.flow.element.Node;
 import com.yomahub.liteflow.slot.DataBus;
 import com.yomahub.liteflow.slot.Slot;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 选择Condition
@@ -19,11 +21,23 @@ import java.util.List;
  * @author Bryan.Zhang
  * @since 2.8.0
  */
-public class SwitchCondition extends Condition {
+public class SwitchCondition extends AbstractParallelCondition {
 
 	private final String TAG_PREFIX = "tag";
 
 	private final String TAG_FLAG = ":";
+
+	private static final String MULTI_TARGET_SPLITTER = ",";
+
+	private String threadPoolExecutorClass;
+
+	public String getThreadPoolExecutorClass() {
+		return threadPoolExecutorClass;
+	}
+
+	public void setThreadPoolExecutorClass(String threadPoolExecutorClass) {
+		this.threadPoolExecutorClass = threadPoolExecutorClass;
+	}
 
 	@Override
 	public void executeCondition(Integer slotIndex) throws Exception {
@@ -46,6 +60,18 @@ public class SwitchCondition extends Condition {
 		// 拿到switch节点的结果
 		String targetId = switchNode.getItemResultMetaValue(slotIndex);
 
+		String[] split = targetId.split(MULTI_TARGET_SPLITTER);
+		if (split.length == 1) {
+			// 只有一个目标节点
+			this.findSwitchTargetAndExecute(slotIndex, targetId, targetList);
+		} else {
+			// 多个目标节点，执行多路选择
+			List<String> targetIds = Arrays.stream(split).map(String::trim).collect(Collectors.toList());
+			this.findMultiSwitchTargetsAndExecute(slotIndex, targetIds, targetList);
+		}
+	}
+
+	private void findSwitchTargetAndExecute(Integer slotIndex, String targetId, List<Executable> targetList) throws Exception {
 		Slot slot = DataBus.getSlot(slotIndex);
 
 		Executable targetExecutor = null;
@@ -61,9 +87,9 @@ public class SwitchCondition extends Condition {
 			}
 			else {
 				targetExecutor = targetList.stream()
-					.filter(executable -> ObjectUtil.equal(executable.getId(),targetId) )
-					.findFirst()
-					.orElse(null);
+						.filter(executable -> ObjectUtil.equal(executable.getId(),targetId) )
+						.findFirst()
+						.orElse(null);
 			}
 		}
 
@@ -90,7 +116,97 @@ public class SwitchCondition extends Condition {
 		}
 	}
 
-	@Override
+	private void findMultiSwitchTargetsAndExecute(Integer slotIndex, List<String> targetIds, List<Executable> targetList) throws Exception {
+		Slot slot = DataBus.getSlot(slotIndex);
+
+		List<Executable> matchedExecutors = null;
+		if (CollectionUtil.isNotEmpty(targetIds)) {
+			// 存储最终目标执行器的 set 集合
+			Set<Executable> resultSet = new HashSet<>();
+
+			// 普通 id
+			Set<String> normalIds = new HashSet<>();
+			// tag 模式的目标，id & tag
+			List<Pair<String, String>> tagTargets = new ArrayList<>();
+
+			// 1. 分离 targetIds 中的普通 ID 和 Tag 模式 ID
+			for (String targetId : targetIds) {
+				if (StrUtil.isNotBlank(targetId)) {
+					if (targetId.contains(TAG_FLAG)) {
+						String[] target = targetId.split(TAG_FLAG, 2);
+						String _targetId = target[0];
+						String _targetTag = target[1];
+						tagTargets.add(Pair.of(_targetId, _targetTag));
+					} else {
+						normalIds.add(targetId);
+					}
+				}
+			}
+
+			// 2. 根据普通 ID 筛选目标
+			if (!normalIds.isEmpty()) {
+				targetList.stream()
+						.filter(executable -> normalIds.contains(executable.getId()))
+						.forEach(resultSet::add);
+			}
+
+			// 3. 根据 Tag 模式筛选目标
+			if (!tagTargets.isEmpty()) {
+				for (Pair<String, String> target : tagTargets) {
+					String _targetId = target.getKey();
+					String _targetTag = target.getValue();
+					targetList.stream()
+							.filter(executable ->
+									(StrUtil.startWith(_targetId, TAG_PREFIX) && ObjectUtil.equal(_targetTag, executable.getTag()))
+											|| ((StrUtil.isEmpty(_targetId) || _targetId.equals(executable.getId()))
+											&& (StrUtil.isEmpty(_targetTag) || _targetTag.equals(executable.getTag()))))
+							.forEach(resultSet::add);
+				}
+			}
+
+			// 4. 收集结果并进行字典序排序
+			matchedExecutors = resultSet.stream()
+					.sorted(Comparator.comparing(Executable::getId))
+					.collect(Collectors.toList());
+		}
+
+		if (CollectionUtil.isEmpty(matchedExecutors)) {
+			// 未匹配到，则走默认节点
+			Executable defaultExecutor = this.getDefaultExecutor();
+			matchedExecutors = Optional.ofNullable(defaultExecutor)
+					.map(CollectionUtil::newArrayList)
+					.orElse(null);
+		}
+
+		if (CollectionUtil.isNotEmpty(matchedExecutors)) {
+			// 判断是否并行
+			if (isParallel()) {
+				// 复用 WhenCondition
+				WhenCondition whenCondition = new WhenCondition();
+				matchedExecutors.forEach(whenCondition::addExecutable);
+				whenCondition.setThreadExecutorClass(this.getThreadPoolExecutorClass());
+				whenCondition.executeCondition(slotIndex);
+			} else {
+				for (Executable targetExecutor : matchedExecutors) {
+					// switch的目标不能是Pre节点或者Finally节点
+					if (targetExecutor instanceof PreCondition || targetExecutor instanceof FinallyCondition) {
+						String errorInfo = StrUtil.format(
+								"[{}]:switch component[{}] error, switch target node cannot be pre or finally",
+								slot.getRequestId(), this.getSwitchNode().getInstance().getDisplayName());
+						throw new SwitchTargetCannotBePreOrFinallyException(errorInfo);
+					}
+					targetExecutor.setCurrChainId(this.getCurrChainId());
+					targetExecutor.execute(slotIndex);
+				}
+			}
+		} else {
+			String errorInfo = StrUtil.format("[{}]:no target node find for the component[{}],targetIds are {}",
+					slot.getRequestId(), this.getSwitchNode().getInstance().getDisplayName(), targetIds);
+			throw new NoSwitchTargetNodeException(errorInfo);
+		}
+	}
+
+		@Override
 	public ConditionTypeEnum getConditionType() {
 		return ConditionTypeEnum.TYPE_SWITCH;
 	}

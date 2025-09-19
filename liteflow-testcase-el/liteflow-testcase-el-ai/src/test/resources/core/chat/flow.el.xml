@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC  "liteflow" "liteflow.dtd">
+<flow>
+    <chain name="chain1">
+        THEN(a, DashScopeChat, b);
+    </chain>
+
+    <chain name="chain2">
+        THEN(a, DashScopeStream);
+    </chain>
+
+    <chain name="chain3">
+        THEN(a, OllamaChat, b);
+    </chain>
+
+    <chain name="chain4">
+        THEN(a, OllamaStream);
+    </chain>
+
+    <chain name="chain5">
+        THEN(a, OpenAIChat, b);
+    </chain>
+
+    <chain name="chain6">
+        THEN(a, OpenAIStream);
+    </chain>
+</flow>

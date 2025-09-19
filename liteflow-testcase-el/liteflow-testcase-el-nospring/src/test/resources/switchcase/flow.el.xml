@@ -9,6 +9,11 @@
         <node id="f" class="com.yomahub.liteflow.test.switchcase.cmp.FSwitchCmp"/>
         <node id="g" class="com.yomahub.liteflow.test.switchcase.cmp.GSwitchCmp"/>
         <node id="h" class="com.yomahub.liteflow.test.switchcase.cmp.HSwitchCmp"/>
+        <node id="i" class="com.yomahub.liteflow.test.switchcase.cmp.IMultiSwitchCmp"/>
+        <node id="j" class="com.yomahub.liteflow.test.switchcase.cmp.JMultiSwitchCmp"/>
+        <node id="k" class="com.yomahub.liteflow.test.switchcase.cmp.KMultiSwitchCmp"/>
+        <node id="l" class="com.yomahub.liteflow.test.switchcase.cmp.LMultiSwitchCmp"/>
+        <node id="m" class="com.yomahub.liteflow.test.switchcase.cmp.MMultiSwitchParallelCmp"/>
     </nodes>
 
     <chain name="chain1">
@@ -44,6 +49,41 @@
         THEN(
         a,
         SWITCH(h).to(b.tag("td"), d.tag("td"))
+        );
+    </chain>
+
+    <chain name="chain6">
+        THEN(
+            a,
+            SWITCH(i).to(a, b, c, d)
+        );
+    </chain>
+
+    <chain name="chain7">
+        THEN(
+            a,
+            SWITCH(j).to(a.tag("tag1"), b.tag("tag2"), c, d)
+        );
+    </chain>
+
+    <chain name="chain8">
+        THEN(
+            a,
+            SWITCH(k).to(a, b, c, d).DEFAULT(a)
+        )
+    </chain>
+
+    <chain name="chain9">
+        THEN(
+            a,
+            SWITCH(l).to(b.tag("td"), d.tag("td"), a, c)
+        );
+    </chain>
+
+    <chain name="chain10">
+        THEN(
+            a,
+            SWITCH(m).to(a, b, c, d).parallel(true)
         );
     </chain>
 </flow>

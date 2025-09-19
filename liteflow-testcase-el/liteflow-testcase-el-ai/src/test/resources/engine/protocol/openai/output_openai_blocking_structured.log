@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\"steps\": [{\"explanation\": \"解第一个方程 8x + 9 = 32，两边同时减去9\", \"output\": \"8x = 32 - 9\"}, {\"explanation\": \"计算右边的结果\", \"output\": \"8x = 23\"}, {\"explanation\": \"两边同时除以8，求解x\", \"output\": \"x = 23/8\"}, {\"explanation\": \"将x = 23/8代入第二个方程 x + y = 1\", \"output\": \"23/8 + y = 1\"}, {\"explanation\": \"两边同时减去23/8，求解y\", \"output\": \"y = 1 - 23/8\"}, {\"explanation\": \"计算右边的结果，将1化为8/8\", \"output\": \"y = 8/8 - 23/8 = -15/8\"}], \"final_answer\": \"x = 23/8，y = -15/8\"}",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1758104531,
+  "id": "02175810452570081cc4b220e2c57abddebb2bf8b39604094a06d",
+  "model": "doubao-seed-1-6-250615",
+  "service_tier": "default",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 218,
+    "prompt_tokens": 362,
+    "total_tokens": 580,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  }
+}

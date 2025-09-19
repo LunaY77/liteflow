@@ -1,0 +1,17 @@
+{
+  "properties": [
+    {
+      "name": "liteflow.ai.workflow.coze.apiKey",
+      "type": "java.lang.String",
+      "description": "apikey for coze service.",
+      "sourceType": "com.yomahub.liteflow.ai.workflow.coze.config.CozeWorkflowProperty"
+    },
+    {
+      "name": "liteflow.ai.workflow.coze.baseUrl",
+      "type": "java.lang.String",
+      "description": "apiUrl for coze service.",
+      "sourceType": "com.yomahub.liteflow.ai.workflow.coze.config.CozeWorkflowProperty",
+      "defaultValue": "https://api.coze.cn"
+    }
+  ]
+}

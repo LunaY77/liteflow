@@ -1,0 +1,70 @@
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"好的","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"用户"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"需要查询广州今天的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"天气和现在的时间"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。首先，我"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"需要调用获取"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"天气的函数get"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"_current_weather，参数"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"是广州。然后"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，再调用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"获取时间的函数"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"get_current_time。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"这两个函数都需要使用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，所以我要分别"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"生成工具调用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。\n\n先看天气"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"部分，用户明确"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"提到了广州，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"所以location参数设"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"为\"广州\""},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。然后时间方面"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，不需要参数，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"直接调用即可"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。确保两个工具"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"调用都正确"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"无误，没有"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"遗漏参数。完成后"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，把结果返回"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"给用户。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":null,"tool_calls":[{"index":0,"id":"call_82b0dfa031c64e42a2e740","type":"function","function":{"name":"get_current_weather","arguments":"{\"location"}}]},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":null,"tool_calls":[{"index":0,"id":"","type":"function","function":{"arguments":"\": \"广州\"}"}}]},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"delta":{"tool_calls":[{"function":{"arguments":null},"index":0,"id":"","type":"function"}]},"index":0}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: {"choices":[{"finish_reason":"tool_calls","delta":{},"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1758103295,"system_fingerprint":null,"model":"qwen-turbo","id":"chatcmpl-3897b411-3c9d-4edd-93f5-5bf0c4517513"}
+
+data: [DONE]
+

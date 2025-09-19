@@ -5,6 +5,7 @@ import com.yomahub.liteflow.builder.el.operator.base.BaseOperator;
 import com.yomahub.liteflow.builder.el.operator.base.OperatorHelper;
 import com.yomahub.liteflow.flow.element.Condition;
 import com.yomahub.liteflow.flow.element.condition.LoopCondition;
+import com.yomahub.liteflow.flow.element.condition.SwitchCondition;
 import com.yomahub.liteflow.flow.element.condition.WhenCondition;
 
 /**
@@ -32,6 +33,13 @@ public class ThreadPoolOperator extends BaseOperator<Condition> {
 			String errorMsg = "The caller must be LoopCondition item";
 
 			LoopCondition condition = OperatorHelper.convert(objects[0], LoopCondition.class, errorMsg);
+
+			condition.setThreadPoolExecutorClass(OperatorHelper.convert(objects[1], String.class));
+			return condition;
+		} else if (objects[0] instanceof SwitchCondition) {
+			String errorMsg = "The caller must be SwitchCondition item";
+
+			SwitchCondition condition = OperatorHelper.convert(objects[0], SwitchCondition.class, errorMsg);
 
 			condition.setThreadPoolExecutorClass(OperatorHelper.convert(objects[1], String.class));
 			return condition;
