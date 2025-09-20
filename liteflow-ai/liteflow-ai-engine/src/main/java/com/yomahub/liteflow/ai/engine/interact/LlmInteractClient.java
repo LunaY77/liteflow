@@ -203,7 +203,7 @@ public class LlmInteractClient implements InteractClient {
             // 找到对应的工具回调
             ToolCallBack toolCallBack = toolRegistry.getAllTools()
                     .stream()
-                    .filter(tool -> Objects.equals(tool.getName(), tool.getName()))
+                    .filter(tool -> Objects.equals(tool.getName(), toolCall.getName()))
                     .findFirst()
                     .orElseThrow(() ->
                             new LiteFlowAIEngineException("Unable to find target tool with tool name: " + toolCall.getName()));
