@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.config;
 
+import com.yomahub.liteflow.ai.context.StreamHandler;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.ai.parse.anno.ChatAnnotationProcessor;
 import com.yomahub.liteflow.ai.parse.anno.ClassifyAnnotationProcessor;
@@ -29,6 +30,12 @@ public class LiteFlowAIAutoConfiguration {
     @ConditionalOnMissingBean
     public ToolRegistry toolRegistry(ApplicationContext applicationContext) {
         return new SpringBeanToolRegistry(applicationContext);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public StreamHandler streamHandler() {
+        return StreamHandler.builder().build();
     }
 
     @Bean

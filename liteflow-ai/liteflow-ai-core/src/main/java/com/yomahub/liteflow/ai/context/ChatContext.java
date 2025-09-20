@@ -25,20 +25,21 @@ public class ChatContext extends DefaultContext {
     private ToolRegistry toolRegistry;
 
     public ChatContext() {
-        this.chatId = "chat_" + UUID.randomUUID();
-        this.streamHandler = null;
+        this(SpringUtil.getBean(StreamHandler.class), SpringUtil.getBean(ToolRegistry.class));
+    }
+
+    public ChatContext(ToolRegistry toolRegistry) {
+        this(SpringUtil.getBean(StreamHandler.class), toolRegistry);
+    }
+
+    public ChatContext(StreamHandler streamHandler) {
+        this(streamHandler, SpringUtil.getBean(ToolRegistry.class));
     }
 
     public ChatContext(StreamHandler streamHandler, ToolRegistry toolRegistry) {
         this.chatId = "chat_" + UUID.randomUUID();
         this.streamHandler = streamHandler;
         this.toolRegistry = toolRegistry;
-    }
-
-    public ChatContext(StreamHandler streamHandler) {
-        this.chatId = "chat_" + UUID.randomUUID();
-        this.streamHandler = streamHandler;
-        this.toolRegistry = SpringUtil.getBean(ToolRegistry.class);
     }
 
     public String getChatId() {
