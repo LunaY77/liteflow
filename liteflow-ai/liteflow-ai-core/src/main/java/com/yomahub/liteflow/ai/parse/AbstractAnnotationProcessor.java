@@ -116,7 +116,7 @@ public abstract class AbstractAnnotationProcessor<A extends Annotation, C extend
                         Optional.ofNullable(context.getAiInputAnno())
                                 .map(AIInput::mapping)
                                 .orElse(null),
-                        context
+                        context.getNodeComponent()
                 );
 
                 setConsumer.accept(content);

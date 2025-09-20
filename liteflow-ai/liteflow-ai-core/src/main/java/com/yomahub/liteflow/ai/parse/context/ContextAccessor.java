@@ -35,12 +35,22 @@ public class ContextAccessor {
      * @return 查找到的值
      */
     public static <T> T searchContextByExpression(String expression, ProcessorContext<?> context) {
+        return searchContextByExpression(expression, context.getNodeComponent());
+    }
+
+    /**
+     * 根据表达式在上下文中查找值(AIInput注解使用)
+     *
+     * @param expression    表达式
+     * @param nodeComponent 节点组件
+     * @return 查找到的值
+     */
+    public static <T> T searchContextByExpression(String expression, NodeComponent nodeComponent) {
         if (StrUtil.isBlank(expression)) {
             return null;
         }
 
         try {
-            NodeComponent nodeComponent = context.getNodeComponent();
             return nodeComponent.getContextValue(expression);
         } catch (Exception e) {
             LOG.info("Failed to search context by expression: {}", expression);

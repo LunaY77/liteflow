@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
 import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
-import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
+import com.yomahub.liteflow.core.NodeComponent;
 
 import java.util.*;
 import java.util.function.Function;
@@ -29,12 +29,12 @@ public class PromptTemplateParser {
     /**
      * 处理模板占位符
      *
-     * @param template    模板内容
-     * @param inputFields 输入字段映射
-     * @param context     聊天上下文
+     * @param template      模板内容
+     * @param inputFields   输入字段映射
+     * @param nodeComponent 节点组件
      * @return 处理后的内容
      */
-    public static String parseTemplate(String template, InputField[] inputFields, ProcessorContext<?> context) {
+    public static String parseTemplate(String template, InputField[] inputFields, NodeComponent nodeComponent) {
         if (StrUtil.isBlank(template)) {
             return template;
         }
@@ -51,7 +51,7 @@ public class PromptTemplateParser {
 
         while (matcher.find()) {
             String placeholder = matcher.group(1).trim();
-            String value = resolveValue(placeholder, fieldMap, context);
+            String value = resolveValue(placeholder, fieldMap, nodeComponent);
             matcher.appendReplacement(res, Matcher.quoteReplacement(value));
         }
 
@@ -63,17 +63,17 @@ public class PromptTemplateParser {
      * 解析占位符值
      * 按照优先级：InputField表达式 > 直接查找 > 默认值
      *
-     * @param placeholder 占位符名称
-     * @param fieldMap    输入字段 Map
-     * @param context     聊天上下文
+     * @param placeholder   占位符名称
+     * @param fieldMap      输入字段 Map
+     * @param nodeComponent 节点组件
      * @return 解析值
      */
-    private static String resolveValue(String placeholder, Map<String, InputField> fieldMap, ProcessorContext<?> context) {
+    private static String resolveValue(String placeholder, Map<String, InputField> fieldMap, NodeComponent nodeComponent) {
         InputField field = fieldMap.get(placeholder);
         // 第一优先级：使用 InputField 中的 expression 映射
         if (Objects.nonNull(field)) {
             // 使用表达式在上下文查找
-            String value = ContextAccessor.searchContextByExpression(field.expression(), context);
+            String value = ContextAccessor.searchContextByExpression(field.expression(), nodeComponent);
             if (StrUtil.isNotBlank(value)) {
                 return value;
             }
@@ -83,12 +83,12 @@ public class PromptTemplateParser {
             }
             // 如果是必需字段但没有找到值，抛出异常
             if (field.required()) {
-                throw new LiteFlowAIException("Required field '" + placeholder + "' not found in context and no default value provided.");
+                throw new LiteFlowAIException("Required field '" + placeholder + "' not found in nodeComponent and no default value provided.");
             }
         }
 
         // 第二优先级，占位符作为表达式在上下文中查找
-        String value = ContextAccessor.searchContextByExpression(placeholder, context);
+        String value = ContextAccessor.searchContextByExpression(placeholder, nodeComponent);
         if (StrUtil.isNotBlank(value)) {
             return value;
         }
