@@ -125,7 +125,7 @@ public @interface AIChat {
     TransportType transportType() default TransportType.SSE;
 
     /**
-     * 需要启用的工具名列表（默认全部启用）
+     * 需要启用的工具名列表（默认不启用）
      * <p>
      * 工具注册于 {@link ChatContext#getToolRegistry()}，请于上下文中传入
      * <p>

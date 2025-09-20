@@ -73,9 +73,9 @@ public class PromptTemplateParser {
         // 第一优先级：使用 InputField 中的 expression 映射
         if (Objects.nonNull(field)) {
             // 使用表达式在上下文查找
-            String value = ContextAccessor.searchContextByExpression(field.expression(), nodeComponent);
-            if (StrUtil.isNotBlank(value)) {
-                return value;
+            Object value = ContextAccessor.searchContextByExpression(field.expression(), nodeComponent);
+            if (Objects.nonNull(value)) {
+                return value.toString();
             }
             // 表达式未找到，使用默认值
             if (StrUtil.isNotBlank(field.defaultValue())) {
@@ -88,9 +88,9 @@ public class PromptTemplateParser {
         }
 
         // 第二优先级，占位符作为表达式在上下文中查找
-        String value = ContextAccessor.searchContextByExpression(placeholder, nodeComponent);
-        if (StrUtil.isNotBlank(value)) {
-            return value;
+        Object value = ContextAccessor.searchContextByExpression(placeholder, nodeComponent);
+        if (Objects.nonNull(value)) {
+            return value.toString();
         }
 
         // 如果都没有找到，返回原始占位符
