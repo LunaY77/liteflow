@@ -8,6 +8,7 @@ import com.yomahub.liteflow.ai.parse.anno.WorkflowAnnotationProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentBeanPostProcessor;
 import com.yomahub.liteflow.ai.proxy.AIComponentProxyRegistrar;
 import com.yomahub.liteflow.ai.tool.SpringBeanToolRegistry;
+import com.yomahub.liteflow.ai.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,6 +37,11 @@ public class LiteFlowAIAutoConfiguration {
     @ConditionalOnMissingBean
     public StreamHandler streamHandler() {
         return StreamHandler.builder().build();
+    }
+
+    @Bean
+    public SpringUtil springUtil() {
+        return new SpringUtil();
     }
 
     @Bean
