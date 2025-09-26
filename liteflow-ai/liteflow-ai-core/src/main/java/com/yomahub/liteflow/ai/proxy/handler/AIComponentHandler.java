@@ -9,7 +9,7 @@ import java.lang.annotation.Annotation;
  * AI组件处理器
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface AIComponentHandler<T extends Annotation> {

@@ -28,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
  * 大模型交互客户端，统筹消息传输、协议转换等功能。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class LlmInteractClient implements InteractClient {

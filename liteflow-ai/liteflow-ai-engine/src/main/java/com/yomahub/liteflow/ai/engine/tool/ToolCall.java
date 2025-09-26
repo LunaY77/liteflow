@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 大模型回复的 ToolCall 参数
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ToolCall {

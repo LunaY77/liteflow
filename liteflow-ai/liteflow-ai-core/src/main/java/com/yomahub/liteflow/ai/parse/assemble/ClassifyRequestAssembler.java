@@ -25,7 +25,7 @@ import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
  * ChatRequest 组装器（意图识别）
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ClassifyRequestAssembler extends AbstractRequestAssembler<ParsedClassifyAnnotationConfig> {

@@ -4,7 +4,7 @@ package com.yomahub.liteflow.ai.model.ollama.constants;
  * Ollama 模型常量定义
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface OllamaConstant {

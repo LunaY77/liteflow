@@ -16,13 +16,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import javax.annotation.Resource;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
-
 @TestPropertySource(properties = {"spring.config.location=classpath:core/chat/application.yaml"})
 @SpringBootTest(classes = {ChatTest.class, SpringUtil.class})
 @EnableAutoConfiguration

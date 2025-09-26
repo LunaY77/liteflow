@@ -23,7 +23,7 @@ import java.util.Objects;
  *
  * @author 苍镜月
  * @see <a href="https://doc.ai-api.chat/openai-chat/">OpenAI Chat API Documentation</a>
- * @since TODO
+ * @since 2.16.0
  */
 
 public class OpenAIChatRequest extends ChatRequest {

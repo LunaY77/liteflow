@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 测试各种协议转换器和流式处理管道的功能
  *
  * @author 苍镜月
- * @since 2.5.0
+ * @since 2.16.0
  */
 public class InteractTest {
 

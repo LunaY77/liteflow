@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * Coze 工作流自动配置类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @Configuration

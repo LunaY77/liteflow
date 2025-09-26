@@ -7,7 +7,7 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
  * AI意图识别节点包装 Bean
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ClassifyProxyWrapBean extends AIProxyWrapBean<AIClassify> {

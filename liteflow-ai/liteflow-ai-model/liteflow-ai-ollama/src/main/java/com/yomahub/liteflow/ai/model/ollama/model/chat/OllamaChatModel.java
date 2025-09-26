@@ -9,7 +9,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
  * Ollama 聊天模型
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class OllamaChatModel extends AbstractChatModel {

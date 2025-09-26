@@ -6,7 +6,7 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBodyConvertible;
  * 大模型选项配置
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface ModelOptions extends RequestBodyConvertible {

@@ -10,7 +10,7 @@ import java.util.List;
  * AIChat 注解解析后的配置类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ParsedChatAnnotationConfig extends ParsedAnnotationConfig {

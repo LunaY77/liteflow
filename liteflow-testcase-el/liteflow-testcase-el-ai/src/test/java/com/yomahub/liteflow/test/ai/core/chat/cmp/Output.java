@@ -1,11 +1,5 @@
 package com.yomahub.liteflow.test.ai.core.chat.cmp;
 
-/**
- * 测试结构化输出使用
- *
- * @author 苍镜月
- * @since TODO
- */
 
 public class Output {
 

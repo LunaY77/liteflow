@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 工具调用消息
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @JsonPropertyOrder({"role", "content", "tool_call_id", "tool_name"})

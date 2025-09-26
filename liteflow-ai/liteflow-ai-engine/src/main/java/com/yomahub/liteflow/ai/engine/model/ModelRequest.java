@@ -7,7 +7,7 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBodyConvertible;
  * 大模型请求
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface ModelRequest extends RequestBodyConvertible {

@@ -4,7 +4,7 @@ package com.yomahub.liteflow.ai.util;
  * 注解标识 Boolean 的 True, False, Unset 三种状态
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public enum TriState {

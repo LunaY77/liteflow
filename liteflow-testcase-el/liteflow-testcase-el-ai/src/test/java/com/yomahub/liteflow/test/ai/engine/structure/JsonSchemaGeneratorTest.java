@@ -14,7 +14,6 @@ import java.util.List;
  * JsonSchemaGeneratorTest
  *
  * @author 苍镜月
- * @since TODO
  */
 
 public class JsonSchemaGeneratorTest {

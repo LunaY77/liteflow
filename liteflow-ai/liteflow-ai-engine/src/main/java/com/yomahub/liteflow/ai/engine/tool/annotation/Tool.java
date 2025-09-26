@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 在方法上使用该注解，将被识别为可供 LLM 调用的工具/函数。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @Retention(RetentionPolicy.RUNTIME)

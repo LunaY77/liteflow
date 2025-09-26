@@ -24,7 +24,7 @@ import java.util.Objects;
  * DashScope 聊天请求类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class DashScopeChatRequest extends ChatRequest {

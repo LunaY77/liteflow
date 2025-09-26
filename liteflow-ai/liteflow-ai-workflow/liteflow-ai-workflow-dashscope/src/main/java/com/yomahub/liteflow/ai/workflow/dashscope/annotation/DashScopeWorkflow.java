@@ -52,7 +52,7 @@ import java.util.List;
  *
  * @author 苍镜月
  * @see <a href="https://help.aliyun.com/zh/model-studio/call-application-through-api">DashScope应用调用 API 参考</a>
- * @since TODO
+ * @since 2.16.0
  */
 
 @Target(ElementType.TYPE)

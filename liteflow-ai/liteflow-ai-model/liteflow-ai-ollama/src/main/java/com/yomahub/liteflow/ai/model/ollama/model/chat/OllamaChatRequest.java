@@ -21,7 +21,7 @@ import java.util.List;
  * @see <a href=
  * "https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion">Chat
  * Completion API</a>
- * @since TODO
+ * @since 2.16.0
  */
 
 public class OllamaChatRequest extends ChatRequest {

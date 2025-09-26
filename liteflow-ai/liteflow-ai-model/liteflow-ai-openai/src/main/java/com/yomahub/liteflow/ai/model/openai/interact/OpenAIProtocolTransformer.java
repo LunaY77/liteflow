@@ -27,7 +27,7 @@ import java.util.stream.StreamSupport;
  * OpenAI 协议转换器
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class OpenAIProtocolTransformer implements ProtocolTransformer {

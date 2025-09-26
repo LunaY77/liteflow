@@ -21,7 +21,7 @@ import java.util.List;
  * LiteFlow-AI 主配置
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @ConditionalOnProperty(prefix = "liteflow.ai", name = "enable", havingValue = "true")

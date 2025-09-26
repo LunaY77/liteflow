@@ -6,7 +6,7 @@ import java.util.List;
  * LiteFlow AI 配置类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class LiteFlowAIConfig {

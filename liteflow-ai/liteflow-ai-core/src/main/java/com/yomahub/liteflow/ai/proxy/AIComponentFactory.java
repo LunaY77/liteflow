@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 实现工厂模式，管理不同类型AI组件的创建
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 public class AIComponentFactory {
 

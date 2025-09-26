@@ -16,7 +16,7 @@ import java.util.Objects;
  * chat 响应体
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ChatResponse extends Response<AssistantMessage> {

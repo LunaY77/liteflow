@@ -5,7 +5,7 @@ package com.yomahub.liteflow.ai.proxy;
  *
  * @param <T> 原始接口类型
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 interface ProxyInterfaceAware<T> {
 

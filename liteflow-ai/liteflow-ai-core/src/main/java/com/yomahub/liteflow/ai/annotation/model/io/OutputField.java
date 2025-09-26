@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  * 此注解应在 {@link AIOutput#mapping()} 数组中使用。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OutputField {

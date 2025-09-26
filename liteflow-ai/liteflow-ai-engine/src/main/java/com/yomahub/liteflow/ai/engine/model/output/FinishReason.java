@@ -4,7 +4,7 @@ package com.yomahub.liteflow.ai.engine.model.output;
  * 模型生成停止原因
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public enum FinishReason {

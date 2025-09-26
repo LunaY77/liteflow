@@ -16,7 +16,7 @@ import java.util.Objects;
  * 动态代理，从 AI 组件持有类中获取 AI 组件接口并动态代理为具体的 AI 组件实现类，最终注册到 Spring 容器和 LiteFlow 容器中。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 public class AIComponentBeanPostProcessor implements BeanPostProcessor {
 

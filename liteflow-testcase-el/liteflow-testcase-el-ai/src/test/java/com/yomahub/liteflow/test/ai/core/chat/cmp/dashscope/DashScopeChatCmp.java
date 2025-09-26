@@ -9,13 +9,6 @@ import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 import com.yomahub.liteflow.ai.util.TriState;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
-
 @AIComponent(
         nodeId = "DashScopeChat",
         nodeName = "DashScopeChat",

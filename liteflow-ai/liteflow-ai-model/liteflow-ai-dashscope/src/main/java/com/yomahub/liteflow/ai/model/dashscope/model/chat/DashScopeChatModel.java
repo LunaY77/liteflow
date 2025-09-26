@@ -8,7 +8,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
  * DashScope 聊天模型类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class DashScopeChatModel extends AbstractChatModel {

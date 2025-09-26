@@ -27,7 +27,7 @@ import java.util.Set;
  * 将接口存入 {@link AIComponentHolder} 注册为 {@link BeanDefinition} 到 Spring 容器中。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 public class AIComponentProxyRegistrar implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
 

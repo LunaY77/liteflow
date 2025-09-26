@@ -9,7 +9,7 @@ import java.util.Map;
  * 对话配置信息
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ChatConfig extends ModelConfig {

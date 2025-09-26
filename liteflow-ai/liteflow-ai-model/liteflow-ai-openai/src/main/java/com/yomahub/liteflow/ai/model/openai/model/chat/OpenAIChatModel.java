@@ -8,7 +8,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
  * OpenAI 聊天模型实现类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class OpenAIChatModel extends AbstractChatModel {

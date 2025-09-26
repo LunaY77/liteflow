@@ -17,7 +17,6 @@ import javax.annotation.Resource;
  * 分类节点测试类
  *
  * @author 苍镜月
- * @since TODO
  */
 
 @TestPropertySource(properties = { "spring.config.location=classpath:core/classify/application.yaml" })

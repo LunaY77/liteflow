@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * 流式消息协议类型枚举
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public enum StreamingProtocolType {

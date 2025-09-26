@@ -27,7 +27,7 @@ import java.util.stream.StreamSupport;
  * DashScope 协议转换器(和 OpenAI 基本一致)
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class DashScopeProtocolTransformer implements ProtocolTransformer {

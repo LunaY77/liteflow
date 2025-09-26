@@ -16,7 +16,7 @@ import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
  * DashScope 模型提供者注册类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class DashScopeModelProvider extends ModelProviderRegistrar {

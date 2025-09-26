@@ -4,7 +4,7 @@ package com.yomahub.liteflow.ai.engine.interact.protocol;
  * 流式消息块
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class StreamingProtocolChunk {

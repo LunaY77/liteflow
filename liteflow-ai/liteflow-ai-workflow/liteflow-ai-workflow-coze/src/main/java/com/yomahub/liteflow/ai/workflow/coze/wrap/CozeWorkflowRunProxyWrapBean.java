@@ -8,7 +8,7 @@ import com.yomahub.liteflow.ai.workflow.coze.annotation.CozeWorkflowRun;
  * Coze工作流运行代理包装Bean
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class CozeWorkflowRunProxyWrapBean extends AIProxyWrapBean<CozeWorkflowRun> {

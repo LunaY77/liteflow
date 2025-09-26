@@ -4,13 +4,6 @@ import com.yomahub.liteflow.ai.engine.tool.annotation.Tool;
 import com.yomahub.liteflow.ai.engine.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
-
 @Component
 public class ToolConfig {
 

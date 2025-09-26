@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * AI 分类节点注解
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @Retention(RetentionPolicy.RUNTIME)

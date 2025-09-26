@@ -12,7 +12,7 @@ import java.util.List;
  * 大模型消息
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @JsonPropertyOrder({"role", "content", "tool_calls"})

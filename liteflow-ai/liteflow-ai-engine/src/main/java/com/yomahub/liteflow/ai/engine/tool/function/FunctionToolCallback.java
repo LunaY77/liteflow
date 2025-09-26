@@ -20,7 +20,7 @@ import java.util.function.Supplier;
  * @param <I> 工具函数的输入参数类型 (Request DTO)
  * @param <O> 工具函数的输出参数类型 (Response DTO)
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class FunctionToolCallback<I, O> implements ToolCallBack {

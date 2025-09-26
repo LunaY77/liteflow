@@ -9,7 +9,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
  * 将不同厂商大模型响应转换为 LiteFlow-AI 支持的统一格式。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface ProtocolTransformer extends ChunkTransformer {

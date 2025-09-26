@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * 传输方式枚举
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public enum TransportType {

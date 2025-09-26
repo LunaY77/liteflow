@@ -4,7 +4,7 @@ package com.yomahub.liteflow.ai.engine.model.output;
  * AI响应类型枚举
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 public enum ResponseType {
     /**

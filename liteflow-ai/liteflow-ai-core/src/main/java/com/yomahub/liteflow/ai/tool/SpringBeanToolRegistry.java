@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 对于 Spring 环境下的工具注册中心实现，用户可以将 Tool 注册为 Spring Bean 从而被该类自动发现与注册。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class SpringBeanToolRegistry implements ToolRegistry {

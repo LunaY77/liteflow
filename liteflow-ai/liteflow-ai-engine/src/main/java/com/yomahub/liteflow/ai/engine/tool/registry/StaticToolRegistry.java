@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 静态的工具注册
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class StaticToolRegistry implements ToolRegistry {

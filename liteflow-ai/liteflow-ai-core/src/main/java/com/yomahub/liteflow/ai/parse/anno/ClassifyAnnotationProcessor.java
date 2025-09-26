@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * AI 意图识别注解处理器
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ClassifyAnnotationProcessor extends AbstractAnnotationProcessor<AIClassify, ParsedClassifyAnnotationConfig> {

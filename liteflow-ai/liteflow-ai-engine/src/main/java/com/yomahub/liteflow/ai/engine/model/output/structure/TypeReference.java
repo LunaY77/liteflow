@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
  * 保存泛型信息，绕开 java 泛型擦除
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public abstract class TypeReference<T> {

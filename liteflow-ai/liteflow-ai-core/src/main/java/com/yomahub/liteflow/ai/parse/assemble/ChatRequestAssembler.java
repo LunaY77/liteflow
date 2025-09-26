@@ -22,7 +22,7 @@ import static com.yomahub.liteflow.ai.util.SetUtil.setIfPresent;
  * ChatRequest 组装器
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnnotationConfig> {

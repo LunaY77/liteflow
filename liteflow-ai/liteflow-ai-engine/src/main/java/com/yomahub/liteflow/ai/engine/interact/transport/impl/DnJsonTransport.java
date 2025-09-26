@@ -29,7 +29,7 @@ import java.util.Objects;
  * 3. 尝试将每一行解析为一个 JSON 对象，并将其作为一条消息传递给 listener。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class DnJsonTransport implements Transport, Callback {

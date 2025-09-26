@@ -7,7 +7,7 @@ import java.io.InputStream;
  * 提示词资源接口
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface PromptResource {

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * AI 模型属性注册中心，用于注册和管理 AI 模型属性
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class LiteFlowAIModelPropertyRegistry {

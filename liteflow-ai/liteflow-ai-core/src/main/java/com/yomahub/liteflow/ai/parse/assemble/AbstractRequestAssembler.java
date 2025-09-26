@@ -12,7 +12,7 @@ import com.yomahub.liteflow.log.LFLoggerManager;
  * 抽象请求组装器
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public abstract class AbstractRequestAssembler<C extends ParsedAnnotationConfig> implements RequestAssembler<C> {

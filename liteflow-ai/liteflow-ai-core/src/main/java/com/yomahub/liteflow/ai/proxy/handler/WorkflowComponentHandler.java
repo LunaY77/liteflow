@@ -14,7 +14,7 @@ import java.lang.annotation.Annotation;
  * 处理同时带有工作流注解和 @AIComponent 注解的组件
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 public abstract class WorkflowComponentHandler<T extends Annotation> extends AbstractAIComponentHandler<T> {
 

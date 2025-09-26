@@ -6,7 +6,7 @@ import com.yomahub.liteflow.ai.parse.prompt.resource.PromptResource;
  * 提示词资源加载器接口
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface PromptResourceLoader {

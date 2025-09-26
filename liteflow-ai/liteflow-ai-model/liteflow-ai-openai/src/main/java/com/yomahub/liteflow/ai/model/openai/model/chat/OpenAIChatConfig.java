@@ -10,7 +10,7 @@ import java.util.Objects;
  * OpenAI 聊天配置类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class OpenAIChatConfig extends ChatConfig {

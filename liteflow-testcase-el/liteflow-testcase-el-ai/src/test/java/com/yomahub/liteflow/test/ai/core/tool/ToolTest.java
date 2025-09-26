@@ -19,12 +19,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import javax.annotation.Resource;
 
-/**
- * TODO
- *
- * @author 苍镜月
- * @since TODO
- */
 
 @TestPropertySource(properties = {"spring.config.location=classpath:core/tool/application.yaml"})
 @SpringBootTest(classes = {ToolTest.class, ToolConfig.class, SpringUtil.class})

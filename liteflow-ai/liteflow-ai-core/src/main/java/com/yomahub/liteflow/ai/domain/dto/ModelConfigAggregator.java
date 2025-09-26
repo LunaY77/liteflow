@@ -17,7 +17,7 @@ import java.util.Objects;
  * 模型配置聚合(与 {@link AIComponent} 相互映射)
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public final class ModelConfigAggregator {

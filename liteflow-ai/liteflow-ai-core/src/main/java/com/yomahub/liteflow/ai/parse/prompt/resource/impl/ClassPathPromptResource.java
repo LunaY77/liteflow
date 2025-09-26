@@ -11,7 +11,7 @@ import java.util.Objects;
  * 类路径
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ClassPathPromptResource extends AbstractPromptResource {

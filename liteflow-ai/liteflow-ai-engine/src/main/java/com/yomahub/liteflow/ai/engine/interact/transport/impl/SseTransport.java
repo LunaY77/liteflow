@@ -23,7 +23,7 @@ import java.util.Objects;
  * Sse传输实现，基于Server-Sent Events的非阻塞式传输
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class SseTransport extends EventSourceListener implements Transport {

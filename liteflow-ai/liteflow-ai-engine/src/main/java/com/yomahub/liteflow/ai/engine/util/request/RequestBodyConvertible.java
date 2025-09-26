@@ -4,7 +4,7 @@ package com.yomahub.liteflow.ai.engine.util.request;
  * 实现该接口的类可以转换为请求体。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface RequestBodyConvertible {

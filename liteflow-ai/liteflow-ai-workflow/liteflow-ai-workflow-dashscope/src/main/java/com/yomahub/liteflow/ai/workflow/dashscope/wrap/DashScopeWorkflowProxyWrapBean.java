@@ -8,7 +8,7 @@ import com.yomahub.liteflow.ai.workflow.dashscope.annotation.DashScopeWorkflow;
  * DashScope 工作流代理包装Bean
  * 
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 public class DashScopeWorkflowProxyWrapBean extends AIProxyWrapBean<DashScopeWorkflow> {
 

@@ -11,7 +11,7 @@ import java.util.Optional;
  * 抽象提示词资源实现类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public abstract class AbstractPromptResource implements PromptResource {

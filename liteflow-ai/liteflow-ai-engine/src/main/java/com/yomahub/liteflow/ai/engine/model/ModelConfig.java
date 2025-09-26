@@ -15,7 +15,7 @@ import java.util.Objects;
  * 模型配置信息
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvertible {

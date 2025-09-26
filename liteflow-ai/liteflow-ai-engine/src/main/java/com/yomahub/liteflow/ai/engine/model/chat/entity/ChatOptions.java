@@ -7,7 +7,7 @@ import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
  * 对话选项配置
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ChatOptions implements ModelOptions {

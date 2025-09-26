@@ -9,7 +9,7 @@ import java.util.*;
  * 如果存在多个工具注册器，这个类可以将它们组合起来，
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class DelegatingToolRegistry implements ToolRegistry {

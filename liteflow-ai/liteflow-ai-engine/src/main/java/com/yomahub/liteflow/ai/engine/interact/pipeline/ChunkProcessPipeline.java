@@ -9,7 +9,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
  * 流式消息处理管道
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ChunkProcessPipeline {

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * OpenAI 模型自动配置类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @Configuration

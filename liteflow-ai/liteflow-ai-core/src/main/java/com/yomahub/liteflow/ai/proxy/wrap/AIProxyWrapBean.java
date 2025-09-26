@@ -9,7 +9,7 @@ import java.lang.annotation.Annotation;
  * AI节点包装 Bean
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public abstract class AIProxyWrapBean<T extends Annotation> {

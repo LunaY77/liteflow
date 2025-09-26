@@ -7,7 +7,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
  * 对消息全部发送完毕并转换后的结果进行处理的接口。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public interface ResultHandler {

@@ -32,7 +32,7 @@ import java.util.function.Consumer;
  * 抽象粉色奶龙处理器
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public abstract class AbstractAnnotationProcessor<A extends Annotation, C extends ParsedAnnotationConfig> implements AnnotationProcessor<A, C>, InitializingBean {

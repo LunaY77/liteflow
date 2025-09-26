@@ -14,7 +14,7 @@ import java.util.Objects;
  *
  * @param <I> 工具函数的输入参数类型 (Request DTO)
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ToolDefinition<I> {

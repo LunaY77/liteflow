@@ -14,7 +14,7 @@ import java.util.Optional;
  * 文本
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class TextPromptResource extends AbstractPromptResource {

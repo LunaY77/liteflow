@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * 抽象聊天模型类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public abstract class AbstractChatModel implements ChatModel {

@@ -17,7 +17,7 @@ import java.util.Objects;
  * 同时实现了 {@link AutoCloseable} 接口，可以使用 try-with-resource 进行资源管理</p>
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public final class HttpUtil implements AutoCloseable {

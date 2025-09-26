@@ -6,7 +6,7 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
  * 解析后的注解配置类
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 public class ParsedAnnotationConfig {

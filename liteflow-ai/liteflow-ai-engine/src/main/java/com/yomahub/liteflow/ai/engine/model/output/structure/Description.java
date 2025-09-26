@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 描述注解，用于为类或字段添加描述信息。
  *
  * @author 苍镜月
- * @since TODO
+ * @since 2.16.0
  */
 
 @Target({ElementType.FIELD, ElementType.TYPE})
