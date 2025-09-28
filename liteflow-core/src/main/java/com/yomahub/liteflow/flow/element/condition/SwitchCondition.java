@@ -185,6 +185,7 @@ public class SwitchCondition extends AbstractParallelCondition {
 				WhenCondition whenCondition = new WhenCondition();
 				matchedExecutors.forEach(whenCondition::addExecutable);
 				whenCondition.setThreadExecutorClass(this.getThreadPoolExecutorClass());
+                whenCondition.setCurrChainId(this.getCurrChainId());
 				whenCondition.executeCondition(slotIndex);
 			} else {
 				for (Executable targetExecutor : matchedExecutors) {
