@@ -105,4 +105,39 @@ public class LiteflowContextRegexMatcher {
             }catch (Exception ignore){}
         }
     }
+
+    public static void searchAndSetContext(List<Tuple> contextList, String methodExpress, Map<String, Object> mapArgs){
+        // 把上下文数据转换成map形式的，key为别名，value为上下文
+        Map<String, Object> contextMap = contextList.stream().collect(
+                Collectors.toMap(tuple -> tuple.get(0), tuple -> tuple.get(1))
+        );
+
+        List<String> errorList = new ArrayList<>();
+
+        boolean flag = false;
+
+        for(Map.Entry<String, Object> entry : contextMap.entrySet()){
+            try{
+                InstructionSet instructionSet = expressRunner.getInstructionSetFromLocalCache(StrUtil.format("{}.{}", entry.getKey(), methodExpress));
+                DefaultContext<String, Object> context = new DefaultContext<>();
+                context.put(entry.getKey(), entry.getValue());
+                context.putAll(mapArgs);
+                expressRunner.execute(instructionSet, context, errorList, false, false);
+                flag = true;
+                break;
+            }catch (Exception ignore){}
+        }
+
+        // 根据表达式去上下文里搜索相匹配的数据
+        if (BooleanUtil.isFalse(flag)){
+            try{
+                // 如果没有搜到，那么尝试推断表达式是指定的上下文，按照指定上下文的方式去再获取
+                InstructionSet instructionSet = expressRunner.getInstructionSetFromLocalCache(StrUtil.format("contextMap.{}", methodExpress));
+                DefaultContext<String, Object> context = new DefaultContext<>();
+                context.put("contextMap", contextMap);
+                context.putAll(mapArgs);
+                expressRunner.execute(instructionSet, context, errorList, false, false);
+            }catch (Exception ignore){}
+        }
+    }
 }
