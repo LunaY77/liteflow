@@ -8,7 +8,6 @@ import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformerFactory;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.log.EngineLog;
 import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
@@ -83,7 +82,7 @@ public class LlmInteractClient implements InteractClient {
             this.pipeline = request.isStreaming()
                     ? ChunkProcessPipeline.createStreamingPipeline(context, protocolTransformer, request.getChunkCallbackTransformer())
                     : ChunkProcessPipeline.createBlockingPipeline(context, protocolTransformer);
-            this.transport = TransportType.getTransportInstance(request.getTransportType());
+            this.transport = request.getTransportType().getTransportInstance();
             this.externalTransportListener = request.getTransportListener();
             this.resultHandler = request.getResultHandler();
             this.internalTransportListener = new InternalTransportListener();
@@ -205,8 +204,8 @@ public class LlmInteractClient implements InteractClient {
                     .stream()
                     .filter(tool -> Objects.equals(tool.getName(), toolCall.getName()))
                     .findFirst()
-                    .orElseThrow(() ->
-                            new LiteFlowAIEngineException("Unable to find target tool with tool name: " + toolCall.getName()));
+                    .orElseThrow(() -> new LiteFlowAIEngineException(
+                            "Unable to find target tool with tool name: " + toolCall.getName()));
             // 调用工具
             String toolResult = toolCallBack.call(toolCall.getArguments().toString());
             // 返回工具调用结果
