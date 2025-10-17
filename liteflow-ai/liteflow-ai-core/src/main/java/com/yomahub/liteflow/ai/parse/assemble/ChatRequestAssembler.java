@@ -55,7 +55,7 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnn
         setIfPresent(optionsBuilder::topK, config.getTopK());
         setIfPresent(optionsBuilder::maxTokens, config.getMaxTokens());
         setIfPresent(optionsBuilder::seed, config.getSeed());
-        setIfPresent(optionsBuilder::enableThinking, config.getEnableThinking().toBool());
+        setIfPresent(optionsBuilder::enableThinking, config.getEnableThinking());
         builder.options(optionsBuilder.build());
 
         // 3. Message

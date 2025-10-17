@@ -4,16 +4,17 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
+import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.util.TriState;
 
 @AIComponent(
         nodeId = "ollamaStreamingToolCmpId",
         nodeName = "ollamaStreamingToolCmpName",
-        provider = "ollama",
+        provider = ProviderEnum.OLLAMA,
         apiUrl = "http://localhost:11434",
         model = "qwen3:32b",
-        enableThinking = TriState.TRUE,
+        enableThinking = true,
         readTimeout = "10m",
         connectTimeout = "10m"
 )

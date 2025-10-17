@@ -4,16 +4,17 @@ import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
+import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.util.TriState;
 
 @AIComponent(
         nodeId = "openaiBlockingToolCmpId",
         nodeName = "openaiBlockingToolCmpName",
-        provider = "openai",
+        provider = ProviderEnum.OPENAI,
         apiUrl = "https://ark.cn-beijing.volces.com/api/v3",
         model = "doubao-seed-1-6-250615",
-        enableThinking = TriState.FALSE,
+        enableThinking = false,
         readTimeout = "10m",
         connectTimeout = "10m"
 )

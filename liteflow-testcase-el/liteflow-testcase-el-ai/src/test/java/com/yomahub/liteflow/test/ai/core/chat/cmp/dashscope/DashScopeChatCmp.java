@@ -5,17 +5,17 @@ import com.yomahub.liteflow.ai.annotation.model.io.AIInput;
 import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
+import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
-import com.yomahub.liteflow.ai.util.TriState;
 
 @AIComponent(
         nodeId = "DashScopeChat",
         nodeName = "DashScopeChat",
-        provider = "dashscope",
-        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        provider = ProviderEnum.DASHSCOPE,
+//        apiUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1",
         model = "qwen-flash",
-        enableThinking = TriState.FALSE,
+        enableThinking = false,
         readTimeout = "10m",
         connectTimeout = "10m"
 )

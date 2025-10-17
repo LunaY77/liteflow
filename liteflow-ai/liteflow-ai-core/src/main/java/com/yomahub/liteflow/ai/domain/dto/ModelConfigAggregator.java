@@ -47,11 +47,11 @@ public final class ModelConfigAggregator {
     private final Duration connectTimeout;
     private final Duration readTimeout;
     private final int maxRetries;
-    private final TriState logRequests;
-    private final TriState logResponses;
+    private final boolean logRequests;
+    private final boolean logResponses;
     // --- 其他参数 ---
     private final List<KeyValue> customHeaders;
-    private final TriState enableThinking;
+    private final boolean enableThinking;
 
     /**
      * 从 {@link AIComponent} 注解中解析模型配置
@@ -61,12 +61,12 @@ public final class ModelConfigAggregator {
      */
     public static ModelConfigAggregator parseFromAnnotation(AIComponent aiComponent) {
         return new ModelConfigAggregator(
-                aiComponent.provider(),
+                aiComponent.provider().getProviderName(),
                 aiComponent.apiUrl(),
                 aiComponent.endPoint(),
                 aiComponent.model(),
                 SpringUtil.getBean(LiteFlowAIModelPropertyRegistry.class)
-                        .getApiKey(aiComponent.provider()).orElse(null),
+                        .getApiKey(aiComponent.provider().getProviderName()).orElse(null),
                 aiComponent.version(),
                 aiComponent.temperature(),
                 aiComponent.topP(),
@@ -96,8 +96,8 @@ public final class ModelConfigAggregator {
                                   double repeatPenalty, double presencePenalty,
                                   double frequencyPenalty, TriState parallelToolCalls,
                                   TriState autoToolCallEnabled, Duration connectTimeout,
-                                  Duration readTimeout, int maxRetries, TriState logRequests,
-                                  TriState logResponses, List<KeyValue> customHeaders, TriState enableThinking) {
+                                  Duration readTimeout, int maxRetries, boolean logRequests,
+                                  boolean logResponses, List<KeyValue> customHeaders, boolean enableThinking) {
         this.provider = provider;
         this.apiUrl = apiUrl;
         this.endPoint = endPoint;
@@ -149,10 +149,10 @@ public final class ModelConfigAggregator {
                 Duration.ofSeconds(60),
                 Duration.ofSeconds(60),
                 -1,
-                TriState.UNSET,
-                TriState.UNSET,
+                false,
+                false,
                 Collections.emptyList(),
-                TriState.UNSET
+                true
         );
     }
 
@@ -236,11 +236,11 @@ public final class ModelConfigAggregator {
         return maxRetries;
     }
 
-    public TriState getLogRequests() {
+    public boolean getLogRequests() {
         return logRequests;
     }
 
-    public TriState getLogResponses() {
+    public boolean getLogResponses() {
         return logResponses;
     }
 
@@ -248,7 +248,7 @@ public final class ModelConfigAggregator {
         return customHeaders;
     }
 
-    public TriState getEnableThinking() {
+    public boolean getEnableThinking() {
         return enableThinking;
     }
 }

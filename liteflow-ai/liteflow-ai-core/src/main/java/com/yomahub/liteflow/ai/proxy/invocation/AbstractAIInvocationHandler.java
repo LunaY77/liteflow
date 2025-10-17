@@ -84,9 +84,6 @@ public abstract class AbstractAIInvocationHandler<T extends AIProxyWrapBean<?>> 
         if (SetUtil.isNotPresent(modelConfigAggregator.getProvider())) {
             throw new LiteFlowAIException("Provider cannot be empty for AI node: " + wrapBean.getNodeId());
         }
-        if (SetUtil.isNotPresent(modelConfigAggregator.getApiUrl())) {
-            throw new LiteFlowAIException("API URL cannot be empty for AI node: " + wrapBean.getNodeId());
-        }
         if (SetUtil.isNotPresent(modelConfigAggregator.getModel())) {
             throw new LiteFlowAIException("Model cannot be empty for AI node: " + wrapBean.getNodeId());
         }

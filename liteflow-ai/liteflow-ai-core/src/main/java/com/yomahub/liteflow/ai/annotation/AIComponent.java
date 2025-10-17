@@ -2,6 +2,7 @@ package com.yomahub.liteflow.ai.annotation;
 
 import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
+import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.util.KeyValue;
 import com.yomahub.liteflow.ai.util.TriState;
 
@@ -30,8 +31,10 @@ public @interface AIComponent {
 
     /**
      * AI 厂商 (e.g. openai, ollama, etc.)
+     *
+     * @see com.yomahub.liteflow.ai.domain.enums.ProviderEnum
      */
-    String provider() default "";
+    ProviderEnum provider() default ProviderEnum.OPENAI;
 
     /**
      * 节点 ID
@@ -263,13 +266,15 @@ public @interface AIComponent {
 
     /**
      * 是否记录请求日志
+     * TODO not implement
      */
-    TriState logRequests() default TriState.UNSET;
+    boolean logRequests() default false;
 
     /**
      * 是否记录响应日志
+     * TODO not implement
      */
-    TriState logResponses() default TriState.UNSET;
+    boolean logResponses() default false;
 
     // --- 其他参数 ---
     /**
@@ -280,6 +285,6 @@ public @interface AIComponent {
     /**
      * 是否开启思考模式
      */
-    TriState enableThinking() default TriState.UNSET;
+    boolean enableThinking() default true;
 
 }

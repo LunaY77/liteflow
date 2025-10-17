@@ -58,7 +58,7 @@ public class ClassifyRequestAssembler extends AbstractRequestAssembler<ParsedCla
         setIfPresent(optionsBuilder::topK, config.getTopK());
         setIfPresent(optionsBuilder::maxTokens, config.getMaxTokens());
         setIfPresent(optionsBuilder::seed, config.getSeed());
-        setIfPresent(optionsBuilder::enableThinking, config.getEnableThinking().toBool());
+        setIfPresent(optionsBuilder::enableThinking, config.getEnableThinking());
         builder.options(optionsBuilder.build());
 
 

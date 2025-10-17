@@ -6,7 +6,6 @@ import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
-import com.yomahub.liteflow.ai.util.SpringUtil;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.test.ai.core.tool.tools.ToolConfig;
@@ -21,7 +20,7 @@ import javax.annotation.Resource;
 
 
 @TestPropertySource(properties = {"spring.config.location=classpath:core/tool/application.yaml"})
-@SpringBootTest(classes = {ToolTest.class, ToolConfig.class, SpringUtil.class})
+@SpringBootTest(classes = {ToolTest.class, ToolConfig.class})
 @EnableAutoConfiguration
 @ComponentScan({"com.yomahub.liteflow.test.ai.core.tool.cmp"})
 public class ToolTest {

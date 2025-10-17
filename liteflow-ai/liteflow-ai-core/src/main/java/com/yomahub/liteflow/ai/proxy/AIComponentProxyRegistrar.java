@@ -61,10 +61,14 @@ public class AIComponentProxyRegistrar implements BeanDefinitionRegistryPostProc
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         // 检查是否启用 AI 组件，如果未启用则不进行任何操作
-        if (Boolean.FALSE.equals(enable)) return;
+        if (Boolean.FALSE.equals(enable)) {
+            return;
+        }
 
         // 检查是否有包路径，如果没有则不进行任何操作
-        if (basePackages.isEmpty()) return;
+        if (basePackages.isEmpty()) {
+            return;
+        }
 
         // 创建类路径扫描器
         ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false) {

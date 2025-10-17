@@ -45,7 +45,7 @@ public class LiteFlowAIAutoConfiguration {
     }
 
     @Bean
-    public static AIComponentProxyRegistrar aiComponentProxyRegistrar() {
+    public AIComponentProxyRegistrar aiComponentProxyRegistrar() {
         return new AIComponentProxyRegistrar();
     }
 

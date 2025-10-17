@@ -4,7 +4,6 @@ import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
 import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
-import com.yomahub.liteflow.ai.util.SpringUtil;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +16,7 @@ import org.springframework.test.context.TestPropertySource;
 import javax.annotation.Resource;
 
 @TestPropertySource(properties = {"spring.config.location=classpath:core/chat/application.yaml"})
-@SpringBootTest(classes = {ChatTest.class, SpringUtil.class})
+@SpringBootTest(classes = {ChatTest.class})
 @EnableAutoConfiguration
 @ComponentScan({"com.yomahub.liteflow.test.ai.core.chat.cmp"})
 public class ChatTest {

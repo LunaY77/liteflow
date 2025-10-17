@@ -45,6 +45,7 @@ public abstract class AbstractAIComponentHandler<T extends Annotation> implement
      * @param aiComponent    AI组件注解
      * @return NodeComponent实例
      */
+    @Override
     public NodeComponent createAIComponent(Class<?> interfaceClass, String beanName, AIComponent aiComponent) {
         LOG.info("Creating AI component for interface: {}, beanName: {}, type: {}",
                 interfaceClass.getName(), beanName, getAIType());
