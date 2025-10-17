@@ -6,7 +6,6 @@ import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
-import com.yomahub.liteflow.ai.util.TriState;
 
 @AIComponent(
         nodeId = "dashscopeBlockingToolCmpId",

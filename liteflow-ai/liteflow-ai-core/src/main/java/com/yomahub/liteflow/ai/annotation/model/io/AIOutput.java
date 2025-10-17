@@ -27,70 +27,42 @@ public @interface AIOutput {
     ResponseType responseType() default ResponseType.TEXT;
 
     /**
-     * 输出数据的映射表达式（必需）。
+     * 输出数据的映射方法表达式 (必需)。
      * <p>
-     * 用于将组件的输出结果映射到 LiteFlow 上下文中。
-     * 表达式的值应为上下文中目标对象的 <b>set 方法名</b>。
+     * 用于将组件的输出结果通过表达式设置到 LiteFlow 的上下文中。
+     *
+     * <p>
+     * <b>占位符使用约定:</b>
      * <ul>
-     * <li>
-     * <b>例如:</b><br>
-     * 要将输出数据设置到 {@code DefaultContext} 的内部 map 中，表达式应为 {@code "setData"}。
-     * 这会最终调用 {@link com.yomahub.liteflow.slot.DefaultContext#setData(String, Object)} 方法。
+     * <li>表达式中必须包含<b>且仅包含一个</b>用于AI输出结果的占位符。</li>
+     * <li>占位符必须是一个以 {@code $} 符号开头的变量名 (例如: {@code $output}, {@code $result})。</li>
+     * <li>在运行时，框架会将此占位符替换为实际的AI输出结果。</li>
+     * </ul>
+     *
+     * <b>关于字符串字面量与转义字符的说明:</b>
+     * <p>
+     * 当你的表达式需要包含一个字符串字面量参数时（例如Map的key），你必须用双引号将其包裹。
+     * 由于 {@code methodExpress} 本身就是一个Java字符串，因此内部的双引号必须使用反斜杠 ({@code \}) 进行转义。
+     * 这是Java语言的标准要求。
+     * <p>
+     * <b>例如:</b> 如果你想调用 {@code setMap("myKey", <AI输出结果>)}，那么表达式必须写成:
+     * {@code "setMap(\"myKey\", $output)"}
+     *
+     * <p>
+     * <b>更多示例:</b>
+     * <ul>
+     * <li><b>简单设置:</b> {@code "setProductName($output)"}<br>
+     * 最终执行: {@code context.setProductName("AI的输出结果")}
      * </li>
-     * <li>
-     * <b>例如:</b><br>
-     * 要将输出数据设置到 自定义 Context 的 String 对象 {@code productName} 中，表达式应为 {@code "setProductName"}。
-     * 这会最终调用 自定义上下文的 {@code setProductName(String)} 方法。
+     * <li><b>设置到DefaultContext的Map中:</b> {@code "setData(\"productName\", $result)"}<br>
+     * 最终执行: {@code defaultContext.setData("productName", "AI的输出结果")}
+     * </li>
+     * <li><b>通过索引设置到List或数组中:</b> {@code "setProducts(0, $product)"}<br>
+     * 最终执行: {@code context.setProducts(0, "AI的输出结果")}
      * </li>
      * </ul>
      */
-    String methodExpress() default "setData";
-
-    /**
-     * 是否启用“按键名/索引”的映射策略（默认为 false）。
-     * <p>
-     * 当为 {@code true} 时，框架将使用 {@code key()} 或 {@code index()} 的值，
-     * 配合 {@link AIOutput#methodExpress()} 来定位上下文中的目标位置。
-     * <p>
-     * 当为 {@code false} 时，{@code key()} 和 {@code index()} 的值将被忽略。
-     * 直接使用 {@link AIOutput#methodExpress()} 指定的方法名来设置数据。
-     */
-    boolean useKeyIndex() default false;
-
-    /**
-     * 如需启用，请开启 {@link AIOutput#useKeyIndex()}
-     * <p>
-     * 键名（非必填），用于向 Map 类型的目标输出数据。
-     * <p>
-     * 当输出目标是 {@code Map} 或其他键值对结构时，此参数用于指定存入数据时所使用的键。
-     * 默认值为空字符串
-     * <ul>
-     * <li>
-     * <b>例如:</b><br>
-     * 当使用 {@code "setData"} 表达式映射到 {@code DefaultContext} 的 dataMap 时，
-     * 若指定 {@code key = "myResult"}，则输出数据会以 "myResult" 为键存入 Map 中。
-     * </li>
-     * </ul>
-     * <b>注意：</b>此参数与 {@code index()} 参数互斥，不应同时设置。
-     */
-    String key() default "";
-
-    /**
-     * 如需启用，请开启 {@link AIOutput#useKeyIndex()}
-     * <p>
-     * 索引（非必填），用于向 List 或数组类型的目标输出数据。
-     * <p>
-     * 当输出目标是 {@code List}、数组或其它按索引访问的集合时，此参数用于指定存入数据时的位置。
-     * 它的默认值为 {@code -1}，这个特殊值表示用户未设置此索引。
-     * <ul>
-     * <li>
-     * <b>例如:</b><br>
-     * 若输出目标是上下文中的一个 List 对象，指定 {@code index = 0} 会将数据设置或替换到 List 的第一个位置。
-     * </li>
-     * </ul>
-     * <b>注意：</b>此参数与 {@code key()} 参数互斥，不应同时设置。
-     */
-    int index() default -1;
+    String methodExpress() default "setData(\"result\", $output)";
 
     /**
      * Json 输出的目标类名，格式为 {@code com.example.MyEntity} 或 {@code java.util.List<com.example.MyEntity>} 或 {@code java.util.Map<String, com.example.MyEntity>}

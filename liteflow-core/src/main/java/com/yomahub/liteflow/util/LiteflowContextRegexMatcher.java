@@ -1,6 +1,5 @@
 package com.yomahub.liteflow.util;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Tuple;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
@@ -9,12 +8,8 @@ import com.ql.util.express.ExpressRunner;
 import com.ql.util.express.InstructionSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

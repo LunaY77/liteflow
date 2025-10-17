@@ -28,9 +28,7 @@ import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
         }
 )
 @AIOutput(
-        methodExpress = "setData",
-        useKeyIndex = true,
-        key = "result"
+        methodExpress = "setData(\"result\", $result)"
 )
 public interface OpenAIMultiClassifyCmp {
 }

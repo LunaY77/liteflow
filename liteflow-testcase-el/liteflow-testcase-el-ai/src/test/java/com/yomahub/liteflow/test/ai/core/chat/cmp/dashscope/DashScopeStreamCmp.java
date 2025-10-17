@@ -33,9 +33,7 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 @AIOutput(
         responseType = ResponseType.TEXT,
         typeName = "com.yomahub.liteflow.test.ai.core.chat.cmp.Output",
-        methodExpress = "setData",
-        useKeyIndex = true,
-        key = "result"
+        methodExpress = "setData(\"result\", $result)"
 )
 public interface DashScopeStreamCmp {
 }

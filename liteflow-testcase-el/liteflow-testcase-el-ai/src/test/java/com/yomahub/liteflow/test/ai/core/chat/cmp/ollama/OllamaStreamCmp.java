@@ -8,7 +8,6 @@ import com.yomahub.liteflow.ai.annotation.model.node.AIChat;
 import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
-import com.yomahub.liteflow.ai.util.TriState;
 
 @AIComponent(
         nodeId = "OllamaStream",
@@ -34,9 +33,7 @@ import com.yomahub.liteflow.ai.util.TriState;
 @AIOutput(
         responseType = ResponseType.TEXT,
         typeName = "com.yomahub.liteflow.test.ai.core.chat.cmp.Output",
-        methodExpress = "setData",
-        useKeyIndex = true,
-        key = "result"
+        methodExpress = "setData(\"result\", $result)"
 )
 public interface OllamaStreamCmp {
 }

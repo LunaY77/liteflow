@@ -6,7 +6,6 @@ import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
 import com.yomahub.liteflow.ai.annotation.model.io.InputField;
 import com.yomahub.liteflow.ai.annotation.model.node.AIClassify;
 import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
-import com.yomahub.liteflow.ai.util.TriState;
 
 @AIComponent(
         nodeId = "openaiSwitch",
@@ -28,9 +27,7 @@ import com.yomahub.liteflow.ai.util.TriState;
         }
 )
 @AIOutput(
-        methodExpress = "setData",
-        useKeyIndex = true,
-        key = "result"
+        methodExpress = "setData(\"result\", $result)"
 )
 public interface OpenAIClassifyCmp {
 }

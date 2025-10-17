@@ -24,39 +24,40 @@ public @interface OutputField {
     String sourceField();
 
     /**
-     * 目标方法表达式（可选）。
+     * 输出数据的映射方法表达式 (必需)。
      * <p>
-     * 用于将此字段的值设置到上下文中。
-     * <b>如果留空（默认），则会继承父注解 {@link AIOutput} 中的 {@code methodExpress()} 设置。</b>
-     */
-    String methodExpress() default "";
-
-    /**
-     * 是否启用“按键名/索引”的映射策略（默认为 false）。
-     * <p>
-     * 当为 {@code true} 时，框架将使用此注解内的 {@code key()} 或 {@code index()} 的值。
-     * <p>
-     * 当为 {@code false} 时（默认），此字段的值将直接作为参数调用 {@code methodExpress()} 指定的方法。
-     */
-    boolean useKeyIndex() default false;
-
-    /**
-     * 键名（可选），用于向 Map 类型的目标输出数据。
-     * <p>
-     * <b>注意：</b>此参数仅在当前注解的 {@code useKeyIndex()} 为 {@code true} 时生效。
-     * 它与 {@code index()} 参数互斥。
+     * 用于将组件的输出结果通过表达式设置到 LiteFlow 的上下文中。
      *
-     * @see #useKeyIndex()
-     */
-    String key() default "";
-
-    /**
-     * 索引（可选），用于向 List 或数组类型的目标输出数据。
      * <p>
-     * <b>注意：</b>此参数仅在当前注解的 {@code useKeyIndex()} 为 {@code true} 时生效。
-     * 它与 {@code key()} 参数互斥。
+     * <b>占位符使用约定:</b>
+     * <ul>
+     * <li>表达式中必须包含<b>且仅包含一个</b>用于AI输出结果的占位符。</li>
+     * <li>占位符必须是一个以 {@code $} 符号开头的变量名 (例如: {@code $output}, {@code $result})。</li>
+     * <li>在运行时，框架会将此占位符替换为实际的AI输出结果。</li>
+     * </ul>
      *
-     * @see #useKeyIndex()
+     * <b>关于字符串字面量与转义字符的说明:</b>
+     * <p>
+     * 当你的表达式需要包含一个字符串字面量参数时（例如Map的key），你必须用双引号将其包裹。
+     * 由于 {@code methodExpress} 本身就是一个Java字符串，因此内部的双引号必须使用反斜杠 ({@code \}) 进行转义。
+     * 这是Java语言的标准要求。
+     * <p>
+     * <b>例如:</b> 如果你想调用 {@code setMap("myKey", <AI输出结果>)}，那么表达式必须写成:
+     * {@code "setMap(\"myKey\", $output)"}
+     *
+     * <p>
+     * <b>更多示例:</b>
+     * <ul>
+     * <li><b>简单设置:</b> {@code "setProductName($output)"}<br>
+     * 最终执行: {@code context.setProductName("AI的输出结果")}
+     * </li>
+     * <li><b>设置到DefaultContext的Map中:</b> {@code "setData(\"productName\", $result)"}<br>
+     * 最终执行: {@code defaultContext.setData("productName", "AI的输出结果")}
+     * </li>
+     * <li><b>通过索引设置到List或数组中:</b> {@code "setProducts(0, $product)"}<br>
+     * 最终执行: {@code context.setProducts(0, "AI的输出结果")}
+     * </li>
+     * </ul>
      */
-    int index() default -1;
+    String methodExpress() default "setData(\"result\", $output)";
 }

@@ -1,5 +1,6 @@
 package com.yomahub.liteflow.ai.parse.context;
 
+import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
@@ -13,8 +14,13 @@ import com.yomahub.liteflow.ai.util.SetUtil;
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.log.LFLog;
 import com.yomahub.liteflow.log.LFLoggerManager;
+import com.yomahub.liteflow.util.LiteflowContextRegexMatcher;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * 上下文访问器
@@ -26,6 +32,8 @@ import java.util.Objects;
 public class ContextAccessor {
 
     private static final LFLog LOG = LFLoggerManager.getLogger(ContextAccessor.class);
+
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\$(\\w+)");
 
     /**
      * 根据表达式在上下文中查找值(AIInput注解使用)
@@ -86,22 +94,8 @@ public class ContextAccessor {
         NodeComponent nodeComponent = context.getNodeComponent();
         AIOutput outputAnno = context.getAiOutputAnno();
 
-        // 检查是否使用了嵌套索引
-        if (outputAnno.useKeyIndex()) {
-            // 如果同时使用了 key 和 index，则抛出异常
-            if (SetUtil.isPresent(outputAnno.key()) && SetUtil.isPresent(outputAnno.index())) {
-                throw new LiteFlowAIException("AIOutput annotation cannot use both key and index together.");
-            }
-            // 如果 key 和 index 都未设置，则抛出异常
-            if (SetUtil.isNotPresent(outputAnno.key()) && SetUtil.isNotPresent(outputAnno.index())) {
-                throw new LiteFlowAIException("AIOutput annotation must specify either key or index when useKeyIndex is true.");
-            }
-            Object key = SetUtil.isPresent(outputAnno.key()) ? outputAnno.key() : outputAnno.index();
-            nodeComponent.setContextValue(expression, key, value);
-        } else {
-            // 如果未使用嵌套索引，则直接设置值
-            nodeComponent.setContextValue(expression, value);
-        }
+        // 处理主输出表达式
+        executeExpression(nodeComponent, expression, value);
 
         // 处理输出字段映射
         if (SetUtil.isPresent(outputAnno.mapping())) {
@@ -113,28 +107,48 @@ public class ContextAccessor {
                     continue;
                 }
 
-                // 确定目标表达式，如果未指定，直接集成 AIOutput 的主表达式
-                String targetExpression = StrUtil.isNotBlank(outputField.methodExpress())
-                        ? outputField.methodExpress()
-                        : outputAnno.methodExpress();
-
-                // 使用了嵌套索引
-                if (outputAnno.useKeyIndex()) {
-                    // 如果同时使用了 key 和 index，则抛出异常
-                    if (SetUtil.isPresent(outputField.key()) && SetUtil.isPresent(outputField.index())) {
-                        throw new LiteFlowAIException("OutputField annotation cannot use both key and index together.");
-                    }
-                    // 如果 key 和 index 都未设置，则抛出异常
-                    if (SetUtil.isNotPresent(outputField.key()) && SetUtil.isNotPresent(outputField.index())) {
-                        throw new LiteFlowAIException("OutputField annotation must specify either key or index when useKeyIndex is true.");
-                    }
-                    Object key = SetUtil.isPresent(outputField.key()) ? outputField.key() : outputField.index();
-                    nodeComponent.setContextValue(targetExpression, key, fieldValue);
-                } else {
-                    // 未使用嵌套索引，直接设置值
-                    nodeComponent.setContextValue(targetExpression, fieldValue);
+                // 获取字段映射的表达式并执行
+                String fieldMethodExpress = outputField.methodExpress();
+                if (StrUtil.isNotBlank(fieldMethodExpress)) {
+                    executeExpression(nodeComponent, fieldMethodExpress, fieldValue);
                 }
             }
         }
+    }
+
+    /**
+     * 解析并执行方法表达式，将值设置到上下文中
+     *
+     * @param nodeComponent 组件实例
+     * @param methodExpress 方法表达式 (例如: "setData(\"key\", $value)")
+     * @param value         要设置的值
+     */
+    private static void executeExpression(NodeComponent nodeComponent, String methodExpress, Object value) {
+        // 查找所有占位符
+        List<String> placeholders = ReUtil.findAllGroup1(PLACEHOLDER_PATTERN, methodExpress);
+
+        // 必须有且仅有一个占位符
+        if (placeholders.isEmpty()) {
+            throw new LiteFlowAIException(StrUtil.format("Illegal method expression [{}]. Must contain one placeholder variable starting with '$' (e.g., $output).", methodExpress));
+        }
+        if (placeholders.size() > 1) {
+            throw new LiteFlowAIException(StrUtil.format("Illegal method expression [{}]. Can only contain one placeholder variable, but found {}: {}.", methodExpress, placeholders.size(), placeholders));
+        }
+
+        String placeholderVarName = placeholders.get(0);
+
+        // 移除'$'符号，生成最终给 LiteflowContextRegexMatcher 使用的表达式
+        String executionExpress = methodExpress.replace("$" + placeholderVarName, placeholderVarName);
+
+        // 准备参数 Map
+        Map<String, Object> argsMap = new HashMap<>();
+        argsMap.put(placeholderVarName, value);
+
+        // 使用 Liteflow 工具类在上下文中查找并执行表达式
+        LiteflowContextRegexMatcher.searchAndSetContext(
+                nodeComponent.getSlot().getContextBeanList(),
+                executionExpress,
+                argsMap
+        );
     }
 }
