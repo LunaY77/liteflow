@@ -1,0 +1,10 @@
+liteflow:
+  rule-source: core/structure/flow.el.xml
+  ai:
+    base-packages:
+      - com.yomahub.liteflow.test.ai.core.structure.cmp
+    enable: true
+    openai:
+      api-key: mock-api-key # 测试代码不需要配置，将使用 mock 数据，不会调用 AI 服务接口
+    dashscope:
+      api-key: mock-api-key # 测试代码不需要配置，将使用 mock 数据，不会调用 AI 服务接口

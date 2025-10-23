@@ -24,7 +24,7 @@
 # --- 火山方舟 (Ark) 配置 ---
 API_URL="https://ark.cn-beijing.volces.com/api/v3/chat/completions"
 # 通用请求的默认模型
-DEFAULT_MODEL="doubao-seed-1-6-250615" # 来自您提供的示例
+DEFAULT_MODEL="doubao-seed-1-6-251015" # 来自您提供的示例
 
 # --- 函数定义区 ---
 
@@ -55,7 +55,8 @@ execute_request() {
     local model_to_use="$4"
 
     # 从JSON中提取用户问题内容用于显示
-    local user_content=$(echo "$json_payload" | jq -r '.messages[] | select(.role=="user") | .content | if type=="array" then .[].text else . end')
+    # 这个jq命令可以同时处理 "content": "string" 和 "content": [{"type": "text", "text": "string"}] 两种格式
+    local user_content=$(echo "$json_payload" | jq -r '(.messages[] | select(.role=="user") | .content) | if type=="array" then .[].text else . end | first')
 
 
     echo "=================================================="
@@ -133,52 +134,108 @@ case "$REQUEST_TYPE" in
           '{model: $model, messages: [{"role": "user", "content": $content}], tools: [{"type": "function", "function": {"name": "get_current_weather", "description": "获取指定城市的当前天气", "parameters": {"type": "object", "properties": { "location": { "type": "string", "description": "城市名称, e.g. 上海市" }}, "required": ["location"]}}}], thought: true, stream: true}')
         ;;
 
-    blocking_structured|streaming_structured)
-        # 为两种结构化请求设置共同参数
-        MODEL=$DEFAULT_MODEL
-        if [ "$REQUEST_TYPE" = "streaming_structured" ]; then
-            USE_STREAM=true
-        fi
-
-        # 定义 JSON Schema 结构
-        SCHEMA='{
-          "name": "math_reasoning",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "steps": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": { "explanation": { "type": "string" }, "output": { "type": "string" } },
-                  "required": [ "explanation", "output" ], "additionalProperties": false
-                }
-              },
-              "final_answer": { "type": "string" }
-            },
-            "required": [ "steps", "final_answer" ], "additionalProperties": false
+    blocking_structured)
+        MODEL="doubao-seed-1-6-250615"
+        USE_STREAM=false
+        # 使用单引号包裹静态JSON字符串
+        JSON_PAYLOAD='{
+          "model" : "doubao-seed-1-6-250615",
+          "messages" : [ {
+            "role" : "system",
+            "content" : "你是一位数学辅导老师"
+          }, {
+            "role" : "user",
+            "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
+          } ],
+          "stream" : false,
+          "thinking" : {
+            "type" : "enabled"
           },
-          "strict": true
+          "response_format" : {
+            "type" : "json_schema",
+            "json_schema" : {
+              "name" : "com.yomahub.liteflow.test.ai.core.structure.output.MathReasoning",
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "final_answer" : {
+                    "type" : "string"
+                  },
+                  "steps" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "explanation" : {
+                          "type" : "string"
+                        },
+                        "output" : {
+                          "type" : "string"
+                        }
+                      },
+                      "required" : [ "explanation", "output" ],
+                      "additionalProperties" : false
+                    }
+                  }
+                },
+                "required" : [ "final_answer", "steps" ],
+                "additionalProperties" : false
+              }
+            }
+          }
         }'
+        ;;
 
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content_text "使用中文解题: 8x + 9 = 32 and x + y = 1" \
-          --argjson schema_obj "$SCHEMA" \
-          --argjson use_stream_bool "$USE_STREAM" \
-          '{
-            model: $model,
-            messages: [
-              {"role": "system", "content": "你是一位数学辅导老师。"},
-              {"role": "user", "content": [{"type": "text", "text": $content_text}]}
-            ],
-            response_format: {
-              "type": "json_schema",
-              "json_schema": $schema_obj
-            },
-            thinking: {"type": "disabled"},
-            stream: $use_stream_bool
-          }')
+    streaming_structured)
+        MODEL="doubao-seed-1-6-251015"
+        USE_STREAM=true
+        # 使用单引号包裹静态JSON字符串
+        JSON_PAYLOAD='{
+          "model" : "doubao-seed-1-6-250615",
+          "messages" : [ {
+            "role" : "system",
+            "content" : "你是一位数学辅导老师"
+          }, {
+            "role" : "user",
+            "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
+          } ],
+          "stream" : true,
+          "thinking" : {
+            "type" : "disabled"
+          },
+          "response_format" : {
+            "type" : "json_schema",
+            "json_schema" : {
+              "name" : "com.yomahub.liteflow.test.ai.core.structure.output.MathReasoning",
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "final_answer" : {
+                    "type" : "string"
+                  },
+                  "steps" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "explanation" : {
+                          "type" : "string"
+                        },
+                        "output" : {
+                          "type" : "string"
+                        }
+                      },
+                      "required" : [ "explanation", "output" ],
+                      "additionalProperties" : false
+                    }
+                  }
+                },
+                "required" : [ "final_answer", "steps" ],
+                "additionalProperties" : false
+              }
+            }
+          }
+        }'
         ;;
 
     classify)

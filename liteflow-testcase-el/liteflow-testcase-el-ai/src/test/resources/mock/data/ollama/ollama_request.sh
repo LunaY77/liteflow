@@ -205,45 +205,93 @@ case "$REQUEST_TYPE" in
 
     blocking_structured)
         USE_STREAM=false
-        MODEL=$DEFAULT_MODEL
-        JSON_PAYLOAD=$(cat <<EOF
+        MODEL="qwen3:32b" # Model is specified in the JSON
+        JSON_PAYLOAD=$(cat <<'EOF'
         {
-          "model": "$MODEL",
-          "messages": [{"role": "user", "content": "Ollama is 22 years old and busy saving the world. Return a JSON object with the age and availability."}],
-          "stream": false,
-          "format": {
-            "type": "object",
-            "properties": {
-              "age": { "type": "integer" },
-              "available": { "type": "boolean" }
+          "model" : "qwen3:32b",
+          "messages" : [ {
+            "role" : "system",
+            "content" : "你是一位数学辅导老师"
+          }, {
+            "role" : "user",
+            "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
+          } ],
+          "stream" : false,
+          "think" : false,
+          "format" : {
+            "type" : "object",
+            "properties" : {
+              "final_answer" : {
+                "type" : "string"
+              },
+              "steps" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "explanation" : {
+                      "type" : "string"
+                    },
+                    "output" : {
+                      "type" : "string"
+                    }
+                  },
+                  "required" : [ "explanation", "output" ],
+                  "additionalProperties" : false
+                }
+              }
             },
-            "required": [ "age", "available" ]
-          },
-          "options": { "temperature": 0 }
+            "required" : [ "final_answer", "steps" ],
+            "additionalProperties" : false
+          }
         }
-        EOF
+EOF
         )
       ;;
 
     streaming_structured)
         USE_STREAM=true
-        MODEL=$DEFAULT_MODEL
-        JSON_PAYLOAD=$(cat <<EOF
+        MODEL="qwen3:32b" # Model is specified in the JSON
+        JSON_PAYLOAD=$(cat <<'EOF'
         {
-          "model": "$MODEL",
-          "messages": [{"role": "user", "content": "Ollama is 22 years old and busy saving the world. Return a JSON object with the age and availability."}],
-          "stream": true,
-          "format": {
-            "type": "object",
-            "properties": {
-              "age": { "type": "integer" },
-              "available": { "type": "boolean" }
+          "model" : "qwen3:32b",
+          "messages" : [ {
+            "role" : "system",
+            "content" : "你是一位数学辅导老师"
+          }, {
+            "role" : "user",
+            "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
+          } ],
+          "stream" : true,
+          "think" : true,
+          "format" : {
+            "type" : "object",
+            "properties" : {
+              "final_answer" : {
+                "type" : "string"
+              },
+              "steps" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "explanation" : {
+                      "type" : "string"
+                    },
+                    "output" : {
+                      "type" : "string"
+                    }
+                  },
+                  "required" : [ "explanation", "output" ],
+                  "additionalProperties" : false
+                }
+              }
             },
-            "required": [ "age", "available" ]
-          },
-          "options": { "temperature": 0 }
+            "required" : [ "final_answer", "steps" ],
+            "additionalProperties" : false
+          }
         }
-        EOF
+EOF
         )
       ;;
 
@@ -305,7 +353,7 @@ EOF
         ;;
 esac
 
-# 检查JSON是否成功生成
+# S: 检查JSON是否成功生成
 if [ -z "$JSON_PAYLOAD" ]; then
     echo "错误: 未能为请求类型 '$REQUEST_TYPE' 生成有效的JSON请求体。"
     exit 1

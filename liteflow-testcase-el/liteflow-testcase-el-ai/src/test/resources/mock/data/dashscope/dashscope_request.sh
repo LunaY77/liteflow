@@ -208,34 +208,48 @@ case "$REQUEST_TYPE" in
         ;;
 
     blocking_structured)
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content "请用JSON格式输出一个包含三个虚构人物（姓名、职业、年龄）的列表" \
-          '{
-            "model": $model,
-            "messages": [
-              {"role": "system", "content": "You are a helpful assistant designed to output JSON."},
-              {"role": "user", "content": $content}
-            ],
-            "response_format": {"type": "json_object"},
-            "stream": false,
-          }')
+        MODEL="qwen-flash" # 替换为新JSON中的模型
+        JSON_PAYLOAD='{
+          "model" : "qwen-flash",
+          "messages" : [ {
+            "role" : "system",
+            "content" : "你是一位数学辅导老师"
+          }, {
+            "role" : "user",
+            "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
+          }, {
+            "role" : "user",
+            "content" : "Your response should be in JSON format.\nDo not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\nDo not include markdown code blocks in your response.\nRemove the ```json markdown from the output.\nHere is the JSON Schema instance your output must adhere to:\n```\n{\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"final_answer\" : {\n      \"type\" : \"string\"\n    },\n    \"steps\" : {\n      \"type\" : \"array\",\n      \"items\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"explanation\" : {\n            \"type\" : \"string\"\n          },\n          \"output\" : {\n            \"type\" : \"string\"\n          }\n        },\n        \"required\" : [ \"explanation\", \"output\" ],\n        \"additionalProperties\" : false\n      }\n    }\n  },\n  \"required\" : [ \"final_answer\", \"steps\" ],\n  \"additionalProperties\" : false\n}\n```"
+          } ],
+          "stream" : false,
+          "enable_thinking" : false,
+          "response_format" : {
+            "type" : "json_object"
+          }
+        }'
         ;;
 
     streaming_structured)
         USE_STREAM=true
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content "请用JSON格式流式输出一个包含三个虚构行星（名称、星系、发现年份）的列表" \
-          '{
-            "model": $model,
-            "messages": [
-              {"role": "system", "content": "You are a helpful assistant designed to output JSON."},
-              {"role": "user", "content": $content}
-            ],
-            "response_format": {"type": "json_object"},
-            "stream": true,
-          }')
+        MODEL="deepseek-r1" # 替换为新JSON中的模型
+        JSON_PAYLOAD='{
+          "model" : "deepseek-r1",
+          "messages" : [ {
+            "role" : "system",
+            "content" : "你是一位数学辅导老师"
+          }, {
+            "role" : "user",
+            "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
+          }, {
+            "role" : "user",
+            "content" : "Your response should be in JSON format.\nDo not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\nDo not include markdown code blocks in your response.\nRemove the ```json markdown from the output.\nHere is the JSON Schema instance your output must adhere to:\n```\n{\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"final_answer\" : {\n      \"type\" : \"string\"\n    },\n    \"steps\" : {\n      \"type\" : \"array\",\n      \"items\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"explanation\" : {\n            \"type\" : \"string\"\n          },\n          \"output\" : {\n            \"type\" : \"string\"\n          }\n        },\n        \"required\" : [ \"explanation\", \"output\" ],\n        \"additionalProperties\" : false\n      }\n    }\n  },\n  \"required\" : [ \"final_answer\", \"steps\" ],\n  \"additionalProperties\" : false\n}\n```"
+          } ],
+          "stream" : true,
+          "enable_thinking" : false,
+          "response_format" : {
+            "type" : "json_object"
+          }
+        }'
         ;;
 
     classify)

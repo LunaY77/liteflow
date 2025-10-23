@@ -2,8 +2,8 @@
   "choices": [
     {
       "message": {
-        "role": "assistant",
-        "content": "[\n  {\n    \"姓名\": \"林星辰\",\n    \"职业\": \"星际导航员\",\n    \"年龄\": 28\n  },\n  {\n    \"姓名\": \"艾瑞斯·莫兰\",\n    \"职业\": \"梦境设计师\",\n    \"年龄\": 34\n  },\n  {\n    \"姓名\": \"古洛·铁砧\",\n    \"职业\": \"机械巨匠\",\n    \"年龄\": 41\n  }\n]"
+        "content": "{\n  \"final_answer\": \"x = 2.875, y = -1.875\",\n  \"steps\": [\n    {\n      \"explanation\": \"解第一个方程 8x + 9 = 32，先移项：8x = 32 - 9\",\n      \"output\": \"8x = 23\"\n    },\n    {\n      \"explanation\": \"两边同时除以8，得到 x = 23 / 8\",\n      \"output\": \"x = 2.875\"\n    },\n    {\n      \"explanation\": \"将 x = 2.875 代入第二个方程 x + y = 1，得 2.875 + y = 1\",\n      \"output\": \"y = 1 - 2.875\"\n    },\n    {\n      \"explanation\": \"计算 y 的值：y = -1.875\",\n      \"output\": \"y = -1.875\"\n    }\n  ]\n}",
+        "role": "assistant"
       },
       "finish_reason": "stop",
       "index": 0,
@@ -12,15 +12,15 @@
   ],
   "object": "chat.completion",
   "usage": {
-    "prompt_tokens": 44,
-    "completion_tokens": 95,
-    "total_tokens": 139,
+    "prompt_tokens": 260,
+    "completion_tokens": 224,
+    "total_tokens": 484,
     "prompt_tokens_details": {
       "cached_tokens": 0
     }
   },
-  "created": 1758103381,
+  "created": 1761202692,
   "system_fingerprint": null,
-  "model": "qwen-plus",
-  "id": "chatcmpl-33fe8bed-6bdb-4d22-a75b-fcf13dc956bf"
+  "model": "qwen-flash",
+  "id": "chatcmpl-0f155d72-0267-4a8b-8417-a6f7b0a89bdf"
 }

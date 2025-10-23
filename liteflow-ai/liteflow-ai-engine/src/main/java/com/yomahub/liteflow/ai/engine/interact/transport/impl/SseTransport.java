@@ -103,6 +103,7 @@ public class SseTransport extends EventSourceListener implements Transport {
     @Override
     public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
         super.onFailure(eventSource, t, response);
+        close();
         this.listener.onError(pipeline.getContext(), t);
     }
 
