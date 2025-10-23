@@ -9,6 +9,16 @@ import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
+/**
+ * OpenAI Chat 组件测试
+ * <p>
+ * 请注意！！！在测试代码中，该组件仅作为展示作用，不会真正执行调用AI服务接口，
+ * 而是使用 mock 数据进行测试，故注解中的配置信息大部分不生效，仅作为参考示例！！！
+ *
+ * @author 苍镜月
+ * @since 2.16.0
+ */
+
 @AIComponent(
         nodeId = "OpenAIChat",
         nodeName = "OpenAIChat",
@@ -27,13 +37,11 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 )
 @AIInput(
         mapping = {
-                @InputField(name = "question", expression = "test", defaultValue = "What is LiteFlow?"),
+                @InputField(name = "question", expression = "test", defaultValue = "请解释一下什么是“人工智能”"),
         }
 )
 @AIOutput(
-        responseType = ResponseType.JSON,
-        typeName = "com.yomahub.liteflow.test.ai.core.chat.cmp.Output",
-        methodExpress = "setData(\"result\", $result)"
+        responseType = ResponseType.TEXT
 )
 public interface OpenAIChatCmp {
 }

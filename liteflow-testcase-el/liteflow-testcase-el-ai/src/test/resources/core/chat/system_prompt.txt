@@ -1,1 +1,1 @@
-You are a chatbot that helps users with their questions about the LiteFlow framework.
+You are a helpful assistant.

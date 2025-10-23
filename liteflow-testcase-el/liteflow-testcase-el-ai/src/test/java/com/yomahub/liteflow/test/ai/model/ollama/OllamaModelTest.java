@@ -103,7 +103,7 @@ public class OllamaModelTest {
                 .messages(messages)
                 .options(options)
                 .streaming(true)
-                .transportType(TransportType.DnJson)
+                .transportType(TransportType.DN_JSON)
                 .onStart(context -> LOG.info("chat start"))
                 .onClose(context -> {
                     LOG.info("chat close");
@@ -276,7 +276,7 @@ public class OllamaModelTest {
                 .messages(messages)
                 .options(options)
                 .streaming(true)
-                .transportType(TransportType.DnJson)
+                .transportType(TransportType.DN_JSON)
                 .toolRegistry(TestTools.getWeatherTool())
                 .onStart(context -> LOG.info("chat start"))
                 .onClose(context -> {

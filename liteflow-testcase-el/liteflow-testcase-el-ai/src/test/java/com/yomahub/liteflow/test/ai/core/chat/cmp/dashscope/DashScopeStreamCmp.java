@@ -9,6 +9,16 @@ import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 
+/**
+ * 阿里百炼平台 Chat 组件测试
+ * <p>
+ * 请注意！！！在测试代码中，该组件仅作为展示作用，不会真正执行调用AI服务接口，
+ * 而是使用 mock 数据进行测试，故注解中的配置信息大部分不生效，仅作为参考示例！！！
+ *
+ * @author 苍镜月
+ * @since 2.16.0
+ */
+
 @AIComponent(
         nodeId = "DashScopeStream",
         nodeName = "DashScopeStream",
@@ -27,13 +37,11 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
 )
 @AIInput(
         mapping = {
-                @InputField(name = "question",  expression = "test", defaultValue = "简短讲解什么是 LiteFlow？"),
+                @InputField(name = "question", expression = "test", defaultValue = "请给我讲一个关于宇宙探索的短故事"),
         }
 )
 @AIOutput(
-        responseType = ResponseType.TEXT,
-        typeName = "com.yomahub.liteflow.test.ai.core.chat.cmp.Output",
-        methodExpress = "setData(\"result\", $result)"
+        responseType = ResponseType.TEXT
 )
 public interface DashScopeStreamCmp {
 }

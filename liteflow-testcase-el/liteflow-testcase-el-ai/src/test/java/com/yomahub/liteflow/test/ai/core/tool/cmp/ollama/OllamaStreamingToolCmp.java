@@ -19,7 +19,7 @@ import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 )
 @AIChat(
         userPrompt = "{{question}}",
-        transportType = TransportType.DnJson,
+        transportType = TransportType.DN_JSON,
         toolNames = "assemble_tool"
 )
 @AIInput(
