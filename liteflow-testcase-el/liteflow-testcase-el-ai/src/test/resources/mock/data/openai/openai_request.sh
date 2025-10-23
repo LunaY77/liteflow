@@ -10,15 +10,15 @@
 #    export OPENAI_API_KEY='您的火山方舟API密钥'
 #
 # 2. 赋予执行权限:
-#    chmod +x ark_request.sh
+#    chmod +x openai_request.sh
 #
 # 3. 运行脚本:
-#    ./ark_request.sh <request_type>
+#    ./openai_request.sh <request_type>
 #
 # 示例:
-# ./ark_request.sh streaming_text
-# ./ark_request.sh blocking_tool_call
-# ./ark_request.sh blocking_structured
+# ./openai_request.sh streaming_text
+# ./openai_request.sh blocking_tool_call
+# ./openai_request.sh classify
 # ===================================================================================
 
 # --- 火山方舟 (Ark) 配置 ---
@@ -39,6 +39,8 @@ usage() {
     echo "  streaming_tool_call    - 流式调用工具 (开启思考过程)"
     echo "  blocking_structured    - 阻塞式结构化输出 (JSON Schema)"
     echo "  streaming_structured   - 流式结构化输出 (JSON Schema)"
+    echo "  classify               - 阻塞式单标签分类"
+    echo "  classify_multi         - 阻塞式多标签JSON分类"
     echo ""
     echo "运行前，请确保已设置环境变量: export OPENAI_API_KEY='您的API密钥'"
     exit 1
@@ -176,6 +178,60 @@ case "$REQUEST_TYPE" in
             },
             thinking: {"type": "disabled"},
             stream: $use_stream_bool
+          }')
+        ;;
+
+    classify)
+        USE_STREAM=false
+        SYSTEM_CONTENT="You are an expert intent classifier.\nYour task is to analyze the user's query and classify it based on the predefined categories.\n\nAvailable categories are:\n- java\n- python\n\nFollow these rules strictly:\n1. You must select only ONE category that best matches the user's query.\n2. Your response MUST be only the name of that single category.\n3. For example: category1\n4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format."
+        USER_CONTENT="请帮我写一段Java代码"
+
+        JSON_PAYLOAD=$(jq -n \
+          --arg model "$MODEL" \
+          --arg sys_content "$SYSTEM_CONTENT" \
+          --arg user_content "$USER_CONTENT" \
+          '{
+            model: $model,
+            messages: [
+              {"role": "system", "content": $sys_content},
+              {"role": "user", "content": $user_content}
+            ],
+            stream: false,
+            thinking: { "type": "enabled" }
+          }')
+        ;;
+
+    classify_multi)
+        USE_STREAM=false
+        SYSTEM_CONTENT="You are an expert intent classifier.\nYour task is to analyze the user's query and classify it based on the predefined categories.\n\nAvailable categories are:\n- java\n- python\n\nFollow these rules strictly:\n1. You may select one or more categories that are relevant to the user's query.\n2. Your response MUST be a valid JSON array of strings, containing only the names of the selected categories.\n3. For example: [\"category1\", \"category2\"]\n4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format."
+        USER_CONTENT="请帮我写一段Java代码, 同时给出 Python 代码"
+
+        # 定义 response_format 所需的 schema
+        SCHEMA='{
+          "type": "json_schema",
+          "json_schema": {
+            "name": "java.util.List<java.lang.String>",
+            "schema": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }'
+
+        JSON_PAYLOAD=$(jq -n \
+          --arg model "$MODEL" \
+          --arg sys_content "$SYSTEM_CONTENT" \
+          --arg user_content "$USER_CONTENT" \
+          --argjson schema_obj "$SCHEMA" \
+          '{
+            model: $model,
+            messages: [
+              {"role": "system", "content": $sys_content},
+              {"role": "user", "content": $user_content}
+            ],
+            stream: false,
+            thinking: { "type": "enabled" },
+            response_format: $schema_obj
           }')
         ;;
 

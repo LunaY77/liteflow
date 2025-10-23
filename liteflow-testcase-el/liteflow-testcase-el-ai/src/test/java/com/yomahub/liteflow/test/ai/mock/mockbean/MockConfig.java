@@ -13,18 +13,18 @@ import com.yomahub.liteflow.test.ai.mock.TestDataReader;
 public class MockConfig {
 
     private final ProviderEnum provider;
-    private final TestDataReader.ResponseType responseType;
+    private final TestDataReader.RequestType requestType;
 
-    public MockConfig(ProviderEnum provider, TestDataReader.ResponseType responseType) {
+    public MockConfig(ProviderEnum provider, TestDataReader.RequestType requestType) {
         this.provider = provider;
-        this.responseType = responseType;
+        this.requestType = requestType;
     }
 
     public ProviderEnum getProvider() {
         return provider;
     }
 
-    public TestDataReader.ResponseType getResponseType() {
-        return responseType;
+    public TestDataReader.RequestType getRequestType() {
+        return requestType;
     }
 }

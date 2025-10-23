@@ -16,7 +16,7 @@
 # 示例:
 # ./ollama_request.sh streaming_text
 # ./ollama_request.sh blocking_tool_call
-# ./ollama_request.sh blocking_structured
+# ./ollama_request.sh classify
 # ===================================================================================
 
 # --- Ollama 配置 ---
@@ -36,6 +36,8 @@ usage() {
     echo "  blocking_tool_call     - 阻塞式调用工具"
     echo "  blocking_structured    - 阻塞式结构化输出 (JSON)"
     echo "  streaming_structured   - 流式结构化输出 (JSON)"
+    echo "  classify               - 阻塞式单标签分类"
+    echo "  classify_multi         - 阻塞式多标签JSON分类"
     echo ""
     echo "运行前，请确保本地 Ollama 服务已启动。"
     exit 1
@@ -49,8 +51,7 @@ execute_request() {
     local use_stream="$3"
     local model_to_use="$4"
 
-    # 从JSON中提取用户问题以用于显示
-    local user_content=$(echo "$json_payload" | jq -r '.messages[0].content')
+    local user_content=$(echo "$json_payload" | jq -r '(.messages[] | select(.role=="user") | .content) | first')
 
     echo "=================================================="
     echo "服务: Ollama"
@@ -245,6 +246,58 @@ case "$REQUEST_TYPE" in
         EOF
         )
       ;;
+
+    classify)
+        USE_STREAM=false
+        MODEL=$DEFAULT_MODEL # 使用默认模型 (qwen3:32b)
+        JSON_PAYLOAD=$(cat <<EOF
+        {
+          "model": "$MODEL",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are an expert intent classifier.\nYour task is to analyze the user's query and classify it based on the predefined categories.\n\nAvailable categories are:\n- java\n- python\n\nFollow these rules strictly:\n1. You must select only ONE category that best matches the user's query.\n2. Your response MUST be only the name of that single category.\n3. For example: category1\n4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format."
+            },
+            {
+              "role": "user",
+              "content": "请帮我写一段Java代码"
+            }
+          ],
+          "stream": false,
+          "think": false
+        }
+EOF
+        )
+        ;;
+
+    classify_multi)
+        USE_STREAM=false
+        MODEL=$DEFAULT_MODEL # 使用默认模型 (qwen3:32b)
+        JSON_PAYLOAD=$(cat <<EOF
+        {
+          "model": "$MODEL",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are an expert intent classifier.\nYour task is to analyze the user's query and classify it based on the predefined categories.\n\nAvailable categories are:\n- java\n- python\n\nFollow these rules strictly:\n1. You may select one or more categories that are relevant to the user's query.\n2. Your response MUST be a valid JSON array of strings, containing only the names of the selected categories.\n3. For example: [\"category1\", \"category2\"]\n4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format."
+            },
+            {
+              "role": "user",
+              "content": "请帮我写一段Java代码, 同时给出 Python 代码"
+            }
+          ],
+          "stream": false,
+          "think": false,
+          "format": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+EOF
+        )
+        ;;
 
     *)
         echo "错误: 不支持的请求类型 '$REQUEST_TYPE'"

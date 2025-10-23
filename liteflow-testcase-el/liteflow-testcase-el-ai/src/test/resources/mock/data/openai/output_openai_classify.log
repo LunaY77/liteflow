@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "java",
+        "reasoning_content": "\nI now need to classify the user's query into either \"java\" or \"python\". The user's query is \"请帮我写一段Java代码\". Clearly, the key word here is \"Java\", which directly corresponds to the \"java\" category. So the answer should be \"java\".",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1761195916,
+  "id": "0217611959141307e7a73b89e83941e4269b399170c320a318718",
+  "model": "doubao-seed-1-6-250615",
+  "service_tier": "default",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 63,
+    "prompt_tokens": 207,
+    "total_tokens": 270,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 62
+    }
+  }
+}

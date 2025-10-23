@@ -1,0 +1,27 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "java",
+        "reasoning_content": "Okay, the user asked for help writing a Java code snippet. Let me check the available categories: java and python. Since they mentioned Java specifically, the correct category should be 'java'. I need to make sure I don't pick python here. The rules say to only output the category name, so I'll just write 'java'.",
+        "role": "assistant"
+      },
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null
+    }
+  ],
+  "object": "chat.completion",
+  "usage": {
+    "prompt_tokens": 123,
+    "completion_tokens": 73,
+    "total_tokens": 196,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "created": 1761195676,
+  "system_fingerprint": null,
+  "model": "qwen-flash",
+  "id": "chatcmpl-a5e5a7ff-a7a5-4aa6-9b02-533549e3d4fb"
+}

@@ -9,6 +9,7 @@ import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.test.ai.core.tool.tools.ToolConfig;
+import com.yomahub.liteflow.test.ai.mock.MockAITest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,7 +24,7 @@ import javax.annotation.Resource;
 @SpringBootTest(classes = {ToolTest.class, ToolConfig.class})
 @EnableAutoConfiguration
 @ComponentScan({"com.yomahub.liteflow.test.ai.core.tool.cmp"})
-public class ToolTest {
+public class ToolTest extends MockAITest {
 
     @Resource
     private FlowExecutor flowExecutor;

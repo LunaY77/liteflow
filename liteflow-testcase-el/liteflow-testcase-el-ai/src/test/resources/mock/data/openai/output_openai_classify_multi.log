@@ -1,0 +1,30 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "[\"java\",\"python\"]",
+        "reasoning_content": "\nI now need to handle the user's query and classify the intent into the predefined categories \"java\" and \"python\". The user's query is \"请帮我写一段Java代码, 同时给出 Python 代码\", which clearly mentions both Java and Python. According to the rules, I can select one or more relevant categories, so both \"java\" and \"python\" should be included. The response must be a valid JSON array of strings. So the correct output is [\"java\", \"python\"].",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1761195933,
+  "id": "021761195930341076ea4837f74e966daea642e85370365731e68",
+  "model": "doubao-seed-1-6-250615",
+  "service_tier": "default",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 109,
+    "prompt_tokens": 386,
+    "total_tokens": 495,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 104
+    }
+  }
+}

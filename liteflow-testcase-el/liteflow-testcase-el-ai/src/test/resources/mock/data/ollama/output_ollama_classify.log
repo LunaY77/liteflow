@@ -1,0 +1,16 @@
+{
+  "model": "qwen3:32b",
+  "created_at": "2025-10-23T05:02:46.55952Z",
+  "message": {
+    "role": "assistant",
+    "content": "java"
+  },
+  "done_reason": "stop",
+  "done": true,
+  "total_duration": 18397768917,
+  "load_duration": 7573856500,
+  "prompt_eval_count": 131,
+  "prompt_eval_duration": 10719546667,
+  "eval_count": 2,
+  "eval_duration": 99161458
+}

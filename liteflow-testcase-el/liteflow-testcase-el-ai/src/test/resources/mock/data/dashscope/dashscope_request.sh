@@ -18,7 +18,7 @@
 # 示例:
 # ./dashscope_request.sh streaming_text
 # ./dashscope_request.sh blocking_tool_call
-# ./dashscope_request.sh blocking_structured
+# ./dashscope_request.sh classify
 # ===================================================================================
 
 # --- DashScope 配置 ---
@@ -40,6 +40,8 @@ usage() {
     echo "  streaming_tool_call    - 流式调用工具"
     echo "  blocking_structured    - 阻塞式结构化输出 (JSON)"
     echo "  streaming_structured   - 流式结构化输出 (JSON)"
+    echo "  classify               - 阻塞式单标签分类"
+    echo "  classify_multi         - 阻塞式多标签JSON分类"
     echo ""
     echo "运行前，请确保已设置环境变量: export DASHSCOPE_API_KEY='您的API密钥'"
     exit 1
@@ -54,7 +56,8 @@ execute_request() {
     local model_to_use="$4"
 
     # 从JSON中提取用户问题内容用于显示
-    local user_content=$(echo "$json_payload" | jq -r '.messages[] | select(.role=="user") | .content')
+    # 注意：这里只提取了第一个user角色的内容
+    local user_content=$(echo "$json_payload" | jq -r '(.messages[] | select(.role=="user") | .content) | first')
 
     echo "=================================================="
     echo "厂商: DashScope (通义千问)"
@@ -235,13 +238,62 @@ case "$REQUEST_TYPE" in
           }')
         ;;
 
+    classify)
+        USE_STREAM=false
+        MODEL="qwen-flash"
+
+        # 使用 $'...' 语法来保留 \n 换行符
+        SYSTEM_CONTENT=$'You are an expert intent classifier.\nYour task is to analyze the user\'s query and classify it based on the predefined categories.\n\nAvailable categories are:\n- java\n- python\n\nFollow these rules strictly:\n1. You must select only ONE category that best matches the user\'s query.\n2. Your response MUST be only the name of that single category.\n3. For example: category1\n4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format.'
+        USER_CONTENT="请帮我写一段Java代码"
+
+        JSON_PAYLOAD=$(jq -n \
+          --arg model "$MODEL" \
+          --arg sys_content "$SYSTEM_CONTENT" \
+          --arg user_content "$USER_CONTENT" \
+          '{
+            model: $model,
+            messages: [
+              {"role": "system", "content": $sys_content},
+              {"role": "user", "content": $user_content}
+            ],
+            stream: false,
+            enable_thinking: true,
+            response_format: { "type": "text" }
+          }')
+        ;;
+
+    classify_multi)
+        USE_STREAM=false
+        MODEL="qwen-flash"
+
+        SYSTEM_CONTENT=$'You are an expert intent classifier.\nYour task is to analyze the user\'s query and classify it based on the predefined categories.\n\nAvailable categories are:\n- java\n- python\n\nFollow these rules strictly:\n1. You may select one or more categories that are relevant to the user\'s query.\n2. Your response MUST be a valid JSON array of strings, containing only the names of the selected categories.\n3. For example: ["category1", "category2"]\n4. Do NOT provide any explanations, introductions, or any text other than the category name(s) in the specified format.'
+        USER_CONTENT_1="请帮我写一段Java代码, 同时给出 Python 代码"
+        USER_CONTENT_2=$'Your response should be in JSON format.\nDo not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\nDo not include markdown code blocks in your response.\nRemove the ```json markdown from the output.\nHere is the JSON Schema instance your output must adhere to:\n```\n{\n  "type" : "array",\n  "items" : {\n    "type" : "string"\n  }\n}\n```'
+
+        JSON_PAYLOAD=$(jq -n \
+          --arg model "$MODEL" \
+          --arg sys_content "$SYSTEM_CONTENT" \
+          --arg user_content_1 "$USER_CONTENT_1" \
+          --arg user_content_2 "$USER_CONTENT_2" \
+          '{
+            model: $model,
+            messages: [
+              {"role": "system", "content": $sys_content},
+              {"role": "user", "content": $user_content_1},
+              {"role": "user", "content": $user_content_2}
+            ],
+            stream: false,
+            enable_thinking: false,
+            response_format: { "type": "json_object" }
+          }')
+        ;;
+
     *)
         echo "错误: 未知的请求类型 '$REQUEST_TYPE'"
         usage
         ;;
 esac
 
-# 检查JSON是否成功生成
 if [ -z "$JSON_PAYLOAD" ]; then
     echo "错误: 未能为请求类型 '$REQUEST_TYPE' 生成有效的JSON请求体。"
     exit 1
