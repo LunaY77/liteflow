@@ -2,7 +2,6 @@ package com.yomahub.liteflow.test.ai.mock;
 
 import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.model.ModelFactory;
-import com.yomahub.liteflow.test.ai.BaseTest;
 import com.yomahub.liteflow.test.ai.mock.mockbean.ConfigurableMockModelProvider;
 import com.yomahub.liteflow.test.ai.mock.mockbean.MockConfig;
 import com.yomahub.liteflow.test.ai.mock.mockbean.MockConfigHolder;
@@ -17,7 +16,7 @@ import org.junit.jupiter.api.AfterEach;
  * @since 2.16.0
  */
 
-public class MockAITest extends BaseTest {
+public class MockAITest {
 
     /**
      * 动态 Mock Provider 实例

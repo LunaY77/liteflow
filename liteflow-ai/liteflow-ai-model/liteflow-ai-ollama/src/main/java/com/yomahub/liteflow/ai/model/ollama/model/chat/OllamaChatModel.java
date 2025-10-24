@@ -2,8 +2,8 @@ package com.yomahub.liteflow.ai.model.ollama.model.chat;
 
 import com.yomahub.liteflow.ai.engine.interact.InteractClient;
 import com.yomahub.liteflow.ai.engine.model.chat.AbstractChatModel;
-import com.yomahub.liteflow.ai.engine.model.chat.ChatModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
+import com.yomahub.liteflow.ai.model.ollama.constants.OllamaConstant;
 
 /**
  * Ollama 聊天模型
@@ -45,7 +45,8 @@ public class OllamaChatModel extends AbstractChatModel {
         }
 
         @Override
-        public ChatModel build() {
+        public OllamaChatModel build() {
+            this.configBuilder.provider(OllamaConstant.PROVIDER_NAME);
             return new OllamaChatModel(this.configBuilder.build(), this.interactClient);
         }
     }

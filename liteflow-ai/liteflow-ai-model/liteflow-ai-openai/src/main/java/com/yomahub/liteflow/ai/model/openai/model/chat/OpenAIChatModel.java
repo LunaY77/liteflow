@@ -3,6 +3,7 @@ package com.yomahub.liteflow.ai.model.openai.model.chat;
 import com.yomahub.liteflow.ai.engine.interact.InteractClient;
 import com.yomahub.liteflow.ai.engine.model.chat.AbstractChatModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
+import com.yomahub.liteflow.ai.model.openai.constants.OpenAIConstant;
 
 /**
  * OpenAI 聊天模型实现类
@@ -45,6 +46,7 @@ public class OpenAIChatModel extends AbstractChatModel {
 
         @Override
         public OpenAIChatModel build() {
+            this.configBuilder.provider(OpenAIConstant.PROVIDER_NAME);
             return new OpenAIChatModel(this.configBuilder.build(), this.interactClient);
         }
     }
