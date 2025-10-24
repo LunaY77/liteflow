@@ -4,6 +4,8 @@ import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
+import com.yomahub.liteflow.ai.engine.log.EngineLog;
+import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
@@ -20,6 +22,8 @@ import java.util.Map;
  */
 
 public class HttpTransport implements Transport {
+
+    private static final EngineLog LOG = EngineLogManager.getLogger(HttpTransport.class);
 
     @Override
     public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
@@ -38,16 +42,24 @@ public class HttpTransport implements Transport {
             // 构建请求头
             Map<String, String> requestHeader = buildRequestHeader(config);
 
-            System.out.println("====== HTTP Request Start ======");
-            System.out.println("URL: " + config.resolveUrl());
-            System.out.println("Headers: " + requestHeader);
-            System.out.println("Body: " + requestBody);
-            System.out.println("======= HTTP Request End =======");
+            // 记录请求日志
+            if (config.isLogRequest()) {
+                LOG.info("====== HTTP Request Start ======");
+                LOG.info("URL: {}", config.resolveUrl());
+                LOG.info("Headers: {}", requestHeader);
+                LOG.info("Body: {}", requestBody);
+                LOG.info("======= HTTP Request End =======");
+            }
 
             // 发送HTTP请求
             String responseBody = httpUtil.post(config.resolveUrl(), requestBody, requestHeader);
 
-            System.out.println(responseBody);
+            // 记录响应日志
+            if (config.isLogResponse()) {
+                LOG.info("====== HTTP Response Start ======");
+                LOG.info("response: {}", responseBody);
+                LOG.info("======= HTTP Response End =======");
+            }
 
             // 处理响应
             return pipeline.processBlocking(responseBody);

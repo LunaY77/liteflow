@@ -6,22 +6,17 @@
  */
 package com.yomahub.liteflow.test.ai.engine.model;
 
+import com.yomahub.liteflow.ai.engine.model.ModelConfig;
+import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
+import com.yomahub.liteflow.ai.engine.util.request.RequestHeader;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.yomahub.liteflow.ai.engine.model.ModelConfig;
-import com.yomahub.liteflow.ai.engine.util.request.RequestBody;
-import com.yomahub.liteflow.ai.engine.util.request.RequestHeader;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ModelConfigTest {
 
@@ -34,6 +29,8 @@ class ModelConfigTest {
     private Duration connectTimeout;
     private Duration readTimeout;
     private Map<String, Object> headersConfig;
+    private boolean logRequest;
+    private boolean logResponse;
 
     @BeforeEach
     void setUp() {
@@ -47,9 +44,11 @@ class ModelConfigTest {
         headersConfig = new HashMap<>();
         headersConfig.put("Custom-Header", "custom-value");
 
+
         modelConfig = new ModelConfig(
                 apiUrl, endPoint, apiKey, provider, model,
-                connectTimeout, readTimeout, headersConfig);
+                connectTimeout, readTimeout, headersConfig,
+                logRequest, logResponse);
     }
 
     /**

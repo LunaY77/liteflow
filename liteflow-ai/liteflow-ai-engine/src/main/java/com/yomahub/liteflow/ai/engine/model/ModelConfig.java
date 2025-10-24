@@ -36,6 +36,10 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
 
     protected Map<String, Object> headersConfig = new LinkedHashMap<>();
 
+    protected boolean logRequest = false;
+
+    protected boolean logResponse = false;
+
     // ==== RequestBody、RequestHeader 相关参数 =====
     protected static final String MODEL_KEY = "model";
     protected static final String API_KEY_KEY = "Authorization";
@@ -53,7 +57,9 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
             String model,
             Duration connectTimeout,
             Duration readTimeout,
-            Map<String, Object> headersConfig
+            Map<String, Object> headersConfig,
+            boolean logRequest,
+            boolean logResponse
     ) {
         this.apiUrl = apiUrl;
         this.endPoint = endPoint;
@@ -63,6 +69,8 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.headersConfig = headersConfig;
+        this.logRequest = logRequest;
+        this.logResponse = logResponse;
         checkRequiredFields();
     }
 
@@ -75,6 +83,8 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.connectTimeout = builder.connectTimeout;
         this.readTimeout = builder.readTimeout;
         this.headersConfig.putAll(builder.headersConfig);
+        this.logRequest = builder.logRequest;
+        this.logResponse = builder.logResponse;
         checkRequiredFields();
     }
 
@@ -180,6 +190,22 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         this.headersConfig.remove(key);
     }
 
+    public boolean isLogRequest() {
+        return logRequest;
+    }
+
+    public void setLogRequest(boolean logRequest) {
+        this.logRequest = logRequest;
+    }
+
+    public boolean isLogResponse() {
+        return logResponse;
+    }
+
+    public void setLogResponse(boolean logResponse) {
+        this.logResponse = logResponse;
+    }
+
     public static Builder<?> builder() {
         return new Builder.BuilderImpl();
     }
@@ -200,6 +226,10 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
         protected Duration readTimeout = Duration.ofSeconds(60);
 
         protected Map<String, Object> headersConfig = new LinkedHashMap<>();
+
+        protected boolean logRequest = false;
+
+        protected boolean logResponse = false;
 
         protected abstract B self();
 
@@ -240,6 +270,16 @@ public class ModelConfig implements RequestBodyConvertible, RequestHeaderConvert
 
         public B headersConfig(Map<String, Object> headersConfig) {
             this.headersConfig = headersConfig;
+            return self();
+        }
+
+        public B logRequest(boolean logRequest) {
+            this.logRequest = logRequest;
+            return self();
+        }
+
+        public B logResponse(boolean logResponse) {
+            this.logResponse = logResponse;
             return self();
         }
 

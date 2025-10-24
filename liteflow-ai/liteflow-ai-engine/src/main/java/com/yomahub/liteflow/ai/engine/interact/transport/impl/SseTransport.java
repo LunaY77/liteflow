@@ -3,6 +3,8 @@ package com.yomahub.liteflow.ai.engine.interact.transport.impl;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
+import com.yomahub.liteflow.ai.engine.log.EngineLog;
+import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
@@ -28,16 +30,20 @@ import java.util.Objects;
 
 public class SseTransport extends EventSourceListener implements Transport {
 
+    private static final EngineLog LOG = EngineLogManager.getLogger(SseTransport.class);
+
     private ChunkProcessPipeline pipeline;
     private TransportListener listener;
     private OkHttpClient client;
     private EventSource eventSource;
     private boolean isStop = false;
+    private boolean isLogResponse = false;
 
     @Override
     public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
         this.pipeline = pipeline;
         this.listener = listener;
+        this.isLogResponse = config.isLogResponse();
 
         try {
             // 构建SSE请求
@@ -89,6 +95,11 @@ public class SseTransport extends EventSourceListener implements Transport {
     @Override
     public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
         super.onEvent(eventSource, id, type, data);
+
+        if (this.isLogResponse) {
+            LOG.info("SSE Response Event - id: {}, type: {}, data: {}", id, type, data);
+        }
+
         // 如果返回 true 表示流式响应结束，关闭连接, 有一些模型不会主动关闭连接，需要在这里判断
         if (pipeline.processStreaming(data)) {
             close();
@@ -110,11 +121,15 @@ public class SseTransport extends EventSourceListener implements Transport {
     private Request buildSseRequest(ChatConfig config, ChatRequest request) {
         String requestBody = buildRequestBody(config, request);
 
-        System.out.println("====== HTTP Request Start ======");
-        System.out.println(requestBody);
-        System.out.println("======= HTTP Request End =======");
-
         Map<String, String> requestHeader = buildRequestHeader(config);
+
+        if (config.isLogRequest()) {
+            LOG.info("====== SSE Request Start ======");
+            LOG.info("URL: {}", config.resolveUrl());
+            LOG.info("Headers: {}", requestHeader);
+            LOG.info("Body: {}", requestBody);
+            LOG.info("======= SSE Request End =======");
+        }
 
         return new Request.Builder()
                 .url(config.resolveUrl())

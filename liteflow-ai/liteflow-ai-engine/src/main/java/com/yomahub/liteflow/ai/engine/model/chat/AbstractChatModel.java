@@ -111,6 +111,16 @@ public abstract class AbstractChatModel implements ChatModel {
             return self();
         }
 
+        public B logRequest(boolean logRequest) {
+            getConfigBuilder().logRequest(logRequest);
+            return self();
+        }
+
+        public B logResponse(boolean logResponse) {
+            getConfigBuilder().logResponse(logResponse);
+            return self();
+        }
+
         public abstract B self();
 
         public abstract ChatModel build();

@@ -5,6 +5,8 @@ import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
 import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
+import com.yomahub.liteflow.ai.engine.log.EngineLog;
+import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
@@ -34,15 +36,19 @@ import java.util.Objects;
 
 public class DnJsonTransport implements Transport, Callback {
 
+    private static final EngineLog LOG = EngineLogManager.getLogger(DnJsonTransport.class);
+
     private ChunkProcessPipeline pipeline;
     private TransportListener listener;
     private OkHttpClient client;
     private boolean isStop = false;
+    private boolean isLogResponse = false;
 
     @Override
     public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
         this.pipeline = pipeline;
         this.listener = listener;
+        this.isLogResponse = config.isLogResponse();
 
         Request dnJsonRequest = buildDnJsonRequest(config, request);
 
@@ -99,7 +105,12 @@ public class DnJsonTransport implements Transport, Callback {
         // 逐行读取响应体，响应体为换行符分隔的 JSON
         try (BufferedReader br = new BufferedReader(new InputStreamReader(body.byteStream()))) {
             String line = br.readLine();
+
             while (StrUtil.isNotBlank(line)) {
+                if (this.isLogResponse) {
+                    LOG.info("DN-JSON Response: {}", line);
+                }
+
                 pipeline.processStreaming(line);
                 line = br.readLine();
             }
@@ -112,11 +123,15 @@ public class DnJsonTransport implements Transport, Callback {
     private Request buildDnJsonRequest(ChatConfig config, ChatRequest request) {
         String requestBody = buildRequestBody(config, request);
 
-        System.out.println("====== HTTP Request Start ======");
-        System.out.println(requestBody);
-        System.out.println("======= HTTP Request End =======");
-
         Map<String, String> requestHeader = buildRequestHeader(config);
+
+        if (config.isLogRequest()) {
+            LOG.info("====== DN-JSON Request Start ======");
+            LOG.info("URL: {}", config.resolveUrl());
+            LOG.info("Headers: {}", requestHeader);
+            LOG.info("Body: {}", requestBody);
+            LOG.info("======= DN-JSON Request End =======");
+        }
 
         return new Request.Builder()
                 .url(config.resolveUrl())

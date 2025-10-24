@@ -40,6 +40,8 @@ public class DashScopeModelProvider extends ModelProviderRegistrar {
                     setIfPresent(builder::readTimeout, configAggregator.getReadTimeout());
                     setIfPresent(builder::headersConfig, configAggregator.getCustomHeaders());
                     setIfPresent(builder::autoToolCallEnabled, configAggregator.getAutoToolCallEnabled().toBool());
+                    setIfPresent(builder::logRequest, configAggregator.getLogRequests());
+                    setIfPresent(builder::logResponse, configAggregator.getLogResponses());
                     return builder;
                 })
                 // 构建模型

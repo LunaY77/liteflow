@@ -27,6 +27,8 @@ class ChatConfigTest {
     private Duration connectTimeout;
     private Duration readTimeout;
     private Map<String, Object> headersConfig;
+    private boolean logRequest;
+    private boolean logResponse;
     private boolean autoToolCallEnabled;
 
     @BeforeEach
@@ -40,6 +42,8 @@ class ChatConfigTest {
         readTimeout = Duration.ofSeconds(60);
         headersConfig = new HashMap<>();
         headersConfig.put("Custom-Header", "custom-value");
+        logRequest = false;
+        logResponse = false;
         autoToolCallEnabled = true;
     }
 
@@ -70,7 +74,7 @@ class ChatConfigTest {
     void testParameterizedConstructor() {
         ChatConfig config = new ChatConfig(
                 apiUrl, endPoint, apiKey, provider, model,
-                connectTimeout, readTimeout, headersConfig, autoToolCallEnabled);
+                connectTimeout, readTimeout, headersConfig, logRequest, logResponse, autoToolCallEnabled);
 
         assertEquals(apiUrl, config.getApiUrl());
         assertEquals(endPoint, config.getEndPoint());
@@ -122,7 +126,7 @@ class ChatConfigTest {
         // 使用完整参数构造函数创建实例
         ChatConfig config = new ChatConfig(
                 apiUrl, endPoint, apiKey, provider, model,
-                connectTimeout, readTimeout, headersConfig, false);
+                connectTimeout, readTimeout, headersConfig, logRequest, logResponse, false);
 
         // 测试继承的方法依然有效
         assertNotNull(config.toRequestBody());

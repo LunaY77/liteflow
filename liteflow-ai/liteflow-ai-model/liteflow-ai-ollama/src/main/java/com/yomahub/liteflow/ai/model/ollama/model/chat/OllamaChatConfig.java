@@ -27,9 +27,11 @@ public class OllamaChatConfig extends ChatConfig {
             Duration connectTimeout,
             Duration readTimeout,
             Map<String, Object> headersConfig,
+            boolean logRequest,
+            boolean logResponse,
             boolean autoToolCallEnabled
     ) {
-        super(apiUrl, endPoint, apiKey, provider, model, connectTimeout, readTimeout, headersConfig, autoToolCallEnabled);
+        super(apiUrl, endPoint, apiKey, provider, model, connectTimeout, readTimeout, headersConfig, logRequest, logResponse, autoToolCallEnabled);
     }
 
     public OllamaChatConfig(Builder builder) {

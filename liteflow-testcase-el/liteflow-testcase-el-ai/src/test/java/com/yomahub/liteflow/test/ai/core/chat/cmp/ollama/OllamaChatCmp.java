@@ -27,7 +27,9 @@ import com.yomahub.liteflow.ai.engine.model.output.ResponseType;
         model = "qwen3:32b",
         enableThinking = false,
         readTimeout = "10m",
-        connectTimeout = "10m"
+        connectTimeout = "10m",
+        logRequests = true,
+        logResponses = true
 )
 @AIChat(
         systemPrompt = "classpath:core/chat/system_prompt.txt",
