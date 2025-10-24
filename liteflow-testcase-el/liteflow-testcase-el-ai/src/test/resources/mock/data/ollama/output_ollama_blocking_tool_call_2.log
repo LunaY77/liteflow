@@ -1,0 +1,16 @@
+{
+  "model": "qwen3:32b",
+  "created_at": "2025-10-24T02:22:38.154573Z",
+  "message": {
+    "role": "assistant",
+    "content": "北京今天的天气是晴天，温度是25°C。"
+  },
+  "done_reason": "stop",
+  "done": true,
+  "total_duration": 4981982083,
+  "load_duration": 54940708,
+  "prompt_eval_count": 197,
+  "prompt_eval_duration": 3631744875,
+  "eval_count": 14,
+  "eval_duration": 1290751500
+}

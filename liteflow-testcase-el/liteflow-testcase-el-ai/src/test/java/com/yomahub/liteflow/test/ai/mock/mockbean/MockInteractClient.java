@@ -26,14 +26,15 @@ public class MockInteractClient extends LlmInteractClient {
      * @return 一个配置了 MockTransport 的 spied ChatRequest
      */
     private ChatRequest createSpiedRequest(ChatRequest originalRequest) {
-        // 1. 创建一个 MockTransport 实例，这是我们最终想要返回的对象
-        MockTransport mockTransport = new MockTransport(MockConfigHolder.getMockConfig());
+        // 1. 获取 MockConfig
+        final MockConfig mockConfig = MockConfigHolder.getMockConfig();
 
         // 2. 模拟 TransportType 对象
         TransportType mockTransportType = Mockito.mock(TransportType.class);
 
         // 3. 存根(Stub) getTransportInstance() 方法，使其返回我们的 MockTransport
-        Mockito.when(mockTransportType.getTransportInstance()).thenReturn(mockTransport);
+        Mockito.when(mockTransportType.getTransportInstance())
+                .thenAnswer(invocation -> new MockTransport(mockConfig));
 
         // 4. "侦察"(Spy) 传入的原始 request 对象
         ChatRequest spyRequest = Mockito.spy(originalRequest);

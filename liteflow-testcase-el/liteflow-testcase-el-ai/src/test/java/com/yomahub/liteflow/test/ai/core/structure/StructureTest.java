@@ -36,14 +36,14 @@ public class StructureTest extends MockAITest {
 
     @Test
     public void testDashScopeStructure() {
-        setupMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.BLOCKING_STRUCTURED);
+        setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.BLOCKING_STRUCTURED);
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
     @Test
     public void testDashScopeStructureStream() {
-        setupMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_STRUCTURED);
+        setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_STRUCTURED);
         ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain2", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -51,14 +51,14 @@ public class StructureTest extends MockAITest {
 
     @Test
     public void testOllamaStructure() {
-        setupMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.BLOCKING_STRUCTURED);
+        setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.BLOCKING_STRUCTURED);
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain3", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
     @Test
     public void testOllamaStructureStream() {
-        setupMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.STREAMING_STRUCTURED);
+        setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.STREAMING_STRUCTURED);
         ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain4", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -66,14 +66,14 @@ public class StructureTest extends MockAITest {
 
     @Test
     public void testOpenAIStructure() {
-        setupMock(ProviderEnum.OPENAI, TestDataReader.RequestType.BLOCKING_STRUCTURED);
+        setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.BLOCKING_STRUCTURED);
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain5", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
     @Test
     public void testOpenAIStructureStream() {
-        setupMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_STRUCTURED);
+        setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_STRUCTURED);
         ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain6", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());

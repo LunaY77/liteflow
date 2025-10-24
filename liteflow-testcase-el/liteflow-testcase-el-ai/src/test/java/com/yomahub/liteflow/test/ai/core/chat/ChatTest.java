@@ -29,14 +29,14 @@ public class ChatTest extends MockAITest {
 
     @Test
     public void testDashScopeChat() {
-        setupMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.BLOCKING_TEXT);
+        setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.BLOCKING_TEXT);
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
     @Test
     public void testDashScopeStream() {
-        setupMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_TEXT);
+        setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_TEXT);
         ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain2", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -44,14 +44,14 @@ public class ChatTest extends MockAITest {
 
     @Test
     public void testOllamaChat() {
-        setupMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.BLOCKING_TEXT);
+        setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.BLOCKING_TEXT);
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain3", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
     @Test
     public void testOllamaStream() {
-        setupMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.STREAMING_TEXT);
+        setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.STREAMING_TEXT);
         ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain4", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -59,14 +59,14 @@ public class ChatTest extends MockAITest {
 
     @Test
     public void testOpenAIChat() {
-        setupMock(ProviderEnum.OPENAI, TestDataReader.RequestType.BLOCKING_TEXT);
+        setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.BLOCKING_TEXT);
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain5", null, ChatContext.class);
         Assertions.assertTrue(liteflowResponse.isSuccess());
     }
 
     @Test
     public void testOpenAIStream() {
-        setupMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_TEXT);
+        setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_TEXT);
         ChatContext chatContext = new ChatContext(getStreamHandler());
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain6", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());

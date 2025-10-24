@@ -3,15 +3,14 @@
     {
       "message": {
         "content": "",
-        "reasoning_content": "",
         "role": "assistant",
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"location\": \"北京\"}",
-              "name": "get_current_weather"
+              "arguments": "{\"content\": \"北京\"}",
+              "name": "weather_tool"
             },
-            "id": "call_7cfc28e37f0a4f2d91dc2b",
+            "id": "call_0650a757b95947b5a4b170",
             "index": 0,
             "type": "function"
           }
@@ -24,15 +23,15 @@
   ],
   "object": "chat.completion",
   "usage": {
-    "prompt_tokens": 174,
-    "completion_tokens": 126,
-    "total_tokens": 300,
+    "prompt_tokens": 159,
+    "completion_tokens": 19,
+    "total_tokens": 178,
     "prompt_tokens_details": {
       "cached_tokens": 0
     }
   },
-  "created": 1758103265,
+  "created": 1761272536,
   "system_fingerprint": null,
-  "model": "qwen-turbo",
-  "id": "chatcmpl-fec064fe-a3e0-4592-928d-f23e4f1034d3"
+  "model": "qwen-flash",
+  "id": "chatcmpl-d931f2e3-5f21-4d48-a1c5-c3b7c65393d8"
 }

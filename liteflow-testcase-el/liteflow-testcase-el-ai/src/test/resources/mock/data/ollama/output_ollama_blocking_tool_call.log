@@ -1,15 +1,15 @@
 {
   "model": "qwen3:32b",
-  "created_at": "2025-09-17T11:49:57.651994Z",
+  "created_at": "2025-10-24T02:22:25.628076Z",
   "message": {
     "role": "assistant",
-    "content": "<think>\nOkay, the user is asking for the weather in Tokyo. Let me check the tools provided. There's a function called get_weather that requires a city parameter. The user mentioned \"Tokyo,\" so I need to call that function with the city set to Tokyo. I should make sure the JSON is correctly formatted with the city name in the parameters. Let me structure the tool call accordingly.\n</think>\n\n",
+    "content": "",
     "tool_calls": [
       {
         "function": {
-          "name": "get_weather",
+          "name": "weather_tool",
           "arguments": {
-            "city": "Tokyo"
+            "content": "北京"
           }
         }
       }
@@ -17,10 +17,10 @@
   },
   "done_reason": "stop",
   "done": true,
-  "total_duration": 11606529916,
-  "load_duration": 48479375,
-  "prompt_eval_count": 154,
-  "prompt_eval_duration": 1419447750,
-  "eval_count": 103,
-  "eval_duration": 10137774250
+  "total_duration": 16039939458,
+  "load_duration": 6825376875,
+  "prompt_eval_count": 152,
+  "prompt_eval_duration": 7365457167,
+  "eval_count": 20,
+  "eval_duration": 1846403542
 }

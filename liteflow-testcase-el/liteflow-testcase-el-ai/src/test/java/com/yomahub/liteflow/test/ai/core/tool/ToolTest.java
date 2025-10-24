@@ -2,6 +2,7 @@ package com.yomahub.liteflow.test.ai.core.tool;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
 import com.yomahub.liteflow.ai.context.StreamHandler;
+import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
 import com.yomahub.liteflow.ai.engine.model.chat.message.AssistantMessage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
@@ -10,6 +11,7 @@ import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.test.ai.core.tool.tools.ToolConfig;
 import com.yomahub.liteflow.test.ai.mock.MockAITest;
+import com.yomahub.liteflow.test.ai.mock.TestDataReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -48,6 +50,7 @@ public class ToolTest extends MockAITest {
 
     @Test
     public void testOpenAIBlockingChatWithTool() {
+        setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.BLOCKING_TOOL_CALL, TestDataReader.RequestType.BLOCKING_TOOL_CALL_2);
         ChatContext chatContext = buildBlockingChatContext();
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain1", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -55,6 +58,7 @@ public class ToolTest extends MockAITest {
 
     @Test
     public void testOpenAIStreamingChatWithTool() {
+        setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_TOOL_CALL, TestDataReader.RequestType.STREAMING_TOOL_CALL_2);
         ChatContext chatContext = buildStreamingChatContext();
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain2", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -62,6 +66,7 @@ public class ToolTest extends MockAITest {
 
     @Test
     public void testDashScopeBlockingChatWithTool() {
+        setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.BLOCKING_TOOL_CALL, TestDataReader.RequestType.BLOCKING_TOOL_CALL_2);
         ChatContext chatContext = buildBlockingChatContext();
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain3", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -69,6 +74,7 @@ public class ToolTest extends MockAITest {
 
     @Test
     public void testDashScopeStreamingChatWithTool() {
+        setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_TOOL_CALL, TestDataReader.RequestType.STREAMING_TOOL_CALL_2);
         ChatContext chatContext = buildStreamingChatContext();
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain4", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -76,6 +82,7 @@ public class ToolTest extends MockAITest {
 
     @Test
     public void testOllamaBlockingChatWithTool() {
+        setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.BLOCKING_TOOL_CALL, TestDataReader.RequestType.BLOCKING_TOOL_CALL_2);
         ChatContext chatContext = buildBlockingChatContext();
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain5", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());
@@ -83,6 +90,7 @@ public class ToolTest extends MockAITest {
 
     @Test
     public void testOllamaStreamingChatWithTool() {
+        setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.STREAMING_TOOL_CALL, TestDataReader.RequestType.STREAMING_TOOL_CALL_2);
         ChatContext chatContext = buildStreamingChatContext();
         LiteflowResponse liteflowResponse = flowExecutor.execute2Resp("chain6", null, chatContext);
         Assertions.assertTrue(liteflowResponse.isSuccess());

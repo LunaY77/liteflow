@@ -38,8 +38,16 @@ public class HttpTransport implements Transport {
             // 构建请求头
             Map<String, String> requestHeader = buildRequestHeader(config);
 
+            System.out.println("====== HTTP Request Start ======");
+            System.out.println("URL: " + config.resolveUrl());
+            System.out.println("Headers: " + requestHeader);
+            System.out.println("Body: " + requestBody);
+            System.out.println("======= HTTP Request End =======");
+
             // 发送HTTP请求
             String responseBody = httpUtil.post(config.resolveUrl(), requestBody, requestHeader);
+
+            System.out.println(responseBody);
 
             // 处理响应
             return pipeline.processBlocking(responseBody);

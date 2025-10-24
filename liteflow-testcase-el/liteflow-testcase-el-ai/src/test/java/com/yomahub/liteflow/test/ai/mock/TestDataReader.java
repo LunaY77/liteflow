@@ -37,6 +37,8 @@ public class TestDataReader {
         // 工具调用
         STREAMING_TOOL_CALL("streaming_tool_call", true),
         BLOCKING_TOOL_CALL("blocking_tool_call", false),
+        STREAMING_TOOL_CALL_2("streaming_tool_call_2", true),
+        BLOCKING_TOOL_CALL_2("blocking_tool_call_2", false),
 
         // 结构化 (JSON Schema)
         STREAMING_STRUCTURED("streaming_structured", true),

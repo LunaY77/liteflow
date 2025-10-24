@@ -111,6 +111,11 @@ public class DnJsonTransport implements Transport, Callback {
 
     private Request buildDnJsonRequest(ChatConfig config, ChatRequest request) {
         String requestBody = buildRequestBody(config, request);
+
+        System.out.println("====== HTTP Request Start ======");
+        System.out.println(requestBody);
+        System.out.println("======= HTTP Request End =======");
+
         Map<String, String> requestHeader = buildRequestHeader(config);
 
         return new Request.Builder()

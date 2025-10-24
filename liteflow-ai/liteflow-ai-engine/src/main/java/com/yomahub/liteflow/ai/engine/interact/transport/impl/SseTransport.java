@@ -109,6 +109,11 @@ public class SseTransport extends EventSourceListener implements Transport {
 
     private Request buildSseRequest(ChatConfig config, ChatRequest request) {
         String requestBody = buildRequestBody(config, request);
+
+        System.out.println("====== HTTP Request Start ======");
+        System.out.println(requestBody);
+        System.out.println("======= HTTP Request End =======");
+
         Map<String, String> requestHeader = buildRequestHeader(config);
 
         return new Request.Builder()

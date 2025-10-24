@@ -16,6 +16,7 @@
 # 示例:
 # ./ollama_request.sh streaming_text
 # ./ollama_request.sh blocking_tool_call
+# ./ollama_request.sh blocking_tool_call_2
 # ./ollama_request.sh classify
 # ===================================================================================
 
@@ -32,8 +33,10 @@ usage() {
     echo "支持的请求类型 (request_type):"
     echo "  streaming_text         - 流式输出文本"
     echo "  blocking_text          - 阻塞式输出文本"
-    echo "  streaming_tool_call    - 流式调用工具"
-    echo "  blocking_tool_call     - 阻塞式调用工具"
+    echo "  streaming_tool_call    - 流式调用工具 (第1轮)"
+    echo "  streaming_tool_call_2  - 流式调用工具 (第2轮, 带工具结果)"
+    echo "  blocking_tool_call     - 阻塞式调用工具 (第1轮)"
+    echo "  blocking_tool_call_2   - 阻塞式调用工具 (第2轮, 带工具结果)"
     echo "  blocking_structured    - 阻塞式结构化输出 (JSON)"
     echo "  streaming_structured   - 流式结构化输出 (JSON)"
     echo "  classify               - 阻塞式单标签分类"
@@ -137,70 +140,190 @@ case "$REQUEST_TYPE" in
 
     streaming_tool_call)
         USE_STREAM=true
-        MODEL=$DEFAULT_MODEL
-        JSON_PAYLOAD='{
-          "model": "'$MODEL'",
-          "messages": [
-            {
-              "role": "user",
-              "content": "what is the weather in tokyo?"
-            }
-          ],
-          "tools": [
-            {
-              "type": "function",
-              "function": {
-                "name": "get_weather",
-                "description": "Get the weather in a given city",
-                "parameters": {
-                  "type": "object",
-                  "properties": {
-                    "city": {
-                      "type": "string",
-                      "description": "The city to get the weather for"
-                    }
+        MODEL="qwen3:32b"
+        JSON_PAYLOAD=$(cat <<'EOF'
+        {
+          "model" : "qwen3:32b",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "调用工具组装 QQ 和 微信"
+          } ],
+          "stream" : true,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "assemble_tool",
+              "description" : "组装工具\n将 a 和 b 组装成答案",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "a" : {
+                    "type" : "string"
                   },
-                  "required": ["city"]
-                }
+                  "b" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "a", "b" ],
+                "additionalProperties" : false
               }
             }
-          ],
-          "stream": true
-        }'
+          } ],
+          "think" : true
+        }
+EOF
+        )
+        ;;
+
+    streaming_tool_call_2)
+        USE_STREAM=true
+        MODEL="qwen3:32b"
+        JSON_PAYLOAD=$(cat <<'EOF'
+        {
+          "model" : "qwen3:32b",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "调用工具组装 QQ 和 微信"
+          }, {
+            "role" : "assistant",
+            "content" : "<think>\n好的，用户让我调用工具组装QQ和微信。首先，我需要确认用户提供的工具是什么。根据之前的工具描述，有一个assemble_tool函数，它需要两个参数a和b，都是字符串类型。用户提到的QQ和微信应该作为这两个参数的值。接下来，我需要按照函数的要求，将QQ和微信作为参数传递给assemble_tool。要确保参数的顺序正确，可能用户希望将QQ作为a，微信作为b，或者可能没有特定顺序要求。但根据用户指令中的顺序，应该是先QQ后微信。因此，正确的调用应该是a是QQ，b是微信。然后生成相应的JSON对象放在tool_call标签中。检查一下是否符合格式要求，确保没有语法错误，比如引号是否正确，逗号的位置等。确认无误后，返回结果。\n</think>\n",
+            "tool_calls" : [ {
+              "id" : null,
+              "type" : "function",
+              "name" : "assemble_tool",
+              "arguments" : {
+                "a" : "QQ",
+                "b" : "微信"
+              },
+              "function" : {
+                "name" : "assemble_tool",
+                "arguments" : {
+                  "a" : "QQ",
+                  "b" : "微信"
+                }
+              }
+            } ]
+          }, {
+            "role" : "tool",
+            "content" : "\"Assembled result: QQ and 微信\"",
+            "tool_call_id" : null,
+            "tool_name" : "assemble_tool"
+          } ],
+          "stream" : true,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "assemble_tool",
+              "description" : "组装工具\n将 a 和 b 组装成答案",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "a" : {
+                    "type" : "string"
+                  },
+                  "b" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "a", "b" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "think" : true
+        }
+EOF
+        )
         ;;
 
     blocking_tool_call)
         USE_STREAM=false
-        MODEL=$DEFAULT_MODEL
-        JSON_PAYLOAD='{
-          "model": "'$MODEL'",
-          "messages": [
-            {
-              "role": "user",
-              "content": "what is the weather in tokyo?"
-            }
-          ],
-          "tools": [
-            {
-              "type": "function",
-              "function": {
-                "name": "get_weather",
-                "description": "Get the weather in a given city",
-                "parameters": {
-                  "type": "object",
-                  "properties": {
-                    "city": {
-                      "type": "string",
-                      "description": "The city to get the weather for"
-                    }
-                  },
-                  "required": ["city"]
-                }
+        MODEL="qwen3:32b"
+        JSON_PAYLOAD=$(cat <<'EOF'
+        {
+          "model" : "qwen3:32b",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "北京今天天气怎么样"
+          } ],
+          "stream" : false,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "weather_tool",
+              "description" : "查询天气\n获取指定位置的天气信息",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "content" ],
+                "additionalProperties" : false
               }
             }
-          ],
-          "stream": false
-        }'
+          } ],
+          "think" : false
+        }
+EOF
+        )
+        ;;
+
+    blocking_tool_call_2)
+        USE_STREAM=false
+        MODEL="qwen3:32b"
+        JSON_PAYLOAD=$(cat <<'EOF'
+        {
+          "model" : "qwen3:32b",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "北京今天天气怎么样"
+          }, {
+            "role" : "assistant",
+            "content" : "",
+            "tool_calls" : [ {
+              "id" : null,
+              "type" : "function",
+              "name" : "weather_tool",
+              "arguments" : {
+                "content" : "北京"
+              },
+              "function" : {
+                "name" : "weather_tool",
+                "arguments" : {
+                  "content" : "北京"
+                }
+              }
+            } ]
+          }, {
+            "role" : "tool",
+            "content" : "\"The weather in 北京 is sunny, 25°C.\"",
+            "tool_call_id" : null,
+            "tool_name" : "weather_tool"
+          } ],
+          "stream" : false,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "weather_tool",
+              "description" : "查询天气\n获取指定位置的天气信息",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "content" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "think" : false
+        }
+EOF
+        )
         ;;
 
     blocking_structured)

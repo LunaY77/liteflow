@@ -1,73 +1,326 @@
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:14.474876Z","message":{"role":"assistant","content":"\u003cthink\u003e"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:14.57087Z","message":{"role":"assistant","content":"\n"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:14.66799Z","message":{"role":"assistant","content":"Okay"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:14.764517Z","message":{"role":"assistant","content":","},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:14.863604Z","message":{"role":"assistant","content":" the"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:14.95871Z","message":{"role":"assistant","content":" user"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.056313Z","message":{"role":"assistant","content":" is"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.153605Z","message":{"role":"assistant","content":" asking"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.25372Z","message":{"role":"assistant","content":" for"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.352034Z","message":{"role":"assistant","content":" the"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.448188Z","message":{"role":"assistant","content":" weather"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.545039Z","message":{"role":"assistant","content":" in"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.644227Z","message":{"role":"assistant","content":" Tokyo"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.744772Z","message":{"role":"assistant","content":"."},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.844825Z","message":{"role":"assistant","content":" I"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:15.94153Z","message":{"role":"assistant","content":" need"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.038578Z","message":{"role":"assistant","content":" to"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.136247Z","message":{"role":"assistant","content":" use"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.233024Z","message":{"role":"assistant","content":" the"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.329977Z","message":{"role":"assistant","content":" get"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.428296Z","message":{"role":"assistant","content":"_weather"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.52527Z","message":{"role":"assistant","content":" function"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.625007Z","message":{"role":"assistant","content":"."},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.723654Z","message":{"role":"assistant","content":" The"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.823111Z","message":{"role":"assistant","content":" function"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:16.922041Z","message":{"role":"assistant","content":" requires"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.02175Z","message":{"role":"assistant","content":" the"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.122055Z","message":{"role":"assistant","content":" city"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.222894Z","message":{"role":"assistant","content":" parameter"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.323016Z","message":{"role":"assistant","content":","},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.422973Z","message":{"role":"assistant","content":" which"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.523023Z","message":{"role":"assistant","content":" is"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.625179Z","message":{"role":"assistant","content":" Tokyo"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.72579Z","message":{"role":"assistant","content":" here"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.827062Z","message":{"role":"assistant","content":"."},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:17.927352Z","message":{"role":"assistant","content":" I"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.027022Z","message":{"role":"assistant","content":"'ll"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.127187Z","message":{"role":"assistant","content":" call"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.22706Z","message":{"role":"assistant","content":" the"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.327504Z","message":{"role":"assistant","content":" function"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.427472Z","message":{"role":"assistant","content":" with"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.527011Z","message":{"role":"assistant","content":" city"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.627274Z","message":{"role":"assistant","content":" set"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.732065Z","message":{"role":"assistant","content":" to"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.831236Z","message":{"role":"assistant","content":" \""},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:18.930341Z","message":{"role":"assistant","content":"tok"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.028981Z","message":{"role":"assistant","content":"yo"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.127269Z","message":{"role":"assistant","content":"\"."},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.226268Z","message":{"role":"assistant","content":" Let"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.324334Z","message":{"role":"assistant","content":" me"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.422725Z","message":{"role":"assistant","content":" make"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.520807Z","message":{"role":"assistant","content":" sure"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.619846Z","message":{"role":"assistant","content":" there"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.719534Z","message":{"role":"assistant","content":"'s"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.818637Z","message":{"role":"assistant","content":" no"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:19.917119Z","message":{"role":"assistant","content":" typo"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.015Z","message":{"role":"assistant","content":"."},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.11197Z","message":{"role":"assistant","content":" Everything"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.210346Z","message":{"role":"assistant","content":" looks"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.308633Z","message":{"role":"assistant","content":" good"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.405927Z","message":{"role":"assistant","content":"."},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.502897Z","message":{"role":"assistant","content":" Time"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.600974Z","message":{"role":"assistant","content":" to"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.697763Z","message":{"role":"assistant","content":" format"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.797379Z","message":{"role":"assistant","content":" the"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.894489Z","message":{"role":"assistant","content":" tool"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:20.991699Z","message":{"role":"assistant","content":" call"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:21.088225Z","message":{"role":"assistant","content":" correctly"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:21.184597Z","message":{"role":"assistant","content":".\n"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:21.282094Z","message":{"role":"assistant","content":"\u003c/think\u003e"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:21.378577Z","message":{"role":"assistant","content":"\n\n"},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:23.217937Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"get_weather","arguments":{"city":"tokyo"}}}]},"done":false}
-{"model":"qwen3:32b","created_at":"2025-09-17T11:49:23.411068Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":12977215666,"load_duration":49819791,"prompt_eval_count":154,"prompt_eval_duration":3987350666,"eval_count":92,"eval_duration":8938256750}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:55.442212Z","message":{"role":"assistant","content":"","thinking":"好的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:55.540792Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:55.640115Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:55.74161Z","message":{"role":"assistant","content":"","thinking":"让我"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:55.850218Z","message":{"role":"assistant","content":"","thinking":"调"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:55.962164Z","message":{"role":"assistant","content":"","thinking":"用"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.078249Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.182758Z","message":{"role":"assistant","content":"","thinking":"来"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.288455Z","message":{"role":"assistant","content":"","thinking":"组装"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.393273Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.495279Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.593351Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.693662Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.789262Z","message":{"role":"assistant","content":"","thinking":"首先"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.884496Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:56.980076Z","message":{"role":"assistant","content":"","thinking":"我"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.075924Z","message":{"role":"assistant","content":"","thinking":"需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.172131Z","message":{"role":"assistant","content":"","thinking":"确认"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.267924Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.362908Z","message":{"role":"assistant","content":"","thinking":"提到"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.458458Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.556989Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.652094Z","message":{"role":"assistant","content":"","thinking":"是什么"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.749647Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.844672Z","message":{"role":"assistant","content":"","thinking":"根据"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:57.941053Z","message":{"role":"assistant","content":"","thinking":"提供的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.041327Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.138685Z","message":{"role":"assistant","content":"","thinking":"信息"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.240312Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.336764Z","message":{"role":"assistant","content":"","thinking":"有一个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.433613Z","message":{"role":"assistant","content":"","thinking":"名为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.533275Z","message":{"role":"assistant","content":"","thinking":"assemble"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.629038Z","message":{"role":"assistant","content":"","thinking":"_tool"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.728255Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.823664Z","message":{"role":"assistant","content":"","thinking":"函数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:58.920502Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.01769Z","message":{"role":"assistant","content":"","thinking":"它的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.112988Z","message":{"role":"assistant","content":"","thinking":"作用"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.214118Z","message":{"role":"assistant","content":"","thinking":"是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.313178Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.409178Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.504874Z","message":{"role":"assistant","content":"","thinking":"a"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.602438Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.699944Z","message":{"role":"assistant","content":"","thinking":"b"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.798694Z","message":{"role":"assistant","content":"","thinking":"组装"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.896058Z","message":{"role":"assistant","content":"","thinking":"成"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:22:59.994397Z","message":{"role":"assistant","content":"","thinking":"答案"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.098643Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.201388Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.302208Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.402722Z","message":{"role":"assistant","content":"","thinking":"希望"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.501588Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.599283Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.701505Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.804048Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:00.905796Z","message":{"role":"assistant","content":"","thinking":"这两个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.012255Z","message":{"role":"assistant","content":"","thinking":"应用"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.119124Z","message":{"role":"assistant","content":"","thinking":"或"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.234024Z","message":{"role":"assistant","content":"","thinking":"它们"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.347643Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.460531Z","message":{"role":"assistant","content":"","thinking":"某些"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.577203Z","message":{"role":"assistant","content":"","thinking":"功能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.689974Z","message":{"role":"assistant","content":"","thinking":"结合起来"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.799066Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:01.919685Z","message":{"role":"assistant","content":"","thinking":"但"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.034806Z","message":{"role":"assistant","content":"","thinking":"具体"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.150436Z","message":{"role":"assistant","content":"","thinking":"需求"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.265082Z","message":{"role":"assistant","content":"","thinking":"不太"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.377755Z","message":{"role":"assistant","content":"","thinking":"明确"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.488099Z","message":{"role":"assistant","content":"","thinking":"。\n\n"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.59805Z","message":{"role":"assistant","content":"","thinking":"接下来"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.716354Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.828567Z","message":{"role":"assistant","content":"","thinking":"我"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:02.937266Z","message":{"role":"assistant","content":"","thinking":"需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.046052Z","message":{"role":"assistant","content":"","thinking":"分析"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.157866Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.269933Z","message":{"role":"assistant","content":"","thinking":"的真实"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.385779Z","message":{"role":"assistant","content":"","thinking":"需求"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.511192Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.622977Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.733544Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.844745Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:03.9557Z","message":{"role":"assistant","content":"","thinking":"都是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.061311Z","message":{"role":"assistant","content":"","thinking":"即时"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.170816Z","message":{"role":"assistant","content":"","thinking":"通讯"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.282479Z","message":{"role":"assistant","content":"","thinking":"软件"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.385853Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.488157Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.596834Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.702181Z","message":{"role":"assistant","content":"","thinking":"想"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.803017Z","message":{"role":"assistant","content":"","thinking":"比较"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:04.91224Z","message":{"role":"assistant","content":"","thinking":"它们"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.0257Z","message":{"role":"assistant","content":"","thinking":"的功能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.140526Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.264704Z","message":{"role":"assistant","content":"","thinking":"或者"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.382568Z","message":{"role":"assistant","content":"","thinking":"希望"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.498807Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.616893Z","message":{"role":"assistant","content":"","thinking":"两者"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.73605Z","message":{"role":"assistant","content":"","thinking":"的消息"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.850551Z","message":{"role":"assistant","content":"","thinking":"整合"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:05.968846Z","message":{"role":"assistant","content":"","thinking":"到"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.083647Z","message":{"role":"assistant","content":"","thinking":"一个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.198131Z","message":{"role":"assistant","content":"","thinking":"平台"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.309842Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.42502Z","message":{"role":"assistant","content":"","thinking":"不过"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.541238Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.657299Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.766066Z","message":{"role":"assistant","content":"","thinking":"只是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.87435Z","message":{"role":"assistant","content":"","thinking":"简单"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:06.984785Z","message":{"role":"assistant","content":"","thinking":"提到"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.089722Z","message":{"role":"assistant","content":"","thinking":"“"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.19411Z","message":{"role":"assistant","content":"","thinking":"组装"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.302573Z","message":{"role":"assistant","content":"","thinking":"”，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.410202Z","message":{"role":"assistant","content":"","thinking":"所以"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.51453Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.619647Z","message":{"role":"assistant","content":"","thinking":"需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.730082Z","message":{"role":"assistant","content":"","thinking":"进一步"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.837321Z","message":{"role":"assistant","content":"","thinking":"澄清"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:07.936674Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.034983Z","message":{"role":"assistant","content":"","thinking":"但"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.133776Z","message":{"role":"assistant","content":"","thinking":"根据"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.23093Z","message":{"role":"assistant","content":"","thinking":"当前"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.330012Z","message":{"role":"assistant","content":"","thinking":"提供的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.430725Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.529946Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.627356Z","message":{"role":"assistant","content":"","thinking":"我"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.726801Z","message":{"role":"assistant","content":"","thinking":"需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.827344Z","message":{"role":"assistant","content":"","thinking":"按照"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:08.927402Z","message":{"role":"assistant","content":"","thinking":"函数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.02737Z","message":{"role":"assistant","content":"","thinking":"的要求"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.126621Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.227053Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.324283Z","message":{"role":"assistant","content":"","thinking":"a"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.422019Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.520551Z","message":{"role":"assistant","content":"","thinking":"b"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.617456Z","message":{"role":"assistant","content":"","thinking":"作为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.715057Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.817148Z","message":{"role":"assistant","content":"","thinking":"传递"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:09.914416Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.012504Z","message":{"role":"assistant","content":"","thinking":"这里"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.111271Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.212992Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.316595Z","message":{"role":"assistant","content":"","thinking":"明确"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.418853Z","message":{"role":"assistant","content":"","thinking":"提"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.516966Z","message":{"role":"assistant","content":"","thinking":"到了"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.61484Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.712439Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.812998Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:10.911308Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.010115Z","message":{"role":"assistant","content":"","thinking":"所以"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.107994Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.206248Z","message":{"role":"assistant","content":"","thinking":"希望"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.305037Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.403761Z","message":{"role":"assistant","content":"","thinking":"这两个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.508688Z","message":{"role":"assistant","content":"","thinking":"名称"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.611507Z","message":{"role":"assistant","content":"","thinking":"作为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.711392Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.809807Z","message":{"role":"assistant","content":"","thinking":"传"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:11.907696Z","message":{"role":"assistant","content":"","thinking":"入"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.0076Z","message":{"role":"assistant","content":"","thinking":"函数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.108461Z","message":{"role":"assistant","content":"","thinking":"。\n\n"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.210927Z","message":{"role":"assistant","content":"","thinking":"然后"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.310234Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.40838Z","message":{"role":"assistant","content":"","thinking":"我"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.506052Z","message":{"role":"assistant","content":"","thinking":"需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.604672Z","message":{"role":"assistant","content":"","thinking":"检查"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.7035Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.801315Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.899504Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:12.998205Z","message":{"role":"assistant","content":"","thinking":"要求"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.097241Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.195674Z","message":{"role":"assistant","content":"","thinking":"函数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.294097Z","message":{"role":"assistant","content":"","thinking":"assemble"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.392695Z","message":{"role":"assistant","content":"","thinking":"_tool"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.490718Z","message":{"role":"assistant","content":"","thinking":"需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.588944Z","message":{"role":"assistant","content":"","thinking":"两个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.687999Z","message":{"role":"assistant","content":"","thinking":"必"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.788081Z","message":{"role":"assistant","content":"","thinking":"填"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.888118Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:13.989455Z","message":{"role":"assistant","content":"","thinking":"a"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.087654Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.18598Z","message":{"role":"assistant","content":"","thinking":"b"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.284707Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.383904Z","message":{"role":"assistant","content":"","thinking":"都是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.483066Z","message":{"role":"assistant","content":"","thinking":"字符串"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.582179Z","message":{"role":"assistant","content":"","thinking":"类型"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.682911Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.780723Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.880194Z","message":{"role":"assistant","content":"","thinking":"给出"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:14.979123Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.078455Z","message":{"role":"assistant","content":"","thinking":"指令"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.179085Z","message":{"role":"assistant","content":"","thinking":"正好"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.27743Z","message":{"role":"assistant","content":"","thinking":"是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.37597Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.474781Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.574303Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.672661Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.770952Z","message":{"role":"assistant","content":"","thinking":"所以"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.8703Z","message":{"role":"assistant","content":"","thinking":"应该"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:15.968743Z","message":{"role":"assistant","content":"","thinking":"直接"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.066898Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.16532Z","message":{"role":"assistant","content":"","thinking":"它们"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.263749Z","message":{"role":"assistant","content":"","thinking":"作为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.363169Z","message":{"role":"assistant","content":"","thinking":"a"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.463413Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.562065Z","message":{"role":"assistant","content":"","thinking":"b"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.661488Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.759384Z","message":{"role":"assistant","content":"","thinking":"值"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.85828Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:16.956463Z","message":{"role":"assistant","content":"","thinking":"不需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.056689Z","message":{"role":"assistant","content":"","thinking":"额外"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.156206Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.255746Z","message":{"role":"assistant","content":"","thinking":"处理"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.35499Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.453286Z","message":{"role":"assistant","content":"","thinking":"因为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.552661Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.652841Z","message":{"role":"assistant","content":"","thinking":"没有"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.751104Z","message":{"role":"assistant","content":"","thinking":"提供"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.849887Z","message":{"role":"assistant","content":"","thinking":"更多信息"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:17.94957Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.049931Z","message":{"role":"assistant","content":"","thinking":"因此"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.148803Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.247674Z","message":{"role":"assistant","content":"","thinking":"正确的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.347437Z","message":{"role":"assistant","content":"","thinking":"做法"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.449584Z","message":{"role":"assistant","content":"","thinking":"是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.551112Z","message":{"role":"assistant","content":"","thinking":"调"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.65016Z","message":{"role":"assistant","content":"","thinking":"用"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.749219Z","message":{"role":"assistant","content":"","thinking":"assemble"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.848678Z","message":{"role":"assistant","content":"","thinking":"_tool"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:18.947579Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.046465Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.145969Z","message":{"role":"assistant","content":"","thinking":"a"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.245989Z","message":{"role":"assistant","content":"","thinking":"为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.344603Z","message":{"role":"assistant","content":"","thinking":"“"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.443796Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.545005Z","message":{"role":"assistant","content":"","thinking":"”，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.646176Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.744556Z","message":{"role":"assistant","content":"","thinking":"b"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.84301Z","message":{"role":"assistant","content":"","thinking":"为"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:19.941928Z","message":{"role":"assistant","content":"","thinking":"“"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.042224Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.140938Z","message":{"role":"assistant","content":"","thinking":"”。\n\n"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.239855Z","message":{"role":"assistant","content":"","thinking":"最后"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.339727Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.439823Z","message":{"role":"assistant","content":"","thinking":"确保"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.539397Z","message":{"role":"assistant","content":"","thinking":"没有"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.638355Z","message":{"role":"assistant","content":"","thinking":"遗漏"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.736891Z","message":{"role":"assistant","content":"","thinking":"其他"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.837631Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:20.936849Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.036081Z","message":{"role":"assistant","content":"","thinking":"解释"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.135956Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.236336Z","message":{"role":"assistant","content":"","thinking":"例如"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.334857Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.433799Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.533138Z","message":{"role":"assistant","content":"","thinking":"是否"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.63236Z","message":{"role":"assistant","content":"","thinking":"想"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.731839Z","message":{"role":"assistant","content":"","thinking":"让"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.830954Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:21.930274Z","message":{"role":"assistant","content":"","thinking":"执行"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.030643Z","message":{"role":"assistant","content":"","thinking":"某种"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.129854Z","message":{"role":"assistant","content":"","thinking":"操作"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.22916Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.329386Z","message":{"role":"assistant","content":"","thinking":"比如"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.429433Z","message":{"role":"assistant","content":"","thinking":"合并"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.529142Z","message":{"role":"assistant","content":"","thinking":"两个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.628503Z","message":{"role":"assistant","content":"","thinking":"应用"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.726964Z","message":{"role":"assistant","content":"","thinking":"的数据"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.826244Z","message":{"role":"assistant","content":"","thinking":"？"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:22.926226Z","message":{"role":"assistant","content":"","thinking":"但"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.026354Z","message":{"role":"assistant","content":"","thinking":"根据"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.125589Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.225958Z","message":{"role":"assistant","content":"","thinking":"的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.325582Z","message":{"role":"assistant","content":"","thinking":"描述"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.424972Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.525017Z","message":{"role":"assistant","content":"","thinking":"函数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.62525Z","message":{"role":"assistant","content":"","thinking":"只是"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.724528Z","message":{"role":"assistant","content":"","thinking":"将"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.823294Z","message":{"role":"assistant","content":"","thinking":"a"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:23.922939Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.023887Z","message":{"role":"assistant","content":"","thinking":"b"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.123485Z","message":{"role":"assistant","content":"","thinking":"组装"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.222997Z","message":{"role":"assistant","content":"","thinking":"成"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.323819Z","message":{"role":"assistant","content":"","thinking":"答案"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.422969Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.52464Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.625826Z","message":{"role":"assistant","content":"","thinking":"返回"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.724996Z","message":{"role":"assistant","content":"","thinking":"一个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.824314Z","message":{"role":"assistant","content":"","thinking":"字符串"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:24.924571Z","message":{"role":"assistant","content":"","thinking":"组合"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.025244Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.126617Z","message":{"role":"assistant","content":"","thinking":"因此"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.229062Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.32939Z","message":{"role":"assistant","content":"","thinking":"用户"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.429507Z","message":{"role":"assistant","content":"","thinking":"可能"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.53009Z","message":{"role":"assistant","content":"","thinking":"只需要"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.630506Z","message":{"role":"assistant","content":"","thinking":"一个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.729995Z","message":{"role":"assistant","content":"","thinking":"简单的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.83288Z","message":{"role":"assistant","content":"","thinking":"组合"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:25.934018Z","message":{"role":"assistant","content":"","thinking":"结果"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.036619Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.135921Z","message":{"role":"assistant","content":"","thinking":"如"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.235671Z","message":{"role":"assistant","content":"","thinking":"“"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.336333Z","message":{"role":"assistant","content":"","thinking":"QQ"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.435652Z","message":{"role":"assistant","content":"","thinking":"和"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.53616Z","message":{"role":"assistant","content":"","thinking":"微信"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.635756Z","message":{"role":"assistant","content":"","thinking":"”"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.735995Z","message":{"role":"assistant","content":"","thinking":"或"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.836004Z","message":{"role":"assistant","content":"","thinking":"类似的"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:26.935139Z","message":{"role":"assistant","content":"","thinking":"格式"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.035273Z","message":{"role":"assistant","content":"","thinking":"。"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.136143Z","message":{"role":"assistant","content":"","thinking":"因此"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.235651Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.336268Z","message":{"role":"assistant","content":"","thinking":"直接"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.436872Z","message":{"role":"assistant","content":"","thinking":"调"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.538084Z","message":{"role":"assistant","content":"","thinking":"用"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.640223Z","message":{"role":"assistant","content":"","thinking":"工具"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.740088Z","message":{"role":"assistant","content":"","thinking":"，"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.839363Z","message":{"role":"assistant","content":"","thinking":"传"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:27.939381Z","message":{"role":"assistant","content":"","thinking":"入"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:28.039311Z","message":{"role":"assistant","content":"","thinking":"这两个"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:28.139268Z","message":{"role":"assistant","content":"","thinking":"参数"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:28.23902Z","message":{"role":"assistant","content":"","thinking":"即可"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:28.339729Z","message":{"role":"assistant","content":"","thinking":"。\n"},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:30.954955Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"assemble_tool","arguments":{"a":"QQ","b":"微信"}}}]},"done":false}
+{"model":"qwen3:32b","created_at":"2025-10-24T02:23:31.157599Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":38157969042,"load_duration":51940958,"prompt_eval_count":165,"prompt_eval_duration":2172934334,"eval_count":354,"eval_duration":35931024125}

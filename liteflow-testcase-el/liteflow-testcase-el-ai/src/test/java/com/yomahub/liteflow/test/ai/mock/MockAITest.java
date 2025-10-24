@@ -40,7 +40,7 @@ public class MockAITest extends BaseTest {
      * @param provider     要 Mock 的 Provider
      * @param responseType 要 Mock 的响应类型
      */
-    protected void setupMock(ProviderEnum provider, TestDataReader.RequestType responseType) {
+    protected void setupChatMock(ProviderEnum provider, TestDataReader.RequestType... responseType) {
         MockConfigHolder.setMockConfig(new MockConfig(provider, responseType));
         ModelFactory.register(MOCK_PROVIDER);
     }

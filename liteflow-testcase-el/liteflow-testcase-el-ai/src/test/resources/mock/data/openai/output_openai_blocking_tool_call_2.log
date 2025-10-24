@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "北京今天天气晴朗，气温25°C。",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1761272549,
+  "id": "021761272548706d5520fc5788ffe3c17f318ec3cb6fdfd816204",
+  "model": "doubao-seed-1-6-250615",
+  "service_tier": "default",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 461,
+    "total_tokens": 471,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  }
+}

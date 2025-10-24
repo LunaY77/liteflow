@@ -6,43 +6,34 @@
       "logprobs": null,
       "message": {
         "content": "",
-        "reasoning_content": "让我想想，用户让我查询北京的天气和字节跳动的当前股价。首先，我需要确定这两个任务是否需要调用不同的工具。根据提供的工具列表，有两个工具：get_current_weather和get_stock_price。北京的天气显然用get_current_weather，参数location是“北京市”。字节跳动的股价用get_stock_price，参数company_name是“ByteDance”。\n\n接下来，用户的问题需要同时获取这两个信息，所以应该并行调用这两个工具，而不是分两次。这样可以提高效率，一次完成两个查询。检查参数是否正确，location必须是城市名称，公司名称是否正确，ByteDance是正确的公司名。确认没有遗漏必填参数，两个工具都需要location和company_name，都是必填的。\n\n然后，按照格式要求，使用并行工具调用，每个工具调用对象里包含name、parameters，可能还需要id来区分结果。不过用户给的样例中，并行调用有id字段，但工具列表里没有提到需要id。不过根据系统提示，并行调用时可以包含id，可能用于后续处理，但用户的问题可能不需要。不过样例中确实有id，所以应该加上id，比如0和1，方便区分两个结果。\n\n所以最终的JSON数组应该包含两个对象，分别调用get_current_weather和get_stock_price，参数正确，id分别为0和1。确保格式正确，使用<|FunctionCallBegin|>和<|FunctionCallEnd|>包裹，中间是JSON数组。检查有没有语法错误，比如引号、逗号是否正确。确认无误后，生成调用内容。",
         "role": "assistant",
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"location\":\"北京市\"}",
-              "name": "get_current_weather"
+              "arguments": "{\"content\":\"北京今天天气\"}",
+              "name": "weather_tool"
             },
-            "id": "call_a8blu41n5gbk9bhv2siwthat",
-            "type": "function"
-          },
-          {
-            "function": {
-              "arguments": "{\"company_name\":\"ByteDance\"}",
-              "name": "get_stock_price"
-            },
-            "id": "call_ipj14z3x6gd8vraj7846an2k",
+            "id": "call_5xq00iko5erszghb3job9bu9",
             "type": "function"
           }
         ]
       }
     }
   ],
-  "created": 1758104449,
-  "id": "0217581044382266a4a79e57bfee6f1241bef9629663f368845fd",
+  "created": 1761272516,
+  "id": "021761272515552eb5cd35b58dcbd0d14b1782773d336b18bdd28",
   "model": "doubao-seed-1-6-250615",
   "service_tier": "default",
   "object": "chat.completion",
   "usage": {
-    "completion_tokens": 400,
-    "prompt_tokens": 535,
-    "total_tokens": 935,
+    "completion_tokens": 22,
+    "prompt_tokens": 399,
+    "total_tokens": 421,
     "prompt_tokens_details": {
       "cached_tokens": 0
     },
     "completion_tokens_details": {
-      "reasoning_tokens": 347
+      "reasoning_tokens": 0
     }
   }
 }

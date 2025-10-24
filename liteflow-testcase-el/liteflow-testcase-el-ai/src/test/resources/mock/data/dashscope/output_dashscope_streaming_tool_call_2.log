@@ -1,0 +1,152 @@
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"好的，现在","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"用户"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"让我"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"调用工具组装QQ"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"和微信。首先"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，我需要确认"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具的正确用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"法。根据提供的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具描述，assemble"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"_tool需要两个字符串"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"参数a和b"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，将它们组合"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"成答案。\n\n用户"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"给的输入是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"“QQ”和"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"“微信”，所以"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"应该把a设"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"为\"QQ\"，b设为\"微信\"。调"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"用工具后，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"返回的结果是\"As"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"sembled result: QQ and 微信\""},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。不过这里可能"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"有点问题，因为"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具描述说是“"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"组装”，可能是指"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"直接拼接，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"比如QQ微信，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"但返回的结果里"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"用了“and”"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"连接。不过按照"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具返回的字符串"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，我需要按照"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"实际结果来回应"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。\n\n用户可能希望"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"得到组合后的结果"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，比如“QQ"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"微信”，但工具"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"返回的是“QQ"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":" and 微信"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”。不过根据工具"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"的响应，我"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"应该直接使用返回"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"的结果。所以正确的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"回答应该是“QQ"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":" and 微信”。不过可能"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"用户需要的是没有"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"“and”的拼"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"接，但根据"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具的输出，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"可能工具内部处理"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"了，所以应该"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"按工具返回的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"来。\n\n检查之前的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具调用，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"参数是否正确。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"a是QQ，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"b是微信，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"所以工具返回的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"应该是这两个的组合"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"。可能工具内部"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"是把a和"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"b用“and"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"”连接起来，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"所以结果就是“"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"QQ and 微信”。需要"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"确认用户是否需要"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"这个格式，但"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"根据工具的响应"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"，应该直接使用"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"返回的结果。\n\n所以"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"最终答案应该是“"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":null,"reasoning_content":"QQ and 微信”"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":"QQ","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"delta":{"content":" and 微信","reasoning_content":null},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: {"choices":[{"finish_reason":"stop","delta":{"content":"","reasoning_content":null},"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1761272584,"system_fingerprint":null,"model":"qwen-flash","id":"chatcmpl-06a9b215-2397-42bf-a9d6-6a4f798cb9fc"}
+
+data: [DONE]
+

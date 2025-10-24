@@ -27,8 +27,9 @@ public class MockTransport implements Transport {
     private boolean isStop = false;
 
     public MockTransport(MockConfig config) {
-        this.blockingResponse = TestDataReader.getBlockingResponse(config.getProvider(), config.getRequestType());
-        this.streamingChunks = TestDataReader.getStreamingChunks(config.getProvider(), config.getRequestType());
+        TestDataReader.RequestType curRequestType = config.getRequestType();
+        this.blockingResponse = TestDataReader.getBlockingResponse(config.getProvider(), curRequestType);
+        this.streamingChunks = TestDataReader.getStreamingChunks(config.getProvider(), curRequestType);
     }
 
     @Override

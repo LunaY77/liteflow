@@ -18,6 +18,7 @@
 # 示例:
 # ./dashscope_request.sh streaming_text
 # ./dashscope_request.sh blocking_tool_call
+# ./dashscope_request.sh blocking_tool_call_2
 # ./dashscope_request.sh classify
 # ===================================================================================
 
@@ -36,8 +37,10 @@ usage() {
     echo "支持的请求类型 (request_type):"
     echo "  streaming_text         - 流式输出文本"
     echo "  blocking_text          - 阻塞式输出文本"
-    echo "  blocking_tool_call     - 阻塞式调用工具"
-    echo "  streaming_tool_call    - 流式调用工具"
+    echo "  blocking_tool_call     - 阻塞式调用工具 (第1次)"
+    echo "  blocking_tool_call_2   - 阻塞式调用工具 (第2次, 带工具结果)"
+    echo "  streaming_tool_call    - 流式调用工具 (第1次)"
+    echo "  streaming_tool_call_2  - 流式调用工具 (第2次, 带工具结果)"
     echo "  blocking_structured    - 阻塞式结构化输出 (JSON)"
     echo "  streaming_structured   - 流式结构化输出 (JSON)"
     echo "  classify               - 阻塞式单标签分类"
@@ -138,73 +141,179 @@ case "$REQUEST_TYPE" in
         ;;
 
     blocking_tool_call)
-        MODEL=$TOOL_MODEL
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content "查询北京和上海今天的天气" \
-          '{
-            "model": $model,
-            "messages": [
-              {"role": "system", "content": "You are a helpful assistant."},
-              {"role": "user", "content": $content}
-            ],
-            "tools": [
-              {
-                "type": "function",
-                "function": {
-                  "name": "get_current_weather",
-                  "description": "获取一个城市当前的实时天气",
-                  "parameters": {
-                    "type": "object",
-                    "properties": {
-                      "location": {
-                        "type": "string",
-                        "description": "城市名称, e.g. 北京"
-                      }
-                    },
-                    "required": ["location"]
+        MODEL="qwen-flash"
+        JSON_PAYLOAD='{
+          "model" : "qwen-flash",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "北京今天天气怎么样"
+          } ],
+          "stream" : false,
+          "enable_thinking" : false,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "weather_tool",
+              "description" : "查询天气\n获取指定位置的天气信息",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "content" : {
+                    "type" : "string"
                   }
-                }
+                },
+                "required" : [ "content" ],
+                "additionalProperties" : false
               }
-            ],
-            "stream": false,
-            "enable_thinking": true
-          }')
+            }
+          } ],
+          "response_format" : {
+            "type" : "text"
+          }
+        }'
+        ;;
+
+    blocking_tool_call_2)
+        MODEL="qwen-flash"
+        JSON_PAYLOAD='{
+          "model" : "qwen-flash",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "北京今天天气怎么样"
+          }, {
+            "role" : "assistant",
+            "content" : "",
+            "tool_calls" : [ {
+              "id" : "call_627a5cbb276d4ebfa2c190",
+              "type" : "function",
+              "name" : "weather_tool",
+              "arguments" : "{\"content\": \"北京\"}",
+              "function" : {
+                "name" : "weather_tool",
+                "arguments" : "{\"content\": \"北京\"}"
+              }
+            } ]
+          }, {
+            "role" : "tool",
+            "content" : "\"The weather in 北京 is sunny, 25°C.\"",
+            "tool_call_id" : "call_627a5cbb276d4ebfa2c190",
+            "tool_name" : "weather_tool"
+          } ],
+          "stream" : false,
+          "enable_thinking" : false,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "weather_tool",
+              "description" : "查询天气\n获取指定位置的天气信息",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "content" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "response_format" : {
+            "type" : "text"
+          }
+        }'
         ;;
 
     streaming_tool_call)
         USE_STREAM=true
-        MODEL=$TOOL_MODEL
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content "查询广州今天的天气以及现在的时间" \
-          '{
-            "model": $model,
-            "messages": [
-              {"role": "system", "content": "You are a helpful assistant."},
-              {"role": "user", "content": $content}
-            ],
-            "tools": [
-              {
-                "type": "function",
-                "function": {
-                  "name": "get_current_weather",
-                  "description": "当你想查询指定城市的天气时非常有用。",
-                  "parameters": {
-                    "type": "object",
-                    "properties": { "location":{ "type": "string", "description": "城市或县区"}},
-                    "required": ["location"]
+        MODEL="qwen-flash"
+        JSON_PAYLOAD='{
+          "model" : "qwen-flash",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "调用工具组装 QQ 和 微信"
+          } ],
+          "stream" : true,
+          "enable_thinking" : true,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "assemble_tool",
+              "description" : "组装工具\n将 a 和 b 组装成答案",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "a" : {
+                    "type" : "string"
+                  },
+                  "b" : {
+                    "type" : "string"
                   }
-                }
-              },
-              {
-                "type": "function",
-                "function": { "name": "get_current_time", "description": "当你想知道现在的时间时非常有用。", "parameters": {} }
+                },
+                "required" : [ "a", "b" ],
+                "additionalProperties" : false
               }
-            ],
-            "stream": true,
-            "enable_thinking": true
-          }')
+            }
+          } ],
+          "response_format" : {
+            "type" : "text"
+          }
+        }'
+        ;;
+
+    streaming_tool_call_2)
+        USE_STREAM=true
+        MODEL="qwen-flash"
+        JSON_PAYLOAD='{
+          "model" : "qwen-flash",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "调用工具组装 QQ 和 微信"
+          }, {
+            "role" : "assistant",
+            "content" : "<think>\n好的，用户让我调用工具组装“QQ”和“微信”。首先，我需要看看提供的工具是什么。根据工具描述，assemble_tool这个函数的作用是将a和b组装成答案，参数是a和b，都是字符串。\n\n用户给的两个词是QQ和微信，所以应该把它们作为a和b的参数传进去。不过需要确认顺序，用户说的是“组装QQ和微信”，可能a是QQ，b是微信。所以调用assemble_tool，a参数是\"QQ\"，b参数是\"微信\"。\n\n检查一下工具的参数要求，必须提供a和b，都是字符串。这里没问题。所以正确的工具调用应该是把a设为\"QQ\"，b设为\"微信\"。然后工具会返回组装后的结果，比如可能拼接成\"QQ微信\"或者有其他格式，但根据描述，工具只是简单组装，所以应该是直接连接。\n\n现在需要生成对应的tool_call JSON。确保参数正确，没有拼写错误。确认工具名称是assemble_tool，参数是a和b。所以最终的tool_call应该是：\n\n{\"name\": \"assemble_tool\", \"arguments\": {\"a\": \"QQ\", \"b\": \"微信\"}}\n\n检查一下有没有其他可能的错误，比如用户是否希望用其他方式组装，但根据工具描述，应该只是简单拼接。所以没问题</think>\n",
+            "tool_calls" : [ {
+              "id" : "call_da044c3fd1714c5687ebbb",
+              "type" : "function",
+              "name" : "assemble_tool",
+              "arguments" : "{\"a\": \"QQ\", \"b\": \"微信\"}null",
+              "function" : {
+                "name" : "assemble_tool",
+                "arguments" : "{\"a\": \"QQ\", \"b\": \"微信\"}null"
+              }
+            } ]
+          }, {
+            "role" : "tool",
+            "content" : "\"Assembled result: QQ and 微信\"",
+            "tool_call_id" : "call_da044c3fd1714c5687ebbb",
+            "tool_name" : "assemble_tool"
+          } ],
+          "stream" : true,
+          "enable_thinking" : true,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "assemble_tool",
+              "description" : "组装工具\n将 a 和 b 组装成答案",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "a" : {
+                    "type" : "string"
+                  },
+                  "b" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "a", "b" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "response_format" : {
+            "type" : "text"
+          }
+        }'
         ;;
 
     blocking_structured)
@@ -242,7 +351,7 @@ case "$REQUEST_TYPE" in
             "content" : "使用中文解题: 8x + 9 = 32 and x + y = 1"
           }, {
             "role" : "user",
-            "content" : "Your response should be in JSON format.\nDo not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\nDo not include markdown code blocks in your response.\nRemove the ```json markdown from the output.\nHere is the JSON Schema instance your output must adhere to:\n```\n{\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"final_answer\" : {\n      \"type\" : \"string\"\n    },\n    \"steps\" : {\n      \"type\" : \"array\",\n      \"items\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"explanation\" : {\n            \"type\" : \"string\"\n          },\n          \"output\" : {\n            \"type\" : \"string\"\n          }\n        },\n        \"required\" : [ \"explanation\", \"output\" ],\n        \"additionalProperties\" : false\n      }\n    }\n  },\n  \"required\" : [ \"final_answer\", \"steps\" ],\n  \"additionalProperties\" : false\n}\n```"
+            "content" : "Your response should be in JSON format.\nDo not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.\nDo not include markdown code blocks in your response.\nRemove the ```json markdown from the output.\nHere is the JSON Schema instance your output must adhere to:\n```\n{\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"final_answer\" : {\n      \"type\" : \"string\"\n    },\n    \"steps\" : {\n      \"type\" : \"array\",\n      \"items\" : {\n        \"type\" : \"object\",\n        \"properties\" : {\n          \"explanation\" : {\n            \"type\" : \"string\"\n          },\n          \"output\" : {\n            \"type\" : "string\"\n          }\n        },\n        \"required\" : [ \"explanation\", \"output\" ],\n        \"additionalProperties\" : false\n      }\n    }\n  },\n  \"required\" : [ \"final_answer\", \"steps\" ],\n  \"additionalProperties\" : false\n}\n```"
           } ],
           "stream" : true,
           "enable_thinking" : false,

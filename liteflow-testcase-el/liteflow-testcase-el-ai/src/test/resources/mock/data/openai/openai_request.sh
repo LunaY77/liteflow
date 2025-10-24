@@ -18,6 +18,7 @@
 # 示例:
 # ./openai_request.sh streaming_text
 # ./openai_request.sh blocking_tool_call
+# ./openai_request.sh blocking_tool_call_2
 # ./openai_request.sh classify
 # ===================================================================================
 
@@ -35,8 +36,10 @@ usage() {
     echo "支持的请求类型 (request_type):"
     echo "  streaming_text         - 流式输出文本"
     echo "  blocking_text          - 阻塞式输出文本"
-    echo "  blocking_tool_call     - 阻塞式调用工具 (开启思考过程)"
-    echo "  streaming_tool_call    - 流式调用工具 (开启思考过程)"
+    echo "  blocking_tool_call     - 阻塞式调用工具 (第1次调用)"
+    echo "  streaming_tool_call    - 流式调用工具 (第1次调用)"
+    echo "  blocking_tool_call_2   - 阻塞式调用工具 (第2次, 含工具结果)"
+    echo "  streaming_tool_call_2  - 流式调用工具 (第2次, 含工具结果)"
     echo "  blocking_structured    - 阻塞式结构化输出 (JSON Schema)"
     echo "  streaming_structured   - 流式结构化输出 (JSON Schema)"
     echo "  classify               - 阻塞式单标签分类"
@@ -120,18 +123,179 @@ case "$REQUEST_TYPE" in
         ;;
 
     blocking_tool_call)
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content "请帮我查询一下北京的天气，并告诉我字节跳动（ByteDance）的当前股价" \
-          '{model: $model, messages: [{"role": "user", "content": $content}], tools: [{"type": "function", "function": {"name": "get_current_weather", "description": "获取指定城市的当前天气", "parameters": {"type": "object", "properties": { "location": { "type": "string", "description": "城市名称, e.g. 北京市" }}, "required": ["location"]}}}, {"type": "function", "function": {"name": "get_stock_price", "description": "获取指定公司的当前股票价格", "parameters": {"type": "object", "properties": { "company_name": { "type": "string", "description": "公司名称, e.g. ByteDance" }}, "required": ["company_name"]}}}], thought: true, stream: false}')
+        MODEL="doubao-seed-1-6-250615"
+        USE_STREAM=false
+        # 使用单引号包裹静态JSON字符串
+        JSON_PAYLOAD='{
+          "model" : "doubao-seed-1-6-250615",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "北京今天天气怎么样"
+          } ],
+          "stream" : false,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "weather_tool",
+              "description" : "查询天气\n获取指定位置的天气信息",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "content" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "thinking" : {
+            "type" : "disabled"
+          }
+        }'
         ;;
 
     streaming_tool_call)
+        MODEL="doubao-seed-1-6-250615"
         USE_STREAM=true
-        JSON_PAYLOAD=$(jq -n \
-          --arg model "$MODEL" \
-          --arg content "上海的天气怎么样？" \
-          '{model: $model, messages: [{"role": "user", "content": $content}], tools: [{"type": "function", "function": {"name": "get_current_weather", "description": "获取指定城市的当前天气", "parameters": {"type": "object", "properties": { "location": { "type": "string", "description": "城市名称, e.g. 上海市" }}, "required": ["location"]}}}], thought: true, stream: true}')
+        # 使用单引号包裹静态JSON字符串
+        JSON_PAYLOAD='{
+          "model" : "doubao-seed-1-6-250615",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "调用工具组装 QQ 和 微信"
+          } ],
+          "stream" : true,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "assemble_tool",
+              "description" : "组装工具\n将 a 和 b 组装成答案",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "a" : {
+                    "type" : "string"
+                  },
+                  "b" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "a", "b" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "thinking" : {
+            "type" : "enabled"
+          }
+        }'
+        ;;
+
+    blocking_tool_call_2)
+        MODEL="doubao-seed-1-6-250615"
+        USE_STREAM=false
+        JSON_PAYLOAD='{
+          "model" : "doubao-seed-1-6-250615",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "北京今天天气怎么样"
+          }, {
+            "role" : "assistant",
+            "content" : "",
+            "tool_calls" : [ {
+              "id" : "call_8ydot326j82hqgfauttl3tqs",
+              "type" : "function",
+              "name" : "weather_tool",
+              "arguments" : "{\"content\":\"北京今天天气\"}",
+              "function" : {
+                "name" : "weather_tool",
+                "arguments" : "{\"content\":\"北京今天天气\"}"
+              }
+            } ]
+          }, {
+            "role" : "tool",
+            "content" : "\"The weather in 北京今天天气 is sunny, 25°C.\"",
+            "tool_call_id" : "call_8ydot326j82hqgfauttl3tqs",
+            "tool_name" : "weather_tool"
+          } ],
+          "stream" : false,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "weather_tool",
+              "description" : "查询天气\n获取指定位置的天气信息",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "content" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "content" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "thinking" : {
+            "type" : "disabled"
+          }
+        }'
+        ;;
+
+    streaming_tool_call_2)
+        MODEL="doubao-seed-1-6-250615"
+        USE_STREAM=true
+        JSON_PAYLOAD='{
+          "model" : "doubao-seed-1-6-250615",
+          "messages" : [ {
+            "role" : "user",
+            "content" : "调用工具组装 QQ 和 微信"
+          }, {
+            "role" : "assistant",
+            "content" : "<think>\n我现在需要处理用户的请求：“调用工具组装 QQ 和微信”。首先，我得仔细看看用户提供的工具信息。用户提到的工具列表里只有一个工具，名字是assemble_tool，它的功能是将a和b组装成答案，参数需要a和b两个字符串，且都是必填项。接下来，用户的问题是要组装QQ和微信。这里的“组装”应该是指把这两个应用名称组合起来。根据assemble_tool的参数要求，我需要将QQ作为a，微信作为b，或者反过来？不过用户没有指定顺序，可能默认顺序就是QQ在前，微信在后。不过工具的描述只是说“组装成答案”，没有说明具体的格式，可能直接拼接字符串即可。然后检查参数是否符合要求。a和b都是字符串类型，QQ和微信都是字符串，所以没问题。必填项a和b都提供了，没有遗漏。additionalProperties是false，所以不能添加其他参数。因此，正确的调用应该是使用assemble_tool，参数a为\"QQ\"，参数b为\"微信\"。需要确保JSON格式正确，使用双引号，逗号分隔，没有语法错误。同时，因为是单工具调用，所以数组里只有一个对象，不需要id字段。最后，按照用户要求的格式，用<|FunctionCallBegin|>和<|FunctionCallEnd|>包裹这个JSON数组。确认没有其他需要注意的地方，比如工具名称是否正确，参数是否正确对应。看起来一切都符合要求，所以可以生成调用指令了。</think>\n",
+            "tool_calls" : [ {
+              "id" : "call_gcp2mh3fmtn72slfepu1cnc9",
+              "type" : "function",
+              "name" : "assemble_tool",
+              "arguments" : "{\"a\":\"QQ\",\"b\":\"微信\"}",
+              "function" : {
+                "name" : "assemble_tool",
+                "arguments" : "{\"a\":\"QQ\",\"b\":\"微信\"}"
+              }
+            } ]
+          }, {
+            "role" : "tool",
+            "content" : "\"Assembled result: QQ and 微信\"",
+            "tool_call_id" : "call_gcp2mh3fmtn72slfepu1cnc9",
+            "tool_name" : "assemble_tool"
+          } ],
+          "stream" : true,
+          "tools" : [ {
+            "type" : "function",
+            "function" : {
+              "name" : "assemble_tool",
+              "description" : "组装工具\n将 a 和 b 组装成答案",
+              "parameters" : {
+                "type" : "object",
+                "properties" : {
+                  "a" : {
+                    "type" : "string"
+                  },
+                  "b" : {
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "a", "b" ],
+                "additionalProperties" : false
+              }
+            }
+          } ],
+          "thinking" : {
+            "type" : "enabled"
+          }
+        }'
         ;;
 
     blocking_structured)
