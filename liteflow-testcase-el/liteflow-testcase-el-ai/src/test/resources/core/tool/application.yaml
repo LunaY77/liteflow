@@ -1,8 +1,7 @@
 liteflow:
   rule-source: core/tool/flow.el.xml
   ai:
-    base-packages:
-      - com.yomahub.liteflow.test.ai.core.tool.cmp
+    base-packages: com.yomahub.liteflow.test.ai.core.tool.cmp
     enable: true
     openai:
       api-key: mock-api-key # 测试代码不需要配置，将使用 mock 数据，不会调用 AI 服务接口

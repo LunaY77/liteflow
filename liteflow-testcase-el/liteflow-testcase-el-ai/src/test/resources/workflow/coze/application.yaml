@@ -1,8 +1,7 @@
 liteflow:
   rule-source: workflow/coze/flow.el.xml
   ai:
-    base-packages:
-      - com.yomahub.liteflow.test.ai.workflow.coze.cmp
+    base-packages: com.yomahub.liteflow.test.ai.workflow.coze.cmp
     enable: true
     workflow:
       coze:

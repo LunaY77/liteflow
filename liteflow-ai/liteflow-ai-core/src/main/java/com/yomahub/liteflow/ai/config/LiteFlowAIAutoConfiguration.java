@@ -10,12 +10,9 @@ import com.yomahub.liteflow.ai.proxy.AIComponentProxyRegistrar;
 import com.yomahub.liteflow.ai.tool.SpringBeanToolRegistry;
 import com.yomahub.liteflow.ai.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * LiteFlow-AI 主配置
@@ -24,17 +21,26 @@ import java.util.List;
  * @since 2.16.0
  */
 
-@ConditionalOnProperty(prefix = "liteflow.ai", name = "enable", havingValue = "true")
+@Configuration
 public class LiteFlowAIAutoConfiguration {
 
+    private LiteFlowAIConfig liteFlowAIConfig;
+
+    public LiteFlowAIAutoConfiguration() {
+    }
+
+    @Autowired(required = false)
+    public void setLiteFlowAIConfig(LiteFlowAIConfig liteFlowAIConfig) {
+        this.liteFlowAIConfig = liteFlowAIConfig;
+        LiteFlowAIConfigGetter.setLiteFlowAIConfig(liteFlowAIConfig);
+    }
+
     @Bean
-    @ConditionalOnMissingBean
     public ToolRegistry toolRegistry(ApplicationContext applicationContext) {
         return new SpringBeanToolRegistry(applicationContext);
     }
 
     @Bean
-    @ConditionalOnMissingBean
     public StreamHandler streamHandler() {
         return StreamHandler.builder().build();
     }
@@ -67,12 +73,5 @@ public class LiteFlowAIAutoConfiguration {
     @Bean
     public WorkflowAnnotationProcessor workflowAnnotationProcessor() {
         return new WorkflowAnnotationProcessor();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public LiteFlowAIModelPropertyRegistry liteFlowAIModelPropertyRegistry(
-            @Autowired(required = false) List<LiteFlowAIModelProperty> modelPropertyList) {
-        return new LiteFlowAIModelPropertyRegistry(modelPropertyList);
     }
 }

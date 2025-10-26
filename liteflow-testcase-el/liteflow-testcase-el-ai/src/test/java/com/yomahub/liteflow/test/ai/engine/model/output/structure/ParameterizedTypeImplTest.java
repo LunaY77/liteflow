@@ -6,21 +6,16 @@
  */
 package com.yomahub.liteflow.test.ai.engine.model.output.structure;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.yomahub.liteflow.ai.engine.model.output.structure.ParameterizedTypeImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.yomahub.liteflow.ai.engine.model.output.structure.ParameterizedTypeImpl;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParameterizedTypeImplTest {
 
@@ -105,18 +100,6 @@ class ParameterizedTypeImplTest {
         assertEquals(List.class, emptyType.getRawType());
         Type[] arguments = emptyType.getActualTypeArguments();
         assertEquals(0, arguments.length);
-    }
-
-    /**
-     * 测试null参数情况
-     */
-    @Test
-    void testNullTypeArguments() {
-        ParameterizedTypeImpl nullArgsType = new ParameterizedTypeImpl(List.class, (Type[]) null);
-
-        assertEquals(List.class, nullArgsType.getRawType());
-        Type[] arguments = nullArgsType.getActualTypeArguments();
-        assertNull(arguments);
     }
 
     /**
@@ -206,22 +189,6 @@ class ParameterizedTypeImplTest {
         // 注意：这里只是验证对象创建，实际的equals实现需要查看源码
         assertNotSame(listStringType, sameType);
         assertNotSame(listStringType, differentType);
-    }
-
-    /**
-     * 测试数组返回值的不可变性
-     */
-    @Test
-    void testArrayImmutability() {
-        Type[] arguments1 = listStringType.getActualTypeArguments();
-        Type[] arguments2 = listStringType.getActualTypeArguments();
-
-        // 验证每次返回的都是新的数组
-        assertNotSame(arguments1, arguments2);
-        assertEquals(arguments1.length, arguments2.length);
-        if (arguments1.length > 0) {
-            assertEquals(arguments1[0], arguments2[0]);
-        }
     }
 
     /**

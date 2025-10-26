@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.yomahub</groupId>
-            <artifactId>liteflow-ai-core</artifactId>
+            <artifactId>liteflow-ai-spring-boot-starter</artifactId>
             <version>${revision}</version>
         </dependency>
 

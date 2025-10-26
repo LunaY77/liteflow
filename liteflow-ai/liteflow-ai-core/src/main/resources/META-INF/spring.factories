@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.yomahub.liteflow.ai.config.LiteFlowAIAutoConfiguration,\
-  com.yomahub.liteflow.ai.config.LiteFlowAIPropertyAutoConfiguration

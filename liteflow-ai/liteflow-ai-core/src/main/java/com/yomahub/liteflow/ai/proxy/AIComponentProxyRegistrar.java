@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.env.Environment;
@@ -32,6 +30,8 @@ import java.util.Set;
 public class AIComponentProxyRegistrar implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
 
     private static final LFLog LOG = LFLoggerManager.getLogger(AIComponentProxyRegistrar.class);
+    private static final String ENABLE_PROPERTY = "liteflow.ai.enable";
+    private static final String BASE_PACKAGES_PROPERTY = "liteflow.ai.base-packages";
 
     private List<String> basePackages;
 
@@ -42,15 +42,13 @@ public class AIComponentProxyRegistrar implements BeanDefinitionRegistryPostProc
      *
      * @param environment Spring 环境对象
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void setEnvironment(Environment environment) {
-        Binder binder = Binder.get(environment);
         // 读取配置，LiteFlow-AI 是否开启，如果未设置代表默认值 True
-        enable = binder.bind("liteflow.ai.enable", Boolean.class)
-                .orElse(Boolean.TRUE);
+        this.enable = environment.getProperty(ENABLE_PROPERTY, Boolean.class, Boolean.TRUE);
         // 读取配置，LiteFlow-AI 基础包路径，如果未设置代表默认值空列表
-        basePackages = binder.bind("liteflow.ai.base-packages", Bindable.listOf(String.class))
-                .orElse(Collections.emptyList());
+        this.basePackages = (List<String>) environment.getProperty(BASE_PACKAGES_PROPERTY, List.class, Collections.emptyList());
     }
 
     /**

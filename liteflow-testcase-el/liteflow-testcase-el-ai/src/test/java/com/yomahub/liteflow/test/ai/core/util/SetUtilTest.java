@@ -21,8 +21,8 @@ class SetUtilTest {
 
     // --- 为参数化测试提供数据 ---
 
-    private static final String NOT_PRESENT_METHOD_SOURCE = "com.yomahub.liteflow.test.ai.util.SetUtilTest#provideNotPresentValues";
-    private static final String PRESENT_METHOD_SOURCE = "com.yomahub.liteflow.test.ai.util.SetUtilTest#providePresentValues";
+    private static final String NOT_PRESENT_METHOD_SOURCE = "com.yomahub.liteflow.test.ai.core.util.SetUtilTest#provideNotPresentValues";
+    private static final String PRESENT_METHOD_SOURCE = "com.yomahub.liteflow.test.ai.core.util.SetUtilTest#providePresentValues";
 
     /**
      * 提供被认为是 "not present" (不存在/为空/为默认值) 的各种值

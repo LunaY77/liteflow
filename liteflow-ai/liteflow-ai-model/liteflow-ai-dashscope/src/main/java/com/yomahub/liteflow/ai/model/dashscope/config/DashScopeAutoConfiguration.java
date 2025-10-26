@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.ai.model.dashscope.config;
 
 import com.yomahub.liteflow.ai.model.dashscope.model.DashScopeModelProvider;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
-@EnableConfigurationProperties(DashScopeModelProperty.class)
 public class DashScopeAutoConfiguration {
 
     @Bean

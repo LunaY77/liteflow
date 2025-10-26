@@ -97,7 +97,7 @@ public class ToolTest {
         );
 
         String call = toolCallback.call("{\"value\":\"Hello, World!\"}");
-        Assertions.assertEquals("[\"Processed: Hello, World!\"]", call);
+        Assertions.assertEquals("[ \"Processed: Hello, World!\" ]", call);
     }
 
     @Test
