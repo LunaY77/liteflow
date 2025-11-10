@@ -2,6 +2,7 @@ package com.yomahub.liteflow.ai.engine.model.chat.message;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
@@ -22,6 +23,7 @@ public class AssistantMessage extends AbstractMessage {
      * 工具调用列表
      */
     @JsonProperty("tool_calls")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ToolCall> toolCalls;
 
     public AssistantMessage(String textContent) {

@@ -266,13 +266,11 @@ public @interface AIComponent {
 
     /**
      * 是否记录请求日志
-     * TODO not implement
      */
     boolean logRequests() default false;
 
     /**
      * 是否记录响应日志
-     * TODO not implement
      */
     boolean logResponses() default false;
 
