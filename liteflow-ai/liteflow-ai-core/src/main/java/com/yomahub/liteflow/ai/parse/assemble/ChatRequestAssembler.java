@@ -1,7 +1,6 @@
 package com.yomahub.liteflow.ai.parse.assemble;
 
 import com.yomahub.liteflow.ai.context.ChatContext;
-import com.yomahub.liteflow.ai.context.StreamHandler;
 import com.yomahub.liteflow.ai.domain.dto.ModelConfigAggregator;
 import com.yomahub.liteflow.ai.domain.dto.ParsedChatAnnotationConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
@@ -32,23 +31,7 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnn
     protected ChatRequest doAssemble(ParsedChatAnnotationConfig annotationConfig, ModelConfigAggregator config, ChatContext context) {
         ChatRequest.Builder<?> builder = ModelFactory.getChatRequestBuilder(config.getProvider());
 
-        // 1. 连接 StreamHandler 回调
-        StreamHandler streamHandler = context.getStreamHandler();
-        if (Objects.nonNull(streamHandler)) {
-            LOG.info("Connecting StreamHandler to ChatRequest");
-            builder.onStart(streamHandler::onStart)
-                    .onClose(streamHandler::onClose)
-                    .onError(streamHandler::onError)
-                    .onText(streamHandler::onText)
-                    .onThinking(streamHandler::onThinking)
-                    .onToolsCalling(streamHandler::onToolsCalling)
-                    .onUsage(streamHandler::onUsage)
-                    .onGrounding(streamHandler::onGrounding)
-                    .onCompletion(streamHandler::onCompletion)
-                    .onFinal(streamHandler::onFinal);
-        }
-
-        // 2. ChatOptions
+        // 1. ChatOptions
         ChatOptions.Builder<?> optionsBuilder = ChatOptions.builder();
         setIfPresent(optionsBuilder::temperature, config.getTemperature());
         setIfPresent(optionsBuilder::topP, config.getTopP());
@@ -58,7 +41,7 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnn
         setIfPresent(optionsBuilder::enableThinking, config.getEnableThinking());
         builder.options(optionsBuilder.build());
 
-        // 3. Message
+        // 2. Message
         List<Message> messages = Optional.ofNullable(annotationConfig.getHistory())
                 .orElse(new ArrayList<>());
         if (messages.isEmpty()) {
@@ -68,7 +51,7 @@ public class ChatRequestAssembler extends AbstractRequestAssembler<ParsedChatAnn
 
         builder.messages(messages);
 
-        // 4. streaming 相关参数
+        // 3. streaming 相关参数
         builder.streaming(annotationConfig.isStreaming());
         builder.transportType(annotationConfig.getTransportType());
 

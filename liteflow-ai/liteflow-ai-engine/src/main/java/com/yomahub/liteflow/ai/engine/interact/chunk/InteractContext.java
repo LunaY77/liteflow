@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.engine.interact.pipeline;
+package com.yomahub.liteflow.ai.engine.interact.chunk;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.yomahub.liteflow.ai.engine.model.output.TokenUsage;

@@ -2,9 +2,11 @@ package com.yomahub.liteflow.ai.engine.model.chat;
 
 import com.yomahub.liteflow.ai.engine.interact.InteractClient;
 import com.yomahub.liteflow.ai.engine.interact.LlmInteractClient;
+import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
+import io.reactivex.rxjava3.core.Flowable;
 
 import java.time.Duration;
 import java.util.Map;
@@ -43,8 +45,8 @@ public abstract class AbstractChatModel implements ChatModel {
     }
 
     @Override
-    public void stream(ChatRequest request) {
-        interactClient.stream(config, request);
+    public Flowable<ChunkEvent> stream(ChatRequest request) {
+        return interactClient.stream(config, request);
     }
 
     @Override

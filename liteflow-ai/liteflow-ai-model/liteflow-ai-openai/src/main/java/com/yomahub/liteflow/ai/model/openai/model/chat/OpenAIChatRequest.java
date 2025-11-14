@@ -2,9 +2,6 @@ package com.yomahub.liteflow.ai.model.openai.model.chat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
-import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
@@ -43,16 +40,12 @@ public class OpenAIChatRequest extends ChatRequest {
             ChatOptions options,
             boolean streaming,
             TransportType transportType,
-            TransportListener transportListener,
-            ResultHandler resultHandler,
-            ChunkCallbackTransformer chunkCallbackTransformer,
             ResponseType responseType,
             TypeReference<?> targetType,
             boolean strict,
             ToolRegistry toolRegistry
     ) {
         super(messages, options, streaming, transportType,
-                transportListener, resultHandler, chunkCallbackTransformer,
                 responseType, targetType, strict, toolRegistry);
     }
 

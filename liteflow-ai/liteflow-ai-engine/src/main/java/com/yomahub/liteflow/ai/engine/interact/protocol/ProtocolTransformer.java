@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.engine.interact.protocol;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkTransformer;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
+import com.yomahub.liteflow.ai.engine.interact.chunk.InteractContext;
+import com.yomahub.liteflow.ai.engine.interact.chunk.StreamingProtocolChunk;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 
 /**
@@ -12,7 +12,7 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
  * @since 2.16.0
  */
 
-public interface ProtocolTransformer extends ChunkTransformer {
+public interface ProtocolTransformer {
 
     /**
      * 将流式响应的 chunk 转换为 LiteFlow-AI 支持的格式。
@@ -41,9 +41,4 @@ public interface ProtocolTransformer extends ChunkTransformer {
     ChatResponse transformBlockingResponse(String blockingResponse, InteractContext context);
 
     String getProviderName();
-
-    @Override
-    default String getTransformerType() {
-        return "ProtocolTransformer";
-    }
 }

@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.engine.interact.protocol;
+package com.yomahub.liteflow.ai.engine.interact.chunk;
 
 /**
  * 流式消息块

@@ -1,12 +1,10 @@
 package com.yomahub.liteflow.test.ai.mock.mockbean;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.test.ai.mock.TestDataReader;
+import io.reactivex.rxjava3.core.Flowable;
 
 import java.util.List;
 
@@ -19,43 +17,29 @@ import java.util.List;
 
 public class MockTransport implements Transport {
 
-    private final String blockingResponse;
-    private final List<String> streamingChunks;
+    private final MockConfig config;
 
-    private ChunkProcessPipeline pipeline;
-    private TransportListener listener = TransportListener.getDefault();
     private boolean isStop = false;
 
     public MockTransport(MockConfig config) {
-        TestDataReader.RequestType curRequestType = config.getRequestType();
-        this.blockingResponse = TestDataReader.getBlockingResponse(config.getProvider(), curRequestType);
-        this.streamingChunks = TestDataReader.getStreamingChunks(config.getProvider(), curRequestType);
+        this.config = config;
     }
 
     @Override
-    public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
-        this.listener = listener;
-        this.pipeline = pipeline;
-        listener.onStart(pipeline.getContext());
-
-        for (String streamingChunk : streamingChunks) {
-            pipeline.processStreaming(streamingChunk);
-        }
-
-        close();
+    public Flowable<String> startStreaming(ChatConfig config, ChatRequest request) {
+        List<String> streamingChunks = TestDataReader.getStreamingChunks(this.config.getProvider(), this.config.getRequestType());
+        return Flowable.fromIterable(streamingChunks);
     }
 
     @Override
-    public ChatResponse startBlocking(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline) {
-        this.pipeline = pipeline;
-        return pipeline.processBlocking(blockingResponse);
+    public String startBlocking(ChatConfig config, ChatRequest request) {
+        return TestDataReader.getBlockingResponse(this.config.getProvider(), this.config.getRequestType());
     }
 
     @Override
     public void close() {
         if (!this.isStop) {
             this.isStop = true;
-            this.listener.onClose(this.pipeline.getContext());
         }
     }
 }

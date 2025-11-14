@@ -1,26 +1,11 @@
 package com.yomahub.liteflow.ai.workflow.dashscope.invocation;
 
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.dashscope.app.Application;
-import com.alibaba.dashscope.app.ApplicationParam;
-import com.alibaba.dashscope.app.ApplicationResult;
 import com.alibaba.dashscope.app.RagOptions;
-import com.alibaba.dashscope.exception.InputRequiredException;
-import com.alibaba.dashscope.exception.NoApiKeyException;
-import com.alibaba.dashscope.utils.JsonUtils;
 import com.google.gson.JsonObject;
-import com.yomahub.liteflow.ai.context.ChatContext;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
-import com.yomahub.liteflow.ai.exception.LiteFlowAIException;
-import com.yomahub.liteflow.ai.parse.context.ContextAccessor;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.invocation.AbstractAIInvocationHandler;
 import com.yomahub.liteflow.ai.util.KeyValue;
-import com.yomahub.liteflow.ai.util.SpringUtil;
-import com.yomahub.liteflow.ai.workflow.dashscope.annotation.DashScopeWorkflow;
-import com.yomahub.liteflow.ai.workflow.dashscope.config.DashScopeWorkflowProperty;
 import com.yomahub.liteflow.ai.workflow.dashscope.wrap.DashScopeWorkflowProxyWrapBean;
-import io.reactivex.Flowable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,95 +31,96 @@ public class DashScopeWorkflowInvocationHandler extends AbstractAIInvocationHand
 
     @Override
     protected Object doExecuteAIProcess(ProcessorContext<?> processorContext, Object[] args) {
-        DashScopeWorkflow dashScopeWorkflow = wrapBean.getAnnotation();
-
-        DashScopeWorkflowProperty property = SpringUtil.getBean(DashScopeWorkflowProperty.class);
-
-        ApplicationParam.ApplicationParamBuilder<?, ?> builder = ApplicationParam.builder();
-
-        builder.appId(dashScopeWorkflow.appId());
-        builder.apiKey(property.getApiKey());
-
-        setIfPresent(builder::prompt, dashScopeWorkflow.prompt(), processorContext);
-
-        String history = dashScopeWorkflow.history();
-        setIfPresent(builder::history, StrUtil.isNotBlank(history) ?
-                ContextAccessor.searchContextByExpression(history, processorContext) : null);
-
-        String messages = dashScopeWorkflow.messages();
-        setIfPresent(builder::messages, StrUtil.isNotBlank(messages) ?
-                ContextAccessor.searchContextByExpression(messages, processorContext) : null);
-
-        setIfPresent(builder::sessionId, dashScopeWorkflow.sessionId());
-
-        setIfPresent(builder::hasThoughts, dashScopeWorkflow.hasThoughts());
-
-        setIfPresent(builder::bizParams, dashScopeWorkflow.bizParams(),
-                processorContext, JsonObject.class, JsonUtils::parse);
-
-        setIfPresent(builder::topP, dashScopeWorkflow.topP());
-
-        setIfPresent(builder::topK, dashScopeWorkflow.topK());
-
-        setIfPresent(builder::seed, dashScopeWorkflow.seed());
-
-        setIfPresent(builder::temperature, dashScopeWorkflow.temperature());
-
-        setIfPresent(builder::incrementalOutput, dashScopeWorkflow.incrementalOutput());
-
-        setIfPresent(builder::memoryId, dashScopeWorkflow.memoryId());
-
-        setIfPresent(builder::images, dashScopeWorkflow.images(), processorContext, List.class,
-                s -> Arrays.stream(s.split(COMMA_SPLITTER))
-                        .map(String::trim)
-                        .collect(Collectors.toList()));
-
-        setIfPresent(builder::ragOptions, buildRagOptions(dashScopeWorkflow.ragOptions(), processorContext));
-
-        setIfPresent(builder::mcpServers, dashScopeWorkflow.mcpServers(), processorContext, List.class,
-                s -> Arrays.stream(s.split(COMMA_SPLITTER))
-                        .map(String::trim)
-                        .collect(Collectors.toList()));
-
-        setIfPresent(builder::enableWebSearch, dashScopeWorkflow.enableWebSearch());
-
-        setIfPresent(builder::enableSystemTime, dashScopeWorkflow.enableSystemTime());
-
-        setIfPresent(builder::enablePremium, dashScopeWorkflow.enablePremium());
-
-        setIfPresent(builder::dialogRound, dashScopeWorkflow.dialogRound());
-
-        setIfPresent(builder::modelId, dashScopeWorkflow.modelId());
-
-        setIfPresent(builder::flowStreamMode, dashScopeWorkflow.flowStreamMode());
-
-        setIfPresent(builder::enableThinking, dashScopeWorkflow.enableThinking());
-
-        ApplicationParam applicationParam = builder.build();
-        Application application = StrUtil.isNotBlank(property.getApiUrl()) ?
-                new Application(property.getApiUrl()) :
-                new Application();
-
-        if (dashScopeWorkflow.stream()) {
-            try {
-                Flowable<ApplicationResult> res = application.streamCall(applicationParam);
-                InteractContext context = new InteractContext();
-                res.blockingForEach(chunk -> {
-                    ChatContext chatContext = processorContext.getChatContext();
-                    chatContext.getStreamHandler().onText(chunk.getOutput().getText(), context);
-                    context.addText(chunk.getOutput().getText());
-                });
-                return null;
-            } catch (NoApiKeyException | InputRequiredException e) {
-                throw new LiteFlowAIException("DashScope stream call failed", e);
-            }
-        } else {
-            try {
-                return application.call(applicationParam);
-            } catch (NoApiKeyException | InputRequiredException e) {
-                throw new LiteFlowAIException("DashScope call failed", e);
-            }
-        }
+        return null;
+//        DashScopeWorkflow dashScopeWorkflow = wrapBean.getAnnotation();
+//
+//        DashScopeWorkflowProperty property = SpringUtil.getBean(DashScopeWorkflowProperty.class);
+//
+//        ApplicationParam.ApplicationParamBuilder<?, ?> builder = ApplicationParam.builder();
+//
+//        builder.appId(dashScopeWorkflow.appId());
+//        builder.apiKey(property.getApiKey());
+//
+//        setIfPresent(builder::prompt, dashScopeWorkflow.prompt(), processorContext);
+//
+//        String history = dashScopeWorkflow.history();
+//        setIfPresent(builder::history, StrUtil.isNotBlank(history) ?
+//                ContextAccessor.searchContextByExpression(history, processorContext) : null);
+//
+//        String messages = dashScopeWorkflow.messages();
+//        setIfPresent(builder::messages, StrUtil.isNotBlank(messages) ?
+//                ContextAccessor.searchContextByExpression(messages, processorContext) : null);
+//
+//        setIfPresent(builder::sessionId, dashScopeWorkflow.sessionId());
+//
+//        setIfPresent(builder::hasThoughts, dashScopeWorkflow.hasThoughts());
+//
+//        setIfPresent(builder::bizParams, dashScopeWorkflow.bizParams(),
+//                processorContext, JsonObject.class, JsonUtils::parse);
+//
+//        setIfPresent(builder::topP, dashScopeWorkflow.topP());
+//
+//        setIfPresent(builder::topK, dashScopeWorkflow.topK());
+//
+//        setIfPresent(builder::seed, dashScopeWorkflow.seed());
+//
+//        setIfPresent(builder::temperature, dashScopeWorkflow.temperature());
+//
+//        setIfPresent(builder::incrementalOutput, dashScopeWorkflow.incrementalOutput());
+//
+//        setIfPresent(builder::memoryId, dashScopeWorkflow.memoryId());
+//
+//        setIfPresent(builder::images, dashScopeWorkflow.images(), processorContext, List.class,
+//                s -> Arrays.stream(s.split(COMMA_SPLITTER))
+//                        .map(String::trim)
+//                        .collect(Collectors.toList()));
+//
+//        setIfPresent(builder::ragOptions, buildRagOptions(dashScopeWorkflow.ragOptions(), processorContext));
+//
+//        setIfPresent(builder::mcpServers, dashScopeWorkflow.mcpServers(), processorContext, List.class,
+//                s -> Arrays.stream(s.split(COMMA_SPLITTER))
+//                        .map(String::trim)
+//                        .collect(Collectors.toList()));
+//
+//        setIfPresent(builder::enableWebSearch, dashScopeWorkflow.enableWebSearch());
+//
+//        setIfPresent(builder::enableSystemTime, dashScopeWorkflow.enableSystemTime());
+//
+//        setIfPresent(builder::enablePremium, dashScopeWorkflow.enablePremium());
+//
+//        setIfPresent(builder::dialogRound, dashScopeWorkflow.dialogRound());
+//
+//        setIfPresent(builder::modelId, dashScopeWorkflow.modelId());
+//
+//        setIfPresent(builder::flowStreamMode, dashScopeWorkflow.flowStreamMode());
+//
+//        setIfPresent(builder::enableThinking, dashScopeWorkflow.enableThinking());
+//
+//        ApplicationParam applicationParam = builder.build();
+//        Application application = StrUtil.isNotBlank(property.getApiUrl()) ?
+//                new Application(property.getApiUrl()) :
+//                new Application();
+//
+//        if (dashScopeWorkflow.stream()) {
+//            try {
+//                Flowable<ApplicationResult> res = application.streamCall(applicationParam);
+//                InteractContext context = new InteractContext();
+//                res.blockingForEach(chunk -> {
+//                    ChatContext chatContext = processorContext.getChatContext();
+//                    chatContext.getStreamHandler().onText(chunk.getOutput().getText(), context);
+//                    context.addText(chunk.getOutput().getText());
+//                });
+//                return null;
+//            } catch (NoApiKeyException | InputRequiredException e) {
+//                throw new LiteFlowAIException("DashScope stream call failed", e);
+//            }
+//        } else {
+//            try {
+//                return application.call(applicationParam);
+//            } catch (NoApiKeyException | InputRequiredException e) {
+//                throw new LiteFlowAIException("DashScope call failed", e);
+//            }
+//        }
     }
 
     @SuppressWarnings("unchecked")

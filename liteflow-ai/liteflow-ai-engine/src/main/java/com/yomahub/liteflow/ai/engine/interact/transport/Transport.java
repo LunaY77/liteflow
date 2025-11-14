@@ -1,9 +1,8 @@
 package com.yomahub.liteflow.ai.engine.interact.transport;
 
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
+import io.reactivex.rxjava3.core.Flowable;
 
 import java.util.Map;
 
@@ -19,22 +18,20 @@ public interface Transport {
     /**
      * 启动流式传输
      *
-     * @param config   聊天配置
-     * @param request  聊天请求
-     * @param pipeline 处理管道
-     * @param listener 传输监听器
+     * @param config  聊天配置
+     * @param request 聊天请求
+     * @return 流式数据流
      */
-    void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener);
+    Flowable<String> startStreaming(ChatConfig config, ChatRequest request);
 
     /**
      * 启动阻塞式传输
      *
-     * @param config   聊天配置
-     * @param request  聊天请求
-     * @param pipeline 处理管道
+     * @param config  聊天配置
+     * @param request 聊天请求
      * @return 聊天响应
      */
-    ChatResponse startBlocking(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline);
+    String startBlocking(ChatConfig config, ChatRequest request);
 
     /**
      * 关闭传输

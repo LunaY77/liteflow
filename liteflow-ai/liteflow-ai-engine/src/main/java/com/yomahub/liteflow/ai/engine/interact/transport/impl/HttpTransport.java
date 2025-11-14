@@ -1,15 +1,13 @@
 package com.yomahub.liteflow.ai.engine.interact.transport.impl;
 
 import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.log.EngineLog;
 import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
-import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.util.HttpUtil;
+import io.reactivex.rxjava3.core.Flowable;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,12 +24,12 @@ public class HttpTransport implements Transport {
     private static final EngineLog LOG = EngineLogManager.getLogger(HttpTransport.class);
 
     @Override
-    public void start(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline, TransportListener listener) {
+    public Flowable<String> startStreaming(ChatConfig config, ChatRequest request) {
         throw new UnsupportedOperationException("HTTP传输不支持流式调用，请使用SSE传输或调用startBlocking方法");
     }
 
     @Override
-    public ChatResponse startBlocking(ChatConfig config, ChatRequest request, ChunkProcessPipeline pipeline) {
+    public String startBlocking(ChatConfig config, ChatRequest request) {
         try (HttpUtil httpUtil = HttpUtil
                 .builder()
                 .connectTimeout(config.getConnectTimeout())
@@ -61,8 +59,8 @@ public class HttpTransport implements Transport {
                 LOG.info("======= HTTP Response End =======");
             }
 
-            // 处理响应
-            return pipeline.processBlocking(responseBody);
+            // 返回响应体
+            return responseBody;
         } catch (IOException e) {
             throw new LiteFlowAIEngineException("阻塞调用大模型失败", e);
         }

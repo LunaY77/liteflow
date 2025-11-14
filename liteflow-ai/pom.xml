@@ -27,6 +27,7 @@
         <victools.version>4.36.0</victools.version>
         <dashscope-sdk.version>2.21.5</dashscope-sdk.version>
         <coze-api.version>0.4.2</coze-api.version>
+        <rxjava.version>3.1.8</rxjava.version>
     </properties>
 
     <dependencyManagement>
@@ -71,6 +72,12 @@
                 <groupId>com.coze</groupId>
                 <artifactId>coze-api</artifactId>
                 <version>${coze-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.reactivex.rxjava3</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>${rxjava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

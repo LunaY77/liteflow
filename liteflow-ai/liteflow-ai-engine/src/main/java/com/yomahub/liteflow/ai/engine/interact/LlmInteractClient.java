@@ -1,13 +1,11 @@
 package com.yomahub.liteflow.ai.engine.interact;
 
-import com.yomahub.liteflow.ai.engine.exception.LiteFlowAIEngineException;
-import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.ChunkProcessPipeline;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
+import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
+import com.yomahub.liteflow.ai.engine.interact.chunk.InteractContext;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformerFactory;
+import com.yomahub.liteflow.ai.engine.interact.chunk.StreamingProtocolChunk;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.log.EngineLog;
 import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
@@ -16,226 +14,241 @@ import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
 import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
 import com.yomahub.liteflow.ai.engine.model.chat.message.ToolMessage;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
-import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
-import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
+import io.reactivex.rxjava3.core.BackpressureStrategy;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 大模型交互客户端，统筹消息传输、协议转换等功能。
+ * 大模型交互客户端
  *
  * @author 苍镜月
  * @since 2.16.0
  */
-
 public class LlmInteractClient implements InteractClient {
 
     private static final EngineLog LOG = EngineLogManager.getLogger(LlmInteractClient.class);
 
-    @Override
-    public void stream(ChatConfig config, ChatRequest request) {
-        InteractManager manager = new InteractManager(config, request);
-        manager.executeStreaming();
-    }
-
+    /**
+     * 同步调用
+     *
+     * @param config  聊天配置
+     * @param request 聊天请求
+     * @return 聊天响应
+     */
     @Override
     public ChatResponse chat(ChatConfig config, ChatRequest request) {
-        InteractManager interactManager = new InteractManager(config, request);
-        return interactManager.executeBlocking();
-    }
+        ProtocolTransformer protocolTransformer = ProtocolTransformerFactory.getTransformer(config.getProvider());
+        Transport transport = request.getTransportType().getTransportInstance();
 
-    @Override
-    public CompletableFuture<ChatResponse> chatAsync(ChatConfig config, ChatRequest request) {
-        CompletableFuture<ChatResponse> future = new CompletableFuture<>();
+        ChatResponse response; // 用于存储最终响应
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                future.complete(chat(config, request));
-            } catch (Exception e) {
-                future.completeExceptionally(new LiteFlowAIEngineException("异步调用大模型失败", e));
+        while (true) {
+            InteractContext context = new InteractContext();
+
+            // 1. 执行单轮对话
+            String responseBody = transport.startBlocking(config, request);
+            response = protocolTransformer.transformBlockingResponse(responseBody, context);
+
+            // 2. 检查循环的 "退出条件"
+            // 如果 AI 没有要求工具调用，或者配置禁用了自动调用，
+            // 那么这就是最终答案，跳出循环。
+            if (!response.hasToolCalls() || !config.isAutoToolCallEnabled()) {
+                break;
             }
-        });
 
-        return future;
+            // 3. 获取并执行工具调用
+            List<ToolCall> toolCalls = response.getOutput().getToolCalls();
+            // 目前只执行单轮单次的工具调用
+            ToolMessage toolMessage = request.getToolRegistry().executeToolCall(toolCalls.get(0));
+
+            // 4. 构建下一轮对话的上下文
+            buildNextRoundMessages(request, response, toolMessage);
+        }
+
+        // 5. 返回循环中断时的最后一个响应
+        return response;
     }
 
     /**
-     * 内部执行器
+     * 异步调用
+     *
+     * @param config  聊天配置
+     * @param request 聊天请求
+     * @return 异步聊天响应
      */
-    private static class InteractManager {
-        private final ChatConfig config;
-        private final ChatRequest request;
-        private final InteractContext context;
-        private final ChunkProcessPipeline pipeline;
-        private final TransportListener externalTransportListener;
-        private final ResultHandler resultHandler;
-        private final Transport transport;
-        private final InternalTransportListener internalTransportListener;
+    @Override
+    public CompletableFuture<ChatResponse> chatAsync(ChatConfig config, ChatRequest request) {
+        return CompletableFuture.supplyAsync(() -> chat(config, request));
+    }
 
-        public InteractManager(ChatConfig config, ChatRequest request) {
-            this.config = config;
-            this.request = request;
-            this.context = new InteractContext();
-            ProtocolTransformer protocolTransformer = ProtocolTransformerFactory.getTransformer(config.getProvider());
-            this.pipeline = request.isStreaming()
-                    ? ChunkProcessPipeline.createStreamingPipeline(context, protocolTransformer, request.getChunkCallbackTransformer())
-                    : ChunkProcessPipeline.createBlockingPipeline(context, protocolTransformer);
-            this.transport = request.getTransportType().getTransportInstance();
-            this.externalTransportListener = request.getTransportListener();
-            this.resultHandler = request.getResultHandler();
-            this.internalTransportListener = new InternalTransportListener();
-        }
+    /**
+     * 创建响应式流事件管道
+     *
+     * @param config  聊天配置
+     * @param request 聊天请求
+     * @return 包含 ChunkEvent 的流
+     */
+    public Flowable<ChunkEvent> stream(ChatConfig config, ChatRequest request) {
+        InteractContext context = new InteractContext();
+        ProtocolTransformer protocolTransformer = ProtocolTransformerFactory.getTransformer(config.getProvider());
 
-        /**
-         * 流式调用
-         */
-        public void executeStreaming() {
-            // 启动传输，使用内部监听器
-            transport.start(config, request, pipeline, internalTransportListener);
-        }
+        return Flowable.just(ChunkEvent.start(context))
+                .concatWith(
+                        streamRecursive(config, request, context, protocolTransformer)
+                );
+    }
 
-        /**
-         * 内部传输监听器，用于处理流式调用的各种事件
-         */
-        private class InternalTransportListener implements TransportListener {
+    /**
+     * 内部递归流逻辑
+     *
+     * @param config              聊天配置
+     * @param request             聊天请求
+     * @param context             当前轮次的交互上下文
+     * @param protocolTransformer 协议转换器
+     * @return 包含 ChunkEvent 的流
+     */
+    private Flowable<ChunkEvent> streamRecursive(ChatConfig config, ChatRequest request,
+                                                 InteractContext context, ProtocolTransformer protocolTransformer) {
+        return Flowable.create(emitter -> {
+            CompositeDisposable compositeDisposable = new CompositeDisposable();
+            emitter.setDisposable(compositeDisposable);
 
-            @Override
-            public void onStart(InteractContext context) {
-                externalTransportListener.onStart(context);
-            }
+            Transport transport = request.getTransportType().getTransportInstance();
 
-            @Override
-            public void onClose(InteractContext context) {
-                ChatResponse finalResponse = null;
-                // 判断是否需要继续进行工具调用
-                boolean isContinuingWithToolCall = false;
-                try {
-                    // 构造最终响应
-                    finalResponse = pipeline.buildFinalStreamingResponse();
+            try {
+                // 获取响应式流
+                Disposable transportDisposable = transport.startStreaming(config, request)
+                        .subscribe(
+                                // onNext: 处理每个原始 JSON 分块
+                                rawChunk -> {
+                                    try {
+                                        // 使用协议转换器转换为框架标准格式
+                                        StreamingProtocolChunk protocolChunk = protocolTransformer.transformStreamingChunk(rawChunk, context);
 
-                    // 调用结果处理器的完成回调
-                    finalResponse = resultHandler.onCompletion(finalResponse, context);
+                                        // 根据分块信息更新上下文
+                                        updateContextFromChunk(context, protocolChunk);
 
-                    // 工具调用
-                    if (finalResponse.hasToolCalls() && config.isAutoToolCallEnabled()) {
-                        // 1. 获取并执行工具调用
-                        List<ToolCall> toolCalls = finalResponse.getOutput().getToolCalls();
-                        // 目前只执行单轮单次的工具调用
-                        ToolMessage toolMessage = executeToolCall(toolCalls.get(0), request.getToolRegistry());
+                                        // 发送分块事件
+                                        if (!emitter.isCancelled()) {
+                                            emitter.onNext(ChunkEvent.chunk(rawChunk, protocolChunk, context));
+                                        }
+                                    } catch (Exception e) {
+                                        if (!emitter.isCancelled()) {
+                                            emitter.onError(e); // 转发解析错误
+                                        }
+                                    }
+                                },
+                                // onError: 转发下游错误
+                                error -> {
+                                    if (!emitter.isCancelled()) {
+                                        emitter.onError(error);
+                                    }
+                                    try {
+                                        transport.close(); // 确保关闭当前轮次的 transport
+                                    } catch (Exception e) {
+                                        LOG.warn("Error closing transport after onError", e);
+                                    }
+                                },
+                                // onComplete: 流完成处理
+                                () -> {
+                                    try {
+                                        // 构建最终响应
+                                        ChatResponse finalResponse = protocolTransformer.transformStreamingResponse(context);
 
-                        // 2. 构建下一轮对话的上下文
-                        buildNextRoundMessages(request, finalResponse, toolMessage);
+                                        // 检查是否需要工具调用
+                                        if (finalResponse.hasToolCalls() && config.isAutoToolCallEnabled()) {
+                                            if (emitter.isCancelled()) {
+                                                return;
+                                            }
 
-                        // 3. 递归调用下一轮消息
-                        // 设置标志位为 true，避免关闭 transport
-                        isContinuingWithToolCall = true;
-                        new InteractManager(config, request).executeStreaming();
-                    }
+                                            // 1. 执行工具调用
+                                            List<ToolCall> toolCalls = finalResponse.getOutput().getToolCalls();
+                                            ToolMessage toolMessage = request.getToolRegistry().executeToolCall(toolCalls.get(0));
 
-                } catch (Exception e) {
-                    onError(context, e);
-                } finally {
-                    // 不需要进行工具调用时才进行清理操作
-                    if (!isContinuingWithToolCall) {
-                        try {
-                            // 调用外部监听器的关闭事件
-                            externalTransportListener.onClose(context);
-                        } catch (Exception e) {
-                            onError(context, e);
-                        } finally {
-                            // 清理资源
-                            cleanup(finalResponse);
-                        }
-                    }
-                    // 如果需要进行工具调用，将清理的责任委托给下一轮调用
+                                            // 2. 构建下一轮消息
+                                            buildNextRoundMessages(request, finalResponse, toolMessage);
+
+                                            // 3. 为下一轮创建新的上下文
+                                            InteractContext nextContext = new InteractContext();
+
+                                            // 4. 递归调用 "循环体"，并将事件转发给当前 emitter
+                                            Disposable recursiveDisposable = streamRecursive(config, request, nextContext, protocolTransformer)
+                                                    .subscribe(
+                                                            emitter::onNext,
+                                                            emitter::onError,
+                                                            emitter::onComplete
+                                                    );
+
+                                            compositeDisposable.add(recursiveDisposable);
+                                        } else {
+                                            if (!emitter.isCancelled()) {
+                                                // 没有工具调用，发送 complete 事件并完成流
+                                                emitter.onNext(ChunkEvent.complete(context, finalResponse));
+                                                emitter.onComplete();
+                                            }
+                                        }
+                                    } catch (Exception e) {
+                                        if (!emitter.isCancelled()) {
+                                            emitter.onError(e); // 转发 onComplete 逻辑中的错误
+                                        }
+                                    } finally {
+                                        try {
+                                            transport.close(); // 确保关闭当前轮次的 transport
+                                        } catch (Exception e) {
+                                            LOG.warn("Error closing transport", e);
+                                        }
+                                    }
+                                }
+                        );
+
+                compositeDisposable.add(transportDisposable);
+            } catch (Exception e) {
+                if (!emitter.isCancelled()) {
+                    emitter.onError(e);
                 }
             }
+        }, BackpressureStrategy.BUFFER);
+    }
 
-            @Override
-            public void onError(InteractContext context, Throwable t) {
-                externalTransportListener.onError(context, t);
-            }
+    /**
+     * 根据分块信息更新交互上下文
+     *
+     * @param context 交互上下文
+     * @param chunk   协议分块
+     */
+    private void updateContextFromChunk(InteractContext context, StreamingProtocolChunk chunk) {
+        if (Objects.isNull(chunk)) {
+            return;
         }
 
-        public ChatResponse executeBlocking() {
-            ChatResponse response = null;
-            try {
-                externalTransportListener.onStart(context);
-
-                response = transport.startBlocking(config, request, pipeline);
-
-                response = resultHandler.onCompletion(response, context);
-
-                // 处理工具调用
-                if (response.hasToolCalls() && config.isAutoToolCallEnabled()) {
-                    // 1. 获取并执行工具调用
-                    List<ToolCall> toolCalls = response.getOutput().getToolCalls();
-                    // 目前只执行单轮单次的工具调用
-                    ToolMessage toolMessage = executeToolCall(toolCalls.get(0), request.getToolRegistry());
-
-                    // 2. 构建下一轮对话的上下文
-                    buildNextRoundMessages(request, response, toolMessage);
-
-                    // 3. 递归调用下一轮消息
-                    response = new InteractManager(config, request).executeBlocking();
-                }
-
-                return response;
-            } catch (Exception e) {
-                this.externalTransportListener.onError(context, e);
-                return response;
-            } finally {
-                cleanup(response);
-            }
+        switch (chunk.getType()) {
+            case TEXT:
+                context.addText((String) chunk.getData());
+                break;
+            case THINKING:
+                context.addThinking((String) chunk.getData());
+                break;
+            default:
+                // 其他类型暂不处理
+                break;
         }
+    }
 
-        /**
-         * 执行工具调用
-         *
-         * @param toolCall     工具调用信息
-         * @param toolRegistry 工具注册中心
-         * @return 工具调用结果
-         */
-        private ToolMessage executeToolCall(ToolCall toolCall, ToolRegistry toolRegistry) {
-            // 找到对应的工具回调
-            ToolCallBack toolCallBack = toolRegistry.getAllTools()
-                    .stream()
-                    .filter(tool -> Objects.equals(tool.getName(), toolCall.getName()))
-                    .findFirst()
-                    .orElseThrow(() -> new LiteFlowAIEngineException(
-                            "Unable to find target tool with tool name: " + toolCall.getName()));
-            // 调用工具
-            String toolResult = toolCallBack.call(toolCall.getArguments().toString());
-            // 返回工具调用结果
-            return new ToolMessage(toolResult, toolCall.getId(), toolCall.getName());
-        }
-
-        /**
-         * 工具调用之后构建下一轮的消息列表
-         *
-         * @param request     原始请求
-         * @param response    大模型响应（要求工具调用）
-         * @param toolMessage 工具调用结果
-         */
-        private void buildNextRoundMessages(ChatRequest request, ChatResponse response, ToolMessage toolMessage) {
-            List<Message> messagesHistory = request.getMessages();
-            messagesHistory.add(response.getOutput());
-            messagesHistory.add(toolMessage);
-        }
-
-        /**
-         * 清理资源
-         */
-        private void cleanup(ChatResponse response) {
-            try {
-                resultHandler.onFinal(response, context);
-            } catch (Exception e) {
-                LOG.error("ResultHandler.onFinal 执行失败: {}", e.getMessage());
-            } finally {
-                transport.close();
-            }
-        }
+    /**
+     * 为下一轮对话构建消息列表
+     *
+     * @param request     聊天请求
+     * @param response    聊天响应
+     * @param toolMessage 工具调用结果
+     */
+    private void buildNextRoundMessages(ChatRequest request, ChatResponse response, ToolMessage toolMessage) {
+        List<Message> messages = request.getMessages();
+        messages.add(response.getOutput());
+        messages.add(toolMessage);
     }
 }

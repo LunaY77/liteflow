@@ -1,4 +1,4 @@
-package com.yomahub.liteflow.ai.engine.interact.protocol;
+package com.yomahub.liteflow.ai.engine.interact.chunk;
 
 import java.util.Arrays;
 import java.util.Map;

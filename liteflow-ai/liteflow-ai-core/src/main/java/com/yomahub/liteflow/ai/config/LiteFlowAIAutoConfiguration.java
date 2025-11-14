@@ -42,7 +42,7 @@ public class LiteFlowAIAutoConfiguration {
 
     @Bean
     public StreamHandler streamHandler() {
-        return StreamHandler.builder().build();
+        return StreamHandler.passThrough();
     }
 
     @Bean

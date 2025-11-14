@@ -1,8 +1,5 @@
 package com.yomahub.liteflow.ai.model.ollama.model.chat;
 
-import com.yomahub.liteflow.ai.engine.interact.callbacks.ChunkCallbackTransformer;
-import com.yomahub.liteflow.ai.engine.interact.callbacks.ResultHandler;
-import com.yomahub.liteflow.ai.engine.interact.transport.TransportListener;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatOptions;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
@@ -39,16 +36,12 @@ public class OllamaChatRequest extends ChatRequest {
             ChatOptions options,
             boolean streaming,
             TransportType transportType,
-            TransportListener transportListener,
-            ResultHandler resultHandler,
-            ChunkCallbackTransformer chunkCallbackTransformer,
             ResponseType responseType,
             TypeReference<?> targetType,
             boolean strict,
             ToolRegistry toolRegistry
     ) {
         super(messages, options, streaming, transportType,
-                transportListener, resultHandler, chunkCallbackTransformer,
                 responseType, targetType, strict, toolRegistry);
     }
 

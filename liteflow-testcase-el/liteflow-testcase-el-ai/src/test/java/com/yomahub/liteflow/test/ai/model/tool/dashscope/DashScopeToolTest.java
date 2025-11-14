@@ -1,12 +1,15 @@
 package com.yomahub.liteflow.test.ai.model.tool.dashscope;
 
 import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
+import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.engine.model.chat.message.*;
+import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
+import com.yomahub.liteflow.ai.engine.model.chat.message.MessageType;
+import com.yomahub.liteflow.ai.engine.model.chat.message.ToolMessage;
+import com.yomahub.liteflow.ai.engine.model.chat.message.UserMessage;
 import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
 import com.yomahub.liteflow.ai.engine.tool.ToolCall;
-import com.yomahub.liteflow.ai.engine.tool.ToolCallBack;
 import com.yomahub.liteflow.ai.engine.tool.registry.ScanningToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.StaticToolRegistry;
 import com.yomahub.liteflow.ai.engine.tool.registry.ToolRegistry;
@@ -16,6 +19,7 @@ import com.yomahub.liteflow.test.ai.mock.MockAITest;
 import com.yomahub.liteflow.test.ai.mock.TestDataReader;
 import com.yomahub.liteflow.test.ai.mock.mockbean.MockConfigHolder;
 import com.yomahub.liteflow.test.ai.mock.mockbean.MockInteractClient;
+import io.reactivex.rxjava3.core.Flowable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,9 +27,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 阿里百炼 工具调用 测试
@@ -75,7 +76,7 @@ public class DashScopeToolTest extends MockAITest {
     }
 
     @Test
-    public void testToolCallStreamingWithAutoToolCall() throws ExecutionException, InterruptedException {
+    public void testToolCallStreamingWithAutoToolCall() {
         setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_TOOL_CALL, TestDataReader.RequestType.STREAMING_TOOL_CALL_2);
 
         List<Message> messages = new ArrayList<>();
@@ -87,24 +88,18 @@ public class DashScopeToolTest extends MockAITest {
                 Collections.singletonList(toolRegistry.getTool("assemble_tool"))
         );
 
-        final CompletableFuture<ChatResponse> future = new CompletableFuture<>();
-
-        chatModelWithAutoToolCall.stream(
+        Flowable<ChunkEvent> stream = chatModelWithAutoToolCall.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
                         .messages(messages)
                         // 工具调用配置
                         .toolRegistry(assembleTool)
-                        // 工具调用配置
-                        .onFinal((chatResponse, context) -> {
-                            future.complete(chatResponse);
-                            return chatResponse;
-                        })
                         .build()
         );
 
-        ChatResponse response = future.get();
+        ChatResponse response = stream.blockingLast()
+                .getFinalResponse();
 
         Assertions.assertEquals(FinishReason.STOP, response.getFinishReason());
         Assertions.assertEquals(MessageType.ASSISTANT, response.getOutput().getMessageType());
@@ -158,13 +153,7 @@ public class DashScopeToolTest extends MockAITest {
         Assertions.assertEquals("weather_tool", toolCall.getName());
 
         // 执行 ToolCall
-        ToolCallBack toolCallBack = weatherTool.getAllTools()
-                .stream()
-                .filter(tool -> Objects.equals(tool.getName(), toolCall.getName()))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("工具未注册: " + toolCall.getName()));
-        String toolResult = toolCallBack.call(toolCall.getArguments().toString());
-        ToolMessage toolMessage = new ToolMessage(toolResult, toolCall.getId(), toolCall.getName());
+        ToolMessage toolMessage = toolRegistry.executeToolCall(toolCall);
 
         // 和 AI 消息一起添加回上下文
         messages.add(response.getOutput());
@@ -190,7 +179,7 @@ public class DashScopeToolTest extends MockAITest {
     }
 
     @Test
-    public void testToolCallStreamingWithManualToolCall() throws ExecutionException, InterruptedException {
+    public void testToolCallStreamingWithManualToolCall() {
         setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_TOOL_CALL);
 
         List<Message> messages = new ArrayList<>();
@@ -202,24 +191,18 @@ public class DashScopeToolTest extends MockAITest {
                 Collections.singletonList(toolRegistry.getTool("assemble_tool"))
         );
 
-        final CompletableFuture<ChatResponse> future = new CompletableFuture<>();
-
-        chatModelWithManualToolCall.stream(
+        Flowable<ChunkEvent> stream = chatModelWithManualToolCall.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
                         .messages(messages)
                         // 工具调用配置
                         .toolRegistry(assembleTool)
-                        // 工具调用配置
-                        .onFinal((chatResponse, context) -> {
-                            future.complete(chatResponse);
-                            return chatResponse;
-                        })
                         .build()
         );
 
-        ChatResponse response = future.get();
+        ChatResponse response = stream.blockingLast()
+                .getFinalResponse();
 
         Assertions.assertEquals(FinishReason.TOOL_CALL, response.getFinishReason());
         Assertions.assertEquals(MessageType.ASSISTANT, response.getOutput().getMessageType());
@@ -231,13 +214,7 @@ public class DashScopeToolTest extends MockAITest {
         Assertions.assertEquals("assemble_tool", toolCall.getName());
 
         // 执行 ToolCall
-        ToolCallBack toolCallBack = assembleTool.getAllTools()
-                .stream()
-                .filter(tool -> Objects.equals(tool.getName(), toolCall.getName()))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("工具未注册: " + toolCall.getName()));
-        String toolResult = toolCallBack.call(toolCall.getArguments().toString());
-        ToolMessage toolMessage = new ToolMessage(toolResult, toolCall.getId(), toolCall.getName());
+        ToolMessage toolMessage = toolRegistry.executeToolCall(toolCall);
 
         // 和 AI 消息一起添加回上下文
         messages.add(response.getOutput());
@@ -247,24 +224,18 @@ public class DashScopeToolTest extends MockAITest {
         MockConfigHolder.clear();
         setupChatMock(ProviderEnum.DASHSCOPE, TestDataReader.RequestType.STREAMING_TOOL_CALL_2);
 
-        final CompletableFuture<ChatResponse> future2 = new CompletableFuture<>();
-
-        chatModelWithManualToolCall.stream(
+        stream = chatModelWithManualToolCall.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
                         .messages(messages)
                         // 工具调用配置
                         .toolRegistry(assembleTool)
-                        // 工具调用配置
-                        .onFinal((chatResponse, context) -> {
-                            future2.complete(chatResponse);
-                            return chatResponse;
-                        })
                         .build()
         );
 
-        response = future2.get();
+        response = stream.blockingLast()
+                .getFinalResponse();
 
         Assertions.assertEquals(FinishReason.STOP, response.getFinishReason());
         Assertions.assertEquals(MessageType.ASSISTANT, response.getOutput().getMessageType());
@@ -311,44 +282,6 @@ public class DashScopeToolTest extends MockAITest {
                 .interactClient(new MockInteractClient())
                 .build();
 
-        chatRequestBuilder = DashScopeChatRequest.builder()
-                .onStart(context -> System.out.println("chat start"))
-                .onClose(context -> System.out.println("chat close"))
-                .onError((context, t) -> {
-                    throw new RuntimeException(t);
-                })
-                .onText((content, context) -> {
-                    System.out.println("Received text: " + content);
-                    return content;
-                })
-                .onThinking((content, context) -> {
-                    System.out.println("Received thinking: " + content);
-                    return content;
-                })
-                .onCompletion((response, context) -> {
-                    AssistantMessage message = response.getOutput();
-                    if (message.getContent() != null && !message.getContent().trim().isEmpty()) {
-                        System.out.println("内容长度: " + message.getContent().length());
-                        if (message.getContent().length() > 200) {
-                            System.out.println("内容预览: " + message.getContent().substring(0, 200) + "...");
-                        } else {
-                            System.out.println("内容: " + message.getContent());
-                        }
-                    }
-                    if (response.hasToolCalls()) {
-                        System.out.println("工具调用数量: " + message.getToolCalls().size());
-                        for (int i = 0; i < message.getToolCalls().size(); i++) {
-                            ToolCall toolCall = message.getToolCalls().get(i);
-                            System.out.println("工具调用 " + (i + 1) + ":");
-                            System.out.println("  ID: " + toolCall.getId());
-                            System.out.println("  名称: " + toolCall.getName());
-                            System.out.println("  类型: " + toolCall.getType());
-                            System.out.println("  参数: " + toolCall.getArguments());
-                        }
-                    }
-                    System.out.println("Token使用情况: " + response.getTokenUsage());
-                    System.out.println("完成原因: " + response.getFinishReason());
-                    return response;
-                });
+        chatRequestBuilder = DashScopeChatRequest.builder();
     }
 }

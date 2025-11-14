@@ -1,10 +1,12 @@
 package com.yomahub.liteflow.test.ai.mock.mockbean;
 
 import com.yomahub.liteflow.ai.engine.interact.LlmInteractClient;
+import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
+import io.reactivex.rxjava3.core.Flowable;
 import org.mockito.Mockito;
 
 import java.util.concurrent.CompletableFuture;
@@ -51,14 +53,14 @@ public class MockInteractClient extends LlmInteractClient {
      * 重写 stream 方法
      */
     @Override
-    public void stream(ChatConfig config, ChatRequest request) {
+    public Flowable<ChunkEvent> stream(ChatConfig config, ChatRequest request) {
         // 创建一个 spied request，它在内部被配置为使用 MockTransport
         ChatRequest spiedRequest = createSpiedRequest(request);
 
         // 调用父类的 stream 方法。
         // 当父类的 InteractManager 构造函数被调用时，
         // 它将使用我们的 spiedRequest，并最终获取到 MockTransport。
-        super.stream(config, spiedRequest);
+        return super.stream(config, spiedRequest);
     }
 
     /**

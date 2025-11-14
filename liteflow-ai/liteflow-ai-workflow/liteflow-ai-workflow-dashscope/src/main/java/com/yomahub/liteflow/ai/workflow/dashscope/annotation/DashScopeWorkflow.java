@@ -4,7 +4,7 @@ import com.alibaba.dashscope.app.FlowStreamMode;
 import com.google.gson.JsonObject;
 import com.yomahub.liteflow.ai.annotation.AIComponent;
 import com.yomahub.liteflow.ai.annotation.model.io.AIOutput;
-import com.yomahub.liteflow.ai.engine.interact.pipeline.InteractContext;
+import com.yomahub.liteflow.ai.engine.interact.chunk.InteractContext;
 
 import java.lang.annotation.*;
 import java.util.List;

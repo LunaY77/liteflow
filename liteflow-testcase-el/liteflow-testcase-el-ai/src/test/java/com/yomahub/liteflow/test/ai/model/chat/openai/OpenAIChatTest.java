@@ -1,23 +1,27 @@
 package com.yomahub.liteflow.test.ai.model.chat.openai;
 
 import com.yomahub.liteflow.ai.domain.enums.ProviderEnum;
+import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
 import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import com.yomahub.liteflow.ai.engine.model.chat.message.*;
+import com.yomahub.liteflow.ai.engine.model.chat.message.Message;
+import com.yomahub.liteflow.ai.engine.model.chat.message.MessageType;
+import com.yomahub.liteflow.ai.engine.model.chat.message.SystemMessage;
+import com.yomahub.liteflow.ai.engine.model.chat.message.UserMessage;
 import com.yomahub.liteflow.ai.engine.model.output.FinishReason;
-import com.yomahub.liteflow.ai.engine.tool.ToolCall;
 import com.yomahub.liteflow.ai.model.openai.model.chat.OpenAIChatModel;
 import com.yomahub.liteflow.ai.model.openai.model.chat.OpenAIChatRequest;
 import com.yomahub.liteflow.test.ai.mock.MockAITest;
 import com.yomahub.liteflow.test.ai.mock.TestDataReader;
 import com.yomahub.liteflow.test.ai.mock.mockbean.MockInteractClient;
+import com.yomahub.liteflow.test.ai.model.util.StreamUtil;
+import io.reactivex.rxjava3.core.Flowable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -61,20 +65,17 @@ public class OpenAIChatTest extends MockAITest {
                 new SystemMessage("You are a helpful assistant."),
                 new UserMessage("请给我讲一个关于未来城市的短故事"));
 
-        final CompletableFuture<ChatResponse> future = new CompletableFuture<>();
-
-        chatModel.stream(
+        Flowable<ChunkEvent> stream = chatModel.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
                         .messages(messages)
-                        .onFinal((chatResponse, context) -> {
-                            future.complete(chatResponse);
-                            return chatResponse;
-                        })
-                        .build());
+                        .build()
+        );
 
-        ChatResponse response = future.get();
+        ChatResponse response = stream.doOnNext(StreamUtil.getChunkEventConsumer())
+                .blockingLast()
+                .getFinalResponse();
 
         Assertions.assertEquals(FinishReason.STOP, response.getFinishReason());
         Assertions.assertEquals(MessageType.ASSISTANT, response.getOutput().getMessageType());
@@ -92,44 +93,6 @@ public class OpenAIChatTest extends MockAITest {
                 .interactClient(new MockInteractClient())
                 .build();
 
-        chatRequestBuilder = OpenAIChatRequest.builder()
-                .onStart(context -> System.out.println("chat start"))
-                .onClose(context -> System.out.println("chat close"))
-                .onError((context, t) -> {
-                    throw new RuntimeException(t);
-                })
-                .onText((content, context) -> {
-                    System.out.println("Received text: " + content);
-                    return content;
-                })
-                .onThinking((content, context) -> {
-                    System.out.println("Received thinking: " + content);
-                    return content;
-                })
-                .onCompletion((response, context) -> {
-                    AssistantMessage message = response.getOutput();
-                    if (message.getContent() != null && !message.getContent().trim().isEmpty()) {
-                        System.out.println("内容长度: " + message.getContent().length());
-                        if (message.getContent().length() > 200) {
-                            System.out.println("内容预览: " + message.getContent().substring(0, 200) + "...");
-                        } else {
-                            System.out.println("内容: " + message.getContent());
-                        }
-                    }
-                    if (response.hasToolCalls()) {
-                        System.out.println("工具调用数量: " + message.getToolCalls().size());
-                        for (int i = 0; i < message.getToolCalls().size(); i++) {
-                            ToolCall toolCall = message.getToolCalls().get(i);
-                            System.out.println("工具调用 " + (i + 1) + ":");
-                            System.out.println("  ID: " + toolCall.getId());
-                            System.out.println("  名称: " + toolCall.getName());
-                            System.out.println("  类型: " + toolCall.getType());
-                            System.out.println("  参数: " + toolCall.getArguments());
-                        }
-                    }
-                    System.out.println("Token使用情况: " + response.getTokenUsage());
-                    System.out.println("完成原因: " + response.getFinishReason());
-                    return response;
-                });
+        chatRequestBuilder = OpenAIChatRequest.builder();
     }
 }
