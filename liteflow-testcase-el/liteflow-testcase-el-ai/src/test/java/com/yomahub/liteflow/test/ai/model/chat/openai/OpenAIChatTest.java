@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * OpenAI chat 测试
@@ -58,20 +57,20 @@ public class OpenAIChatTest extends MockAITest {
     }
 
     @Test
-    public void testStreaming() throws ExecutionException, InterruptedException {
+    public void testStreaming() {
         setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_TEXT);
 
         List<Message> messages = Arrays.asList(
                 new SystemMessage("You are a helpful assistant."),
                 new UserMessage("请给我讲一个关于未来城市的短故事"));
 
-        Flowable<ChunkEvent> stream = chatModel.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModel.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
                         .messages(messages)
                         .build()
-        );
+        ));
 
         ChatResponse response = stream.doOnNext(StreamUtil.getChunkEventConsumer())
                 .blockingLast()

@@ -29,6 +29,8 @@ public enum StreamingProtocolType {
     BASE64_IMAGE(7, "base64_image"),
     // 未知类型数据
     DATA(8, "未知数据"),
+    // workflow 数据（coze 和 dashscope 返回值）
+    WORKFLOW_DATA(9, "workflow_data")
     ;
     private final Integer code;
     private final String desc;

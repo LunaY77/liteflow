@@ -81,7 +81,7 @@ public class DashScopeStructureTest extends MockAITest {
                 new UserMessage("使用中文解题: 8x + 9 = 32 and x + y = 1")
         );
 
-        Flowable<ChunkEvent> stream = chatModel.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModel.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
@@ -90,7 +90,8 @@ public class DashScopeStructureTest extends MockAITest {
                         .responseType(ResponseType.JSON)
                         .targetType(MathReasoning.class)
                         // 结构化输出相关配置
-                        .build());
+                        .build())
+        );
 
         ChatResponse response = stream.doOnNext(StreamUtil.getChunkEventConsumer())
                 .blockingLast()

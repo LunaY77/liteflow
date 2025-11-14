@@ -1,7 +1,7 @@
 package com.yomahub.liteflow.ai.context;
 
 import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
-import io.reactivex.rxjava3.core.Flowable;
+import org.reactivestreams.Publisher;
 
 /**
  * 响应式流处理器
@@ -37,7 +37,7 @@ public interface StreamHandler {
      * @param eventStream 原始的 ChunkEvent 流
      * @return 处理后的 ChunkEvent 流
      */
-    Flowable<ChunkEvent> handle(Flowable<ChunkEvent> eventStream);
+    Publisher<ChunkEvent> handle(Publisher<ChunkEvent> eventStream);
 
     /**
      * 创建一个 pass-through 处理器，不做任何转换直接返回原始流
@@ -56,7 +56,7 @@ public interface StreamHandler {
      */
     static StreamHandler composite(StreamHandler... handlers) {
         return eventStream -> {
-            Flowable<ChunkEvent> result = eventStream;
+            Publisher<ChunkEvent> result = eventStream;
             for (StreamHandler handler : handlers) {
                 result = handler.handle(result);
             }

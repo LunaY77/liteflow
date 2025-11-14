@@ -4,7 +4,7 @@ import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import io.reactivex.rxjava3.core.Flowable;
+import org.reactivestreams.Publisher;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface InteractClient {
 
-    Flowable<ChunkEvent> stream(ChatConfig config, ChatRequest request);
+    Publisher<ChunkEvent> stream(ChatConfig config, ChatRequest request);
 
     ChatResponse chat(ChatConfig config, ChatRequest request);
 

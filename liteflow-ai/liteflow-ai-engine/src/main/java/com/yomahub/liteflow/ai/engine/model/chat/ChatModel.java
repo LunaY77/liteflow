@@ -5,7 +5,7 @@ import com.yomahub.liteflow.ai.engine.model.BaseModel;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import io.reactivex.rxjava3.core.Flowable;
+import org.reactivestreams.Publisher;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -46,5 +46,5 @@ public interface ChatModel extends BaseModel<ChatConfig> {
      * @param request 聊天请求
      * @return 包含所有流式事件的 Flowable 流
      */
-    Flowable<ChunkEvent> stream(ChatRequest request);
+    Publisher<ChunkEvent> stream(ChatRequest request);
 }

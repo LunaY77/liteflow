@@ -2,9 +2,9 @@ package com.yomahub.liteflow.ai.engine.interact;
 
 import com.yomahub.liteflow.ai.engine.interact.chunk.ChunkEvent;
 import com.yomahub.liteflow.ai.engine.interact.chunk.InteractContext;
+import com.yomahub.liteflow.ai.engine.interact.chunk.StreamingProtocolChunk;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformer;
 import com.yomahub.liteflow.ai.engine.interact.protocol.ProtocolTransformerFactory;
-import com.yomahub.liteflow.ai.engine.interact.chunk.StreamingProtocolChunk;
 import com.yomahub.liteflow.ai.engine.interact.transport.Transport;
 import com.yomahub.liteflow.ai.engine.log.EngineLog;
 import com.yomahub.liteflow.ai.engine.log.EngineLogManager;
@@ -18,6 +18,7 @@ import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import org.reactivestreams.Publisher;
 
 import java.util.List;
 import java.util.Objects;
@@ -93,7 +94,7 @@ public class LlmInteractClient implements InteractClient {
      * @param request 聊天请求
      * @return 包含 ChunkEvent 的流
      */
-    public Flowable<ChunkEvent> stream(ChatConfig config, ChatRequest request) {
+    public Publisher<ChunkEvent> stream(ChatConfig config, ChatRequest request) {
         InteractContext context = new InteractContext();
         ProtocolTransformer protocolTransformer = ProtocolTransformerFactory.getTransformer(config.getProvider());
 

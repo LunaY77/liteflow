@@ -6,8 +6,8 @@ import com.yomahub.liteflow.ai.engine.interact.transport.TransportType;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatConfig;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatRequest;
 import com.yomahub.liteflow.ai.engine.model.chat.entity.ChatResponse;
-import io.reactivex.rxjava3.core.Flowable;
 import org.mockito.Mockito;
+import org.reactivestreams.Publisher;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -53,7 +53,7 @@ public class MockInteractClient extends LlmInteractClient {
      * 重写 stream 方法
      */
     @Override
-    public Flowable<ChunkEvent> stream(ChatConfig config, ChatRequest request) {
+    public Publisher<ChunkEvent> stream(ChatConfig config, ChatRequest request) {
         // 创建一个 spied request，它在内部被配置为使用 MockTransport
         ChatRequest spiedRequest = createSpiedRequest(request);
 

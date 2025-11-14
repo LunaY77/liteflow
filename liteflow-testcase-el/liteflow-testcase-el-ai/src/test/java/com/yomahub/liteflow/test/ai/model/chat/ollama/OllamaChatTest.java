@@ -68,13 +68,13 @@ public class OllamaChatTest extends MockAITest {
                 new UserMessage("why is the sky blue?")
         );
 
-        Flowable<ChunkEvent> stream = chatModel.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModel.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.DN_JSON)
                         .messages(messages)
                         .build()
-        );
+        ));
 
         ChatResponse response = stream.doOnNext(StreamUtil.getChunkEventConsumer())
                 .blockingLast()

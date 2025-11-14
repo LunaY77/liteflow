@@ -9,6 +9,7 @@ import com.yomahub.liteflow.ai.model.ModelFactory;
 import com.yomahub.liteflow.ai.parse.context.ProcessorContext;
 import com.yomahub.liteflow.ai.proxy.wrap.ChatProxyWrapBean;
 import io.reactivex.rxjava3.core.Flowable;
+import org.reactivestreams.Publisher;
 
 import java.util.Objects;
 
@@ -51,12 +52,13 @@ public class ChatAIInvocationHandler extends AbstractAIInvocationHandler<ChatPro
         }
 
         // 获取原始的事件流
-        Flowable<ChunkEvent> eventStream = chatModel.stream(chatRequest);
+        Publisher<ChunkEvent> eventStream = chatModel.stream(chatRequest);
 
         // 应用用户的 StreamHandler 进行响应式转换
-        Flowable<ChunkEvent> handledStream = streamHandler.handle(eventStream);
+        Publisher<ChunkEvent> handledStream = streamHandler.handle(eventStream);
 
-        return handledStream.blockingLast()
+        return Flowable.fromPublisher(handledStream)
+                .blockingLast()
                 .getFinalResponse();
     }
 }

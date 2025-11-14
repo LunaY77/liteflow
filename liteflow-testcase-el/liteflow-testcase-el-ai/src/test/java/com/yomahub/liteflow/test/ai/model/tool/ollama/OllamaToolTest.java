@@ -84,7 +84,7 @@ public class OllamaToolTest extends MockAITest {
         ToolRegistry assembleTool = new StaticToolRegistry(
                 Collections.singletonList(toolRegistry.getTool("assemble_tool")));
 
-        Flowable<ChunkEvent> stream = chatModelWithAutoToolCall.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModelWithAutoToolCall.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.DN_JSON)
@@ -92,7 +92,7 @@ public class OllamaToolTest extends MockAITest {
                         // 工具调用配置
                         .toolRegistry(assembleTool)
                         .build()
-        );
+        ));
 
         ChatResponse response = stream.blockingLast()
                 .getFinalResponse();
@@ -168,7 +168,7 @@ public class OllamaToolTest extends MockAITest {
         ToolRegistry assembleTool = new StaticToolRegistry(
                 Collections.singletonList(toolRegistry.getTool("assemble_tool")));
 
-        Flowable<ChunkEvent> stream = chatModelWithManualToolCall.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModelWithManualToolCall.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.DN_JSON)
@@ -176,7 +176,7 @@ public class OllamaToolTest extends MockAITest {
                         // 工具调用配置
                         .toolRegistry(assembleTool)
                         .build()
-        );
+        ));
 
         ChatResponse response = stream.blockingLast()
                 .getFinalResponse();
@@ -202,7 +202,7 @@ public class OllamaToolTest extends MockAITest {
         MockConfigHolder.clear();
         setupChatMock(ProviderEnum.OLLAMA, TestDataReader.RequestType.STREAMING_TOOL_CALL_2);
 
-        stream = chatModelWithManualToolCall.stream(
+        stream = Flowable.fromPublisher(chatModelWithManualToolCall.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.DN_JSON)
@@ -210,7 +210,7 @@ public class OllamaToolTest extends MockAITest {
                         // 工具调用配置
                         .toolRegistry(assembleTool)
                         .build()
-        );
+        ));
 
         response = stream.blockingLast()
                 .getFinalResponse();

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * OpenAI 结构化输出 测试
@@ -71,14 +70,14 @@ public class OpenAIStructureTest extends MockAITest {
     }
 
     @Test
-    public void testStructureStreaming() throws ExecutionException, InterruptedException {
+    public void testStructureStreaming() {
         setupChatMock(ProviderEnum.OPENAI, TestDataReader.RequestType.STREAMING_STRUCTURED);
 
         List<Message> messages = Arrays.asList(
                 new SystemMessage("你是一位数学辅导老师"),
                 new UserMessage("使用中文解题: 8x + 9 = 32 and x + y = 1"));
 
-        Flowable<ChunkEvent> stream = chatModel.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModel.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
@@ -87,7 +86,8 @@ public class OpenAIStructureTest extends MockAITest {
                         .responseType(ResponseType.JSON)
                         .targetType(MathReasoning.class)
                         // 结构化输出相关配置
-                        .build());
+                        .build())
+        );
 
         ChatResponse response = stream.doOnNext(StreamUtil.getChunkEventConsumer())
                 .blockingLast()

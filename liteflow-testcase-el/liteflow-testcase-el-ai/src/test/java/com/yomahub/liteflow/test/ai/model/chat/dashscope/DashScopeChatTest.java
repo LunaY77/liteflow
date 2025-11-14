@@ -69,13 +69,13 @@ public class DashScopeChatTest extends MockAITest {
                 new UserMessage("请给我讲一个关于宇宙探索的短故事")
         );
 
-        Flowable<ChunkEvent> stream = chatModel.stream(
+        Flowable<ChunkEvent> stream = Flowable.fromPublisher(chatModel.stream(
                 chatRequestBuilder
                         .streaming(true)
                         .transportType(TransportType.SSE)
                         .messages(messages)
                         .build()
-        );
+        ));
 
         ChatResponse response = stream.doOnNext(StreamUtil.getChunkEventConsumer())
                 .blockingLast()
